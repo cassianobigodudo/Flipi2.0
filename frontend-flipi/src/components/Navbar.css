@@ -1,0 +1,28 @@
+.navbar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    min-width: 100vw;
+}
+
+.btnavbar{
+
+    width: 90px;
+    height: 30px;
+    font-family: "fonte-projeto";
+    font-size: 25px;
+    transition: 0.2s;
+    border: none;
+    background-color: var(--fundoDivs);
+    margin: 10px;
+    border-radius: 10px;
+    
+
+}
+.btnavbar:hover{
+
+    cursor: pointer;
+    
+
+}

@@ -1,0 +1,123 @@
+.container-mae-resenhas{
+    display: flex;
+    background-color: whitesmoke;
+}
+
+.container-resenhas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    background-color: #c89b7a;
+    min-height: 35vh;
+    width: 180vh;
+}
+    .container-resenha-usuarios{
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        padding: 20px;
+        height: fit-content;
+        width: 93%;
+        background-color: #ffeddf;
+        border-radius: 15px;
+        margin-bottom: 1%;
+        gap: 10px;
+    }
+        .box-resenha{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: fit-content;
+            background-color: #ffeddf;
+            margin: 2% 5% 4% 5%;
+            border-radius: 10px;
+            gap: 40px;
+        }
+
+        .box-resenha-vazio{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: fit-content;
+            min-width: 1000px;
+            background-color: #ffeddf;
+            margin: 2% 5% 4% 5%;
+            border-radius: 10px;
+            gap: 40px;
+        }
+
+            .parte-foto-nome{
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                gap: 18px;
+                padding: 30px;
+                height: 50px;
+                width: 100%;
+                background-color: #fff;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+                .foto-perfil{
+                    margin-bottom: 30px;
+                    height: 70px;
+                    width: 80px;
+                    background-color: #ffffff;
+                    border-radius: 50%;
+                    margin-bottom: 40px;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                }
+                    .imagem-perfil{
+                        height: 70px;
+                        width: 80px;
+                        border-radius: 50%;
+                    }
+
+            .parte-resenha{
+                
+                display: flex;
+                justify-content: start;
+                align-items: start;
+                flex-direction: column;
+                padding: 25px;
+                height: fit-content;
+                width: 930px;
+                block-size: fit-content;
+                background-color: #fff;
+                height: 200px;
+            }
+                .texto-resenha{
+                    font-size: 18px;
+                    font-family: "fonte-projeto";
+                }
+
+            .parte-curtida{
+                display: flex;
+                justify-content: end;
+                align-items: center;
+                gap: 7px;
+                padding-right: 18px;
+                padding-bottom: 18px;
+                height: 30px;
+                width: 100%;
+                background-color: #fff;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+            }
+                .botao-curtida{
+                    border: none;
+                    background-color: transparent;
+                    cursor: pointer;
+                }
+                .icone-curtida{
+                    width: 30px;
+                }
+                .label-curtidas{
+                    font-size: 25px;
+                }

@@ -1,0 +1,118 @@
+.resenhas-container{
+
+    height: 40%;
+    width: 100%;
+    background-color: var(--corfundo);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+
+}
+
+    .resenhas-usuario{
+
+
+        height: 90%;
+        width: 90%;
+        /* background-color: red; */
+        border: solid;
+        border-radius: 10px;
+        border-width: 2px;
+        border-color: var(--fundoDivs);
+        display: flex;
+
+    }
+
+        .resenhas-usuario-capa{
+
+            /* background-color: crimson; */
+            width: 30%;
+            height: 100%;
+            border-radius: 10px;
+
+        }
+
+            .resenhas-usuario-livro{
+
+                /* background-color: blueviolet; */
+                border-radius: 10px;
+                height: 85%;
+                width: 100%;
+
+            }
+
+            .resenhas-usuario-edicaoRemocao{
+
+                background-color: indianred;
+                height: 12%;
+                width: 90%;
+                border-radius: 5px;
+                margin-left: 4%;
+
+            }
+
+        .resenhas-usuario-infos{
+
+            /* background-color: darkgreen; */
+            height: 100%;
+            width: 70%;
+            border-radius: 10px;
+            overflow: auto;
+
+        }
+
+
+            .resenhas-usuario-titulo{
+
+                /* background-color: aqua; */
+                background-color: var(--fundoDivs);
+                color: white;
+                height: 20%;
+                width: 100%;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                padding-top: 5px;
+
+            }
+
+                .lbl-titulo{
+
+                    font-family: 'fonte-projeto';
+                    font-size: 25px;
+
+                }
+            
+            .resenhas-usuario-estrelas{
+
+                /* background-color: orange; */
+                width: 100%;
+                height: 20%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: row;
+                margin-top: 3px;
+                padding-left: 20px;
+            }
+
+            .textarea-resenha{
+
+                resize: none;
+                font-family: 'fonte-projeto';
+                font-size: 28px;
+                height: 50%;
+                border: none;
+                width: 100%;
+                padding: 5px;
+
+            }
+
+            .textarea-resenha:focus{
+
+                outline-width: 0px;
+
+            }
+            

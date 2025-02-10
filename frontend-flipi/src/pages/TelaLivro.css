@@ -1,0 +1,16 @@
+
+.container-mae{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: whitesmoke;
+    height: 100vh;
+    font-family: "fonte-projeto";
+    font-size: 24px;
+}
+
+html{
+   background-color: whitesmoke;
+}
+    

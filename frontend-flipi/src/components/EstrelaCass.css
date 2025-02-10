@@ -1,0 +1,29 @@
+.btn-nota{
+
+    margin-left: 2px;
+    height: 90%;
+    width: 18%;
+    background-color: var(--laranjaenferrujado);
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    font-size: 25px;
+    font-family: "fonte-projeto";
+    cursor: pointer;
+
+
+}
+
+.img-estrela{
+
+
+    height: 70%;
+    width: 100%;    
+}
+
+.estrelas-container{
+
+    height: 100%;
+    width: 100%;
+
+}

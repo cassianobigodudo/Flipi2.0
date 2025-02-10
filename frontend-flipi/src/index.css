@@ -1,0 +1,41 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: transparent;
+  
+}
+
+:root{
+    
+  --corfundo: #fcf6e8;
+  --fundoelementos: #f4e2b4;
+  --laranjaenferrujado: #c85b34;
+  --fundoDivs: #cb9375;
+  --navbar: #fdfaf3;
+  --textos: #40454b;
+  
+}
+
+::-webkit-scrollbar{
+
+  width: 13px;
+  
+  transition: 1s;
+}
+
+
+::-webkit-scrollbar-thumb{
+
+  border-radius: 2px;
+  
+  
+  background-color: var(--laranjaenferrujado);
+}
+
+
+
+@font-face {
+  font-family: "fonte-projeto";
+  src: url(./font/Amatic_SC/AmaticSC-Bold.ttf);
+}

@@ -1,0 +1,195 @@
+.container-tela-cadastro{
+
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    display: flex;
+    background-color: #fcf6e8;
+
+    background-image: url(./images/Captura de tela_20-10-2024_19117_localhost.jpeg);
+}
+
+.livro-cadastro-container-esquerda{
+
+    height: 85%;
+    width: 35%;
+    
+    background: linear-gradient(0.25turn, #c85b34, #efc5ae);
+    border-radius: 30px;
+    display: flex;
+}
+
+
+
+.livro-cadastro-primeiraLayer-esquerda{
+
+    height: 100%;
+    width: 98%;
+    background-color: #debeb2;
+    display: flex;
+    border-radius: 30px;
+    margin-left: 8px;
+
+}
+
+.livro-cadastro-conteudoLayerEsquerda{
+  
+
+    margin-top: 2%;
+    height: 97.5%;
+    width: 95%;
+    background-color: #fdfaf3;
+    display: flex;
+    margin-right: 0.5%;
+    border-radius: 27px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 18px;
+
+}
+
+
+
+.label-titulos{
+
+
+    color: #40454b;
+    font-size: 68px;
+    font-family: "fonte-projeto";
+   
+    display: flex;
+    font-weight: bolder;
+    margin-bottom: 15px;
+
+
+}
+
+
+.label-inputs{
+
+
+    color: #40454b;
+    font-size: 38px;
+    font-family: "fonte-projeto";
+   
+    display: flex;
+    margin-right: 325px;
+    margin-top: 15px;
+}
+
+.label-inputs-nome{
+
+
+    color: #40454b;
+    font-size: 38px;
+    font-family: "fonte-projeto";
+   
+    display: flex;
+    font-weight: bold;
+    margin-right: 231px;
+    margin-bottom: 15px;
+}
+
+
+.inputs-cadastro{
+
+    color: #c85b34;
+    font-size: 34px;
+    font-weight: bold;
+    border-radius: 11px;
+    text-align: center;
+    font-family: "fonte-projeto";
+    height: 38px;
+    width: 380px;
+    border-style: solid;
+    border-color: #c85b34;
+    border-width: 2px;
+}
+
+.livro-cadastro-container-direita{
+
+    height: 85%;
+    width: 35%;
+    background: linear-gradient(0.25turn, #e0c2b2, #c85b34);
+    border-radius: 30px;
+    display: flex;
+    
+}
+
+
+.livro-cadastro-primeiraLayerDireita{
+
+
+    height: 100%;
+    width: 98%;
+    background-color: #debeb2;
+    display: flex;
+    border-radius: 30px;
+    margin-left: 0.3%;
+
+}
+
+
+.livro-cadastro-conteudoLayerDireita{
+
+
+
+
+
+    margin-top: 2%;
+    height: 97.5%;
+    width: 95%;
+    background-color: #fdfaf3;
+    display: flex;
+    margin-right: 0.5%;
+    border-radius: 27px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 5px;
+
+}
+
+.imagem-parte-cadastro{
+
+
+    height: 60%;
+    width: 70%;
+    margin-top: 10%;
+}
+
+.botao-cadastro{
+
+
+    height: 60px;
+    width: 400px;
+    
+    color: var(--corfundo);
+    font-size: 38px;
+    font-family: "fonte-projeto";
+    font-weight: bold;
+    background-color: var(--laranjaenferrujado);
+    border-radius: 10px;
+    width: 280px;
+    border-color: #f4e2b4;
+
+
+}
+.botao-cadastro:hover{
+
+    cursor: pointer;
+
+}
+
+.label-possuir-conta{
+
+
+    margin-top: 20%;
+    
+    color: #40454b;
+    font-size: 27px;
+    font-family: "fonte-projeto";
+    font-weight: bold;
+    margin-left: 50%;
+}

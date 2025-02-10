@@ -1,0 +1,33 @@
+.btnEstrelas{
+
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    width: 100%;
+}
+
+
+.generoIsbn-desfecho-btn{
+
+    margin-top: 5%;
+    height: 48%;
+    width: 100%;
+    background-color: var(--laranjaenferrujado);
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    font-size: 30px;
+    font-family: "fonte-projeto";
+    cursor: pointer;
+    box-shadow: 0px 2px 15px rgb(150, 101, 67);
+
+
+}
+
+
+.btn-desfecho-img{
+
+    margin-top: 15%;
+    height: 100%;
+    width: 80%;
+}

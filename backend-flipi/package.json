@@ -1,0 +1,25 @@
+{
+  "name": "backend-flipi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon src/server.js"
+  },
+  "keywords": [
+    "react",
+    "node",
+    "postgresql",
+    "dashboard"
+  ],
+  "author": "Cassiano",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  }
+}

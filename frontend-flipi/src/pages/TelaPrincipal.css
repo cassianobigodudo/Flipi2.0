@@ -1,0 +1,592 @@
+
+.container-tela-principal{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    
+}
+
+
+
+.retangulo-um{
+    height: 90%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eddbb3;
+    border-radius: 10px;
+   
+}
+
+.retangulo-dois{
+    height: 100%;
+    width: 96%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #c69877;
+    border-radius: 10px;
+    
+}
+
+.retangulo-tres{
+    height: 100%;
+    width: 97%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#f8ebce;
+    border-radius: 10px;
+
+}
+
+    .div-espaco-vazio{
+        height: 100%;
+        width: 6%;
+        background-color: #fdfaf3;
+    }
+   
+        .div-home-escrivaninha{
+            height: 33%;
+            width: 100%;
+            background-color: #fdfaf3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+            .btns{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 50px;
+                width: 50px;
+                margin-bottom: 25px;
+                border-radius: 50%;
+                border: none;
+                cursor: pointer;
+
+            }
+                .icons{
+                    height: 35px;
+                    width: 35px;
+                    margin: 10%;
+                    background-color: #fdfaf3;
+                }
+
+
+    .div-livros-esquerda{
+        height: 100%;
+        width: 44%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #fdfaf3;
+        margin-left: 4px;
+    }
+
+        .div-barra-de-pesquisa{
+            height: 15%;
+            width: 100%;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            background-color: #fdfaf3;
+
+        }
+
+            .btn-pesquisar{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 40px;
+                width: 40px;
+                margin: 0% 0% 0% 1%;
+                border-radius: 100%;
+                border: none;
+                cursor: pointer;
+                margin-left: -40px;
+                
+            }
+
+                .icons-pesquisar{
+                    height: 20px;
+                    width: 20px;
+                    /* margin: 1% 1% 0% 10%; */
+                    background-color: #fdfaf3;
+                }
+
+            .inpt-pesquisa{
+                height: 30px;
+                width: 250px;
+                border: solid #d7beb1;
+                border-radius: 10px;
+                padding-left: 20px;
+                padding-right: 35px;
+                color: #40454b;
+                font-family: "fonte-projeto";
+                font-size: 20px;
+                font-weight: 700
+                
+            }
+            
+            .inpt-pesquisa:focus{
+
+            outline-width: 0px;
+
+            }
+
+        .div-Fila-livros{
+            height: 35%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            background-color: #fdfaf3;
+            
+        }
+
+            .div-box-titulo{
+
+                height: 100%;
+                width: 25%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                background-color: #fdfaf3;
+                transition: 0.3s;                
+
+            }
+                .box{
+                    height: 105px;
+                    width: 100px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ;
+                    background-image: url('./images/dom_casmurro.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-1{
+                    height: 105px;
+                    width: 85px;
+                    /*  */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/vidas_secas.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-3{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/magico_de_oz.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-4{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/romeu-julieta.png');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-5{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/sombras_de_outubro.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-6{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/ultimo_adeus.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-7{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/culpa_estrelas.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-8{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/ilha.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-9{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/game_of_thrones.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-10{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/it.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-11{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/diario_banana.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+            
+
+                .box-12{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/brave_new_world.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-13{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/pequeno_principe.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-14{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/da_vinci.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-15{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/1984.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+                .box-16{
+                    height: 105px;
+                    width: 85px;
+                    /* background-color: rgb(189, 142, 142); */
+                    display: flex;
+                    align-items: center;
+                    padding-top: 100px;
+                    transition: 0.3s ease;
+                    background-image: url('./images/cem_anos.jpg');
+                    /* background-position: 50%;
+                    background-size: 130%; */
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    
+                    
+                }
+
+
+
+                .div-Fila-livros:hover .div-box-titulo{
+                    filter: blur(5px);
+                    opacity: 0.9;
+                    transition: 0.3s;
+                    margin-bottom: 10px;
+                    background-color: #dfdcd9;
+                    
+
+                }
+
+                .div-Fila-livros .div-box-titulo:hover{
+                    filter: none;
+                    opacity: 1;
+                    /* background-color: #cb9375; */
+                    transition: 0.3s;
+                }
+
+                /* .img-livro{
+
+                    width: 110px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-bottom: 100px;
+                    margin-left: px;
+                    
+                
+                }
+                 */
+
+                .titulos-livros{
+                 text-align: center;
+                 margin-top: 6px;
+                 font-size: 14px;
+                 transition: 0.3s;
+                
+                }
+
+
+        .div-contatos{
+            height: 15%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #fdfaf3;
+        }
+
+            .div-divisao-um{
+                height: 3px;
+                width: 90%;
+                border-radius: 5px;
+                margin-top: 15px;
+                background-color: #d7beb1;
+            }
+
+            .div-divisao-dois{
+                height: 3px;
+                width: 70%;
+                border-radius: 5px;
+                margin-top: 8px;
+                background-color: #d7beb1; 
+            }
+
+            .btn-contacts{
+                height: 30px;
+                width: 90px;
+                margin-top: 1%;
+                border: solid #d7beb1;
+                border-radius: 10px;
+                cursor: pointer;
+                color: #40454b;
+                font-family: "fonte-projeto";
+                font-size: 20px;
+                font-weight: 700;
+            }
+
+
+    .div-livros-direita{
+        height: 100%;
+        width: 44%;
+        margin-left: 8px;
+        background-color: #fdfaf3;
+    }
+
+    .div-elementos{
+        height: 100%;
+        width: 6%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        background-color: #fdfaf3;
+        margin-left: 4px;
+    }
+
+        .div-next-page{
+            height: 15%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #fdfaf3;
+        }
+
+            .div-label-next-page{
+                height: 30%;
+                width: 100%;
+                display: flex;
+                justify-content: end;
+                
+            }
+
+                .btn-next-page{
+                    height: 30px;
+                    width: 90px;
+                    margin-top: 1% ;
+                    border: solid #d7beb1;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    color: #40454b;
+                    font-family: "fonte-projeto";
+                    font-size: 20px;
+                    font-weight: 700;
+                    margin-right: 10px;
+                
+                }
+
+                
+                .btn-livro-home{
+                    border: none;
+                    cursor: pointer;
+                }
