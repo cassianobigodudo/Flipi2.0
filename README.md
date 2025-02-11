@@ -2,7 +2,7 @@
 # FliPi - Biblioteca Virtual
 
 ### INTRODUÇÃO
-O trabalho desenvolvido pelo nosso grupo, cujo membros são Arthur Viecili Pinheiro da Silva [arthurvp1](https://github.com/arthurvp1), Cassiano Calazans Coelho Machado [cassianobigodudo](https://github.com/cassianobigodudo), Jaime António Cá [jaime-ac](https://github.com/jaime-ac) e José Vitor de Mattos Pinheiro [Jouusey](https://github.com/Jouusey) é referente a construção de um site com caráter de BIBLIOTECA VIRTUAL. A finalidade do site é posssilibitar que usuários cadastrados possam registrar livros que já leram em suas respectivas bibliotecas e com o principal objetivo de compartilhar uma resenha sobre o livro registrado no site, servindo dessa forma como uma ferramenta de recomendação de livros para outros usuários, baseada no compartilhamento de resenhas de livros. 
+O trabalho desenvolvido pelo nosso grupo, cujo membros são Arthur Viecili Pinheiro da Silva ([arthurvp1](https://github.com/arthurvp1)), Cassiano Calazans Coelho Machado ([cassianobigodudo](https://github.com/cassianobigodudo)), Jaime António Cá ([jaime-ac](https://github.com/jaime-ac)) e José Vitor de Mattos Pinheiro ([Jouusey](https://github.com/Jouusey)) é referente a construção de um site com caráter de BIBLIOTECA VIRTUAL. A finalidade do site é posssilibitar que usuários cadastrados possam registrar livros que já leram em suas respectivas bibliotecas e com o principal objetivo de compartilhar uma resenha sobre o livro registrado no site, servindo dessa forma como uma ferramenta de recomendação de livros para outros usuários, baseada no compartilhamento de resenhas de livros. 
 
 ## Requisitos Funcionais
 
