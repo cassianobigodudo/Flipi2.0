@@ -9,9 +9,9 @@ O trabalho desenvolvido pelo nosso grupo, cujo membros são Arthur Viecili Pinhe
 1. **Cadastro de Usuários (RF-01):** O sistema deve permitir que novos usuários se cadastrem preenchendo as informações solicitadas.
      
 2. **Login e Autenticação de Usuários (RF-02):** O sistema deve permitir que os usuários façam login utilizando suas credenciais.
-3. **Cadastro de Livros (RF-03):** O sistema deve permitir que usuários cadastrados adicionem livros que já leram, caso esses livros não estejam presentes no ISBN.
-4. **Remoção de Livros (RF-04):** O sistema deve permitir que os usuários removam livros cadastrados sem ISBN, garantindo a exclusão de informações desatualizadas ou incorretas.
-5. **Edição de Livros (RF-05):** Usuários devem poder editar informações de livros cadastrados sem ISBN, assegurando que os dados estejam sempre atualizados e corretos.
+     -3. **Cadastro de Livros (RF-03):** O sistema deve permitir que usuários cadastrados adicionem livros que já leram, caso esses livros não estejam presentes no ISBN.
+     -4. **Remoção de Livros (RF-04):** O sistema deve permitir que os usuários removam livros cadastrados sem ISBN, garantindo a exclusão de informações desatualizadas ou incorretas.
+     -5. **Edição de Livros (RF-05):** Usuários devem poder editar informações de livros cadastrados sem ISBN, assegurando que os dados estejam sempre atualizados e corretos.
 6. **Cadastro de Resenhas (RF-06):** O sistema deve permitir que usuários cadastrados escrevam resenhas dos livros registrados.
 7. **Notas nas Resenhas (RF-07):** O sistema deve permitir que usuários cadastrados avaliem o livro na resenha de 0 a 5 estrelas.
 8. **Avaliação das Resenhas (RF-08): **O sistema deve permitir que usuários cadastrados possam "curtir" as resenhas de outros usuários cadastrados.
