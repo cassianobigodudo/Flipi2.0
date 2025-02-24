@@ -3,23 +3,19 @@
 ### INTRODUÇÃO
 O trabalho desenvolvido pelo nosso grupo, cujo membros são Arthur Viecili Pinheiro da Silva ([arthurvp1](https://github.com/arthurvp1)), Cassiano Calazans Coelho Machado ([cassianobigodudo](https://github.com/cassianobigodudo)), Jaime António Cá ([jaime-ac](https://github.com/jaime-ac)), José Vitor de Mattos Pinheiro ([Jouusey](https://github.com/Jouusey)) e Rodrigo Albuquerque da Rocha Junior([jujubssss](https://github.com/jujubssss)). é referente a construção de um site com caráter de BIBLIOTECA VIRTUAL. A finalidade do site é posssilibitar que usuários cadastrados possam registrar livros que já leram em suas respectivas bibliotecas e com o principal objetivo de compartilhar uma resenha sobre o livro registrado no site, servindo dessa forma como uma ferramenta de recomendação de livros para outros usuários, baseada no compartilhamento de resenhas de livros.
 
-José e Rodrigo estarão encarregados do front-end para refatoração das telas atuais do site, implementação de novas telas e foco no cadastro de resenhas, usando as tecnologias VSCode, React.JS e Figma
-Cassiano está encarregado do back-end para a refatoração total do backend do protótipo do Flipi 1.0 usando as tecnologias VSCode e Node.JS
-Cassiano e Rodrigo estarão encarregados do banco de dados para a refatoração do banco de dados do protótipo do Flipi1.0 implementando novas tabelas usando as tecnologias MyCompiler e PostgreSQL
-
 ## Requisitos Funcionais
 
 1. (Legado) **Cadastro de Usuários (RF-01):** O sistema deve permitir que novos usuários se cadastrem preenchendo as informações solicitadas.
 2. (Legado Refatorado) **Visualização de Livros e Resenhas (RF-02):** O sistema deve permitir a visualização de livros registrados e de resenhas de outros usuários sem ter uma conta.
 3. (Legado Refatorado) **Obrigatoriedade de Cadastro para Avaliar Livros (RF-03):** O sistema não permite que o usuário crie uma resenha, avalie um livro e curta outras resenhas sem ter uma conta.
 4. (Legado) **Login e Autenticação de Usuários (RF-04):** O sistema deve permitir que os usuários façam login utilizando suas credenciais.
-5. (Legado Refatorado) **Cadastro, Edição e Remoção de Resenhas (RF-05):** O sistema deve permitir que usuários cadastrados criem, editem ou removam suas próprias resenhas dos livros registrados.
-6. (Legado)**Notas nas Resenhas (RF-06):** O sistema deve permitir que usuários cadastrados avaliem o livro na resenha de 1 a 5 estrelas.
-7. (Legado)**Avaliação das Resenhas (RF-07): **O sistema deve permitir que usuários cadastrados possam "curtir" as resenhas de outros usuários cadastrados.
-8. (Legado)**Filtragem de Livros (RF-08):** O sistema deve permitir a filtragem de livros por gênero, autor, editora, data de lançamento e título.
-9. (Legado)**Visualização de Detalhes (RF-09):** O sistema deve permitir a visualização de detalhes completos de um livro selecionado.
-10. **Criação de Lista de Livros (RF-10):** O sistema deve permitir que usuários cadastrados criem, atualizem ou removam suas próprias listas de livros com um título e descrição personalizadas. 
-11. (Legado)**Edição e Exclusão de Conta (RF-11):** O sistema deve permitir que usuários editem os dados do perfil e excluam suas contas, se desejarem.
+5. (Legado Refatorado) **Cadastro, Edição e Remoção de Resenhas (RF-05):** O sistema deve permitir que usuários cadastrados criem, editem ou removam suas próprias resenhas dos livros registrados. (Responsável: José)
+6. (Legado-refatorado)**Classificação dos livros (RF-06):** O sistema deve permitir que usuários cadastrados avaliem o livro na resenha de 1 a 5 estrelas.
+7. (Legado-refatorado)**Curtida nas Resenhas** (RF-07): **O sistema deve permitir que usuários cadastrados possam "curtir" as resenhas de outros usuários cadastrados.
+8. (Legado-refatorado)**Pesquisa de Livros (RF-08):** O sistema deve permitir a filtragem de livros por gênero, autor, editora, data de lançamento e título. (Responsável: Cassiano)
+9. (Legado)**Visualização de Detalhes (RF-09):** O sistema deve permitir a visualização de detalhes completos de um livro selecionado. (Responsável: Arthur)
+10. **Criação de Lista de Livros (RF-10):** O sistema deve permitir que usuários cadastrados criem, atualizem ou removam suas próprias listas de livros com um título e descrição personalizadas. (Responsável: Jaime)
+11. (Legado-refatorado)**Edição e Exclusão de Conta (RF-11):** O sistema deve permitir que usuários editem os dados do perfil e excluam suas contas, se desejarem. (Responsável: Rodrigo)
 
 ## Requisitos Não Funcionais
 
