@@ -275,76 +275,67 @@
         background-color: #fdfaf3;
     }
   
-         .div-espaco-vazio-landing{
-              height: 15%;
-              width: 90%;
-              display: flex;
-              justify-content: start;
-              align-items: center;
-              background-color: #fdfaf3;
-              
-         } 
+        .div-espaco-vazio-landing{
+            height: 10%;
+            width: 90%;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            background-color: #fdfaf3;  
+        } 
   
-         .div-Fila-livros-landing{
-              height: 35%;
-              width: 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              flex-direction: row;
-              background-color: #fdfaf3;
-         }
+        .parte__livros{
+            height: 75%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            background-color: darkcyan;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
   
   
-              .div-box-titulo{
+        .div-box-titulo{
   
-                  height: 100%;
-                  width: 25%;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  flex-direction: column;
-                  background-color: #fdfaf3;
-                  
-              }
-                  .box{
-                      height: 105px;
-                      width: 85px;
-                      /* background-color: rgb(139, 142, 142); */
-                      transition: 0.3s ease;
-                      
-                  }
-
-                  .box-19{
+            height: 100%;
+            width: 25%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #fdfaf3;     
+        }
+                .box{
                     height: 105px;
                     width: 85px;
-                    /* background-color: rgb(139, 142, 142); */
+                    transition: 0.3s ease;  
+                }
+
+                .box-19{
+                    height: 105px;
+                    width: 85px;
                     transition: 0.3s ease;
                     display: flex;
                     align-items: center;
                     padding-top: 100px;
                     transition: 0.3s ease;
                     background-image: url('./images/hobbit.jpg');
-                    /* background-position: 50%;
-                    background-size: 130%; */
                     background-size: contain;
                     background-position: center;
-                    background-repeat: no-repeat;
-                    
+                    background-repeat: no-repeat;  
                 }
 
                 .box-20{
                     height: 105px;
                     width: 85px;
-                    /* background-color: rgb(139, 142, 142); */
                     transition: 0.3s ease;
                     display: flex;
                     align-items: center;
                     padding-top: 100px;
                     transition: 0.3s ease;
                     background-image: url('./images/mockingbird.jpg');
-                    /* background-position: 50%;
-                    background-size: 130%; */
                     background-size: contain;
                     background-position: center;
                     background-repeat: no-repeat;
@@ -353,15 +344,12 @@
                 .box-br{
                     height: 105px;
                     width: 85px;
-                    /* background-color: rgb(139, 142, 142); */
                     transition: 0.3s ease;
                     display: flex;
                     align-items: center;
                     padding-top: 100px;
                     transition: 0.3s ease;
                     background-image: url('./images/battle_royale.jpg');
-                    /* background-position: 50%;
-                    background-size: 130%; */
                     background-size: contain;
                     background-position: center;
                     background-repeat: no-repeat;
@@ -370,15 +358,12 @@
                 .box-bichos{
                     height: 105px;
                     width: 85px;
-                    /* background-color: rgb(139, 142, 142); */
                     transition: 0.3s ease;
                     display: flex;
                     align-items: center;
                     padding-top: 100px;
                     transition: 0.3s ease;
                     background-image: url('./images/bichos.jpg');
-                    /* background-position: 50%;
-                    background-size: 130%; */
                     background-size: contain;
                     padding-right: 30px;
                     background-position: center;
@@ -395,7 +380,6 @@
                   .div-Fila-livros-landing .div-box-titulo:hover{
                       filter: none;
                       opacity: 1;
-                      /* background-color: rgb(189, 142, 142); */
                   }
   
                   .titulos-livros{

@@ -1,0 +1,55 @@
+<div className="div-Fila-livros-landing">
+
+                            <div className="div-box-titulo">
+
+                                <button className="btn-livro-home" onClick={() => 
+                                    navigate("/telalivro", { state: { index: 18 } })}>
+                                
+                                    <div className="box-19"></div>
+                                    <p className='titulos-livros'>{biblioteca[18].tituloLivro}</p>
+
+                                </button>
+
+                            </div>
+
+                            <div className="div-box-titulo">
+                                <button className="btn-livro-home" onClick={() => 
+                                    navigate("/telalivro", { state: { index: 19 } })}>      
+
+                                    <div className="box-20"></div>
+                                    <p className='titulos-livros'>{biblioteca[19].tituloLivro}</p>
+                                </button>
+                            </div>
+
+                            <div className="div-box-titulo">
+
+                                <button className="btn-livro-home" onClick={() => 
+                                    navigate("/telalivro", { state: { index: 0 } })}>
+                                   
+                                    <div className="box"></div>
+                                    <p className='titulos-livros'>{biblioteca[0].tituloLivro}</p>
+
+                                </button>
+
+                            </div>
+
+                            <div className="div-box-titulo">
+                                <button className="btn-livro-home" onClick={() => 
+                                    navigate("/telalivro", { state: { index: 2 } })}>      
+                        
+                                    <div className="box-br"></div>
+                                    <p className='titulos-livros'>{biblioteca[2].tituloLivro}</p>
+                                </button>
+                            </div>
+    
+                        </div>
+
+.div-Fila-livros-landing{
+              height: 35%;
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: row;
+              background-color: #fdfaf3;
+         }
