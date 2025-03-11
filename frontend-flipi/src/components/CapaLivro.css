@@ -4,8 +4,8 @@
     align-items: center;
     flex-direction: column;
     background-color: darkcyan;
-    height: 200px;
-    width: 125px;
+    height: 250px;
+    width: 150px;
 }
     /* .box__livro:hover{
         filter: blur(5px);

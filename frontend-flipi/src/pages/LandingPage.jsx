@@ -8,9 +8,29 @@ import CapaLivro from '../components/CapaLivro'
 function LandingPage() {
 
     const navigate = useNavigate()
-    const {biblioteca} = useContext(GlobalContext)
-    
 
+    const {biblioteca} = useContext(GlobalContext)
+
+    const bibliotecaLandingPage = []
+    let livroGerado
+
+    const usados = new Set(); // Para evitar repetições
+    
+    for (let i = 0; i < 8; i++){
+        
+        do {
+            
+            livroGerado = (Math.floor(Math.random() * biblioteca.length))
+            
+        } while (usados.has(livroGerado));
+        
+        bibliotecaLandingPage.push(biblioteca[livroGerado])
+        usados.add(livroGerado);
+
+    }
+
+    console.log(bibliotecaLandingPage)
+    
   return (
 
     <div className='container-landing-page'>
@@ -83,7 +103,7 @@ function LandingPage() {
 
                         <div className="parte__livros">
 
-                            {biblioteca.map((livro) => (
+                            {bibliotecaLandingPage.map((livro) => (
                                 <CapaLivro key={livro.isbnLivro} capa={livro.capaLivro} titulo={livro.tituloLivro}/>
                             ))};
 
