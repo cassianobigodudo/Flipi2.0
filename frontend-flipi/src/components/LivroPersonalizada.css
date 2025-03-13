@@ -1,0 +1,14 @@
+.container__livro--personalizada{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: darkcyan;
+}
+
+    .container__tela--listas{
+        height: 90%;
+        width: 90%;
+        background-color: darkgreen;
+    }
