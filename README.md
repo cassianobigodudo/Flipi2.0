@@ -1,21 +1,19 @@
 # FliPi - Biblioteca Virtual
 
 ### INTRODUÇÃO
-O trabalho desenvolvido pelo nosso grupo, cujo membros são Arthur Viecili Pinheiro da Silva ([arthurvp1](https://github.com/arthurvp1)), Cassiano Calazans Coelho Machado ([cassianobigodudo](https://github.com/cassianobigodudo)), Jaime António Cá ([jaime-ac](https://github.com/jaime-ac)), José Vitor de Mattos Pinheiro ([Jouusey](https://github.com/Jouusey)) e Rodrigo Albuquerque da Rocha Junior([jujubssss](https://github.com/jujubssss)). é referente a construção de um site com caráter de BIBLIOTECA VIRTUAL. A finalidade do site é posssilibitar que usuários cadastrados possam registrar livros que já leram em suas respectivas bibliotecas e com o principal objetivo de compartilhar uma resenha sobre o livro registrado no site, servindo dessa forma como uma ferramenta de recomendação de livros para outros usuários, baseada no compartilhamento de resenhas de livros.
+O trabalho desenvolvido pelo nosso grupo, cujo membros são Cassiano Calazans Coelho Machado ([cassianobigodudo](https://github.com/cassianobigodudo)), Jaime António Cá ([jaime-ac](https://github.com/jaime-ac)), José Vitor de Mattos Pinheiro ([Jouusey](https://github.com/Jouusey)) e Rodrigo Albuquerque da Rocha Junior([jujubssss](https://github.com/jujubssss)). é referente a construção de um site com caráter de BIBLIOTECA VIRTUAL. A finalidade do site é posssilibitar que usuários cadastrados possam registrar livros que já leram em suas respectivas bibliotecas e com o principal objetivo de compartilhar uma resenha sobre o livro registrado no site, servindo dessa forma como uma ferramenta de recomendação de livros para outros usuários, baseada no compartilhamento de resenhas de livros.
 
 ## Requisitos Funcionais
 
-1. (Legado) **Cadastro de Usuários (RF-01):** O sistema deve permitir que novos usuários se cadastrem preenchendo as informações solicitadas.
+1. (Legado-Refatorado) **Cadastro, Login, Edição e Exclusão de Usuários (RF-01):** O sistema deve permitir que novos usuários se cadastrem, acessem suas contas criadas, editem seus dados e excluam sua conta. (Responsável pelo CRUD do usuário: [Rodrigo](https://github.com/jujubssss))
 2. (Legado Refatorado) **Visualização de Livros e Resenhas (RF-02):** O sistema deve permitir a visualização de livros registrados e de resenhas de outros usuários sem ter uma conta.
-3. (Legado Refatorado) **Obrigatoriedade de Cadastro para Avaliar Livros (RF-03):** O sistema não permite que o usuário crie uma resenha, avalie um livro e curta outras resenhas sem ter uma conta.
-4. (Legado) **Login e Autenticação de Usuários (RF-04):** O sistema deve permitir que os usuários façam login utilizando suas credenciais.
-5. (Legado Refatorado) **Cadastro, Edição e Remoção de Resenhas (RF-05):** O sistema deve permitir que usuários cadastrados criem, editem ou removam suas próprias resenhas dos livros registrados. (Responsável: José)
-6. (Legado-refatorado)**Classificação dos livros (RF-06):** O sistema deve permitir que usuários cadastrados avaliem o livro na resenha de 1 a 5 estrelas.
-7. (Legado-refatorado)**Curtida nas Resenhas** (RF-07): **O sistema deve permitir que usuários cadastrados possam "curtir" as resenhas de outros usuários cadastrados.
-8. (Legado-refatorado)**Pesquisa de Livros (RF-08):** O sistema deve permitir a filtragem de livros por gênero, autor, editora, data de lançamento e título. (Responsável: Cassiano)
-9. (Legado)**Visualização de Detalhes (RF-09):** O sistema deve permitir a visualização de detalhes completos de um livro selecionado. (Responsável: Arthur)
-10. **Criação de Lista de Livros (RF-10):** O sistema deve permitir que usuários cadastrados criem, atualizem ou removam suas próprias listas de livros com um título e descrição personalizadas. (Responsável: Jaime)
-11. (Legado-refatorado)**Edição e Exclusão de Conta (RF-11):** O sistema deve permitir que usuários editem os dados do perfil e excluam suas contas, se desejarem. (Responsável: Rodrigo)
+3. (Legado Refatorado) **Obrigatoriedade de Cadastro para Avaliar Livros (RF-03):** O sistema NÃO permite que o usuário crie uma resenha, avalie um livro, registre um livro por ISBN e curta outras resenhas sem ter uma conta.
+4. (Legado Refatorado) **Cadastro, Edição e Remoção de Resenhas (RF-04):** O sistema deve permitir que usuários cadastrados criem, editem ou removam suas próprias resenhas dos livros registrados. (Responsável pelo CRUD das resenhas: [José](https://github.com/Jouusey))
+5. (Legado-refatorado)**Notas dos livros (RF-05):** O sistema deve permitir que usuários cadastrados avaliem o livro na resenha de 1 a 5 estrelas.
+6. (Legado-refatorado)**Curtida nas Resenhas** (RF-06): **O sistema deve permitir que usuários cadastrados possam curtir as resenhas de outros usuários cadastrados.
+7. (Legado-refatorado)**Pesquisa de Livros (RF-07):** O sistema deve permitir a filtragem de livros por gênero, autor, editora, data de lançamento e título.
+8. **ISBN para Cadastrar Livros (RF-08):** O sistema deve permitir que o usuário possa cadastrar livros utilizando o ISBN caso o livro não exista no banco de dados (Responsável pelo registro do ISBN no banco de dados: [Cassiano](https://github.com/cassianobigodudo))
+9. **Criação de Lista de Livros (RF-09):** O sistema deve permitir que usuários cadastrados criem, atualizem ou removam suas próprias listas de livros com um título e descrição personalizadas. (Responsável pelo CRUD das listas personalizadas: [Jaime](https://github.com/jaime-ac))
 
 ## Requisitos Não Funcionais
 
@@ -28,29 +26,43 @@ O trabalho desenvolvido pelo nosso grupo, cujo membros são Arthur Viecili Pinhe
 7. (Legado)**Suporte aos Navegadores (RNF-07):** O sistema será compatível com os navegadores Microsoft Edge, Google Chrome, além de dispositivos móveis.
 8. (Legado)**Moderação (RNF-08):** Todo o conteúdo criado pelos usuários será monitorado e regulado de acordo com as regras estabelecidas, garantindo a segurança do ambiente virtual.
 
-## Protótipos
+## Telas
+
+### Landing Page 
+![Landing Page](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87bd6f68bd36ed15037a4/download/image.png)
 
 ### Página de Cadastro  
-![Protótipo-tela-CADASTRO-0 2](https://github.com/user-attachments/assets/85f21700-5042-45f1-8e7c-9775596c3ee2)
+![Tela de Cadastro](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87ce735b033fc8f4dfa6a/download/image.png)
 
 ### Página de Login  
-![Protótipo-tela-LOGIN-0 2](https://github.com/user-attachments/assets/5b31fb4d-ba0e-4dc0-9508-49406571a3f0)
+![Tela de Login](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87cfeacbb2a7661929ca7/download/image.png)
 
 ### Página Principal
-![Pagina-principal-protótipo](https://github.com/user-attachments/assets/443eb6c7-957f-42dc-a302-6b6c9965b469)
+![Tela Principal](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87d26e7b8242fced3dfdd/download/image.png)
 
-### Página Escrivaninha
-![Pagina-escrivaninha-protótipo](https://github.com/user-attachments/assets/cd6e05ca-fe5b-4914-81e1-4bf31a3b7ca7)
+### Página do Livro
+![Tela do Livro](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87d9c2aea95d9da38558f/download/image.png)
 
-### Página de Resenhas
-## Parte 1
-![Pagina-resenhas-parteUm-protótipo](https://github.com/user-attachments/assets/d0bea091-cab3-427f-b26f-5a1cc08af266)
+### Escrivaninha
 
-## Parte 2
-![Pagina-resenhas-parteDois-protótipo](https://github.com/user-attachments/assets/61a27777-da06-481a-a2aa-12394a088a4e)
+![Tela da Escrivaninha](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87dd90a22ae52a13ecd1e/download/image.png)
 
-### Página da Conta 
-![Pagina-configuraçõesconta-protótipo](https://github.com/user-attachments/assets/bfbcf96b-9baa-4ff9-a732-5167b1c7a20c)
+---
+
+### Protótipos
+
+### Tela de Pesquisa de Livros
+
+![Tela de Pesquisa de Livros](https://trello.com/1/cards/67d85232fe31f9b907a3f18f/attachments/67d85236b30ae4d2613ea692/download/Frame_3.png)
+
+### Tela de Configuração de Usuário
+
+![Tela de Configuracao de Usuario](https://trello.com/1/cards/67d8834dc6b3e2e11e0cc212/attachments/67d88350776c570106c13077/download/Frame_9.png)
+
+### Tela de Listas Personalizadas de Livros
+
+![Tela de Listas Personalizadas de Livros](https://trello.com/1/cards/67d3375d036bf85216b83ad4/attachments/67d337f9866270a6f048612c/download/Livros_da_lista.png)
+
 
 ---
 ## Paleta de cores
@@ -59,4 +71,4 @@ O trabalho desenvolvido pelo nosso grupo, cujo membros são Arthur Viecili Pinhe
 ![image](https://github.com/user-attachments/assets/9405752d-27b6-4a56-be2d-bacaa5008e50)
 
 **Membros do Grupo:**  
-Arthur Viecili Pinheiro da Silva, Cassiano Calazans Coelho Machado, Jaime António Cá, José Vitor de Mattos Pinheiro e Rodrigo Albuquerque da Rocha Junior
+Cassiano Calazans Coelho Machado, Jaime António Cá, José Vitor de Mattos Pinheiro e Rodrigo Albuquerque da Rocha Junior
