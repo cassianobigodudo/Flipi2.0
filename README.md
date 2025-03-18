@@ -32,20 +32,24 @@ O trabalho desenvolvido pelo nosso grupo, cujo membros são Cassiano Calazans Co
 ![image](https://github.com/user-attachments/assets/1132db13-941e-4ab0-bbb7-bdd63e6bdbd9)
 
 ### Página de Cadastro  
-![Tela de Cadastro](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87ce735b033fc8f4dfa6a/download/image.png)
+![image](https://github.com/user-attachments/assets/c956a971-8740-43b9-ae52-42918f3baf29)
+
 
 ### Página de Login  
-![Tela de Login](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87cfeacbb2a7661929ca7/download/image.png)
+![image](https://github.com/user-attachments/assets/22c2823f-e7a7-44f8-af30-92d3e2c40e0a)
+
 
 ### Página Principal
-![Tela Principal](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87d26e7b8242fced3dfdd/download/image.png)
+![image](https://github.com/user-attachments/assets/ad0cc680-ac5d-4967-bf1e-4e0c64680a56)
+
 
 ### Página do Livro
-![Tela do Livro](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87d9c2aea95d9da38558f/download/image.png)
+![image](https://github.com/user-attachments/assets/d6b61577-543b-4acc-85da-7011d0e66070)
+
 
 ### Escrivaninha
+![image](https://github.com/user-attachments/assets/08b08c66-f966-4766-9998-90e54096c9ec)
 
-![Tela da Escrivaninha](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87dd90a22ae52a13ecd1e/download/image.png)
 
 ---
 
@@ -53,15 +57,24 @@ O trabalho desenvolvido pelo nosso grupo, cujo membros são Cassiano Calazans Co
 
 ### Tela de Pesquisa de Livros
 
-![Tela de Pesquisa de Livros](https://trello.com/1/cards/67d85232fe31f9b907a3f18f/attachments/67d85236b30ae4d2613ea692/download/Frame_3.png)
+![image](https://github.com/user-attachments/assets/df3ed783-b502-4e9c-a562-e0c068ccec96)
+
 
 ### Tela de Configuração de Usuário
 
-![Tela de Configuracao de Usuario](https://trello.com/1/cards/67d8834dc6b3e2e11e0cc212/attachments/67d88350776c570106c13077/download/Frame_9.png)
+![image](https://github.com/user-attachments/assets/388babf7-bdb4-4f95-88d7-66ade7a7f9ad)
+
 
 ### Tela de Listas Personalizadas de Livros
 
-![Tela de Listas Personalizadas de Livros](https://trello.com/1/cards/67d3375d036bf85216b83ad4/attachments/67d337f9866270a6f048612c/download/Livros_da_lista.png)
+![image](https://github.com/user-attachments/assets/6dfb747d-d61f-4d7a-b503-b3ef533e7836)
+
+![image](https://github.com/user-attachments/assets/426f96bf-a87b-4cc8-98ab-2bccc360a72b)
+
+![image](https://github.com/user-attachments/assets/99524a80-6339-4ffb-b13d-71e8e5620b60)
+
+
+
 
 
 ---
