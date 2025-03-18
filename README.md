@@ -29,7 +29,7 @@ O trabalho desenvolvido pelo nosso grupo, cujo membros são Cassiano Calazans Co
 ## Telas
 
 ### Landing Page 
-![Landing Page](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87bd6f68bd36ed15037a4/download/image.png)
+![image](https://github.com/user-attachments/assets/1132db13-941e-4ab0-bbb7-bdd63e6bdbd9)
 
 ### Página de Cadastro  
 ![Tela de Cadastro](https://trello.com/1/cards/67d87bd3a21598020db1d3b1/attachments/67d87ce735b033fc8f4dfa6a/download/image.png)
