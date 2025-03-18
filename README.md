@@ -62,7 +62,7 @@ O trabalho desenvolvido pelo nosso grupo, cujo membros são Cassiano Calazans Co
 
 ### Tela de Configuração de Usuário
 
-![image](https://github.com/user-attachments/assets/388babf7-bdb4-4f95-88d7-66ade7a7f9ad)
+![image](https://github.com/user-attachments/assets/ccf0650c-b348-41a4-8b63-28d64ad9c45c)
 
 
 ### Tela de Listas Personalizadas de Livros
