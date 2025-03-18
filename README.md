@@ -9,22 +9,22 @@ O trabalho desenvolvido pelo nosso grupo, cujo membros são Cassiano Calazans Co
 2. (Legado Refatorado) **Visualização de Livros e Resenhas (RF-02):** O sistema deve permitir a visualização de livros registrados e de resenhas de outros usuários sem ter uma conta.
 3. (Legado Refatorado) **Obrigatoriedade de Cadastro para Avaliar Livros (RF-03):** O sistema NÃO permite que o usuário crie uma resenha, avalie um livro, registre um livro por ISBN e curta outras resenhas sem ter uma conta.
 4. (Legado Refatorado) **Cadastro, Edição e Remoção de Resenhas (RF-04):** O sistema deve permitir que usuários cadastrados criem, editem ou removam suas próprias resenhas dos livros registrados. (Responsável pelo CRUD das resenhas: [José](https://github.com/Jouusey))
-5. (Legado-refatorado)**Notas dos livros (RF-05):** O sistema deve permitir que usuários cadastrados avaliem o livro na resenha de 1 a 5 estrelas.
-6. (Legado-refatorado)**Curtida nas Resenhas** (RF-06): **O sistema deve permitir que usuários cadastrados possam curtir as resenhas de outros usuários cadastrados.
-7. (Legado-refatorado)**Pesquisa de Livros (RF-07):** O sistema deve permitir a filtragem de livros por gênero, autor, editora, data de lançamento e título.
+5. (Legado-refatorado) **Notas dos livros (RF-05):** O sistema deve permitir que usuários cadastrados avaliem o livro na resenha de 1 a 5 estrelas.
+6. (Legado-refatorado) **Curtida nas Resenhas** (RF-06): **O sistema deve permitir que usuários cadastrados possam curtir as resenhas de outros usuários cadastrados.
+7. (Legado-refatorado) **Pesquisa de Livros (RF-07):** O sistema deve permitir a filtragem de livros por gênero, autor, editora, data de lançamento e título.
 8. **ISBN para Cadastrar Livros (RF-08):** O sistema deve permitir que o usuário possa cadastrar livros utilizando o ISBN caso o livro não exista no banco de dados (Responsável pelo registro do ISBN no banco de dados: [Cassiano](https://github.com/cassianobigodudo))
 9. **Criação de Lista de Livros (RF-09):** O sistema deve permitir que usuários cadastrados criem, atualizem ou removam suas próprias listas de livros com um título e descrição personalizadas. (Responsável pelo CRUD das listas personalizadas: [Jaime](https://github.com/jaime-ac))
 
 ## Requisitos Não Funcionais
 
-1. (Legado)**Desempenho (RNF-01):** O sistema deve processar rapidamente as requisições de registro e consulta de livros, garantindo tempos de resposta inferiores a 3 segundos para a maioria das operações, mesmo com um grande volume de usuários.
-2. (Legado)**Usabilidade (RNF-02):** O sistema deve disponibilizar uma interface intuitiva, amigável e de fácil navegação, com design responsivo, garantindo uma boa experiência tanto em dispositivos móveis quanto em desktops.
-3. (Legado)**Escalabilidade (RNF-03):** O sistema deve ser capaz de suportar um aumento significativo no número de usuários e registros de livros, sem comprometer o desempenho.
-4. (Legado)**Segurança (RNF-04):** O sistema deve proteger os dados dos usuários e as informações dos livros, garantindo a segurança das contas e a proteção contra ataques.
-5. (Legado)**Atualização de Dados (RNF-05):** As informações devem ser atualizadas imediatamente após qualquer recomendação feita pelos usuários no site.
-6. (Legado)**Restrição de Direitos Autorais (RNF-06):** O sistema não armazenará nem disponibilizará conteúdo ilegal que viole direitos autorais. Serão disponibilizados apenas links de referência confiáveis.
-7. (Legado)**Suporte aos Navegadores (RNF-07):** O sistema será compatível com os navegadores Microsoft Edge, Google Chrome, além de dispositivos móveis.
-8. (Legado)**Moderação (RNF-08):** Todo o conteúdo criado pelos usuários será monitorado e regulado de acordo com as regras estabelecidas, garantindo a segurança do ambiente virtual.
+1. (Legado) **Desempenho (RNF-01):** O sistema deve processar rapidamente as requisições de registro e consulta de livros, garantindo tempos de resposta inferiores a 3 segundos para a maioria das operações, mesmo com um grande volume de usuários.
+2. (Legado) **Usabilidade (RNF-02):** O sistema deve disponibilizar uma interface intuitiva, amigável e de fácil navegação, com design responsivo, garantindo uma boa experiência tanto em dispositivos móveis quanto em desktops.
+3. (Legado) **Escalabilidade (RNF-03):** O sistema deve ser capaz de suportar um aumento significativo no número de usuários e registros de livros, sem comprometer o desempenho.
+4. (Legado) **Segurança (RNF-04):** O sistema deve proteger os dados dos usuários e as informações dos livros, garantindo a segurança das contas e a proteção contra ataques.
+5. (Legado) **Atualização de Dados (RNF-05):** As informações devem ser atualizadas imediatamente após qualquer recomendação feita pelos usuários no site.
+6. (Legado) **Restrição de Direitos Autorais (RNF-06):** O sistema não armazenará nem disponibilizará conteúdo ilegal que viole direitos autorais. Serão disponibilizados apenas links de referência confiáveis.
+7. (Legado) **Suporte aos Navegadores (RNF-07):** O sistema será compatível com os navegadores Microsoft Edge, Google Chrome, além de dispositivos móveis.
+8. (Legado) **Moderação (RNF-08):** Todo o conteúdo criado pelos usuários será monitorado e regulado de acordo com as regras estabelecidas, garantindo a segurança do ambiente virtual.
 
 ## Telas
 
