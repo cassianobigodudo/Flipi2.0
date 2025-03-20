@@ -47,13 +47,18 @@ O trabalho desenvolvido pelo nosso grupo, cujo membros são Cassiano Calazans Co
 ![image](https://github.com/user-attachments/assets/d6b61577-543b-4acc-85da-7011d0e66070)
 
 
-### Escrivaninha
+## Tela de Resenhas
 ![image](https://github.com/user-attachments/assets/08b08c66-f966-4766-9998-90e54096c9ec)
 
 
 ---
 
 ### Protótipos
+
+## Tela de Resenhas
+
+![image](https://github.com/user-attachments/assets/b8109b93-5435-46dd-92a8-4e8227f6f5a4)
+
 
 ### Tela de Pesquisa de Livros
 
