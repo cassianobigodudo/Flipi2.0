@@ -67,6 +67,9 @@ O trabalho desenvolvido pelo nosso grupo, cujo membros são Cassiano Calazans Co
 
 ### Tela de Configuração de Usuário
 
+![image](https://github.com/user-attachments/assets/1f023b63-6810-4e7a-b4b9-77c3ed32b1a7)
+
+
 ![image](https://github.com/user-attachments/assets/ccf0650c-b348-41a4-8b63-28d64ad9c45c)
 
 
