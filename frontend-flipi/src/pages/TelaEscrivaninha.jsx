@@ -11,15 +11,15 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 function TelaEscrivaninha() {
 
-  useEffect (() => {
+  // useEffect (() => {
 
-    if(usuarioLogado == false){
+  //   if(usuarioLogado == false){
 
-      alert('Não há usuário logado, por favor, cadastre-se ou entre na sua conta.')
-      navigate('/')
-    }
+  //     alert('Não há usuário logado, por favor, cadastre-se ou entre na sua conta.')
+  //     navigate('/')
+  //   }
 
-  }, [])
+  // }, [])
   
   
   
@@ -90,118 +90,46 @@ function TelaEscrivaninha() {
 
     <div className="escrivaninha-mesa">
 
-      <div className="escrivaninha-documento">
-                  
-           <div className="documento-folha">
-    
-              <div className="folha-topo">
 
-                <button className='folha-topo-btn'>
-                  <img className='img-lixo-escrivaninha' src="public\images\output-onlinepngtools.png" alt="" /> 
-                </button>
-              
-                <input maxLength={18} className='inpt-tituloResenha' placeholder='TITULO' type="text" />
+      <div className="escrivaninha-navbarVertical">
+        <NavbarVertical />
+      </div>
 
+      <div className="escrivaninha-resenha-container">
 
-              </div>
-              
-              <div className="folha-conteudo">
-
-                <textarea placeholder='Começe sua resenha aqui...' maxLength={800} className='inpt-resenha' name="resenha" id="" cols="10" rows="10" 
-                value={resenha}
-                onChange={(event) => setResenha(event.target.value)}
-                ></textarea>
-
-              
-              </div>
-
-              <div className="folha-desfecho">
-
-                <label className='lbl-desfecho' htmlFor="">Preview</label>
-
-              </div>
-
-            </div>
-        </div>
-
-        <div className="escrivaninha-container-generoIsbn">
-
-          <div className="container-generoIsnb">
-
-            <div className="generoIsbn-topo"></div>
-
-            <div className="container-informacoesLivro">
-
-
-            <div className="informacoesLivro-esquerda">
-
-                <div className="informacoesLivro-esquerda-capa">
-                <img className='livro-escrivaninha' src={livroAcessado.capaLivro} alt="" />
-                
-                </div>
-
-                <label className='lbl-DadosLivro'>Autor:  {livroAcessado.autorLivro}</label>
-                <label className='lbl-DadosLivro'>Editora:  {livroAcessado.editoraLivro}</label>
-                <label className='lbl-DadosLivro'>Ano:  {livroAcessado.anoLivro}</label>  
-
-            </div>
-
-            <div className="informacoesLivro-direita">
-
-              <div className="informacoesLivro-direita-tituloSinopse">
-
-                  <div className="meio-sinopse">
-
-                    <label className='lbl-generos' htmlFor="">{livroAcessado.tituloLivro}</label>
-
-                  <textarea className='sinopse-textArea' value={livroAcessado.sinopseLivro} name="" id="" cols="30" rows="10" readOnly></textarea>
-          
-                  </div>                   
-
-              </div>
-
-              <div className="informacoesLivro-direita-generos">
-                <label className='lbl-generos' htmlFor="">Generos</label>
-          
-                {livroAcessado && livroAcessado.generoLivro.length > 0 ? (
-                  livroAcessado.generoLivro.map((genero, indice) => (
-                    <div key={indice} className="btn-generos">#{genero}</div>
-                      ))
-                      ) : (
-                    <div className="btn-generos">#SemGênero</div>
-                )}
-                
-              </div>
-
-            </div>
-
-            </div>
-
-            <div className="generoIsbn-desfecho">
-
-              <label className='desfecho-lbl' htmlFor="">Nota do livro: </label>
-
-              <div className="estrelas-div">
-
-                <EstrelasBtn />
-
-              </div>
-        
-              <button className='btn-escrivaninha' onClick={cadastrarResenha}>CADASTRAR → </button>
-
-            </div>
-
-          </div>    
+        <div className="resenha-container-textBlock">
+      
+         <input maxLength={40} className='inpt-tituloResenha' placeholder='TITULO...' type="text" />
+         <textarea placeholder='Começe sua resenha aqui...' maxLength={1600} className='inpt-resenha' name="resenha" id="" cols="10" rows="10" 
+          value={resenha}
+          onChange={(event) => setResenha(event.target.value)}
+         ></textarea>
 
         </div>
 
-        <div className="escrivaninha-navbarVertical">
+      </div>
 
-          <NavbarVertical />
+      <div className="escrivaninha-info-container">
+        <div className="info-container-isbn">
+
+          <label htmlFor="">ISBN</label>
+          <input type="text" placeholder='Código ISBN aqui...' />
+        </div>
+
+        <div className="info-container-livroContainer">
+
+
+          <div className="livroContainer-capa"></div>
+          <div className="livroContainer-desc"></div>
+
 
         </div>
+        <div className="livroContainer-tags"></div>
+
+      </div>
 
     </div>
+
 
   </div>    
 

@@ -7,9 +7,6 @@
     align-items: center;
 
 }
-
-
-
 .escrivaninha-mesa{
 
     display: flex;
@@ -18,89 +15,65 @@
     width: 100%;
     
     background-color: var(--fundoDivs);
-    background-image: url('./images/3 Sem Título_20241101231159.png');
+    background-image: url('./public/images/Group 1 (1).png');
     
+        background-size: 100%;
         border-radius: 3px;
         border-top: 0px;
         border-left: 0px;
         border-right: 0px;
-        border-bottom: 20px;
         border-style: solid;
         border-color: #8c5d47;
 }
 
-.escrivaninha-documento{
+.escrivaninha-navbarVertical{
 
     display: flex;
-    position: relative;
+    background-color: rgb(249, 238, 222);
     height: 100%;
-    width: 41%;
-    justify-content: center;
-    align-items: center;
+    width: 5%;
+    flex-direction: column;
+  
 }
 
-.documento-folha{
-    
-    margin-left: 3%;
-    height: 90%;
-    width: 95%;
-    background-color: var(--corfundo);
-    border-radius: 2px;
-    border-style: solid;
-    border-width: 5px;
-    border-top: 0px;
-    border-left: 0px;
-    border-bottom: 0px;
-    border-color: rgb(201, 176, 151);
-    box-shadow: 0px 5px 15px rgb(150, 101, 67);
-
+.escrivaninha-resenha-container{
+display: flex;
+height: 100%;
+width: 45%;
+justify-content: center;
+align-items: center;
 }
 
-.folha-topo{
+.resenha-container-textBlock{
     display: flex;
-    height: 10%;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    height: 80%;
+    width: 75%;
+    background-color: rgb(255, 243, 225);
+    margin-bottom: 10%;
+    box-shadow: 0px 0px 2px  rgb(255, 243, 225);
 }
-
-.folha-topo-btn{
-    margin-top: 2.5%;
-    height: 70%;
-    width: 10%;
-    margin-right: 5%;
-    cursor: pointer;
-    border: none;
-}
-
-
-.img-lixo-escrivaninha{
-    height: 90%;
-}
-
 .inpt-tituloResenha{
 
     display: flex;
     
-    margin-right: 14%;
     margin-top: 2%;
-    font-size: 40px;
+    width: 100%;
+    font-size: 27px;
     font-family: "fonte-projeto";
+    color: rgb(89, 68, 52);
     font-weight: 900;
     text-align: center;
     border: none;
     background: none;
 
 }
+
 .inpt-tituloResenha:focus{
 
     outline-width: 0px;
-}
-
-
-
-.folha-conteudo{
-    height: 85%;
-    
 }
 
 .inpt-resenha{
@@ -108,9 +81,11 @@
     
     resize: none;
     font-weight: 400;
-    font-size: 28px;
+    font-size: 20px;
     font-family: "fonte-projeto";
-    padding: 20px;
+    padding-left: 20px;
+    color: rgb(89, 68, 52);
+    padding-right: 20px;
     text-align: start;
     font-weight: 500;
     height: 100%;
@@ -124,268 +99,47 @@
     outline-width: 0px;
 }
 
-
-.folha-desfecho{
-    
+.escrivaninha-info-container{
     display: flex;
-    height: 5%;
-    justify-content: center;
     align-items: center;
-}
-
-.lbl-desfecho{
-    
-    font-family: "fonte-projeto";
-    font-size: 26px;
-    margin-bottom: 2%;
-    color: rgb(107, 78, 58);
-    font-style: italic;
-}
-
-
-.escrivaninha-container-generoIsbn{
-
-    display: flex;
-
-    
-    justify-content: center;
-    align-items: center;
-
+    flex-direction: column;
     height: 100%;
-    width: 60%;
-
-
+    width: 58%;
 }
 
-
-.container-generoIsnb{
-
-    height: 95%;
-    width: 90%;
-    border-radius: 5px;
-    
-    
-}
-
-
-.generoIsbn-topo{
-    
-    margin-top: 7%;
-    height: 10%;
+.info-container-isbn{  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 14%;
     width: 100%;
-    border-radius: 3px;
-    
-    background-color: rgb(244, 216, 181);
-
-
+    background-color: #c89a85;
 }
 
-.container-informacoesLivro{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 2.5%;
-    height: 65%;
-    width: 95%;
-    
-    
-    background-color: var(--corfundo);
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    
-    box-shadow: 0px 5px 15px rgb(150, 101, 67);
-    
-}
-.informacoesLivro-esquerda{
-    display: flex;
-    flex-direction: column;
-    height: 90%;
-    width: 28%;
-    font-family: "fonte-projeto";
-    margin-top: 10%;
-    margin-left: 3%;
-    font-size: 25px;
-    gap: 5px;
-}
-
-.informacoesLivro-esquerda-capa{
-    /* background: linear-gradient(rgb(194, 144, 116), rgb(116, 74, 54)); */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 65%;
-    width: 95%;
-}
-
-.livro-escrivaninha{
-
-    width: 140px
-
-}
-.meio-sinopse{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    margin-bottom: 5%;
-}
-
-
-.informacoesLivro-direita{
-    display: flex;
-    height: 90%;
-    width: 68%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    font-family: "fonte-projeto";
-    font-size: 30px;
-}
-
-.informacoesLivro-direita-tituloSinopse{
-    width: 55%;
-    height: 100%;
-}
-
-
-.informacoesLivro-direita-generos{
-    display: flex;
-    flex-direction: column;
-    width: 45%;
-    height: 100%;
-}
-
-
-.lbl-generos{
-    font-size: 34px;
-    color: var(--laranjaenferrujado);
-    margin-left: 60px;
-}
-
-.btn-generos{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin-left: 15%;
-    margin-top: 10%;
-    height: 16%;
-    width: 70%;
-    background-color: var(--laranjaenferrujado);
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 20px;
-    font-family: "fonte-projeto";
-
-    color: var(--navbar);
-    
-    box-shadow: 0px 2px 15px rgb(150, 101, 67);
-}
-
-.sinopse-textArea{
-    
-    font-size: 20px;
-    font-family: "fonte-projeto";
-    font-style: italic;
-    height: 100%;
-    width: 100%;
-    resize: none;
-    border: none;
-
-}
-
-
-.sinopse-textArea:focus{
-
-    outline-width: 0px;
-}
-
-
-
-.generoIsbn-desfecho{
-    display: flex;
-    height: 13%;
-    width: 105%;
-    
-    justify-content: center;
-    align-items: center;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-
-}
-
-.desfecho-lbl{
-
-    height: 7%;
-    width: 20%;
-    font-size: 33px;
-    font-family: "fonte-projeto";
-    font-weight: 500;
-    color: var(--navbar);
-    margin-bottom: 3.5%;
-}
-
-.generoIsbn-desfecho-btn{
-
-    margin-left: 2%;
-    margin-top: 5%;
-    height: 48%;
-    width: 6%;
-    background-color: var(--laranjaenferrujado);
-    border-radius: 10px;
-    border: none;
-    text-align: center;
-    font-size: 30px;
-    font-family: "fonte-projeto";
-    cursor: pointer;
-    box-shadow: 0px 2px 15px rgb(150, 101, 67);
-
-
-}
-
-.estrelas-div{
-
-    width: 30%;
+.info-container-livroContainer{  
     display: flex;
     flex-direction: row;
-}
-
-.btn-desfecho-img{
-
-    height: 99%;
+    height: 33%;
     width: 100%;
+    background-color: #d35d26;
 }
 
-.btn-escrivaninha{
-
-    margin-left: 7%;
-    margin-top: 8%;
-    height: 60%;
-    width: 26%;
-    background-color: var(--laranjaenferrujado);
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 36px;
-    font-family: "fonte-projeto";
-    rotate: 10deg;
-    cursor: pointer;
-
-    color: var(--navbar);
-    
-    box-shadow: 0px 2px 15px rgb(150, 101, 67);
-}
-
-.escrivaninha-navbarVertical{
-
-    display: flex;
+.livroContainer-capa{
     height: 100%;
-    width: 6%;
-    flex-direction: column;
-  
+    width: 25%;
+    margin-left: 28px;
+    background-color: #c1cc9f;
 }
 
+.livroContainer-desc{
 
-.lbl-DadosLivro{
-    font-size: 17px;
+        height: 100%;
+        width: 67%;
+        background-color: #8ba049;
+}
+
+.livroContainer-tags{
+    height: 17%;
+    width: 100%;
+    background-color: #a0a982;
 }
