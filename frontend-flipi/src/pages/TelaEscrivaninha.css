@@ -5,6 +5,7 @@
     height: 100vh;
     justify-content: center;
     align-items: center;
+    font-family: "fonte-projeto";
 
 }
 .escrivaninha-mesa{
@@ -107,21 +108,22 @@ align-items: center;
     width: 58%;
 }
 .Infor-container-isbnlbl{
-    margin-top: 5%;
+    margin-top: 2%;
     font-family: "fonte-projeto";
     text-align: center;
-    color: rgb(191, 82, 36);
-    width: 12%;
+    color: rgb(199, 71, 16);
+    width: 13%;
     height: 34%;
     font-size: 23px;
-    letter-spacing: 3px;
+    letter-spacing: 5px;
     background-color: #fef4e9;
     border-radius: 3px;
 }
 
 .infor-container-isbnInpt{ 
+    margin-top: 2%;
     font-family: "fonte-projeto";
-    margin-left: 10px;
+    margin-left: 6px;
     text-align: center;
     color: rgb(191, 82, 36);
     width: 32%;
@@ -187,9 +189,51 @@ align-items: center;
 }
 
 .livroContainer-tags{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
     height: 14%;
     width: 100%;
     background-color: #a0a982;
+}
+
+.tags-btnAutor{
+    margin-left: 2.5%;
+    height: 60%; 
+    width: 30%;
+    letter-spacing: 4px;
+    font-family: "fonte-projeto";
+    font-size: 22px;
+    color: #f9f3e5;
+    background-color: #d35d26;
+    border: none;
+    border-radius: 2px;
+}
+
+.tags-btnEditora{
+    margin-left: 2.5%;
+    height: 60%; 
+    width: 30%;
+    letter-spacing: 4px;
+    font-family: "fonte-projeto";
+    font-size: 22px;
+    color: #f9f3e5;
+    background-color: #d35d26;
+    border: none;
+    border-radius: 2px;
+}
+.tags-btnData{
+    margin-left: 2.5%;
+    height: 60%; 
+    width: 30%;
+    letter-spacing: 4px;
+    font-family: "fonte-projeto";
+    font-size: 22px;
+    color: #f9f3e5;
+    background-color: #d35d26;
+    border: none;
+    border-radius: 2px;
 }
 
 .livroContainer-nota{

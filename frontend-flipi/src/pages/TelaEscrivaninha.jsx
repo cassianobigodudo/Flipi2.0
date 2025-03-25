@@ -128,9 +128,9 @@ function TelaEscrivaninha() {
 
         </div>
         <div className="livroContainer-tags">
-          <button>Autor</button>
-          <button>EDITORA</button>
-          <button>DATA</button>
+          <button className='tags-btnAutor' >Autor-João Gomez</button>
+          <button className='tags-btnEditora'>Editora-Linuxs</button>
+          <button className='tags-btnData'>Data-01/021985</button>
         </div>
         <div className="livroContainer-nota">
 
