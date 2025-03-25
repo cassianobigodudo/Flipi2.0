@@ -143,7 +143,7 @@ function TelaUsuarioConfigs() {
     alert('Até mais!')
     setUsuarioLogado(false)
     setPosicaoUsuarioID(null)
-    navigate('/landingpage')
+    navigate('/')
 
   }
 
