@@ -112,19 +112,39 @@ function TelaEscrivaninha() {
       <div className="escrivaninha-info-container">
         <div className="info-container-isbn">
 
-          <label htmlFor="">ISBN</label>
-          <input type="text" placeholder='Código ISBN aqui...' />
+          <label className='Infor-container-isbnlbl' htmlFor="">ISBN</label>
+          <input className='infor-container-isbnInpt' minLength={10} maxLength={13} type="number" placeholder='Código ISBN aqui...' />
         </div>
 
         <div className="info-container-livroContainer">
 
-
           <div className="livroContainer-capa"></div>
-          <div className="livroContainer-desc"></div>
+
+          <div className="livroContainer-desc">
+            <div className="desc-livroTitulo"></div>
+            <div className="desc-livroDesc"></div>
+          </div>
 
 
         </div>
-        <div className="livroContainer-tags"></div>
+        <div className="livroContainer-tags">
+          <button>Autor</button>
+          <button>EDITORA</button>
+          <button>DATA</button>
+        </div>
+        <div className="livroContainer-nota">
+
+          <div className="nota-labelEspaco"></div>
+          
+          <div className="estrelas-div">
+
+          <EstrelasBtn />
+
+        </div>
+        </div>
+        <div className="livroContainer-enviar">
+          <button>ENVIAR</button>
+        </div>
 
       </div>
 

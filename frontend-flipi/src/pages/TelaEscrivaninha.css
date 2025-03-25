@@ -68,7 +68,7 @@ align-items: center;
     text-align: center;
     border: none;
     background: none;
-
+    
 }
 
 .inpt-tituloResenha:focus{
@@ -106,6 +106,39 @@ align-items: center;
     height: 100%;
     width: 58%;
 }
+.Infor-container-isbnlbl{
+    margin-top: 5%;
+    font-family: "fonte-projeto";
+    text-align: center;
+    color: rgb(191, 82, 36);
+    width: 12%;
+    height: 34%;
+    font-size: 23px;
+    letter-spacing: 3px;
+    background-color: #fef4e9;
+    border-radius: 3px;
+}
+
+.infor-container-isbnInpt{ 
+    font-family: "fonte-projeto";
+    margin-left: 10px;
+    text-align: center;
+    color: rgb(191, 82, 36);
+    width: 32%;
+    height: 36%;
+    font-size: 20px;
+    letter-spacing: 3px;
+    background-color: #f9f3e5;
+    border: none;
+    border-radius: 13px;
+
+
+}
+
+.infor-container-isbnInpt:focus{
+    outline-width: 0;
+}
+
 
 .info-container-isbn{  
     display: flex;
@@ -127,19 +160,61 @@ align-items: center;
 .livroContainer-capa{
     height: 100%;
     width: 25%;
-    margin-left: 28px;
+    margin-left: 4%;
+    background-image: url('./public/images/ilha.jpg');
+    background-size: 100%;
     background-color: #c1cc9f;
 }
 
 .livroContainer-desc{
-
+    display: flex;
+    flex-direction: column;
+    
         height: 100%;
         width: 67%;
         background-color: #8ba049;
 }
 
+.desc-livroTitulo{
+    height: 30%;
+    width: 100%;
+    background-color: #a08349;
+}
+.desc-livroDesc{
+    height: 70%;
+    width: 100%;
+    background-color: #886620;
+}
+
 .livroContainer-tags{
-    height: 17%;
+    height: 14%;
     width: 100%;
     background-color: #a0a982;
+}
+
+.livroContainer-nota{
+    display: flex;
+    flex-direction: row;
+    height: 14%;
+    width: 100%;
+    background-color: #636e3d;
+}
+.nota-labelEspaco{
+    width: 50%;
+    display: flex;
+    background-color: rgb(202, 125, 86);
+}
+
+.estrelas-div{
+
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    background-color: #ffffff;
+}
+
+.livroContainer-enviar{
+    height: 25%;
+    width: 100%;
+    background-color: #6cb47f;
 }
