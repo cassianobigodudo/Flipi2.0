@@ -108,7 +108,7 @@ align-items: center;
     width: 58%;
 }
 .Infor-container-isbnlbl{
-    margin-top: 3%;
+    margin-top: 2%;
     font-family: "fonte-projeto";
     text-align: center;
     color: rgb(188, 90, 48);
@@ -121,7 +121,7 @@ align-items: center;
 }
 
 .infor-container-isbnInpt{ 
-    margin-top: 3%;
+    margin-top: 2%;
     font-family: "fonte-projeto";
     margin-left: 6px;
     text-align: center;
@@ -146,7 +146,7 @@ align-items: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 14%;
+    height: 11%;
     width: 100%;
     background-color: #c89a85;
 }
@@ -211,7 +211,8 @@ align-items: center;
     align-items: center;
     flex-direction: row;
     height: 14%;
-    width: 100%;
+    margin-right: 4.2%;
+    width: 96%;
     background-color: #a0a982;
 }
 
@@ -257,6 +258,7 @@ align-items: center;
     flex-direction: row;
     height: 12%;
     width: 100%;
+    margin: 3%;
     background-color: #636e3d;
 }
 .nota-labelEspaco{
@@ -274,7 +276,7 @@ align-items: center;
 }
 
 .livroContainer-enviar{
-    height: 12.8%;
+    height: 11.8%;
     display: flex;
     justify-content: center;
     align-items: center;
