@@ -136,7 +136,11 @@ function TelaEscrivaninha() {
         </div>
         <div className="livroContainer-nota">
 
-          <div className="nota-labelEspaco"></div>
+          <div className="nota-labelEspaco">
+
+
+          <button className='livroContainer-btnEnviar' >ENVIAR RESENHA</button>
+          </div>
           
           <div className="estrelas-div">
 
