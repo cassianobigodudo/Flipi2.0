@@ -17,7 +17,7 @@
     
     background-color: var(--fundoDivs);
     background-image: url('./public/images/Group 1 (1).png');
-    
+
         background-size: 100%;
         border-radius: 3px;
         border-top: 0px;
@@ -108,10 +108,10 @@ align-items: center;
     width: 58%;
 }
 .Infor-container-isbnlbl{
-    margin-top: 2%;
+    margin-top: 3%;
     font-family: "fonte-projeto";
     text-align: center;
-    color: rgb(199, 71, 16);
+    color: rgb(188, 90, 48);
     width: 13%;
     height: 34%;
     font-size: 23px;
@@ -121,7 +121,7 @@ align-items: center;
 }
 
 .infor-container-isbnInpt{ 
-    margin-top: 2%;
+    margin-top: 3%;
     font-family: "fonte-projeto";
     margin-left: 6px;
     text-align: center;
@@ -160,10 +160,15 @@ align-items: center;
 }
 
 .livroContainer-capa{
-    height: 100%;
-    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 11px;
+    height: 95%;
+    width: 20%;
     margin-left: 4%;
     background-image: url('./public/images/ilha.jpg');
+    background-repeat: no-repeat;
     background-size: 100%;
     background-color: #c1cc9f;
 }
@@ -173,18 +178,30 @@ align-items: center;
     flex-direction: column;
     
         height: 100%;
-        width: 67%;
+        width: 72%;
         background-color: #8ba049;
 }
 
 .desc-livroTitulo{
     height: 30%;
-    width: 100%;
-    background-color: #a08349;
+    margin-top: 11px;
+    display: flex;
+    justify-content: start;
+    width: 75%;
+    margin-left: 5%;
+    background-color: #d35d26;
+}
+.livroTituloLbl{
+    margin-top: 1%;
+    margin-left: 2%;
+    font-size: 40px;
+    letter-spacing: 5px;
+    color: antiquewhite;
 }
 .desc-livroDesc{
     height: 70%;
-    width: 100%;
+    width: 95%;
+    margin-left: 5%;
     background-color: #886620;
 }
 
@@ -199,7 +216,6 @@ align-items: center;
 }
 
 .tags-btnAutor{
-    margin-left: 2.5%;
     height: 60%; 
     width: 30%;
     letter-spacing: 4px;
@@ -239,7 +255,7 @@ align-items: center;
 .livroContainer-nota{
     display: flex;
     flex-direction: row;
-    height: 14%;
+    height: 12%;
     width: 100%;
     background-color: #636e3d;
 }
@@ -254,11 +270,26 @@ align-items: center;
     width: 50%;
     display: flex;
     flex-direction: row;
-    background-color: #ffffff;
+    background-color: #947878;
 }
 
 .livroContainer-enviar{
-    height: 25%;
+    height: 12.8%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     background-color: #6cb47f;
+}
+
+.livroContainer-btnEnviar{
+    height: 67%;
+    width: 60%;
+    font-family: "fonte-projeto";
+    font-size: 40px;
+    letter-spacing: 2px;
+    border: none;
+    border-radius: 4px;
+    color: #fef4e9;
+    background-color: #d35d26;
 }

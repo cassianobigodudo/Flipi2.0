@@ -121,7 +121,9 @@ function TelaEscrivaninha() {
           <div className="livroContainer-capa"></div>
 
           <div className="livroContainer-desc">
-            <div className="desc-livroTitulo"></div>
+            <div className="desc-livroTitulo"> 
+              <label className='livroTituloLbl' htmlFor="">Titulo do livro</label>
+            </div>
             <div className="desc-livroDesc"></div>
           </div>
 
@@ -143,7 +145,7 @@ function TelaEscrivaninha() {
         </div>
         </div>
         <div className="livroContainer-enviar">
-          <button>ENVIAR</button>
+          <button className='livroContainer-btnEnviar' >ENVIAR RESENHA</button>
         </div>
 
       </div>
