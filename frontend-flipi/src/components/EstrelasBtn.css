@@ -9,16 +9,13 @@
 
 .generoIsbn-desfecho-btn{
 
-    margin: 1%;
-    margin-top: 5%;
-    height: 55%;
+    height: 100%;
     width: 100%;
     border-radius: 10px;
     border: none;
     text-align: center;
     font-size: 30px;
     font-family: "fonte-projeto";
-    cursor: pointer;
 
 
 }
@@ -27,6 +24,8 @@
 .btn-desfecho-img{
 
     margin-top: 4%;
-    height: 90%;
+    cursor: pointer;
+    height: 100%;
     width: 80%;
+
 }

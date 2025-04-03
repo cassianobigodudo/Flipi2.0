@@ -19,8 +19,7 @@
 
 ::-webkit-scrollbar{
 
-  width: 13px;
-  
+  width: 11px;
   transition: 1s;
 }
 
@@ -29,8 +28,7 @@
 
   border-radius: 2px;
   
-  
-  background-color: var(--laranjaenferrujado);
+  background-color: #c78066;
 }
 
 

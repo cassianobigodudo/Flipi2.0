@@ -122,29 +122,50 @@ function TelaEscrivaninha() {
 
           <div className="livroContainer-desc">
             <div className="desc-livroTitulo"> 
-              <label className='livroTituloLbl' htmlFor="">Titulo do livro</label>
+              <label className='livroTituloLbl' htmlFor="">A ILHA</label>
             </div>
-            <div className="desc-livroDesc"></div>
+            <div className="desc-livroDesc">
+
+      <textarea readOnly className='livroDesc-textArea' name="" id="">"A Ilha é um romance intrigante que mistura suspense, 
+        drama e reflexões profundas sobre a natureza humana,
+         a solidão e os segredos que nos assombram. 
+         a narrativa transporta o leitor para um ambiente isolado e misterioso, 
+         onde os personagens são confrontados não apenas com as forças da natureza, 
+         mas também com um gato lá, e assim como foi escrito naquele livro anterior lá, 
+         é revelado que ná verdade a ilha é uma cidade secreta em baixo da agua que antes era habitada
+          por leõasda que antes eram capazes sfe aleerem as e abanquet aé um o´´toeitmo 
+          jgog qur realmente te faz poensar nesse pontopara um ambiente isolado e misterioso, 
+         onde os personagens são confrontados não apenas com as forças da natureza, 
+         mas também com um gato lá, e assim como foipara um ambiente isolado e misterioso, 
+         onde os personagens são confrontados não apenas com as forças da natureza, 
+         mas também com um gato lá, e assim como foi"
+      </textarea>
+
+            </div>
           </div>
 
 
         </div>
         <div className="livroContainer-tags">
-          <button className='tags-btnAutor' >Autor-João Gomez</button>
-          <button className='tags-btnEditora'>Editora-Linuxs</button>
-          <button className='tags-btnData'>Data-01/021985</button>
+          <button className='tags-btnAutor' >Autor-Adrian McKinty</button>
+          <button className='tags-btnEditora'>Editora-Linuxs Zaus</button>
+          <button className='tags-btnData'>Data-01/021985 </button>
         </div>
         <div className="livroContainer-nota">
 
           <div className="nota-labelEspaco">
 
+          <label className='livroContainer-labelNota' htmlFor="">Qual nota daria a esse livro?</label>
 
-          <button className='livroContainer-btnEnviar' >ENVIAR RESENHA</button>
           </div>
           
           <div className="estrelas-div">
 
+          <div className="estrelas-buttons">
+            
           <EstrelasBtn />
+
+          </div>
 
         </div>
         </div>
