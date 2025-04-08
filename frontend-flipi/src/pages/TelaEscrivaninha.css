@@ -114,13 +114,13 @@ align-items: center;
 }
 .Infor-container-isbnlbl{
     margin-top: 2%;
-    font-family: "fonte-projeto";
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     text-align: center;
     color: var(--laranjaenferrujado);
     width: 13%;
     height: 34.5%;
-    font-size: 21px;
-    letter-spacing: 5px;
+    font-size: 23px;
+    letter-spacing: 4px;
     background-color: #fef4e9;
     border-radius: 3px;
 }
@@ -151,8 +151,73 @@ align-items: center;
 
 }
 
+.infor-container-isbnQuestion{
+    position: absolute;
+    text-align: center;
+    margin-left: -11%;
+    margin-bottom: 1%;
+    background-color: #a3ceff;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: white;
+    height: 3.2%;
+    width: 1.5%;
+    border: none;
+    border-radius: 200px;
+    transition: 2s;
+    opacity: 80%;
+    cursor: pointer;
+}
+.infor-container-isbnQuestion:hover{
+    opacity: 100%;
+    font-size: 21px;
+    background-color: rgb(88, 200, 244);
+    height: 3.8%;
+    width: 1.9%;
+
+    transition: 1s;
+}
+
+.infor-container-isbnQuestion:active{
+    transition: 0.01s;
+    background-color: antiquewhite;
+}
+
 .infor-container-isbnInpt:focus{
     outline-width: 0;
+}
+
+dialog{
+    height: 110px;
+    width: 40%;
+    
+
+}
+
+.dialog-div{
+    height: 100%;
+    position: fixed;
+    width: 60%;
+    background-color: rgb(88, 200, 244);
+    opacity: 94%;
+    margin-top: -290px;
+    margin-left: 60px;
+    border-radius: 3px;
+    transition: 2s;
+}
+.dialog-div:hover{
+    transition: 2s;
+    background-color: rgb(72, 146, 203);
+    opacity: 100%;
+}
+.dialogLbl{ 
+    font-family: "fonte-projeto";
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: rgb(255, 255, 255);
+    margin: 5px;
+    transition: 1s;
 }
 
 
@@ -206,7 +271,14 @@ align-items: center;
     letter-spacing: 5px;
     overflow: hidden;
     color: var(--corfundo);
+    transition: 11s;
 }
+.livroTituloLbl:hover{
+    transition: 1s;
+    font-size: 34px;
+    letter-spacing: 7px;
+}
+
 .desc-livroDesc{
     height: 70%;
     width: 95%;
@@ -336,8 +408,10 @@ align-items: center;
     height: 100%;
     width: 100%;
     background-color: #fff2db;
+   
 
 }
+
 .livroContainer-enviar{
     height: 9.5%;
     display: flex;
@@ -352,14 +426,29 @@ align-items: center;
 .livroContainer-btnEnviar{
     cursor: pointer;
     height: 67%;
-    width: 78%;
+    width: 58%;
     font-family: "fonte-projeto";
-    font-size: 35px;
-    letter-spacing: 12px;
+    font-size: 30px;
+    letter-spacing: 6px;
     border: none;
     border-radius: 2px;
     color: #fef4e9;
     background-color: var(--laranjaenferrujado);
     border-radius: 2px;
     user-select: none;
+    transition: 0.8s;
+}
+
+.livroContainer-btnEnviar:hover{
+    transition: 1s;
+    width: 78%;
+    font-size: 32px;
+    letter-spacing: 13px;
+    height: 68%;
+    width: 79%;
+}
+
+.livroContainer-btnEnviar:active{
+    transition: 0.01s;
+    background-color: #ff911b;
 }
