@@ -48,6 +48,7 @@ height: 100%;
 width: 45%;
 justify-content: center;
 align-items: center;
+
 }
 
 .resenha-container-textBlock{
@@ -59,7 +60,8 @@ align-items: center;
     width: 75%;
     background-color: rgb(255, 243, 225);
     margin-bottom: 10%;
-    box-shadow: 0px 0px 2px  rgb(255, 243, 225);
+    box-shadow: 0px 3px 10px rgba(87, 61, 47, 0.5);
+    border-radius: 1px;
 }
 .inpt-tituloResenha{
 
@@ -69,11 +71,12 @@ align-items: center;
     width: 100%;
     font-size: 27px;
     font-family: "fonte-projeto";
-    color: rgb(89, 68, 52);
+    color: rgb(176, 80, 7);
     font-weight: 900;
     text-align: center;
     border: none;
     background: none;
+    transition: 1s;
     
 }
 
@@ -97,9 +100,9 @@ align-items: center;
     height: 100%;
     width: 100%;
     border: none;
+    transition: 1s;
 
 }
-
 .inpt-resenha:focus{
 
     outline-width: 0px;
@@ -195,7 +198,7 @@ dialog{
 
 }
 
-.dialog-div{
+.dialog-divAtivo{
     height: 100%;
     position: fixed;
     width: 60%;
@@ -204,12 +207,14 @@ dialog{
     margin-top: -290px;
     margin-left: 60px;
     border-radius: 3px;
-    transition: 2s;
+    transition: 1s;
+    box-shadow: 0px 13px 17px rgba(60, 49, 44, 0.1);
 }
-.dialog-div:hover{
-    transition: 2s;
+.dialog-divAtivo:hover{
+    transition: 1s;
     background-color: rgb(72, 146, 203);
     opacity: 100%;
+    box-shadow: 0px 13px 17px rgba(63, 38, 35, 0.4);
 }
 .dialogLbl{ 
     font-family: "fonte-projeto";
@@ -230,6 +235,7 @@ dialog{
     background-image: url(./public/images/fundo-livro-container.png);
     background-size: 100%;
     background-repeat: no-repeat; border-radius: 1px;
+    box-shadow: 0px 70px 10px rgba(39, 20, 15, 0.3);
 }
 
 .livroContainer-capa{
@@ -237,12 +243,26 @@ dialog{
     justify-content: center;
     align-items: center;
     margin-top: 1.8%;
-    height: 99%;
+    height: 83%;
     width: 20%;
     margin-left: 2%;
     background-image: url('./public/images/ilha.jpg');
     background-repeat: no-repeat;
     background-size: 100%;
+    opacity: 90%;
+    box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.5);
+    transition: 2s;
+    border-radius: 2px;
+}
+
+.livroContainer-capa:hover{
+    margin-top: 1%;
+    margin-left: 5%;
+    box-shadow: 0px 13px 17px rgba(0, 0, 0, 0.3);
+    transition: 2s;
+    height: 91%;
+    width: 22%;
+    overflow: hidden;
 }
 
 .livroContainer-desc{
@@ -271,12 +291,7 @@ dialog{
     letter-spacing: 5px;
     overflow: hidden;
     color: var(--corfundo);
-    transition: 11s;
-}
-.livroTituloLbl:hover{
-    transition: 1s;
-    font-size: 34px;
-    letter-spacing: 7px;
+    transition: 2s;
 }
 
 .desc-livroDesc{
@@ -295,8 +310,14 @@ dialog{
     resize: none;
     font-family: "fonte-projeto";
     border: none;
-
+    transition: 1s;
 }
+.livroDesc-textArea:hover{
+
+    transition: 5s;
+    
+}
+
 
 
 .livroDesc-textArea:focus-visible{
@@ -320,12 +341,13 @@ dialog{
     font-family: "fonte-projeto";
     font-size: 24px;
     margin-bottom: 2%;
-    color: #f9f3e5;
-    background-color: var(--laranjaenferrujado);
+    color: #000000;
     border: none;
     border-radius: 2px;
     overflow-y: scroll;
+    transition: 1s;
 }
+
 
 
 .tags-btnEditora{
@@ -335,8 +357,7 @@ dialog{
     font-family: "fonte-projeto";
     font-size: 24px;
     margin-bottom: 2%;
-    color: #f9f3e5;
-    background-color: var(--laranjaenferrujado);
+    color: #000000;
     border: none;
     border-radius: 2px;
     overflow-y: scroll;
@@ -349,8 +370,7 @@ dialog{
     font-family: "fonte-projeto";
     font-size: 24px;
     margin-bottom: 2%;
-    color: #f9f3e5;
-    background-color: var(--laranjaenferrujado);
+    color: #000000;
     border: none;
     border-radius: 2px;
     overflow-y: scroll;
@@ -390,10 +410,12 @@ dialog{
     width: 83%;
     background-color: var(--laranjaenferrujado);
     user-select: none;
+    box-shadow: 0px 8px 7px rgba(39, 20, 15, 0.1);
 }
 
 .estrelas-div{
     display: flex;
+    border-radius: 3px;
     width: 48.5%;
     height: 100%;
     margin-left: 3.5%;
@@ -401,12 +423,14 @@ dialog{
     align-items: center;
     flex-direction: row;
     background-color: #947878;
+    box-shadow: 0px 8px 7px rgba(39, 20, 15, 0.1);
 }
 
 .estrelas-buttons{
 
     height: 100%;
     width: 100%;
+    border-radius: 2px;
     background-color: #fff2db;
    
 
@@ -449,6 +473,7 @@ dialog{
 }
 
 .livroContainer-btnEnviar:active{
-    transition: 0.01s;
+    transition: 0.1s;
+    letter-spacing: 14px;
     background-color: #ff911b;
 }

@@ -33,7 +33,19 @@ function TelaEscrivaninha() {
   const [abrirCaixa, setAbrirCaixa] = useState(false)
 
   //passando o valor do textarea para o usestate
-  const [resenha, setResenha] = useState('')
+  const [resenha, setResenha] = useState()
+
+  function dialogFunc() {
+
+    if (abrirCaixa == false){
+
+      setAbrirCaixa(true)
+
+    }else{
+      setAbrirCaixa(false)
+    }
+    
+  }
 
   function verificarCampoResenha(){
 
@@ -114,7 +126,7 @@ function TelaEscrivaninha() {
 
           <label className='Infor-container-isbnlbl' htmlFor="">ISBN</label>
 
-          <button onClick={() => setAbrirCaixa(true)}  className='infor-container-isbnQuestion' >?</button>
+          <button onClick={dialogFunc}  className='infor-container-isbnQuestion' >?</button>
 
           <input className='infor-container-isbnInpt' minLength={10} maxLength={13} type="number" placeholder='Código ISBN aqui...' />
         </div>
@@ -125,7 +137,7 @@ function TelaEscrivaninha() {
 
           <div className="livroContainer-desc">
             <div className="desc-livroTitulo"> 
-              <label className='livroTituloLbl' htmlFor="">A ILHA</label>
+              <label className='livroTituloLbl' htmlFor="">A ILHA: O ilhamento</label>
             </div>
             <div className="desc-livroDesc">
 
@@ -141,8 +153,11 @@ function TelaEscrivaninha() {
          onde os personagens são confrontados não apenas com as forças da natureza, 
          mas também com um gato lá, e assim como foipara um ambiente isolado e misterioso, 
          onde os personagens são confrontados não apenas com as forças da natureza, 
-         mas também com um gato lá, e assim como foi"
+         mas também com um gato lá, e assim como foi"o
       </textarea>
+
+
+      
 
             </div>
           </div>
@@ -150,9 +165,9 @@ function TelaEscrivaninha() {
 
         </div>
         <div className="livroContainer-tags">
-          <button className='tags-btnAutor' >Autor-Adrian McKinty</button>
-          <button className='tags-btnEditora'>Editora-Linuxs Zaus</button>
-          <button className='tags-btnData'>Data-01/021985 </button>
+          <button className='tags-btnAutor' >#Autor-Adrian McKinty</button>
+          <button className='tags-btnEditora'>#Editora-Linuxs Zaus</button>
+          <button className='tags-btnData'>#Data-01/021985 </button>
         </div>
         <div className="livroContainer-nota">
 
@@ -182,10 +197,12 @@ function TelaEscrivaninha() {
 
       <dialog open={abrirCaixa}> 
 
-        <div className="dialog-div">
-          <h1 className='dialogLbl' >Para usar um ISBN, você pode pesquisá-lo em bancos de dados como o Open Library,
+        <div className="dialog-divAtivo">
+          <h1 className='dialogLbl' >Para usar um ISBN, você pode pesquisá-lo em bancos de dados como o - 
+          <a href="https://openlibrary.org/" target='_blank' >Open Library</a>,
              Google Books ou sites de editoras para obter informações sobre um livro específico. 
 </h1>
+
         </div>
 
       </dialog>
