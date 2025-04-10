@@ -3,6 +3,7 @@ import './TelaPesquisa.css'
 import { Link, useNavigate } from "react-router-dom"
 import { GlobalContext } from '../contexts/GlobalContext'
 import NavbarRealOficial from '../components/NavbarRealOficial'
+import BarraPesquisa from '../components/BarraPesquisa'
 
 
 function TelaPesquisa() {
@@ -15,7 +16,13 @@ function TelaPesquisa() {
               <NavbarRealOficial/>
             </div>
             <div className="folha-esquerda">
+              <BarraPesquisa/>
+                <div className="livros-pesquisados-esquerda">
+                  <div className="livro-unidade-pesquisado">
+                
+                  </div>
 
+                </div>
             </div>
 
             <div className="folha-direita">

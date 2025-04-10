@@ -58,6 +58,19 @@
                     border-bottom-width: 0px;
                 }
 
+                    .livros-pesquisados-esquerda{
+                        height: 70%;
+                        background-color: red;
+
+                    }
+
+                        .livro-unidade-pesquisado{
+
+                            height: 33.33%;
+                            background-color: blue;
+
+                        }
+
                 .folha-direita{
 
                     height: 100%;

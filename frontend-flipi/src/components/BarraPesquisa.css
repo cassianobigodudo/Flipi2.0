@@ -1,0 +1,51 @@
+
+.barra-pesquisa{
+
+    /* background-color: red; */
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: row;
+}
+.inpt-pesquisar{
+
+    height: 40px;
+    width: 300px;
+    border: solid #d7beb1;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 40px;
+    color: #40454b;
+    font-family: "fonte-projeto";
+    font-size: 26px;
+    font-weight: 700;
+    margin-left: 110px;
+    
+
+}
+.inpt-pesquisar:focus{
+
+    outline: none;
+}
+
+.btn-pesquisa{
+   border: none;
+   cursor: pointer;
+   margin-left: -36px;
+   padding-top: 4px;
+   
+}
+
+.icon-pesquisar{
+    height: 25px;
+    width: 25px;
+    /* margin: 1% 1% 0% 10%; */
+    background-color: #fdfaf3;
+}
+
+.btn-filter{
+
+    margin-left: 50px;
+
+}
