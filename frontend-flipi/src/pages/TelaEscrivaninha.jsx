@@ -148,12 +148,12 @@ function TelaEscrivaninha() {
          onde os personagens são confrontados não apenas com as forças da natureza, 
          mas também com um gato lá, e assim como foi escrito naquele livro anterior lá, 
          é revelado que ná verdade a ilha é uma cidade secreta em baixo da agua que antes era habitada
-          por leõasda que antes eram capazes sfe aleerem as e abanquet aé um o´´toeitmo 
+          por leõasda que antes eram capazes sfe aleerem as e abanquet aé um otoeitmo 
           jgog qur realmente te faz poensar nesse pontopara um ambiente isolado e misterioso, 
          onde os personagens são confrontados não apenas com as forças da natureza, 
          mas também com um gato lá, e assim como foipara um ambiente isolado e misterioso, 
          onde os personagens são confrontados não apenas com as forças da natureza, 
-         mas também com um gato lá, e assim como foi"o
+         mas também com um gato lá, e assim como foi"
       </textarea>
 
 
@@ -173,7 +173,7 @@ function TelaEscrivaninha() {
 
           <div className="nota-labelEspaco">
 
-          <label className='livroContainer-labelNota' htmlFor="">Qual nota daria a esse livro?</label>
+          <label className='livroContainer-labelNota' htmlFor="">Avalie esse livro:</label>
 
           </div>
           

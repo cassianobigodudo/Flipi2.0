@@ -159,7 +159,7 @@ align-items: center;
     text-align: center;
     margin-left: -11%;
     margin-bottom: 1%;
-    background-color: #a3ceff;
+    background-color: #80aee3;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 700;
     font-size: 17px;
@@ -175,7 +175,7 @@ align-items: center;
 .infor-container-isbnQuestion:hover{
     opacity: 100%;
     font-size: 21px;
-    background-color: rgb(88, 200, 244);
+    background-color: rgb(80, 167, 160);
     height: 3.8%;
     width: 1.9%;
 
@@ -183,8 +183,9 @@ align-items: center;
 }
 
 .infor-container-isbnQuestion:active{
-    transition: 0.01s;
-    background-color: antiquewhite;
+    transition: 0.01s; height: 4.2%;
+    width: 2%;
+    background-color: rgb(166, 211, 196);
 }
 
 .infor-container-isbnInpt:focus{
@@ -202,18 +203,12 @@ dialog{
     height: 100%;
     position: fixed;
     width: 60%;
-    background-color: rgb(88, 200, 244);
+    background-color: rgb(65, 143, 137);
     opacity: 94%;
     margin-top: -290px;
     margin-left: 60px;
     border-radius: 3px;
     transition: 1s;
-    box-shadow: 0px 13px 17px rgba(60, 49, 44, 0.1);
-}
-.dialog-divAtivo:hover{
-    transition: 1s;
-    background-color: rgb(72, 146, 203);
-    opacity: 100%;
     box-shadow: 0px 13px 17px rgba(63, 38, 35, 0.4);
 }
 .dialogLbl{ 
@@ -302,13 +297,14 @@ dialog{
 
 .livroDesc-textArea{
 
-    color: #5a4940;
+    color: #2e2723;
     margin-top: 2%;
     height: 77.9%;
     width: 99%;
-    font-size: 20px;
+    font-size: 21px;
     resize: none;
     font-family: "fonte-projeto";
+    font-style: italic;
     border: none;
     transition: 1s;
 }
@@ -332,7 +328,7 @@ dialog{
     height: 10%;
     margin-right: 4.1%;
     width: 95.9%;
-    background-color: #fff2db;
+    background-color: var(--corfundo);
 }
 
 .tags-btnAutor{
@@ -399,6 +395,7 @@ dialog{
     align-items: center;
     background-color: var(--fundoelementos);
     border-radius: 2px;
+    box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.2);
 }
 
 .livroContainer-labelNota{
@@ -423,7 +420,7 @@ dialog{
     align-items: center;
     flex-direction: row;
     background-color: #947878;
-    box-shadow: 0px 8px 7px rgba(39, 20, 15, 0.1);
+    box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.2);
 }
 
 .estrelas-buttons{
@@ -445,6 +442,7 @@ dialog{
     width: 66%;
     background-color: var(--fundoelementos);
     border-radius: 1px;
+    box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.2);
 }
 
 .livroContainer-btnEnviar{
@@ -474,6 +472,10 @@ dialog{
 
 .livroContainer-btnEnviar:active{
     transition: 0.1s;
-    letter-spacing: 14px;
     background-color: #ff911b;
+}
+.livroContainer-btnEnviar:active{
+    width: 80%;
+    transition: 0.2s;
+    letter-spacing: 14px;
 }
