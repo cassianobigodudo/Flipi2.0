@@ -1,0 +1,51 @@
+.livro-unidade-pesquisado{
+
+    height: 33.33%;
+    /* background-color: blue; */
+
+}
+
+    .isbn-container{
+
+        height: 18%;
+        background-color: yellow;
+        display: flex;
+        align-items: center;
+
+    }
+
+    .pesquisado-container{
+
+        height: 82.1%;
+        background-color: green;
+        display: flex;
+    }
+
+        .livro-capa-container{
+
+            height: 100%;
+            width: 22%;
+            background-color: purple;
+
+        }
+
+        .livro-info-container{
+
+            height: 100%;
+            width: 78%;
+        }
+
+            .titulo-autor-data-container{
+
+                height: 28%;
+                width: 100%;
+                background-color: brown;
+
+            }
+
+            .sinopse-container{
+
+                height: 72%;
+                width: 100%;
+                background-color: silver;
+            }

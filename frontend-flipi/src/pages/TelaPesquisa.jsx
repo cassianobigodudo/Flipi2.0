@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom"
 import { GlobalContext } from '../contexts/GlobalContext'
 import NavbarRealOficial from '../components/NavbarRealOficial'
 import BarraPesquisa from '../components/BarraPesquisa'
+import LivrosPesquisados from '../components/LivrosPesquisados'
+import ContainerDosLivrosPesquisados from '../components/ContainerDosLivrosPesquisados'
+import BottomPagina from '../components/BottomPagina'
 
 
 function TelaPesquisa() {
@@ -17,16 +20,14 @@ function TelaPesquisa() {
             </div>
             <div className="folha-esquerda">
               <BarraPesquisa/>
-                <div className="livros-pesquisados-esquerda">
-                  <div className="livro-unidade-pesquisado">
-                
-                  </div>
-
-                </div>
+              <ContainerDosLivrosPesquisados/>
+              <BottomPagina/>
             </div>
 
             <div className="folha-direita">
-
+              <div className="vazio-pagina-direita"></div>
+              <ContainerDosLivrosPesquisados/>
+              <BottomPagina/>
             </div>
 
             <div className="vazio-direita">

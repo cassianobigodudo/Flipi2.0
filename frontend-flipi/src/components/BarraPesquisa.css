@@ -10,17 +10,17 @@
 }
 .inpt-pesquisar{
 
-    height: 40px;
-    width: 300px;
+    height: 50px;
+    width: 380px;
     border: solid #d7beb1;
-    border-radius: 10px;
+    border-radius: 20px;
     padding-left: 20px;
     padding-right: 40px;
     color: #40454b;
     font-family: "fonte-projeto";
-    font-size: 26px;
+    font-size: 34px;
     font-weight: 700;
-    margin-left: 110px;
+    margin-left: 75px;
     
 
 }
@@ -32,14 +32,14 @@
 .btn-pesquisa{
    border: none;
    cursor: pointer;
-   margin-left: -36px;
+   margin-left: -41px;
    padding-top: 4px;
    
 }
 
 .icon-pesquisar{
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
     /* margin: 1% 1% 0% 10%; */
     background-color: #fdfaf3;
 }
