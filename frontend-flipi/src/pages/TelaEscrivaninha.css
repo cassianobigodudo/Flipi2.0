@@ -403,6 +403,7 @@ dialog{
     text-align: center;
     color: #fef4e9;
     font-size: 30px;
+    letter-spacing: 5px;
     height: 59%;
     width: 83%;
     background-color: var(--laranjaenferrujado);
