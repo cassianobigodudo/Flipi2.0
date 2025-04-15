@@ -26,10 +26,6 @@
         border-style: solid;
         border-color: #8c5d47;
 }
-::selection{
-    color: rgb(255, 255, 255);
-    background-color: #e08e65;
-}
 
 .escrivaninha-navbarVertical{
 

@@ -54,13 +54,13 @@
 .label-titulos{
 
 
-    color: #40454b;
+    color: #654831;
     font-size: 68px;
     font-family: "fonte-projeto";
+    letter-spacing: 5px;
    
     display: flex;
     font-weight: bolder;
-    margin-bottom: 15px;
 
 
 }
@@ -75,7 +75,6 @@
    
     display: flex;
     margin-right: 325px;
-    margin-top: 15px;
 }
 
 .label-inputs-nome{
@@ -171,14 +170,22 @@
     font-weight: bold;
     background-color: var(--laranjaenferrujado);
     border-radius: 10px;
+    border: none;
     width: 280px;
     border-color: #f4e2b4;
+    cursor: pointer;
 
+    transition: 0.8s;
 
 }
-.botao-cadastro:hover{
 
-    cursor: pointer;
+
+.botao-cadastro:active{
+    transition: 0.06s;
+    width: 310px;
+    font-size: 45px;
+    letter-spacing: 8px;
+    background-color: #dfa73f;
 
 }
 

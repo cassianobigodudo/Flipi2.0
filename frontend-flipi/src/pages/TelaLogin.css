@@ -40,7 +40,7 @@
 }
 
 .label-titulos {
-    color: #40454b;
+    color: var(--laranjaenferrujado);
     font-size: 58px;
     font-family: "fonte-projeto";
     display: flex;
@@ -111,18 +111,27 @@
    
     
     height: 80px;
-    width: 400px;
+    width: 280px;
     
     color: var(--corfundo);
-    font-size: 38px;
+    font-size: 42px;
+    letter-spacing: 5px;
     font-family: "fonte-projeto";
     font-weight: bold;
     background-color: var(--laranjaenferrujado);
     border-radius: 10px;
-    width: 280px;
-    border-color: #f4e2b4;
+    border: none;
+    transition: 0.4s;
 }
 
+.botao-login:active{
+    transition: 0.06s;
+    width: 310px;
+    font-size: 45px;
+    letter-spacing: 8px;
+    background-color: #dfa73f;
+
+}
 .botao-login:hover{
 
     cursor: pointer;

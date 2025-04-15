@@ -143,7 +143,7 @@ function TelaUsuarioConfigs() {
     alert('Até mais!')
     setUsuarioLogado(false)
     setPosicaoUsuarioID(null)
-    navigate('/landingpage')
+    navigate('/')
 
   }
 
@@ -167,7 +167,7 @@ function TelaUsuarioConfigs() {
 
           alert(`Conta deletada com sucesso.`)
           setUsuarioLogado(false) //hi
-          navigate(`/landingpage`)
+          navigate(`/`)
             
         }
       } catch (error) {

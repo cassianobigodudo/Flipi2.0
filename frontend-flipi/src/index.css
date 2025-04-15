@@ -32,6 +32,11 @@
 }
 
 
+::selection{
+  color: rgb(255, 255, 255);
+  background-color: #e08e65;
+}
+
 
 @font-face {
   font-family: "fonte-projeto";
