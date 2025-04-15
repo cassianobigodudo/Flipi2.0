@@ -4,6 +4,7 @@ import EstrelasBtn from '../components/EstrelasBtn'
 import NavbarVertical from '../components/NavbarVertical'
 import { GlobalContext } from '../contexts/GlobalContext'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { use } from 'react'
 
 
 
@@ -11,15 +12,15 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 function TelaEscrivaninha() {
 
-  // useEffect (() => {
+   useEffect (() => {
 
-  //   if(usuarioLogado == false){
+     if(usuarioLogado == false){
 
-  //     alert('Não há usuário logado, por favor, cadastre-se ou entre na sua conta.')
-  //     navigate('/')
-  //   }
+       alert('Não há usuário logado, por favor, cadastre-se ou entre na sua conta.')
+      navigate('/')
+     }
 
-  // }, [])
+   }, [])
   
   
   
@@ -61,7 +62,6 @@ function TelaEscrivaninha() {
 
   function cadastrarResenha() {
     if (verificarCampoResenha()) {
-        alert('Insira algum texto dentro da resenha!');
     } else {
         // Cria a nova resenha
         const novaResenha = {
@@ -112,7 +112,7 @@ function TelaEscrivaninha() {
         <div className="resenha-container-textBlock">
       
          <input maxLength={40} className='inpt-tituloResenha' placeholder='TITULO...' type="text" />
-         <textarea placeholder='Começe sua resenha aqui...' maxLength={1600} className='inpt-resenha' name="resenha" id="" cols="10" rows="10" 
+         <textarea placeholder='Começe sua resenha aqui...' maxLength={1600} cols="10" rows="10"  className='inpt-resenha' name="resenha" id="" 
           value={resenha}
           onChange={(event) => setResenha(event.target.value)}
          ></textarea>
@@ -133,27 +133,17 @@ function TelaEscrivaninha() {
 
         <div className="info-container-livroContainer">
 
-          <div className="livroContainer-capa"></div>
+          <div className="livroContainer-capa">
+          <img className='capa-img' src={livroAcessado.capaLivro} alt="" />
+          </div>
 
           <div className="livroContainer-desc">
             <div className="desc-livroTitulo"> 
-              <label className='livroTituloLbl' htmlFor="">A ILHA: O ilhamento</label>
+              <label className='livroTituloLbl' htmlFor="">{livroAcessado.tituloLivro}</label>
             </div>
             <div className="desc-livroDesc">
 
-      <textarea readOnly className='livroDesc-textArea' name="" id="">"A Ilha é um romance intrigante que mistura suspense, 
-        drama e reflexões profundas sobre a natureza humana,
-         a solidão e os segredos que nos assombram. 
-         a narrativa transporta o leitor para um ambiente isolado e misterioso, 
-         onde os personagens são confrontados não apenas com as forças da natureza, 
-         mas também com um gato lá, e assim como foi escrito naquele livro anterior lá, 
-         é revelado que ná verdade a ilha é uma cidade secreta em baixo da agua que antes era habitada
-          por leõasda que antes eram capazes sfe aleerem as e abanquet aé um otoeitmo 
-          jgog qur realmente te faz poensar nesse pontopara um ambiente isolado e misterioso, 
-         onde os personagens são confrontados não apenas com as forças da natureza, 
-         mas também com um gato lá, e assim como foipara um ambiente isolado e misterioso, 
-         onde os personagens são confrontados não apenas com as forças da natureza, 
-         mas também com um gato lá, e assim como foi"
+      <textarea readOnly className='livroDesc-textArea' value={livroAcessado.sinopseLivro} name="" id="">
       </textarea>
 
 
@@ -165,9 +155,9 @@ function TelaEscrivaninha() {
 
         </div>
         <div className="livroContainer-tags">
-          <button className='tags-btnAutor' >#Autor-Adrian McKinty</button>
-          <button className='tags-btnEditora'>#Editora-Linuxs Zaus</button>
-          <button className='tags-btnData'>#Data-01/021985 </button>
+          <button className='tags-btnAutor' >Autor:  {livroAcessado.autorLivro}</button>
+          <button className='tags-btnEditora'>Editora:  {livroAcessado.editoraLivro}</button>
+          <button className='tags-btnData'>Ano:  {livroAcessado.anoLivro}</button>
         </div>
         <div className="livroContainer-nota">
 
@@ -188,7 +178,7 @@ function TelaEscrivaninha() {
         </div>
         </div>
         <div className="livroContainer-enviar">
-          <button className='livroContainer-btnEnviar' >ENVIAR RESENHA</button>
+          <button className='livroContainer-btnEnviar'  onClick={cadastrarResenha} >ENVIAR RESENHA</button>
         </div>
 
       </div>
