@@ -39,3 +39,10 @@
   font-family: "fonte-projeto";
   src: url(./font/Amatic_SC/AmaticSC-Bold.ttf);
 }
+
+@font-face {
+
+  font-family: "mais-legivel";
+  src: url(./font/Afacad/static/Afacad-Regular.ttf);
+
+}

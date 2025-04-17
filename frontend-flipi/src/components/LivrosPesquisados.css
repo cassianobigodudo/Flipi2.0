@@ -8,16 +8,81 @@
     .isbn-container{
 
         height: 18%;
-        background-color: yellow;
+        /* background-color: yellow; */
         display: flex;
-        align-items: center;
+        align-items: end;
 
     }
+
+        .copy-icon{
+
+            color: var(--laranjaenferrujado);
+            margin: 2px;
+            cursor: pointer;
+            /* font-size: 50px; */
+            transition: 1s;
+            font-size: 23px;
+            
+        }
+        
+        .copy-icon:active{
+            
+            color: green;
+            margin: 2px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .isbn-botao-container{
+
+            height: 70%;
+            width: 7%;
+            background-color: var(--laranjaenferrujado);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--fundoelementos);
+            border-style: solid;
+            border-width: 2px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.4s;
+            border-radius: 5px;
+            margin-left: 30px;
+        }
+
+        
+            .lbl-isbn{
+                
+                cursor: pointer;
+                /* transition: 0.4s; */
+                text-align: row;
+                font-size: 18px;
+                white-space: nowrap;
+                font-family: 'mais-legivel';
+            }
+                .isbn-botao-container-ativado{
+
+                    height: 70%;
+                    width: 25%;
+                    background-color: var(--laranjaenferrujado);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--fundoelementos);
+                    border-style: solid;
+                    border-width: 2px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    overflow: hidden;
+                    transition: 0.4s;
+                    margin-left: 30px;
+                }
 
     .pesquisado-container{
 
         height: 82.1%;
-        background-color: green;
+        /* background-color: green; */
         display: flex;
     }
 
@@ -25,7 +90,17 @@
 
             height: 100%;
             width: 22%;
-            background-color: purple;
+            /* background-color: purple; */
+            display: flex;
+            justify-content: end;
+
+
+        }
+
+        .img-livro-pesquisado{
+
+            height: 100%;
+            margin-right: 10px ;
 
         }
 
