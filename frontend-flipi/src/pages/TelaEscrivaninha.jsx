@@ -9,7 +9,6 @@ import { use } from 'react'
 
 
 
-
 function TelaEscrivaninha() {
 
    useEffect (() => {
@@ -34,7 +33,12 @@ function TelaEscrivaninha() {
   const [abrirCaixa, setAbrirCaixa] = useState(false)
 
   //passando o valor do textarea para o usestate
+  const [resenhaTitulo, setResenhaTitulo] = useState()
   const [resenha, setResenha] = useState()
+  const [notaResenha, setNotaResenha] = useState()
+  const [isbn, setIsbn] = useState()
+  const [divInfo, setDivInfo] = useState('')
+
 
   function dialogFunc() {
 
@@ -66,7 +70,10 @@ function TelaEscrivaninha() {
         // Cria a nova resenha
         const novaResenha = {
             nomeUsuario: '', // Inicializa vazio; será atualizado abaixo
-            resenhaUsuario: resenha, // Atribui o texto da resenha
+            tituloResenha: resenhaTitulo , // titulo da resenha 
+            resenhaUsuario: resenha ,// Atribui o texto da resenha
+            nota: notaResenha // :D N
+            
         };
 
         // Busca o usuário logado pelo ID
@@ -111,7 +118,9 @@ function TelaEscrivaninha() {
 
         <div className="resenha-container-textBlock">
       
-         <input maxLength={40} className='inpt-tituloResenha' placeholder='TITULO...' type="text" />
+         <input maxLength={40} className='inpt-tituloResenha' placeholder='TITULO...' type="text"
+          onChange={(event) => setResenhaTitulo(event.target.value)} 
+          value={resenhaTitulo} />
          <textarea placeholder='Começe sua resenha aqui...' maxLength={1600} cols="10" rows="10"  className='inpt-resenha' name="resenha" id="" 
           value={resenha}
           onChange={(event) => setResenha(event.target.value)}
@@ -128,7 +137,9 @@ function TelaEscrivaninha() {
 
           <button onClick={dialogFunc}  className='infor-container-isbnQuestion' >?</button>
 
-          <input className='infor-container-isbnInpt' minLength={10} maxLength={13} type="number" placeholder='Código ISBN aqui...' />
+          <input className='infor-container-isbnInpt' minLength={10} maxLength={13} type="number" placeholder='Código ISBN aqui...' 
+          value={resenha}
+          onChange={(event) => setResenha(event.target.value)}/>
         </div>
 
         <div className="info-container-livroContainer">
@@ -171,7 +182,8 @@ function TelaEscrivaninha() {
 
           <div className="estrelas-buttons">
             
-          <EstrelasBtn />
+          <EstrelasBtn onRatingChange={setNotaResenha}/>
+          
 
           </div>
 

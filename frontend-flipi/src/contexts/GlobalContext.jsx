@@ -4,7 +4,6 @@ export const GlobalContext = createContext()
 
 export const GlobalContextProvider = ({children}) => {
 
-const [bairro, setBairro] = useState('Monte Verde')
 const [vetorObjetosUsuarios, setVetorObjetosUsuarios] = useState([])
 const [usuarioLogado, setUsuarioLogado] = useState(false)
 const [posicaoUsuario, setPosicaoUsuario] = useState('vazio')
@@ -301,7 +300,7 @@ const [biblioteca, setBiblioteca] = useState([
 ])
 
     return(
-        <GlobalContext.Provider value={{bairro, setBairro, vetorObjetosUsuarios, setVetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuario, setPosicaoUsuario, posicaoUsuarioID, setPosicaoUsuarioID, dadosUsuarioLogado, setDadosUsuarioLogado, biblioteca, setBiblioteca, livroAcessado, setLivroAcessado}}>
+        <GlobalContext.Provider value={{vetorObjetosUsuarios, setVetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuario, setPosicaoUsuario, posicaoUsuarioID, setPosicaoUsuarioID, dadosUsuarioLogado, setDadosUsuarioLogado, biblioteca, setBiblioteca, livroAcessado, setLivroAcessado}}>
             {children}
         </GlobalContext.Provider>
     )
