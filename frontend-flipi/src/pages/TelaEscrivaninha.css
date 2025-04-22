@@ -282,13 +282,14 @@ dialog{
     text-align: start;
     margin-top: 2.2%;
     margin-left: 2%;
-    font-size: 32px;
     letter-spacing: 5px;
     overflow: hidden;
     color: var(--corfundo);
     transition: 2s;
-}
+    font-size: 32px;
+   
 
+}
 .desc-livroDesc{
     height: 70%;
     width: 95%;

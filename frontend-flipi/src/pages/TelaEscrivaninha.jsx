@@ -5,6 +5,7 @@ import NavbarVertical from '../components/NavbarVertical'
 import { GlobalContext } from '../contexts/GlobalContext'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { use } from 'react'
+import axios from 'axios'
 
 
 
@@ -37,7 +38,6 @@ function TelaEscrivaninha() {
   const [resenha, setResenha] = useState()
   const [notaResenha, setNotaResenha] = useState()
   const [isbn, setIsbn] = useState()
-  const [divInfo, setDivInfo] = useState('')
 
 
   function dialogFunc() {
@@ -64,17 +64,46 @@ function TelaEscrivaninha() {
   }
 
 
-  function cadastrarResenha() {
+
+   const cadastrarResenha = async (e) => {
+
+ e.preventDefault()
     if (verificarCampoResenha()) {
+
+      alert(`Verifique se todos os campos estão preenchidos.`)
+
     } else {
+
         // Cria a nova resenha
-        const novaResenha = {
+        let novaResenha = {
             nomeUsuario: '', // Inicializa vazio; será atualizado abaixo
-            tituloResenha: resenhaTitulo , // titulo da resenha 
-            resenhaUsuario: resenha ,// Atribui o texto da resenha
-            nota: notaResenha // :D N
-            
-        };
+            resenha_id: '',
+            resenha_titulo: resenhaTitulo , // titulo da resenha 
+            resenha_texto: resenha ,// Atribui o texto da resenha
+            resenha_nota: notaResenha ,// Atribui a avaliação do livro feito pelo usuário
+            resenha_data: '' ,//Atribui a data de criação da resenha\\\
+            resenha_isbn: isbn
+        }
+        console.log(novaResenha)
+
+        alert('Resenha registrada com sucesso!')
+        console.log('hora do try')
+        try {
+
+            const response = await axios.post('http://localhost:3000/resenha', novaResenha);
+
+            if (response.status === 201) {
+              console.log('respondi com 201')
+
+              // Adiciona a resenha ao vetor
+              setListaResenhas([...listaResenhas, novaResenha])
+              console.log('coloquei a resenha dentro do vetor', listaResenhas) 
+             
+              alert("resenha cadastrada com sucesso!");
+          }
+        } catch (error) {
+          
+        }
 
         // Busca o usuário logado pelo ID
         const usuarioAtualizado = vetorObjetosUsuarios.find(e => e.usuario_id === posicaoUsuarioID);
@@ -86,17 +115,20 @@ function TelaEscrivaninha() {
             return;
         }
 
-        // Atualiza o estado de `livroAcessado`
+         // Atualiza o estado de `livroAcessado`
         setLivroAcessado((prevState) => ({
             ...prevState,
             resenhasLivro: [...prevState.resenhasLivro, novaResenha], // Adiciona a nova resenha ao array
-        }));
+        })); 
+
 
         console.log('Nova resenha adicionada:', novaResenha);
     }
 
 
-  }
+
+
+  } 
   useEffect(() => {
     
     console.log(livroAcessado)
