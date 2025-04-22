@@ -108,6 +108,7 @@
 
             height: 100%;
             width: 78%;
+            
         }
 
             .titulo-autor-data-container{
@@ -115,8 +116,62 @@
                 height: 28%;
                 width: 100%;
                 background-color: brown;
+                display: flex;
 
             }
+
+                .titulo-livro-pesquisado{
+
+                    height: 100%;
+                    width: 60%;
+                    background-color: var(--laranjaenferrujado);
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: row;
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                    /* overscroll-behavior-x: contain; */
+                    /* Desabilita a barra de rolagem visível mas mantém a funcionalidade */
+                }
+                
+                .titulo-livro-pesquisado::-webkit-scrollbar {
+                    height: 6px;
+                }
+                .titulo-livro-pesquisado::-webkit-scrollbar-track{
+                    background: none;
+                    overflow: auto;
+                }
+
+                
+                .titulo-livro-pesquisado::-webkit-scrollbar-thumb{
+                    opacity: calc(0);
+                    background: white;
+                }
+
+/* 
+                .titulo-livro-pesquisado::-webkit-scrollbar {
+                    display: none;
+                } */
+
+                    .lbl-titulo-pesquisa{
+
+                        font-family: "fonte-projeto";
+                        font-size: 36px;
+                        margin-bottom: 2.5px;
+                        white-space: nowrap;
+                        margin-left: 5px;
+                        margin-right: 5px;
+
+                    }
+
+                .autor-ano-pesquisado{
+
+                    width: 30%;
+                    height: 100%;
+                    background-color: darkviolet;
+
+                }
 
             .sinopse-container{
 
