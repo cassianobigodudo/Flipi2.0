@@ -126,22 +126,25 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
 
 
 //* TABELA RESENHA
- 
- app.post('/resenha'), async (req, res) => {
-    const{resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas,resenha_data} = req.body
-        try{
-            const result = await pool.query(
-            'INSERT INTO resenha (Oi, ahhhhh, 5, 22, 2014/12/10) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas,resenha_data])
-            
-            res.status(201).json(result.rows[0])
-        } catch (err) {
-            console.error(err.message)
-            res.status(500).json({ error: 'Erro ao cadastrar usuário! :(' })
-        }
-    }
 
+
+app.post('/resenha', async (req, res) => {
+    const { resenha_titulo, resenha_texto, resenha_nota, usuario_id, livro_isbn } = req.body;
+    try {
+        const result = await pool.query(
+            `INSERT INTO resenha 
+            (resenha_titulo, resenha_texto, resenha_nota, usuario_id, livro_isbn, resenha_data) 
+            VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING *`,
+            [resenha_titulo, resenha_texto, resenha_nota, usuario_id, livro_isbn]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Erro ao cadastrar resenha!' });
+    }
+});
  
+
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000! :D')
 })
