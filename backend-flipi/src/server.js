@@ -129,13 +129,13 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
 
 
 app.post('/resenha', async (req, res) => {
-    const { resenha_titulo, resenha_texto, resenha_nota, usuario_id, livro_isbn } = req.body;
+    const { resenha_id, resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data } = req.body;
     try {
         const result = await pool.query(
             `INSERT INTO resenha 
-            (resenha_titulo, resenha_texto, resenha_nota, usuario_id, resenha_data) 
+            (resenha_id, resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data) 
             VALUES ($1, $2, $3, $4) RETURNING *`,
-            [resenha_titulo, resenha_texto, resenha_nota, usuario_id, livro_isbn]
+            [resenha_id, resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data ]
         );
         res.status(201).json(result.rows[0]);
     } catch (err) {
