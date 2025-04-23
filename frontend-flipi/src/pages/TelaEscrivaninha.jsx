@@ -70,7 +70,7 @@ function TelaEscrivaninha() {
  e.preventDefault()
     if (verificarCampoResenha()) {
 
-      alert(`Verifique se todos os campos estão preenchidos.`)
+      alert(`Por favor escreva uma resenha :)`)
 
     } else {
 
@@ -82,16 +82,15 @@ function TelaEscrivaninha() {
             resenha_texto: resenha ,// Atribui o texto da resenha
             resenha_nota: notaResenha ,// Atribui a avaliação do livro feito pelo usuário
             resenha_data: '' ,//Atribui a data de criação da resenha\\\
-            resenha_isbn: isbn
         }
         console.log(novaResenha)
 
-        alert('Resenha registrada com sucesso!')
+        
         console.log('hora do try')
         try {
 
-            const response = await axios.post('http://localhost:3000/resenha', novaResenha);
-
+            
+          const response = await axios.post('http://localhost:3000/resenha', novaResenha);
             if (response.status === 201) {
               console.log('respondi com 201')
 
@@ -99,10 +98,11 @@ function TelaEscrivaninha() {
               setListaResenhas([...listaResenhas, novaResenha])
               console.log('coloquei a resenha dentro do vetor', listaResenhas) 
              
+              
               alert("resenha cadastrada com sucesso!");
           }
         } catch (error) {
-          
+          console.error('Erro ao cadastrar resenha! :(', error)
         }
 
         // Busca o usuário logado pelo ID
@@ -170,8 +170,8 @@ function TelaEscrivaninha() {
           <button onClick={dialogFunc}  className='infor-container-isbnQuestion' >?</button>
 
           <input className='infor-container-isbnInpt' minLength={10} maxLength={13} type="number" placeholder='Código ISBN aqui...' 
-          value={resenha}
-          onChange={(event) => setResenha(event.target.value)}/>
+          value={isbn}
+          onChange={(event) => setIsbn(event.target.value)}/>
         </div>
 
         <div className="info-container-livroContainer">

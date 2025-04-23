@@ -133,8 +133,8 @@ app.post('/resenha', async (req, res) => {
     try {
         const result = await pool.query(
             `INSERT INTO resenha 
-            (resenha_titulo, resenha_texto, resenha_nota, usuario_id, livro_isbn, resenha_data) 
-            VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING *`,
+            (resenha_titulo, resenha_texto, resenha_nota, usuario_id, resenha_data) 
+            VALUES ($1, $2, $3, $4) RETURNING *`,
             [resenha_titulo, resenha_texto, resenha_nota, usuario_id, livro_isbn]
         );
         res.status(201).json(result.rows[0]);
