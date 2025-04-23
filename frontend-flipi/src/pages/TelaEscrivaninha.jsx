@@ -67,7 +67,7 @@ function TelaEscrivaninha() {
 
    const cadastrarResenha = async (e) => {
 
- e.preventDefault()
+    e.preventDefault()
     if (verificarCampoResenha()) {
 
       alert(`Por favor escreva uma resenha :)`)
@@ -77,18 +77,19 @@ function TelaEscrivaninha() {
         // Cria a nova resenha
         let novaResenha = {
             nomeUsuario: '', // Inicializa vazio; será atualizado abaixo
-            resenha_id: '',
+            resenha_id: 'i',
             resenha_titulo: resenhaTitulo , // titulo da resenha 
             resenha_texto: resenha ,// Atribui o texto da resenha
             resenha_nota: notaResenha ,// Atribui a avaliação do livro feito pelo usuário
-            resenha_data: '' ,//Atribui a data de criação da resenha\\\
+            resenha_curtidas: "1",
+            resenha_data: '12' ,//Atribui a data de criação da resenha\\\
         }
         console.log(novaResenha)
 
         
         console.log('hora do try')
         try {
-
+          console.log('entrei no try')
             
           const response = await axios.post('http://localhost:3000/resenha', novaResenha);
             if (response.status === 201) {
