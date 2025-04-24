@@ -115,7 +115,7 @@
 
                 height: 28%;
                 width: 100%;
-                background-color: brown;
+                /* background-color: brown; */
                 display: flex;
 
             }
@@ -135,19 +135,21 @@
                     /* Desabilita a barra de rolagem visível mas mantém a funcionalidade */
                 }
                 
-                .titulo-livro-pesquisado::-webkit-scrollbar {
-                    height: 6px;
-                }
-                .titulo-livro-pesquisado::-webkit-scrollbar-track{
-                    background: none;
-                    overflow: auto;
-                }
-
-                
-                .titulo-livro-pesquisado::-webkit-scrollbar-thumb{
-                    opacity: calc(0);
-                    background: white;
-                }
+                    .titulo-livro-pesquisado::-webkit-scrollbar {
+                        height: 6px;
+                    }
+                    .titulo-livro-pesquisado::-webkit-scrollbar-track{
+                        background-color: var(--laranjaenferrujado);
+                        overflow: auto;
+                        background: var(--textos);
+                    }
+                    
+                    
+                    .titulo-livro-pesquisado::-webkit-scrollbar-thumb{
+                        border-radius: 0px;
+                        background: var(--fundoelementos);
+                        opacity: calc(0);
+                    }
 
 /* 
                 .titulo-livro-pesquisado::-webkit-scrollbar {
@@ -167,15 +169,45 @@
 
                 .autor-ano-pesquisado{
 
-                    width: 30%;
+                    width: 40%;
                     height: 100%;
-                    background-color: darkviolet;
-
+                    /* background-color: darkviolet; */
+                    display: flex;
+                    flex-direction: column;
+                    /* font-family: 'fonte-projeto'; */
+                    
+                    
                 }
+                
+                    .lbl-autor{
+                        font-family: 'mais-legivel';
+                        font-size: 15px;
+                        padding-left: 5px;
+                    }
+                    
+                    .lbl-ano{
+                        padding-left: 5px;
+                    
+                        font-size: 15px;
+                        font-family: 'mais-legivel';
 
-            .sinopse-container{
+                    }
 
-                height: 72%;
-                width: 100%;
-                background-color: silver;
-            }
+                .sinopse-container{
+
+                    height: 65%;
+                    width: 94%;
+                    background-color: #F8EBCE;
+                    margin-top: 2%;
+                    display: flex;
+                    border-radius: 3px;
+                }
+                
+                    .lbl-sinopse{
+                        padding-left: 3px;
+                        padding-right: 3px;
+                        font-size: 20px;
+                        font-family: 'mais-legivel';
+                        overflow: auto;
+
+                    }

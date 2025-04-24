@@ -70,16 +70,19 @@ function LivrosPesquisados() {
             <div className="livro-info-container">
                 <div className="titulo-autor-data-container">
                   <div className="titulo-livro-pesquisado" ref={tituloRef}>
-                    <label className='lbl-titulo-pesquisa'>Livro bonito que eu gosto muito, uma pena ele ser muito longo no título</label>
+                    <label className='lbl-titulo-pesquisa'>Livro bonito que eu gosto muito, uma pena ele ser muito longo </label>
                   </div>
 
                   <div className="autor-ano-pesquisado">
-                    
+                    <label className='lbl-autor'>Autor: Isabella Boscov Scandinavo</label>
+                    <label className='lbl-ano'>Ano: 2026</label>
 
                   </div>
                 </div>
 
                 <div className="sinopse-container">
+                  <label className='lbl-sinopse' >Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, nemo. Corporis, illum? Id, a. Quis voluptas fugiat odit accusamus veritatis minus sint cupiditate quibusdam porro omnis dignissimos quam, ipsam minima! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur debitis, soluta vitae hic, suscipit quia dignissimos ab quisquam ex quae placeat cumque voluptate provident necessitatibus praesentium rerum amet dicta reprehenderit.</label>
+
                 </div>
             </div>
         </div>

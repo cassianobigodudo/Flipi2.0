@@ -2,14 +2,18 @@ import React from 'react'
 import './TelaPesquisa.css'
 import { Link, useNavigate } from "react-router-dom"
 import { GlobalContext } from '../contexts/GlobalContext'
+import { useContext } from 'react'
 import NavbarRealOficial from '../components/NavbarRealOficial'
 import BarraPesquisa from '../components/BarraPesquisa'
 import LivrosPesquisados from '../components/LivrosPesquisados'
 import ContainerDosLivrosPesquisados from '../components/ContainerDosLivrosPesquisados'
 import BottomPagina from '../components/BottomPagina'
+import Filtro from '../components/Filtro'
 
 
 function TelaPesquisa() {
+
+
   return (
     <div className='container-pesquisa'>
       <div className="capa-fundo-livro-um">
@@ -19,6 +23,7 @@ function TelaPesquisa() {
               <NavbarRealOficial/>
             </div>
             <div className="folha-esquerda">
+              <Filtro/>
               <BarraPesquisa/>
               <ContainerDosLivrosPesquisados/>
               <BottomPagina/>
