@@ -174,8 +174,6 @@ function TelaUsuarioConfigs() {
         console.error('Erro ao deletar cliente:', error);
       }
 
-      
-
 
     }else{
 
@@ -206,14 +204,9 @@ function TelaUsuarioConfigs() {
 
       <div className="usuarioConfigs-div-esquerda">
 
-
-
       </div>
 
       <div className="usuarioConfigs-body">
-        
-        
-        
 
         <div className="usuarioConfigs-body-cima">
 
@@ -235,25 +228,28 @@ function TelaUsuarioConfigs() {
 
               <div className="usuarioConfigs-bmpc-infos">
 
-              <label className="lbl-infos" >Usuário: {dadosUsuarioLogado.usuario_apelido}</label>
-              <label className="lbl-infos" >Email: {dadosUsuarioLogado.usuario_email}</label>
-              <label className="lbl-infos" >Senha: {dadosUsuarioLogado.usuario_senha}</label>
+                <label className="lbl-infos" >Usuário: {dadosUsuarioLogado.usuario_apelido}</label>
+                <label className="lbl-infos" >Email: {dadosUsuarioLogado.usuario_email}</label>
+                <label className="lbl-infos" >Senha: {dadosUsuarioLogado.usuario_senha}</label>
 
-              <input type="text" 
+                <input type="text" 
                 className="input"
                 value={editarNome} 
                 onChange={(event) => setEditarNome(event.target.value)}
                 placeholder="Edite seu nome completo" />
+
                 <input type="text" 
                 className="input"
                 value={editarEmail} 
                 onChange={(event) => setEditarEmail(event.target.value)}
                 placeholder="Edite seu email" />
+
                 <input type="text" 
                 className="input"
                 value={editarSenha} 
                 onChange={(event) => setEditarSenha(event.target.value)}
                 placeholder="Edite sua senha" />
+
               </div>
 
               {/* <div className="usuarioConfigs-bmpc-inputs">
@@ -265,6 +261,7 @@ function TelaUsuarioConfigs() {
                 <button className="btn" onClick={editarDados}>Editar dados</button>
                 <button className="btn" onClick={deslogarUsuario} >Deslogar</button>
                 <button className="btn btn-delete" onClick={deletarUsuario}>Apagar conta</button>
+                
               </div>
 
             </div>

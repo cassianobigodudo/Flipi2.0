@@ -1,0 +1,41 @@
+.container--teste{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--corfundo);
+}
+    .container--dois{
+        display: flex;
+        height: 92%;
+        width: 95%;
+        background-color: darkcyan;
+        border-radius: 20px
+    }
+        .container--left{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+            width: 40%;
+            background-color: var(--fundoDivs);
+            
+        }
+            .botao__criar--lista{
+                height: 50px;
+                width: 250px;
+                font-size: 25px;
+                font-weight: bold;
+                cursor: pointer;
+                border-radius: 20px;
+            }
+        .container--right{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 60%;
+            background-color: var(--fundoelementos);
+        }

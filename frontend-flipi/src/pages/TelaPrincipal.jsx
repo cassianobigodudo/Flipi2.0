@@ -269,24 +269,24 @@ function TelaPrincipal() {
                             
                                 
                                 <Link to="/telaprincipal">
-                                <button className="btns">
-                                    <img src="../public/icons/ant-design--home-outlined.svg" alt="" className="icone-botao"/>
-                                </button>
+                                    <button className="btns">
+                                        <img src="../public/icons/ant-design--home-outlined.svg" alt="" className="icone-botao"/>
+                                    </button>
                                 </Link>
     
     
                                 <Link to="/telaescrivaninha"> 
-                                <button className="btns"> 
-                                <img src="public/icons/escrita.png" alt="" className="icone-botao"/> 
-                                </button>
+                                    <button className="btns"> 
+                                        <img src="public/icons/escrita.png" alt="" className="icone-botao"/> 
+                                    </button>
                                 </Link>
                                 
                             </div>
     
-                            <Link to="/telausuarioconfigs"> 
-                            <button className="btns">  
-                            <img src="./public/images/setting.svg" alt="" className="icone-botao"/>
-                            </button>
+                            <Link to="/paginatestejaime"> 
+                                <button className="btns">  
+                                    <img src="./public/images/setting.svg" alt="" className="icone-botao"/>
+                                </button>
                             </Link>
     
                         </div>

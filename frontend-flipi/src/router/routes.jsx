@@ -11,6 +11,7 @@ import TelaUsuarioConfigs from "../pages/TelaUsuarioConfigs";
 import TelaPrincipal from "../pages/TelaPrincipal";
 import LandingPage from "../pages/LandingPage";
 import TelaLivro from "../pages/TelaLivro";
+import PaginaTesteJaime from "../pages/PaginaTesteJaime";
 
 const router = createBrowserRouter([
     // {path: "/", element: <Home />},
@@ -24,7 +25,8 @@ const router = createBrowserRouter([
     {path: "/telausuarioconfigs", element: <TelaUsuarioConfigs/>},
     {path: "/telaprincipal", element: <TelaPrincipal />},
     {path: "/", element: <LandingPage />},
-    {path: "/telalivro", element: <TelaLivro/>}
+    {path: "/telalivro", element: <TelaLivro/>},
+    {path: "/paginatestejaime", element: <PaginaTesteJaime />}
 
 ])
 
