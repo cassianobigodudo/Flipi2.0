@@ -123,8 +123,6 @@ function TelaLogin() {
 
     }
     
-
-
   return (<div className="container-tela-login">
     <div className="livro-login-container-esquerda">
         <div className="livro-login-primeiraLayer-esquerda">

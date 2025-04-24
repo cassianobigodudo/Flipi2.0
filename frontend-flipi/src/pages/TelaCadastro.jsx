@@ -27,8 +27,6 @@ export default function TelaCadastro() {
             }
         }
         
-
-
         return false
     }
 
@@ -158,13 +156,10 @@ export default function TelaCadastro() {
     function lol(){
         console.log(posicaoUsuarioID)
     }
+
     return (
 
-
         <div className="container-tela-cadastro">
-
-
-
 
             <div className="livro-cadastro-container-esquerda">
                 <div className="livro-cadastro-primeiraLayer-esquerda">
@@ -208,7 +203,6 @@ export default function TelaCadastro() {
                 </div>
             </div>
 
-
             <div className="livro-cadastro-container-direita">
 
                 <div className="livro-cadastro-primeiraLayerDireita">
@@ -217,12 +211,10 @@ export default function TelaCadastro() {
                         <img className="imagem-parte-cadastro" src="public\images\Creative writing-pana (1).png" alt=""/>
                         <button className="botao-cadastro" onClick={verificarCadastro}>Cadastrar</button>
 
-                        
                         {/* Cassiano: uso de router para transicionar para a tela de login */}
                         <Link className="label-possuir-conta" to='/telalogin'>Já possui uma conta?</Link>
                         
                     </div>
-
 
                 </div>
             </div>
