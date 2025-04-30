@@ -51,6 +51,126 @@
 
 }
 
+
+.img-prendedor{
+
+  width: 200px;
+  /* margin-left: 200px; */
+  /* margin-top: -300px; */
+  margin-bottom: 675px;
+  position: absolute;
+
+}
+
+.papel-container{
+
+  background-color: var(--fundoelementos);
+  height: 100% ;
+  width: 100%;
+  border-radius: 1px;
+  box-shadow: 0 10px 10px rgba(95, 42, 8, 0.3);
+
+}
+
+.filtros-header{
+
+  height: 15%;
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+  .filtro-titulo-label{
+
+    font-family: 'fonte-projeto';
+    font-size: 50px;
+  }
+
+  .linha-preta-fina{
+
+    height: 2%;
+    width: 30%;
+    border-radius: 10px;
+    background-color: black;
+
+  }
+
+  .x-btn{
+
+    border: none;
+    color: var(--laranjaenferrujado);
+    font-family: 'mais-legivel';
+    font-size: 40px;
+    position: absolute;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 530px;
+    margin-bottom: 50px;
+    width: 35px;
+    height: 50px;
+
+  }
+
+.filtros-genero{
+
+  height: 36%;
+  /* background-color: blue; */
+}
+
+.filtros-autor{
+
+  height: 13%;
+  /* background-color: brown; */
+}
+
+.filtros-ano{
+
+  height: 13%;
+  /* background-color: green; */
+}
+
+.filtros-editora{
+
+  height: 13%;
+  /* background-color: purple; */
+}
+
+.aplicar-filtros{
+
+  height: 10%;
+  /* background-color: darkorange; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+
+
+.close-button {
+  background-color: var(--laranjaenferrujado);
+  color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 30px;
+  width: 300px;
+  height: 45px;
+  font-family: 'fonte-projeto';
+  text-align: center;
+  transition: 0.2s ease;
+}
+
+
+.close-button:hover {
+  transition: 0.2s ease;
+  background-color: var(--hoverBotao);
+}
+/*! ---------------------------- MODAL ---------------------------- */
+
 .open-button {
     background-color: #4285f4;
     color: white;
@@ -81,15 +201,31 @@
   }
   
   .modal-container {
-    background-color: #fff;
-    border-radius: 8px;
-    width: 90%;
+    background-color: var(--fundoDivs);
+    border-radius: 16px;
+    width: 33%;
     height: 80%;
-    max-width: 500px;
-    position: relative;
+    /* margin-left: 290px; */
+    /* margin-top: 50px; */
+    /* max-width: 500px; */
+    /* position: relative; */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     animation: modalFadeIn 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
 }
+
+  .modal-content{
+
+    height: 93%;
+    width: 93%;
+
+  }
+
+  
   
 /* Animação simples para a entrada do modal */
 @keyframes modalFadeIn {
@@ -102,54 +238,16 @@
         transform: translateY(0);
     }
 }
-
-.modal-close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: #666;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-  }
   
   .modal-close-button:hover {
     background-color: #f2f2f2;
   }
   
-  .modal-content {
-    padding: 20px;
-  }
-  
-  .modal-content h2 {
-    margin-top: 10px;
-    margin-bottom: 15px;
-    color: #333;
-  }
   
   .modal-actions {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
   }
-  
-  .close-button {
-    background-color: #4285f4;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .close-button:hover {
-    background-color: #3367d6;
-  }
+
+/*! ---------------------------- MODAL ---------------------------- */

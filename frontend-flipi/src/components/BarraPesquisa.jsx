@@ -10,13 +10,7 @@ const Modal = ({ isOpen, onClose, children }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-container">
-        <button 
-          className="modal-close-button"
-          onClick={onClose}
-          aria-label="Fechar"
-        >
-          ✕
-        </button>
+      <img className='img-prendedor' src="public\images\Prendedor.svg" alt="" />
         <div className="modal-content">
           {children}
         </div>
@@ -50,16 +44,46 @@ function BarraPesquisa() {
       </button>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <h2>Conteúdo do Popup</h2>
-        <p>Este é um popup que aparece sobre o conteúdo da página sem afetar o layout existente.</p>
-        <p>Você pode colocar qualquer componente aqui!</p>
-        <div className="modal-actions">
-          <button 
-            onClick={closeModal}
-            className="close-button"
-          >
-            Fechar
-          </button>
+        
+        <div className="papel-container">
+
+          <div className="filtros-header">
+
+            <button onClick={closeModal}
+            className='x-btn'>X</button>
+
+            <label className='filtro-titulo-label'>Filtros</label>
+
+            <div className="linha-preta-fina"></div>
+
+          </div>
+
+          <div className="filtros-genero">
+
+          </div>
+
+          <div className="filtros-autor">
+
+          </div>
+
+          <div className="filtros-ano">
+
+          </div>
+
+          <div className="filtros-editora">
+
+          </div>
+
+          <div className="aplicar-filtros">
+
+            <button 
+              onClick={closeModal}
+              className="close-button"
+            >
+              Aplicar Filtros
+            </button>
+          </div>
+
         </div>
       </Modal>
         
