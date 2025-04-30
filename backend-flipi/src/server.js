@@ -129,13 +129,13 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
 
 
 app.post('/resenha', async (req, res) => {
-    const { resenha_id, resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data } = req.body;
+    const {resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data } = req.body;
     try {
         const result = await pool.query(
             `INSERT INTO resenha 
-            (resenha_id, resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data) 
-            VALUES ($1, $2, $3, $4) RETURNING *`,
-            [resenha_id, resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data ]
+            (resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data) 
+            VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+            [resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data ]
         );
         res.status(201).json(result.rows[0]);
     } catch (err) {
@@ -143,6 +143,26 @@ app.post('/resenha', async (req, res) => {
         res.status(500).json({ error: 'Erro ao cadastrar resenha!' });
     }
 });
+
+
+app.get('/resenha', async (req, res) => {
+
+    try {
+
+        const result = await pool.query(
+            'SELECT * FROM resenha'
+
+        )
+        res.status(200).json(result.rows)
+    } catch (error) {
+
+        console.error('Erro ao buscar resenha: ', error)
+        res.status(500).json({ error: 'Erro ao buscar resenha'})
+
+    }
+
+
+})
  
 
 app.listen(3000, () => {
