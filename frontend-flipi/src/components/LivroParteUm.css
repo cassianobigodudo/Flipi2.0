@@ -27,14 +27,14 @@
     }
         .capa-livro{
             box-shadow: 0px 10px 9px #a07e5c;
-             margin: 10px; 
+             margin: -6px; 
             display: flex;
             justify-content: center;
             align-items: center;
             margin-right: 90px;
             flex-direction: column;
             height: 54vh;
-            width: 45vh;
+            width: 36vh;
             background-color: #ecd9b1;
             background-repeat: no-repeat;
             background-size: cover;
@@ -58,7 +58,7 @@
         .estrelas-btn-livro{
 
             margin-top: 5%;
-            width: 60%;
+            width: 68%;
         }
             .icone-estrela{
                 height: 35px;

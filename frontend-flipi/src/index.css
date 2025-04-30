@@ -43,3 +43,8 @@
   font-family: "fonte-projeto";
   src: url(./font/Amatic_SC/AmaticSC-Bold.ttf);
 }
+
+@font-face {
+  font-family: "fonte-projeto-extra";
+  src: url(./font/Overlock/Overlock-Regular.ttf);
+}
