@@ -8,8 +8,6 @@ import { use } from 'react'
 import axios from 'axios'
 
 
-
-
 function TelaEscrivaninha() {
 
    useEffect (() => {
@@ -38,6 +36,32 @@ function TelaEscrivaninha() {
   const [resenha, setResenha] = useState()
   const [notaResenha, setNotaResenha] = useState()
   const [isbn, setIsbn] = useState()
+  const [time,setTime] = useState(0)
+
+    
+useEffect(() => {
+
+  const intervalo = setInterval(() => {
+
+
+    if (time <= 9){
+
+    setTime((timerAtual) => timerAtual+1)
+
+    } else{
+      
+    setTime((timerAtual) => timerAtual = 0)
+    }
+      
+    
+  }, 500);
+
+  return () => clearInterval(intervalo)
+
+}, [time])
+
+  
+  
 
 
   function dialogFunc() {
@@ -45,9 +69,13 @@ function TelaEscrivaninha() {
     if (abrirCaixa == false){
 
       setAbrirCaixa(true)
+     
 
     }else{
+
+
       setAbrirCaixa(false)
+      
     }
     
   }
