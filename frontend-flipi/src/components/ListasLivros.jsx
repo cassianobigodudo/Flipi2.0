@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import './ListasLivros.css'
 import CardLista from './CardLista';
 import MinhaLista from './MinhaLista';
+import axios from "axios";
+// import { GlobalContext } from '../contexts/GlobalContext';
+// const { usuarioLogado } = useContext(GlobalContext);
 
 function ListasLivros() {
 
@@ -11,24 +14,44 @@ function ListasLivros() {
     const [listas, setListas] = useState([]);
     const [mostrarLista, setMostrarLista] = useState(false);
 
-    function salvarLista(){
+    // function salvarLista(){
 
-        if (nomeLista === '' || descricaoLista === ''){
-            alert('Todos os campos do formulário devem ser preenchidos!')
-        }
+    //     if (nomeLista === '' || descricaoLista === ''){
+    //         alert('Todos os campos do formulário devem ser preenchidos!')
+    //     }
 
-        if (nomeLista.trim() && descricaoLista.trim()) {
-            setListas(prevListas => {
-                const novasListas = [...prevListas, { nomeLista, descricaoLista }];
-                setNomeLista(""); // Limpa o input
-                setDescricaoLista(""); // Limpa o input
-                setAbriuForm(false); // Fecha o diálogo APÓS atualizar a lista
-                console.log(novasListas)
-                return novasListas;
+    //     if (nomeLista.trim() && descricaoLista.trim()) {
+    //         setListas(prevListas => {
+    //             const novasListas = [...prevListas, { nomeLista, descricaoLista }];
+    //             setNomeLista(""); // Limpa o input
+    //             setDescricaoLista(""); // Limpa o input
+    //             setAbriuForm(false); // Fecha o diálogo APÓS atualizar a lista
+    //             console.log(novasListas)
+    //             return novasListas;
+    //         });
+    //     }
+
+    // }
+
+    const salvarLista = async (e) => {
+        e.preventDefault();
+        try {
+          const res = await axios.post("http://localhost:3000/listas",
+             {
+                nome: nomeLista,
+                descricao: descricaoLista
             });
+            alert("Lista criada com sucesso!");
+            console.log("Lista criada:", res.data);
+            setNomeLista(""); // Limpa o input
+            setDescricaoLista(""); // Limpa o input
+            setAbriuForm(false); // Fecha o diálogo APÓS atualizar a lista
+          
+        } catch (err) {
+          console.error(err);
+          alert("Erro ao criar lista");
         }
-
-    }
+    };
 
   return (
     <div className='container__listas'>

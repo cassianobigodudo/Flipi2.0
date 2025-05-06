@@ -33,7 +33,7 @@ app.post('/usuario', async (req, res) => {
     }
 })
 
-// Rota para buscar todos os clientes
+// Rota para buscar todos os usuários
 app.get('/usuario', async (req, res) => {
 
     try {
@@ -53,7 +53,7 @@ app.get('/usuario', async (req, res) => {
 
 })
 
-// Rota para buscar um cliente por ID
+// Rota para buscar um usuário por ID
 app.get('/usuario/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -122,6 +122,26 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
     }
 });
 
+// Rota para criar uma nova lista
+app.post('/listas', async (req, res) => {
+    console.log('Dados recebidos', req.body);
+
+    const { nome, descricao } = req.body;
+    
+    try {
+        // Query para inserir a nova lista no banco de dados
+        const result = await pool.query(
+            'INSERT INTO listas ( nome, descricao) VALUES ($1, $2) RETURNING *',
+            [ nome, descricao]
+        );
+
+        // Retorna a lista criada com status 201
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Erro ao criar lista!' });
+    }
+});
 
 
 app.listen(3000, () => {
