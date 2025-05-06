@@ -113,40 +113,97 @@
 
   }
 
-.filtros-genero{
+  .filtros-body{
 
-  height: 36%;
-  /* background-color: blue; */
+    height: 75%;
+    background-color: rosybrown;
+    display: flex;
+
+  }
+.titulo-genero-container{
+
+  height: 15%;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+
 }
 
-.filtros-autor{
+.opcoes-container{
+
+  height: 100%;
+  background-color: green;
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+}
+
+
+  .genero-label{
+
+    font-family: 'fonte-projeto';
+    font-size: 40px;
+    padding-left: 50px;
+
+  }
+
+  .opcoes-genero{
+
+    font-family: 'fonte-projeto';
+    font-size: 25px;
+
+  }
+
+  .checkbox-filtros{
+
+    height: 60px;
+    width: 200px;
+    font-family: 'fonte-projeto';
+    font-size: 30px;
+    cursor: pointer;
+    border: none;
+  }
+
+  .checkbox{
+
+    width: 45px;
+
+  }
+
+  .checkbox-marcada{
+
+    width: 45px;
+
+  }
+
+.filtros-autor-div{
 
   height: 13%;
   /* background-color: brown; */
 }
 
-.filtros-ano{
+.filtros-ano-div{
 
   height: 13%;
   /* background-color: green; */
 }
 
-.filtros-editora{
+.filtros-editora-div{
 
   height: 13%;
   /* background-color: purple; */
 }
 
-.aplicar-filtros{
+.aplicar-filtros-div{
 
   height: 10%;
-  /* background-color: darkorange; */
+  background-color: darkorange;
   display: flex;
   align-items: center;
   justify-content: center;
   
 }
-
 
 
 .close-button {
