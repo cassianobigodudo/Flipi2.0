@@ -86,12 +86,12 @@ app.get('/usuario/apelido/:apelido', async (req, res) => {
 // Rota para atualizar um cliente
 app.put('/usuario/:usuario_id', async (req, res) => {
     const { usuario_id } = req.params;
-    const { usuario_nome, usuario_email, usuario_senha  } = req.body;
+    const { usuario_nome, usuario_email, usuario_senha, url_foto  } = req.body;
     try {
         console.log('entrei no try')
         const result = await pool.query(
-            'UPDATE usuario SET usuario_nome = $1, usuario_email = $2, usuario_senha = $3 WHERE usuario_id = $4 RETURNING *',
-            [usuario_nome, usuario_email, usuario_senha, usuario_id]
+            'UPDATE usuario SET usuario_nome = $1, usuario_email = $2, usuario_senha = $3, url_foto = $5 WHERE usuario_id = $4 RETURNING *',
+            [usuario_nome, usuario_email, usuario_senha, usuario_id, url_foto]
         );
         console.log('fiz a query')
         console.log(usuario_id)

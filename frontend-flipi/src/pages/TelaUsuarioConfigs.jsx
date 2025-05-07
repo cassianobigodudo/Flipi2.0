@@ -14,6 +14,7 @@ function TelaUsuarioConfigs() {
   const {posicaoUsuario, setPosicaoUsuario, posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, setVetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado}=useContext(GlobalContext)
   const [editarNome, setEditarNome]=useState('')
   const [editarEmail, setEditarEmail]=useState('')
+  const [editarFoto, setEditarFoto]=useState('')
   const [editarSenha, setEditarSenha]=useState('')
   const navigate = useNavigate()
 
@@ -103,7 +104,7 @@ function TelaUsuarioConfigs() {
 
       default: 
         console.log('entrei no default')
-        let dadosUsuarioEditado = {...dadosUsuarioLogado, usuario_nome: editarNome || dadosUsuarioLogado.usuario_nome, usuario_email: editarEmail || dadosUsuarioLogado.usuario_email, usuario_senha: editarSenha || dadosUsuarioLogado.usuario_senha}
+        let dadosUsuarioEditado = {...dadosUsuarioLogado, usuario_nome: editarNome || dadosUsuarioLogado.usuario_nome, usuario_email: editarEmail || dadosUsuarioLogado.usuario_email, usuario_senha: editarSenha || dadosUsuarioLogado.usuario_senha, url_foto: editarFoto || dadosUsuarioLogado.url_foto}
         console.log(`dados de usuario editado: `, dadosUsuarioEditado)
 
         const response = await axios.put(`http://localhost:3000/usuario/${dadosUsuarioLogado.usuario_id}`, dadosUsuarioEditado);
@@ -112,6 +113,7 @@ function TelaUsuarioConfigs() {
               fetchClientes(); // Atualiza a lista de clientes após a edição
               setDadosUsuarioLogado(dadosUsuarioEditado)
               setEditarNome(''); // Limpa o campo 
+              setEditarFoto(''); // Limpa o campo 
               setEditarEmail(''); // Limpa o campo
               setEditarSenha(''); // Limpa o campo
               
@@ -143,7 +145,7 @@ function TelaUsuarioConfigs() {
     alert('Até mais!')
     setUsuarioLogado(false)
     setPosicaoUsuarioID(null)
-    navigate('/landingpage')
+    navigate('/')
 
   }
 
@@ -228,7 +230,13 @@ function TelaUsuarioConfigs() {
               <div className="usuarioConfigs-bmpc-titulo">
 
                 <label className="lbl-titulos">Configurações de usuário</label>
-                <IconUserCircle/>
+                <img 
+                  src={dadosUsuarioLogado.url_foto} 
+                  alt="Foto do usuário" 
+                  className="img-usuario"
+                  style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                />
+                {/* <IconUserCircle/> */}
                 <label className="lbl-nome-usuario" >Nome Completo: {dadosUsuarioLogado.usuario_nome}</label>
 
               </div>
@@ -249,6 +257,11 @@ function TelaUsuarioConfigs() {
                 value={editarEmail} 
                 onChange={(event) => setEditarEmail(event.target.value)}
                 placeholder="Edite seu email" />
+                <input type="text" 
+                className="input"
+                value={editarFoto} 
+                onChange={(event) => setEditarFoto(event.target.value)}
+                placeholder="Edite sua foto" />
                 <input type="text" 
                 className="input"
                 value={editarSenha} 
