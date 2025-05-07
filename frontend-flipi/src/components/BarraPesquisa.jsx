@@ -150,12 +150,21 @@ function BarraPesquisa() {
                 />
               ))}
             </div>
+            <div className="autor-editora-ano-container">
+
+              <label className='lbl-opcoes'>Autor: </label>
+              <input type="text" className='inpt-filtros' />
+              <label className='lbl-opcoes'>Editora: </label>
+              <input type="text" className='inpt-filtros' />
+              <label className='lbl-opcoes'>Ano: </label>
+              <input type="number" placeholder='YYYY' min={0} max={2025} className='inpt-filtros' />
+
+
+            </div>
+
 
 
           {/* Outras seções de filtro que podem ser implementadas futuramente */}
-          <div className="filtros-autor-div"></div>
-          <div className="filtros-ano-div"></div>
-          <div className="filtros-editora-div"></div>
           </div>
 
 

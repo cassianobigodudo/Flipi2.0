@@ -116,7 +116,7 @@
   .filtros-body{
 
     height: 75%;
-    background-color: rosybrown;
+    /* background-color: rosybrown; */
     display: flex;
 
   }
@@ -133,10 +133,13 @@
 .opcoes-container{
 
   height: 100%;
-  background-color: green;
+  overflow: auto;
+  width: 45%;
+  /* background-color: green; */
   display: flex;
   /* align-items: center; */
   flex-direction: column;
+  justify-content: start;
 }
 
 
@@ -158,11 +161,13 @@
   .checkbox-filtros{
 
     height: 60px;
-    width: 200px;
+    width: 90%;
     font-family: 'fonte-projeto';
     font-size: 30px;
     cursor: pointer;
     border: none;
+    text-align: start;
+    margin-left: 25px;
   }
 
   .checkbox{
@@ -177,28 +182,53 @@
 
   }
 
-.filtros-autor-div{
+  .autor-editora-ano-container{
 
-  height: 13%;
-  /* background-color: brown; */
-}
+    height: 100%;
+    width: 55%;
+    /* background-color: tomato; */
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    flex-direction: column;
+  }
 
-.filtros-ano-div{
+  .lbl-opcoes{
 
-  height: 13%;
-  /* background-color: green; */
-}
+    font-family: 'fonte-projeto';
+    font-size: 50px;
+    /* margin-right: 130px; */
+    margin-left: 25px;
+    
+  }
 
-.filtros-editora-div{
+  .inpt-filtros{
 
-  height: 13%;
-  /* background-color: purple; */
-}
+    background-color: #EEDAAD;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: black;
+    height: 50px;
+    width: 250px;
+    color: var(--laranjaenferrujado);
+    font-family: 'fonte-projeto';
+    font-size: 40px;
+    padding-left: 10px;
+    margin-left: 25px;
+
+  }
+
+  .inpt-filtros:focus-visible{
+
+    outline: none;
+
+
+  }
 
 .aplicar-filtros-div{
 
   height: 10%;
-  background-color: darkorange;
+  /* background-color: darkorange; */
   display: flex;
   align-items: center;
   justify-content: center;
