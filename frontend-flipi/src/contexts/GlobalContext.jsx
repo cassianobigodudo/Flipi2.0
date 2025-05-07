@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 
 export const GlobalContext = createContext()
 
@@ -306,3 +306,5 @@ const [biblioteca, setBiblioteca] = useState([
         </GlobalContext.Provider>
     )
 }
+
+export const useGlobalContext = () => useContext(GlobalContext);

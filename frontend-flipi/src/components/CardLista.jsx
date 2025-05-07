@@ -1,12 +1,12 @@
 import './CardLista.css'
 
-function CardLista({ titulo }) {
+function CardLista({ titulo, capa }) {
   return (
     <div className='container__card--listas'>
 
         <div className="img__card--listas">
 
-            {/* <img src="./flipi/capa.webp" alt="" className='image__capa--listas'/> */}
+            <img src={capa} className='image__capa--listas'/>
 
         </div>
 

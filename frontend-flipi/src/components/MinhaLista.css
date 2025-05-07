@@ -14,7 +14,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 20%;
+        height: 15%;
         width: 100%;
     }
         .lista__name{
@@ -37,51 +37,20 @@
             align-items: start;
             padding-left: 20px;
             padding-right: 20px;
-            height: 45%;
+            height: 70%;
             width: 100%;
         }
             .descricao__lista{
                 font-size: 15px;
                 font-weight: bold;
                 color: #40454b;
-            }
-
-        .pesquisa__lista--livro{
-            display: flex;
-            justify-content: end;
-            align-items: center;
-            padding-right: 15px;
-            height: 25%;
-            width: 100%;
-        }
-            .pesquisa__livro{
-                padding-left: 5px;
-                height: 30px;
-                width: 250px;
-                border-top-left-radius: 10px;
-                border-bottom-left-radius: 10px;
-                border: none;
-                background-color: #FCF6E8;
-                font-size: 15px; 
-            }
-            .btn__pesquisa--livro{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 30px;
-                width: 30px;
-                border: none;
-                background-color: #FCF6E8;
-                border-top-right-radius: 10px;
-                border-bottom-right-radius: 10px;
-                cursor: pointer;
-            }
+            }       
 
     .lista__body{
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 80%;
+        height: 85%;
         width: 100%;
         background-color: transparent;      
     }
@@ -116,37 +85,90 @@
         border-radius: 20px;
         width: 50%;
         position: fixed;
-        top: 63%;
-        left: 48%;
+        top: 60%;
+        left: 50.3%;
         transform: translate(-10%, -50%);
     }
         .container__livros{
-            height: 90%;
-            width: 90%;
+            height: 95%;
+            width: 95%;
             background-color: #F4E2B4;
             border-radius: 20px;
         }
             .fechar__caixa{
                 display: flex;
-                justify-content: end;
-                align-items: center;
-                padding-right: 10px;
-                padding-top: 10px;
-                height: 5%;
+                background-color: transparent;
+                height: 10%;
                 width: 100%;
             }
-                .btn__fechar--caixa{
+            
+                .pesquisar__livro{
                     display: flex;
-                    justify-content: center;
+                    justify-content: start;
                     align-items: center;
-                    cursor: pointer;
-                    height: 20px;
-                    width: 20px;
-                    border: solid 1px #40454b;
-                    border-radius: 5px;
+                    height: 100%;
+                    width: 50%;
+                    background-color: transparent;
                 }
+                    .input__pesquisar--livro{
+                        padding-left: 5px;
+                        height: 30px;
+                        width: 250px;
+                        border-top-left-radius: 10px;
+                        border-bottom-left-radius: 10px;
+                        border: none;
+                        background-color: #FCF6E8;
+                        font-size: 15px; 
+                    }
+                    .btn__pesquisa--livro{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 30px;
+                        width: 30px;
+                        border: none;
+                        background-color: #FCF6E8;
+                        border-top-right-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                        cursor: pointer;
+                    }
+                        .img__pesquisar{
+                            height: 25px;
+                            width: 25px;
+                        }
+                        .btn__pesquisa--livro:hover{
+                            background-color: var(--fundoDivs);
+                        }
+                
+                .botao__fechar{
+                    display: flex;
+                    justify-content: end;
+                    align-items: center;
+                    padding-right: 10px;
+                    height: 100%;
+                    width: 50%;
+                    background-color: transparent;
+                }
+                    .btn__fechar--caixa{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        cursor: pointer;
+                        height: 30px;
+                        width: 30px;
+                        border: solid 1px var(--laranjaenferrujado);
+                        /* border: none; */
+                        border-radius: 5px;
+                    }
 
             .lista__livros{
-                height: 95%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: auto;
+                flex-wrap: wrap;
+                gap: 30px;
+                height: 90%;
                 width: 100%;
+                padding: 10px;
             }
