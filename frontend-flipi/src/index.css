@@ -1,3 +1,5 @@
+
+
 *{
   margin: 0;
   padding: 0;
@@ -28,9 +30,12 @@
 
   border-radius: 2px;
   
-  background-color: #c78066;
+  background-color: #d6a47a;
   cursor: pointer;
+  transition: 1s;
+  animation: pulse 2s infinite ease-in-out;
 }
+
 
 
 ::selection{

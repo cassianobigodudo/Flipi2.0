@@ -1,6 +1,19 @@
+
+@keyframes slideInTop {
+    from {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
 .container-mae-resenhas{
     display: flex;
     background-color: whitesmoke;
+    animation: slideInTop 0.5s ease-in-out;
 }
 
 .container-resenhas{

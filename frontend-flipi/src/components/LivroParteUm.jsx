@@ -107,9 +107,9 @@ function LivroParteUm() {
 
             <div className="parte-baixo">
 
-                <button className="botao-resenha">Resenhas  |  {livro.resenhasLivro.length}</button>
+                <button className="botao-resenha">Resenhas |  {livro.resenhasLivro.length}</button>
 
-                <button className="botao-icone" onClick={ () => setResenhas(!resenhas)}><img src="./images/down.svg" alt="" className="icone-down"/></button>
+                <button className="botao-icone" onClick={ () => setResenhas(!resenhas)}><img src="./images/down.png" alt="" className="icone-down"/></button>
 
             </div>
 

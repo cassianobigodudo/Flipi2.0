@@ -175,6 +175,11 @@
     animation: slideInLeft 1s ease-in-out;
 }
 
+.inpt-tituloResenha:hover{
+
+  font-size: 29px;
+}
+
 .inpt-tituloResenha:focus{
     outline-width: 0px;
 }
@@ -415,14 +420,15 @@ dialog{
 }
 
 .desc-livroDesc{
-    height: 70%;
+  margin-top: 2%;
+    height: 66%;
     width: 95%;
     margin-left: 5%;
     animation: fadeIn 1.7s ease-in-out;
 }
 
 .livroDesc-textArea{
-    color: #2e2723;
+  color: #795041;
     margin-top: 2%;
     height: 77.9%;
     width: 99%;
@@ -458,11 +464,11 @@ dialog{
 
 .tags-btnAutor{
     height: 76%; 
-    width: 30.5%;
+    width: 31%;
     font-family: "fonte-projeto";
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 2%;
-    color: #000000;
+    color: #795041;
     border: none;
     border-radius: 2px;
     overflow-y: scroll;
@@ -474,11 +480,11 @@ dialog{
 .tags-btnEditora{
     margin-left: 2.3%;
     height: 76%; 
-    width: 30.5%;
+    width: 31%;
     font-family: "fonte-projeto";
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 2%;
-    color: #000000;
+    color: #795041;
     border: none;
     border-radius: 2px;
     overflow-y: scroll;
@@ -488,15 +494,16 @@ dialog{
 .tags-btnData{
     margin-left: 2.3%;
     height: 76%; 
-    width: 30.5%;
-    letter-spacing: 3px;
+    width: 31%;
+    letter-spacing: 2px;
     font-family: "fonte-projeto";
-    font-size: 24px;
+    font-size: 25px;
     margin-bottom: 2%;
-    color: #000000;
+    color: #795041;
     border: none;
     border-radius: 2px;
     overflow-y: scroll;
+    transition: 1s;
     animation: fadeIn 2.5s ease-in-out;
 }
 
