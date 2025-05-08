@@ -75,7 +75,7 @@ const [biblioteca, setBiblioteca] = useState([
     },
     {
         capaLivro: './images/bichos.jpg',
-        tituloLivro: 'A Revolução dos\nBichos',
+        tituloLivro: 'A Revolução dos Bichos',
         autorLivro: 'George Orwell',
         isbnLivro: '9788535914389',
         anoLivro: '1945',

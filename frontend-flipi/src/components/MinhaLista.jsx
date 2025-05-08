@@ -5,7 +5,10 @@ import CapaLivro from './CapaLivro';
 
 function MinhaLista() {
   const [abriuCaixa, setAbriuCaixa] = useState(false)
+  const [confirmacao, setConfirmacao] = useState(false)
   const {biblioteca} = useGlobalContext();
+
+  
 
   return (
     <div className='container__lista--livros'>
@@ -56,10 +59,22 @@ function MinhaLista() {
             <div className="lista__livros">
 
               {biblioteca.map((livro) => (
-                <CapaLivro key={livro.isbnLivro} capa={livro.capaLivro} titulo={livro.tituloLivro}/>
+                // <CapaLivro key={livro.isbnLivro} capa={livro.capaLivro} titulo={livro.tituloLivro} onClick={() => alert(`Olá ${livro.tituloLivro}`)}/>
+                <CapaLivro key={livro.isbnLivro} capa={livro.capaLivro} titulo={livro.tituloLivro} onClick={() => setConfirmacao(true)}/>
               ))}
 
             </div>
+
+          </div>
+
+        </dialog>
+
+        <dialog open={confirmacao}>
+
+          <div className="container__confirmacao">
+
+            <h1>Olá dialog de confirmação</h1>
+            <button className='botao__confirmacao' onClick={() => setConfirmacao(false)}>Fechar</button>
 
           </div>
 

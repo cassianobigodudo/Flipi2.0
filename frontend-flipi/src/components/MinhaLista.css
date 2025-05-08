@@ -172,3 +172,19 @@
                 width: 100%;
                 padding: 10px;
             }
+
+        .container__confirmacao{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 200px;
+            width: 350px;
+            background-color: whitesmoke;
+            border-radius: 20px;
+        }
+            .botao__confirmacao{
+                height: 30px;
+                width: 100px;
+                background-color: darkcyan;
+            }

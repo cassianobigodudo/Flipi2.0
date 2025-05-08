@@ -1,9 +1,9 @@
 import React from 'react'
 import './CapaLivro.css'
 
-function CapaLivro({ capa, titulo}) {
+function CapaLivro({ capa, titulo, onClick}) {
   return (
-    <div className='box__livro'>
+    <div className='box__livro' onClick={onClick}>
 
         <div className="capa__livro">
 
