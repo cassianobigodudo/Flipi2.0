@@ -7,8 +7,23 @@ function MinhaLista() {
   const [abriuCaixa, setAbriuCaixa] = useState(false)
   const [confirmacao, setConfirmacao] = useState(false)
   const {biblioteca} = useGlobalContext();
+  const [livroClicado, setLivroClicado] = useState();
 
-  
+  function cancelarAdicao(){
+    alert('cancelado!!!')
+    setConfirmacao(false)
+  }
+
+  function confirmarAdicao(){
+    //é nessa função que vou adicionar o livro a lista personalizada do usuário
+    alert('adicionado!!!')
+    setConfirmacao(false)
+  }
+
+  function cliquenolivro(){
+    setConfirmacao(true)
+    setLivroClicado(livro.tituloLivro)
+  }
 
   return (
     <div className='container__lista--livros'>
@@ -23,7 +38,7 @@ function MinhaLista() {
 
         <div className="lista__description">
 
-          <label className='descricao__lista'>Descrição da lista: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint distinctio enim ex tempore. Dolorem facere assumenda error maxime neque aspernatur molestiae vitae velit repudiandae odit quas eum eos, odio reprehenderit! Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam minus nostrum asperiores quisquam, optio dolores dicta laudantium maiores corrupti quod, itaque aspernatur sit nesciunt expedita similique incidunt? Hic, possimus? Nam.</label>
+          <label className='descricao__lista'>Descrição da lista: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint distinctio enim ex tempore. Dolorem facere assumenda error maxime neque aspernatur molestiae vitae velit repudiandae odit quas eum eos, odio reprehenderit! Lorem ipsum dolor sit amet consectetur adipisicing elit.</label>
 
         </div>
 
@@ -60,7 +75,7 @@ function MinhaLista() {
 
               {biblioteca.map((livro) => (
                 // <CapaLivro key={livro.isbnLivro} capa={livro.capaLivro} titulo={livro.tituloLivro} onClick={() => alert(`Olá ${livro.tituloLivro}`)}/>
-                <CapaLivro key={livro.isbnLivro} capa={livro.capaLivro} titulo={livro.tituloLivro} onClick={() => setConfirmacao(true)}/>
+                <CapaLivro key={livro.isbnLivro} capa={livro.capaLivro} titulo={livro.tituloLivro} onClick={cliquenolivro}/>
               ))}
 
             </div>
@@ -73,8 +88,25 @@ function MinhaLista() {
 
           <div className="container__confirmacao">
 
-            <h1>Olá dialog de confirmação</h1>
-            <button className='botao__confirmacao' onClick={() => setConfirmacao(false)}>Fechar</button>
+            <div className="confirmacao__fechar">
+
+              <button className='fechar__confirmacao' onClick={() => setConfirmacao(false)}>❌</button>
+
+            </div>
+
+            <div className="confirmacao__textos">
+
+              <label htmlFor="" className="textos__confirmacao">Quer adicionar "{livroClicado}" a sua lista?</label>
+
+            </div>
+
+            <div className="confirmacao__botoes">
+
+              <button className="botoes__confirmacao" onClick={cancelarAdicao}>Cancelar</button>
+              <button className="botoes__confirmacao" onClick={confirmarAdicao}>Adicionar</button>
+
+            </div>
+
 
           </div>
 
