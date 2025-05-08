@@ -264,7 +264,7 @@ useEffect(() => {
       <dialog open={abrirCaixa}> 
 
         <div className="dialog-divAtivo">
-          <h1 className='dialogLbl' >Para usar um ISBN, você pode pesquisá-lo em bancos de dados como o - 
+          <h1 className='dialogLbl' >O ISBN é um código de identificação de um livro, acesse vários desses códigos em- 
           <a href="https://openlibrary.org/" target='_blank' >Open Library</a>,
              Google Books ou sites de editoras para obter informações sobre um livro específico. 
 </h1>

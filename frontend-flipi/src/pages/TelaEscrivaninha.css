@@ -253,6 +253,7 @@
     background-color: #f9f3e5;
     border: none;
     border-radius: 13px;
+    transition: 1s;
 }
 
 .infor-container-isbnQuestion{
@@ -295,6 +296,11 @@
 .infor-container-isbnInpt:focus{
     outline-width: 0;
 }
+.infor-container-isbnInpt:hover{
+  margin-right: -3.3%;
+  width: 34%;
+  transition: 1s;
+}
 
 dialog{
     height: 110px;
@@ -333,7 +339,6 @@ dialog{
 .dialogLbl{ 
     font-family: "fonte-projeto";
     font-size: 20px;
-    letter-spacing: 1px;
     color: rgb(255, 255, 255);
     margin: 5px;
     transition: 1s;
