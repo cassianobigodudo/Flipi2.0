@@ -153,9 +153,9 @@ function BarraPesquisa() {
             <div className="autor-editora-ano-container">
 
               <label className='lbl-opcoes'>Autor: </label>
-              <input type="text" className='inpt-filtros' />
+              <input type="text" className='inpt-filtros' placeholder='Digite o autor desejado'/>
               <label className='lbl-opcoes'>Editora: </label>
-              <input type="text" className='inpt-filtros' />
+              <input type="text" className='inpt-filtros' placeholder='Digite a editora desejada'/>
               <label className='lbl-opcoes'>Ano: </label>
               <input type="number" placeholder='YYYY' min={0} max={2025} className='inpt-filtros' />
 
