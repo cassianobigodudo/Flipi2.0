@@ -1,0 +1,85 @@
+.container-pesquisa{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+    .capa-fundo-livro-um{
+        height: 90%;
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #eddbb3;
+        border-radius: 10px;
+       
+    }
+
+        .capa-fundo-livro-dois{
+            height: 100%;
+            width: 96%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #c69877;
+            border-radius: 10px;
+            
+        }
+
+            .capa-fundo-livro-tres{
+                height: 100%;
+                width: 97%;
+                display: flex;
+                /* justify-content: center; */
+                align-items: center;
+                background-color:#f8ebce;
+                border-radius: 10px;
+            
+            }
+
+                .navbar-container{
+                    height: 100%;
+                    width: 6%;
+                    background-color: #fdfaf3;
+                }
+
+                .folha-esquerda{
+
+                    height: 100%;
+                    width: 44%;
+                    background-color: #fdfaf3;
+                    border-color: #f8ebce;
+                    border-style: solid;
+                    border-left-width: 4px;
+                    border-right-width: 4px;
+                    border-top-width: 0px;
+                    border-bottom-width: 0px;
+                }
+
+
+                .folha-direita{
+
+                    height: 100%;
+                    width: 44%;
+                    background-color: #fdfaf3;
+                    border-color: #f8ebce;
+                    border-style: solid;
+                    border-left-width: 4px;
+                    border-right-width: 4px;
+                    border-top-width: 0px;
+                    border-bottom-width: 0px;
+                }
+
+                .vazio-pagina-direita{
+
+                    height: 15%;
+
+                }
+
+                .vazio-direita{
+                    height: 100%;
+                    width: 6%;
+                    background-color: #fdfaf3;
+                }
