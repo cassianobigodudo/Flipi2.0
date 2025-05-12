@@ -14,6 +14,7 @@ function TelaUsuarioConfigs() {
   const {posicaoUsuario, setPosicaoUsuario, posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, setVetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado}=useContext(GlobalContext)
   const [editarNome, setEditarNome]=useState('')
   const [editarEmail, setEditarEmail]=useState('')
+  const [editarDescricao, setEditarDescricao]=useState('')
   const [editarFoto, setEditarFoto]=useState('')
   const [editarSenha, setEditarSenha]=useState('')
   const navigate = useNavigate()
@@ -167,7 +168,7 @@ function TelaUsuarioConfigs() {
           
           setVetorObjetosUsuarios(usuariosAtualizado)
 
-          alert(`Conta deletada com sucesso.`)
+          alert(`Conta deletada com sucesso!!`)
           setUsuarioLogado(false) //hi
           navigate(`/landingpage`)
             
@@ -222,7 +223,6 @@ function TelaUsuarioConfigs() {
         </div>
 
         <div className="usuarioConfigs-body-meio">
-
           <div className="usuarioConfigs-body-meio-papel">
 
             <div className="usuarioConfigs-body-meio-papel-conta">
@@ -234,10 +234,13 @@ function TelaUsuarioConfigs() {
                   src={dadosUsuarioLogado.url_foto} 
                   alt="Foto do usuário" 
                   className="img-usuario"
-                  style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                  style={{ width: '150px', height: '150px', borderRadius: '50%' }}
                 />
                 {/* <IconUserCircle/> */}
-                <label className="lbl-nome-usuario" >Nome Completo: {dadosUsuarioLogado.usuario_nome}</label>
+                <div className="usuarioNomeDescricao">
+                  <h2>{dadosUsuarioLogado.usuario_nome}</h2>
+                  <buttom onClick><p>{dadosUsuarioLogado.descricao || "Sua descrição..."}</p></buttom>
+                </div>
 
               </div>
 
@@ -247,26 +250,46 @@ function TelaUsuarioConfigs() {
               <label className="lbl-infos" >Email: {dadosUsuarioLogado.usuario_email}</label>
               <label className="lbl-infos" >Senha: {dadosUsuarioLogado.usuario_senha}</label>
 
-              <input type="text" 
+              <div className="campo-editavel">
+                <label>Nome:</label>
+                <input type="text" 
                 className="input"
                 value={editarNome} 
                 onChange={(event) => setEditarNome(event.target.value)}
-                placeholder="Edite seu nome completo" />
+                placeholder="Editar nome completo" />
+                <button className="btn-editar">✏️</button>
+              </div>
+              
+              <div className="campo-editavel">
+                <label>E-mail:</label>
                 <input type="text" 
                 className="input"
                 value={editarEmail} 
                 onChange={(event) => setEditarEmail(event.target.value)}
-                placeholder="Edite seu email" />
+                placeholder="Editar E-mail" />
+                <button className="btn-editar">✏️</button>
+              </div>
+
+              <div className="campo-editavel">
+                <label>Foto:</label>
                 <input type="text" 
                 className="input"
                 value={editarFoto} 
                 onChange={(event) => setEditarFoto(event.target.value)}
-                placeholder="Edite sua foto" />
+                placeholder="Editar Foto" />
+                <button className="btn-editar">✏️</button>
+              </div>
+
+              <div className="campo-editavel">
+                <label>Senha:</label>
                 <input type="text" 
                 className="input"
                 value={editarSenha} 
                 onChange={(event) => setEditarSenha(event.target.value)}
-                placeholder="Edite sua senha" />
+                placeholder="Editar Senha" />
+                <button className="btn-editar">✏️</button>
+              </div>
+                
               </div>
 
               {/* <div className="usuarioConfigs-bmpc-inputs">
@@ -274,10 +297,12 @@ function TelaUsuarioConfigs() {
               </div> */}
 
               <div className="usuarioConfigs-bmpc-buttons">
-
+{/* 
                 <button className="btn" onClick={editarDados}>Editar dados</button>
                 <button className="btn" onClick={deslogarUsuario} >Deslogar</button>
-                <button className="btn btn-delete" onClick={deletarUsuario}>Apagar conta</button>
+                <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button> */}
+                <button className="btn-secao">Listas Personalizadas</button>
+                <button className="btn-secao">Resenhas</button>
               </div>
 
             </div>
@@ -301,7 +326,6 @@ function TelaUsuarioConfigs() {
             </div>
 
           </div>
-
         </div>
 
         <div className="usuarioConfigs-body-baixo">
