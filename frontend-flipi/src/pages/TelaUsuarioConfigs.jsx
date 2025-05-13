@@ -17,6 +17,7 @@ function TelaUsuarioConfigs() {
   const [editarDescricao, setEditarDescricao]=useState('')
   const [editarFoto, setEditarFoto]=useState('')
   const [editarSenha, setEditarSenha]=useState('')
+  const [mostrarSenha, setMostrarSenha] = useState(false)
   const navigate = useNavigate()
 
   useEffect (() => {
@@ -88,58 +89,50 @@ function TelaUsuarioConfigs() {
     }
 };
 
-  const editarDados = async (e) => {
-    e.preventDefault();
-    switch (true) {
-      case verificarInputsRegistrados():
-        alert(`Verifique se ao menos um campo esteja preenchido`)
-        break
-
-      case verificarInputsIguais():
-        alert('Algum dado é idêntico ao que já existe')
-        break
-      
-      case verificarEmailExistente():
-        alert('Não foi possivel alterar os dados: email já existente')
-        break
-
-      default: 
-        console.log('entrei no default')
-        let dadosUsuarioEditado = {...dadosUsuarioLogado, usuario_nome: editarNome || dadosUsuarioLogado.usuario_nome, usuario_email: editarEmail || dadosUsuarioLogado.usuario_email, usuario_senha: editarSenha || dadosUsuarioLogado.usuario_senha, url_foto: editarFoto || dadosUsuarioLogado.url_foto}
-        console.log(`dados de usuario editado: `, dadosUsuarioEditado)
-
-        const response = await axios.put(`http://localhost:3000/usuario/${dadosUsuarioLogado.usuario_id}`, dadosUsuarioEditado);
-        console.log('to no put no frontend ')
-          if (response.status === 200) {
-              fetchClientes(); // Atualiza a lista de clientes após a edição
-              setDadosUsuarioLogado(dadosUsuarioEditado)
-              setEditarNome(''); // Limpa o campo 
-              setEditarFoto(''); // Limpa o campo 
-              setEditarEmail(''); // Limpa o campo
-              setEditarSenha(''); // Limpa o campo
-              
-          }
-
-      
-        // alert('Dados alterados!')
-        // let usuariosAtualizado = { 
-        //   ...vetorObjetosUsuarios[posicaoUsuario], 
-          // nome: editarNome || vetorObjetosUsuarios[posicaoUsuario].nome, 
-          // email: editarEmail || vetorObjetosUsuarios[posicaoUsuario].email, 
-          // senha: editarSenha || vetorObjetosUsuarios[posicaoUsuario].senha 
-        // }
-
-        // const novosUsuarios = [...vetorObjetosUsuarios]
-
-        // novosUsuarios[posicaoUsuario] = usuariosAtualizado
-        
-        // setVetorObjetosUsuarios(novosUsuarios)
-        // setEditarNome('')
-        // setEditarEmail('')
-        // setEditarSenha('')
-    }
-
+const editarDados = async (campo) => {
+  let novoValor;
+  switch (campo) {
+    case "nome":
+      if (!editarNome || editarNome === dadosUsuarioLogado.usuario_nome) return alert("Nome inválido ou igual ao atual.");
+      novoValor = { usuario_nome: editarNome };
+      break;
+    case "email":
+      if (!editarEmail || editarEmail === dadosUsuarioLogado.usuario_email) return alert("E-mail inválido ou igual ao atual.");
+      if (verificarEmailExistente()) return alert("E-mail já em uso.");
+      novoValor = { usuario_email: editarEmail };
+      break;
+    case "foto":
+      if (!editarFoto || editarFoto === dadosUsuarioLogado.url_foto) return alert("URL inválida ou igual à atual.");
+      novoValor = { url_foto: editarFoto };
+      break;
+    case "senha":
+      if (!editarSenha || editarSenha === dadosUsuarioLogado.usuario_senha) return alert("Senha inválida ou igual à atual.");
+      novoValor = { usuario_senha: editarSenha };
+      break;
+    default:
+      return;
   }
+
+  const dadosAtualizados = { ...dadosUsuarioLogado, ...novoValor };
+
+  try {
+    const response = await axios.put(`http://localhost:3000/usuario/${dadosUsuarioLogado.usuario_id}`, dadosAtualizados);
+    if (response.status === 200) {
+      setDadosUsuarioLogado(dadosAtualizados);
+      fetchClientes();
+      alert("Dados atualizados com sucesso!");
+
+      // limpa apenas o campo atualizado
+      if (campo === "nome") setEditarNome("");
+      if (campo === "email") setEditarEmail("");
+      if (campo === "foto") setEditarFoto("");
+      if (campo === "senha") setEditarSenha("");
+    }
+  } catch (error) {
+    console.error("Erro ao atualizar:", error);
+  }
+};
+
 
   function deslogarUsuario(){
 
@@ -231,65 +224,97 @@ function TelaUsuarioConfigs() {
 
                 <label className="lbl-titulos">Configurações de usuário</label>
                 <img 
-                  src={dadosUsuarioLogado.url_foto} 
+                  src={editarFoto || dadosUsuarioLogado.url_foto} 
                   alt="Foto do usuário" 
                   className="img-usuario"
                   style={{ width: '150px', height: '150px', borderRadius: '50%' }}
                 />
+
                 {/* <IconUserCircle/> */}
                 <div className="usuarioNomeDescricao">
                   <h2>{dadosUsuarioLogado.usuario_nome}</h2>
-                  <buttom onClick><p>{dadosUsuarioLogado.descricao || "Sua descrição..."}</p></buttom>
+                  <label><p>{dadosUsuarioLogado.descricao || "Sua descrição..."}</p></label>
                 </div>
 
               </div>
 
               <div className="usuarioConfigs-bmpc-infos">
 
-              <label className="lbl-infos" >Usuário: {dadosUsuarioLogado.usuario_apelido}</label>
-              <label className="lbl-infos" >Email: {dadosUsuarioLogado.usuario_email}</label>
-              <label className="lbl-infos" >Senha: {dadosUsuarioLogado.usuario_senha}</label>
+              {/* <label className="lbl-infos" >Usuário: {dadosUsuarioLogado.usuario_nome}</label> */}
+              <div className="senha-container">
+                <label className="lbl-infos">
+                  Senha: {mostrarSenha 
+                    ? dadosUsuarioLogado.usuario_senha 
+                    : "•".repeat(dadosUsuarioLogado.usuario_senha.length)}
+                </label>
 
-              <div className="campo-editavel">
-                <label>Nome:</label>
-                <input type="text" 
-                className="input"
-                value={editarNome} 
-                onChange={(event) => setEditarNome(event.target.value)}
-                placeholder="Editar nome completo" />
-                <button className="btn-editar">✏️</button>
+                <button 
+                  className="btn-olhoMagico"
+                  onMouseDown={() => setMostrarSenha(true)}   // mostrar ao pressionar
+                  onMouseUp={() => setMostrarSenha(false)}   // esconder ao soltar
+                  onMouseLeave={() => setMostrarSenha(false)} // esconder se mouse sair
+                >
+                  👁️
+                </button>
               </div>
-              
               <div className="campo-editavel">
-                <label>E-mail:</label>
-                <input type="text" 
-                className="input"
-                value={editarEmail} 
-                onChange={(event) => setEditarEmail(event.target.value)}
-                placeholder="Editar E-mail" />
-                <button className="btn-editar">✏️</button>
-              </div>
+                {/* <label>Nome:</label> */}
+                  <div className="input-container">
+                    <input 
+                      type="text" 
+                      className="input"
+                      value={editarNome} 
+                      onChange={(e) => setEditarNome(e.target.value)}
+                      placeholder={dadosUsuarioLogado.usuario_nome}
+                    />
+                    <button className="btn-editar" onClick={() => editarDados("nome")}>✏️</button>
+                  </div>
+                </div>
 
-              <div className="campo-editavel">
-                <label>Foto:</label>
-                <input type="text" 
-                className="input"
-                value={editarFoto} 
-                onChange={(event) => setEditarFoto(event.target.value)}
-                placeholder="Editar Foto" />
-                <button className="btn-editar">✏️</button>
-              </div>
+                <div className="campo-editavel">
+                  {/* <label>Email:</label> */}
+                  <div className="input-container">
+                    <input 
+                      type="text" 
+                      className="input"
+                      value={editarEmail} 
+                      onChange={(e) => setEditarEmail(e.target.value)}
+                      placeholder={dadosUsuarioLogado.usuario_email}
+                    />
+                    <button className="btn-editar" onClick={() => editarDados("email")}>✏️</button>
+                  </div>
+                </div>
 
-              <div className="campo-editavel">
-                <label>Senha:</label>
-                <input type="text" 
-                className="input"
-                value={editarSenha} 
-                onChange={(event) => setEditarSenha(event.target.value)}
-                placeholder="Editar Senha" />
-                <button className="btn-editar">✏️</button>
-              </div>
-                
+                <div className="campo-editavel">
+                  {/* <label>Foto (URL):</label> */}
+                  <div className="input-container">
+                    <input 
+                      type="text" 
+                      className="input"
+                      value={editarFoto} 
+                      onChange={(e) => setEditarFoto(e.target.value)}
+                      placeholder="Cole a URL da imagem" 
+                    />
+                    <button className="btn-editar" onClick={() => editarDados("foto")}>✏️</button>
+                  </div>
+                </div>
+
+
+                <div className="campo-editavel">
+                  {/* <label>Senha:</label> */}
+                  <div className="input-container">
+                    <input 
+                      type="text" 
+                      className="input"
+                      value={editarSenha} 
+                      onChange={(e) => setEditarSenha(e.target.value)}
+                      placeholder="Editar Senha" 
+                    />
+                    <button className="btn-editar" onClick={() => editarDados("senha")}>✏️</button>
+                  </div>
+                </div>
+
+                    
               </div>
 
               {/* <div className="usuarioConfigs-bmpc-inputs">
