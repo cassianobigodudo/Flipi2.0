@@ -1,3 +1,14 @@
+@keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.09);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 
 .container-landing-page{
     height: 100vh;
@@ -142,6 +153,7 @@
                   .logo-site{
                       height: 100px;
                       width: 150px;
+                      animation: pulse 2s infinite ease-in-out;
                   }
   
           .div-informacoes{

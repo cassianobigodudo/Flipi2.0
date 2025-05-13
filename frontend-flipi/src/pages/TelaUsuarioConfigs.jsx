@@ -167,7 +167,7 @@ function TelaUsuarioConfigs() {
 
           alert(`Conta deletada com sucesso.`)
           setUsuarioLogado(false) //hi
-          navigate(`/landingpage`)
+          navigate(`/`)
             
         }
       } catch (error) {

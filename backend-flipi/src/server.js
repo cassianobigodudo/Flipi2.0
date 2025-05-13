@@ -16,6 +16,8 @@ const pool = new Pool({
 app.use(cors())
 app.use(express.json())
 
+//! TABELA USUARIO
+
 // Rota para inserção de user no banco de dados
 app.post('/usuario', async (req, res) => {
     console.log('Dados recebidos no backend:', req.body);
@@ -123,6 +125,45 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
 });
 
 
+//* TABELA RESENHA
+
+
+app.post('/resenha', async (req, res) => {
+    const {resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data } = req.body;
+    try {
+        const result = await pool.query(
+            `INSERT INTO resenha 
+            (resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data) 
+            VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+            [resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data ]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Erro ao cadastrar resenha!' });
+    }
+});
+
+
+app.get('/resenha', async (req, res) => {
+
+    try {
+
+        const result = await pool.query(
+            'SELECT * FROM resenha'
+
+        )
+        res.status(200).json(result.rows)
+    } catch (error) {
+
+        console.error('Erro ao buscar resenha: ', error)
+        res.status(500).json({ error: 'Erro ao buscar resenha'})
+
+    }
+
+
+})
+ 
 
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000! :D')
