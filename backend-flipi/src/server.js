@@ -8,11 +8,20 @@ const app = express()
 
 async function iniciarDB(){
     await verificarDB()
+    await verificarTabelas()
 }
 
 iniciarDB().catch(error => {
     console.error('Erro na inicialização do Banco de Dados: ', error)
 })
+
+const pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'flipidb',
+    password: 'senai',
+    port: 5432 
+  });
 
 async function verificarDB(){
 
@@ -43,6 +52,68 @@ async function verificarDB(){
     
     client.release()
     await defaultPool.end()
+}
+
+async function verificarTabelas(){
+
+    const client = await pool.connect();
+
+    const createUsuarioQuery = `
+    CREATE TABLE IF NOT EXISTS usuario(
+        usuario_id SERIAL PRIMARY KEY,
+        usuario_nome VARCHAR(40) NOT NULL,
+        usuario_apelido VARCHAR(40) NOT NULL,
+        usuario_email VARCHAR(80) NOT NULL,
+        usuario_senha VARCHAR(30) NOT NULL
+    );`
+    await client.query(createUsuarioQuery);
+    console.log(`Tabela "usuario" verificada/criada com sucesso.`);
+
+    const createEditoraQuery = `
+    CREATE TABLE IF NOT EXISTS editora(
+        editora_id SERIAL PRIMARY KEY,
+        editora_nome VARCHAR(40) NOT NULL
+    );`
+    await client.query(createEditoraQuery);
+    console.log(`Tabela "editora" verificada/criada com sucesso.`);
+
+    const createAutorQuery = `
+    CREATE TABLE IF NOT EXISTS autor(
+        autor_id SERIAL PRIMARY KEY,
+        autor_nome VARCHAR(40) NOT NULL
+    );`
+    await client.query(createAutorQuery);
+    console.log(`Tabela "autor" verificada/criada com sucesso.`);
+
+    const createGeneroQuery = `
+    CREATE TABLE IF NOT EXISTS genero(
+        genero_id SERIAL PRIMARY KEY,
+        genero_nome VARCHAR(40) NOT NULL
+    );`
+    await client.query(createGeneroQuery);
+    console.log(`Tabela "genero" verificada/criada com sucesso.`);
+
+    const createLivroQuery= `
+    CREATE TABLE IF NOT EXISTS livro (
+        livro_isbn BIGINT PRIMARY KEY,
+        livro_titulo VARCHAR(100) NOT NULL,
+        livro_ano INTEGER NOT NULL,
+        livro_sinopse VARCHAR (400) NOT NULL,
+        livro_media INTEGER,
+        editora_id INTEGER,
+        autor_id INTEGER,
+        genero_id INTEGER,
+        CONSTRAINT fk_livro_editora FOREIGN KEY (editora_id) REFERENCES EDITORA (editora_id) ON DELETE SET NULL,
+        CONSTRAINT fk_livro_autor FOREIGN KEY (autor_id) REFERENCES AUTOR (autor_id) ON DELETE SET NULL,
+        CONSTRAINT fk_livro_genero FOREIGN KEY (genero_id) REFERENCES GENERO (genero_id) ON DELETE SET NULL
+    );`
+    await client.query(createLivroQuery);
+    console.log(`Tabela "livro" verificada/criada com sucesso.`);
+
+    
+
+  client.release();
+  await pool.end();
 }
 
 
