@@ -1,17 +1,50 @@
-const express = require('express')
-const cors = require('cors')
-const { Pool } = require('pg')
+import express from 'express'
+import cors from 'cors'
+import pg from 'pg';
+const { Pool } = pg;
 
 const app = express()
 
-// Configurando pool para acesso ao banco de dados
-const pool = new Pool({
-    user: 'postgres', // Substitua pelo seu usuário do PostgreSQL / PGAdmin
-    host: 'localhost',
-    database: 'FlipiDB', // Nome da sua database no PostgreSQL / PGAdmin
-    password: 'senai', // Substitua pela sua senha do PostgreSQL / PGAdmin
-    port: 5432, // Porta padrão do PostgreSQL
+
+async function iniciarDB(){
+    await verificarDB()
+}
+
+iniciarDB().catch(error => {
+    console.error('Erro na inicialização do Banco de Dados: ', error)
 })
+
+async function verificarDB(){
+
+    // Configurando pool para acesso ao banco de dados
+    const defaultPool = new Pool({
+        user: 'postgres', // Substitua pelo seu usuário do PostgreSQL / PGAdmin
+        host: 'localhost',
+        database: 'postgres', // Nome da sua database no PostgreSQL / PGAdmin
+        password: 'senai', // Substitua pela sua senha do PostgreSQL / PGAdmin
+        port: 5432, // Porta padrão do PostgreSQL
+    })
+    
+    const client = await defaultPool.connect();
+    const nomeBanco = 'flipidb'
+    
+    const result = await client.query('SELECT 1 FROM pg_database WHERE datname = $1', [nomeBanco])
+    
+    if(result.rowCount == 0){
+    
+        console.log(`Banco de dados ${nomeBanco} não existe. Criando...`)
+        await client.query(`CREATE DATABASE ${nomeBanco}`)
+        console.log(`Banco de dados ${nomeBanco} criado com sucesso!`)
+    } else {
+    
+        console.log(`Banco de dados ${nomeBanco} já existe.`)
+    
+    }
+    
+    client.release()
+    await defaultPool.end()
+}
+
 
 app.use(cors())
 app.use(express.json())

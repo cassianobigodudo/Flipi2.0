@@ -1,6 +1,7 @@
 {
   "name": "backend-flipi",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "src/server.js",
   "scripts": {
@@ -22,4 +23,5 @@
     "express": "^4.21.2",
     "pg": "^8.13.1"
   }
+  
 }
