@@ -245,40 +245,47 @@ const editarDados = async (campo) => {
                 <label className="lbl-infos">
                   Senha: {mostrarSenha 
                     ? dadosUsuarioLogado.usuario_senha 
-                    : "•".repeat(dadosUsuarioLogado.usuario_senha.length)}
+                    : "•".repeat(dadosUsuarioLogado.usuario_senha?.length || 0)}
                 </label>
 
                 <button 
                   className="btn-olhoMagico"
                   onMouseDown={() => setMostrarSenha(true)}   // mostrar ao pressionar
                   onMouseUp={() => setMostrarSenha(false)}   // esconder ao soltar
-                  onMouseLeave={() => setMostrarSenha(false)} // esconder se mouse sair
-                >
-                  👁️
-                </button>
-              </div>
-              <div className="campo-editavel">
-                {/* <label>Nome:</label> */}
-                  <div className="input-container">
+                   // esconder se mouse sair
+                          >
+                            👁️
+                  </button>
+                  </div>
+                  <div className="campo-editavel">
+                  {/* <label>Email:</label> */}
+                    <div className="input-container">
                     <input 
                       type="text" 
                       className="input"
-                      value={editarNome} 
+                      value={editarNome}
                       onChange={(e) => setEditarNome(e.target.value)}
                       placeholder={dadosUsuarioLogado.usuario_nome}
                     />
                     <button className="btn-editar" onClick={() => editarDados("nome")}>✏️</button>
+                    </div>
                   </div>
-                </div>
 
-                <div className="campo-editavel">
-                  {/* <label>Email:</label> */}
+                  <div className="campo-editavel">
+                    {/* <label>Foto (URL):</label> */}
                   <div className="input-container">
                     <input 
-                      type="text" 
+                      type="email" 
                       className="input"
                       value={editarEmail} 
-                      onChange={(e) => setEditarEmail(e.target.value)}
+                      onChange={(e) => setEditarEmail(e.target.value)} // Permite qualquer valor no estado
+                      onBlur={() => { // Valida o e-mail ao sair do campo
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex para validar e-mails
+                        if (editarEmail && !emailRegex.test(editarEmail)) {
+                          alert("Por favor, insira um e-mail válido.");
+                          setEditarEmail(""); // Limpa o campo se o e-mail for inválido
+                        }
+                      }}
                       placeholder={dadosUsuarioLogado.usuario_email}
                     />
                     <button className="btn-editar" onClick={() => editarDados("email")}>✏️</button>
