@@ -103,12 +103,32 @@ async function verificarTabelas(){
         editora_id INTEGER,
         autor_id INTEGER,
         genero_id INTEGER,
-        CONSTRAINT fk_livro_editora FOREIGN KEY (editora_id) REFERENCES EDITORA (editora_id) ON DELETE SET NULL,
-        CONSTRAINT fk_livro_autor FOREIGN KEY (autor_id) REFERENCES AUTOR (autor_id) ON DELETE SET NULL,
-        CONSTRAINT fk_livro_genero FOREIGN KEY (genero_id) REFERENCES GENERO (genero_id) ON DELETE SET NULL
+        CONSTRAINT fk_livro_editora FOREIGN KEY (editora_id) REFERENCES EDITORA (editora_id) ON UPDATE CASCADE ON DELETE RESTRICT
     );`
     await client.query(createLivroQuery);
     console.log(`Tabela "livro" verificada/criada com sucesso.`);
+
+    const createLivroAutorQuery= `
+    CREATE TABLE IF NOT EXISTS livro_autor(
+        livro_isbn BIGINT NOT NULL,
+        autor_id INT NOT NULL,
+        PRIMARY KEY (livro_isbn, autor_id),
+        CONSTRAINT fk_livro_autor FOREIGN KEY (autor_id) REFERENCES AUTOR (autor_id) ON UPDATE CASCADE ON DELETE RESTRICT,
+        CONSTRAINT fk_livro_isbn FOREIGN KEY (livro_isbn) REFERENCES LIVRO (livro_isbn) ON UPDATE CASCADE ON DELETE CASCADE        
+    );`
+    await client.query(createLivroAutorQuery);
+    console.log(`Tabela "livro_autor" verificada/criada com sucesso.`)
+
+    const createLivroGeneroQuery= `
+    CREATE TABLE IF NOT EXISTS livro_genero(
+        livro_isbn BIGINT NOT NULL,
+        genero_id INT NOT NULL,
+        PRIMARY KEY (livro_isbn, genero_id),
+        CONSTRAINT fk_livro_genero FOREIGN KEY (genero_id) REFERENCES GENERO (genero_id) ON UPDATE CASCADE ON DELETE RESTRICT,
+        CONSTRAINT fk_livro_isbn FOREIGN KEY (livro_isbn) REFERENCES LIVRO (livro_isbn) ON UPDATE CASCADE ON DELETE CASCADE        
+    );`
+    await client.query(createLivroGeneroQuery);
+    console.log(`Tabela "livro_genero" verificada/criada com sucesso.`)
 
     
 
