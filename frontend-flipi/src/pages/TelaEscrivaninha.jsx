@@ -4,22 +4,21 @@ import EstrelasBtn from '../components/EstrelasBtn'
 import NavbarVertical from '../components/NavbarVertical'
 import { GlobalContext } from '../contexts/GlobalContext'
 import { useLocation, useNavigate } from 'react-router-dom'
-
-
-
+import { use } from 'react'
+import axios from 'axios'
 
 
 function TelaEscrivaninha() {
 
-  useEffect (() => {
+   useEffect (() => {
 
-    if(usuarioLogado == false){
+     if(usuarioLogado == false){
 
-      alert('Não há usuário logado, por favor, cadastre-se ou entre na sua conta.')
+       alert('Não há usuário logado, por favor, cadastre-se ou entre na sua conta.')
       navigate('/')
-    }
+     }
 
-  }, [])
+   }, [])
   
   
   
@@ -30,10 +29,56 @@ function TelaEscrivaninha() {
 
 
   const {biblioteca, livroAcessado, setLivroAcessado, vetorObjetosUsuarios, posicaoUsuarioID, dadosUsuarioLogado, livro} = useContext(GlobalContext)
-
+  const [abrirCaixa, setAbrirCaixa] = useState(false)
 
   //passando o valor do textarea para o usestate
-  const [resenha, setResenha] = useState('')
+  const [resenhaTitulo, setResenhaTitulo] = useState()
+  const [resenha, setResenha] = useState()
+  const [notaResenha, setNotaResenha] = useState()
+  const [isbn, setIsbn] = useState()
+  const [time,setTime] = useState(0)
+
+    
+useEffect(() => {
+
+  const intervalo = setInterval(() => {
+
+
+    if (time <= 9){
+
+    setTime((timerAtual) => timerAtual+1)
+
+    } else{
+      
+    setTime((timerAtual) => timerAtual = 0)
+    }
+      
+    
+  }, 500);
+
+  return () => clearInterval(intervalo)
+
+}, [time])
+
+  
+  
+
+
+  function dialogFunc() {
+
+    if (abrirCaixa == false){
+
+      setAbrirCaixa(true)
+     
+
+    }else{
+
+
+      setAbrirCaixa(false)
+      
+    }
+    
+  }
 
   function verificarCampoResenha(){
 
@@ -47,15 +92,50 @@ function TelaEscrivaninha() {
   }
 
 
-  function cadastrarResenha() {
+
+   const cadastrarResenha = async (e) => {
+
+    e.preventDefault()
     if (verificarCampoResenha()) {
-        alert('Insira algum texto dentro da resenha!');
+
+      alert(`Por favor escreva uma resenha :)`)
+
     } else {
+
+      const currentDate = new Date().toISOString();
+
         // Cria a nova resenha
-        const novaResenha = {
+        let novaResenha = {
+          
             nomeUsuario: '', // Inicializa vazio; será atualizado abaixo
-            resenhaUsuario: resenha, // Atribui o texto da resenha
-        };
+            resenha_id: null,
+            resenha_titulo: resenhaTitulo , // titulo da resenha 
+            resenha_texto: resenha ,// Atribui o texto da resenha
+            resenha_nota: notaResenha ,// Atribui a avaliação do livro feito pelo usuário
+            resenha_curtidas: 0,
+            resenha_data: currentDate ,//Atribui a data de criação da resenha\\\
+        }
+        console.log(novaResenha)
+
+        
+        console.log('hora do try')
+        try {
+          console.log('entrei no try')
+            
+          const response = await axios.post('http://localhost:3000/resenha', novaResenha);
+            if (response.status === 201) {
+              console.log('respondi com 201')
+
+              // Adiciona a resenha ao vetor
+              setListaResenhas([...listaResenhas, novaResenha])
+              console.log('coloquei a resenha dentro do vetor', listaResenhas) 
+             
+              
+              alert("resenha cadastrada com sucesso!");
+          }
+        } catch (error) {
+          console.error('Erro ao cadastrar resenha! :(', error)
+        }
 
         // Busca o usuário logado pelo ID
         const usuarioAtualizado = vetorObjetosUsuarios.find(e => e.usuario_id === posicaoUsuarioID);
@@ -67,17 +147,20 @@ function TelaEscrivaninha() {
             return;
         }
 
-        // Atualiza o estado de `livroAcessado`
+         // Atualiza o estado de `livroAcessado`
         setLivroAcessado((prevState) => ({
             ...prevState,
             resenhasLivro: [...prevState.resenhasLivro, novaResenha], // Adiciona a nova resenha ao array
-        }));
+        })); 
+
 
         console.log('Nova resenha adicionada:', novaResenha);
     }
 
 
-  }
+
+
+  } 
   useEffect(() => {
     
     console.log(livroAcessado)
@@ -90,118 +173,106 @@ function TelaEscrivaninha() {
 
     <div className="escrivaninha-mesa">
 
-      <div className="escrivaninha-documento">
-                  
-           <div className="documento-folha">
-    
-              <div className="folha-topo">
 
-                <button className='folha-topo-btn'>
-                  <img className='img-lixo-escrivaninha' src="public\images\output-onlinepngtools.png" alt="" /> 
-                </button>
-              
-                <input maxLength={18} className='inpt-tituloResenha' placeholder='TITULO' type="text" />
+      <div className="escrivaninha-navbarVertical">
+        <NavbarVertical />
+      </div>
 
+      <div className="escrivaninha-resenha-container">
 
-              </div>
-              
-              <div className="folha-conteudo">
+        <div className="resenha-container-textBlock">
+      
+         <input maxLength={40} className='inpt-tituloResenha' placeholder='TITULO...' type="text"
+          onChange={(event) => setResenhaTitulo(event.target.value)} 
+          value={resenhaTitulo} />
+         <textarea placeholder='Começe sua resenha aqui...' maxLength={1600} cols="10" rows="10"  className='inpt-resenha' name="resenha" id="" 
+          value={resenha}
+          onChange={(event) => setResenha(event.target.value)}
+         ></textarea>
 
-                <textarea placeholder='Começe sua resenha aqui...' maxLength={800} className='inpt-resenha' name="resenha" id="" cols="10" rows="10" 
-                value={resenha}
-                onChange={(event) => setResenha(event.target.value)}
-                ></textarea>
-
-              
-              </div>
-
-              <div className="folha-desfecho">
-
-                <label className='lbl-desfecho' htmlFor="">Preview</label>
-
-              </div>
-
-            </div>
         </div>
 
-        <div className="escrivaninha-container-generoIsbn">
+      </div>
 
-          <div className="container-generoIsnb">
+      <div className="escrivaninha-info-container">
+        <div className="info-container-isbn">
 
-            <div className="generoIsbn-topo"></div>
+          <label className='Infor-container-isbnlbl' htmlFor="">ISBN</label>
 
-            <div className="container-informacoesLivro">
+          <button onClick={dialogFunc}  className='infor-container-isbnQuestion' >?</button>
+
+          <input className='infor-container-isbnInpt' minLength={10} maxLength={13} type="number" placeholder='Código ISBN aqui...' 
+          value={isbn}
+          onChange={(event) => setIsbn(event.target.value)}/>
+        </div>
+
+        <div className="info-container-livroContainer">
+
+          <div className="livroContainer-capa">
+          <img className='capa-img' src={livroAcessado.capaLivro} alt="" />
+          </div>
+
+          <div className="livroContainer-desc">
+            <div className="desc-livroTitulo"> 
+              <label className='livroTituloLbl' htmlFor="">{livroAcessado.tituloLivro}</label>
+            </div>
+            <div className="desc-livroDesc">
+
+      <textarea readOnly className='livroDesc-textArea' value={livroAcessado.sinopseLivro} name="" id="">
+      </textarea>
 
 
-            <div className="informacoesLivro-esquerda">
-
-                <div className="informacoesLivro-esquerda-capa">
-                <img className='livro-escrivaninha' src={livroAcessado.capaLivro} alt="" />
-                
-                </div>
-
-                <label className='lbl-DadosLivro'>Autor:  {livroAcessado.autorLivro}</label>
-                <label className='lbl-DadosLivro'>Editora:  {livroAcessado.editoraLivro}</label>
-                <label className='lbl-DadosLivro'>Ano:  {livroAcessado.anoLivro}</label>  
+      
 
             </div>
+          </div>
 
-            <div className="informacoesLivro-direita">
 
-              <div className="informacoesLivro-direita-tituloSinopse">
+        </div>
+        <div className="livroContainer-tags">
+          <button className='tags-btnAutor' >Autor:  {livroAcessado.autorLivro}</button>
+          <button className='tags-btnEditora'>Editora:  {livroAcessado.editoraLivro}</button>
+          <button className='tags-btnData'>Ano:  {livroAcessado.anoLivro}</button>
+        </div>
+        <div className="livroContainer-nota">
 
-                  <div className="meio-sinopse">
+          <div className="nota-labelEspaco">
 
-                    <label className='lbl-generos' htmlFor="">{livroAcessado.tituloLivro}</label>
+          <label className='livroContainer-labelNota' htmlFor="">Avalie esse livro:</label>
 
-                  <textarea className='sinopse-textArea' value={livroAcessado.sinopseLivro} name="" id="" cols="30" rows="10" readOnly></textarea>
+          </div>
           
-                  </div>                   
+          <div className="estrelas-div">
 
-              </div>
-
-              <div className="informacoesLivro-direita-generos">
-                <label className='lbl-generos' htmlFor="">Generos</label>
+          <div className="estrelas-buttons">
+            
+          <EstrelasBtn onRatingChange={setNotaResenha}/>
           
-                {livroAcessado && livroAcessado.generoLivro.length > 0 ? (
-                  livroAcessado.generoLivro.map((genero, indice) => (
-                    <div key={indice} className="btn-generos">#{genero}</div>
-                      ))
-                      ) : (
-                    <div className="btn-generos">#SemGênero</div>
-                )}
-                
-              </div>
 
-            </div>
-
-            </div>
-
-            <div className="generoIsbn-desfecho">
-
-              <label className='desfecho-lbl' htmlFor="">Nota do livro: </label>
-
-              <div className="estrelas-div">
-
-                <EstrelasBtn />
-
-              </div>
-        
-              <button className='btn-escrivaninha' onClick={cadastrarResenha}>CADASTRAR → </button>
-
-            </div>
-
-          </div>    
+          </div>
 
         </div>
-
-        <div className="escrivaninha-navbarVertical">
-
-          <NavbarVertical />
-
         </div>
+        <div className="livroContainer-enviar">
+          <button className='livroContainer-btnEnviar'  onClick={cadastrarResenha} >ENVIAR RESENHA</button>
+        </div>
+
+      </div>
 
     </div>
+
+      <dialog open={abrirCaixa}> 
+
+        <div className="dialog-divAtivo">
+          <h1 className='dialogLbl' >O ISBN é um código de identificação de um livro, acesse vários desses códigos em- 
+          <a href="https://openlibrary.org/" target='_blank' >Open Library</a>,
+             Google Books ou sites de editoras para obter informações sobre um livro específico. 
+</h1>
+
+        </div>
+
+      </dialog>
+
 
   </div>    
 
