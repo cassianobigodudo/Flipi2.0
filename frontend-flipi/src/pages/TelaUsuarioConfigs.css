@@ -70,14 +70,14 @@
 
                 .usuarioConfigs-bmpc-titulo{
                     background-color: var(--corfundo);
-                    height: 33%;
+                    height: 30%;
                     width: 100%;
                     display: flex;
                     align-items: center;
-                    flex-direction: column;
+                    flex-direction: initial;
                     border-top-left-radius: 10px;
                     margin-right: 1px;
-
+                    padding-left: 25px;
 
                 }
                     .lbl-titulos{

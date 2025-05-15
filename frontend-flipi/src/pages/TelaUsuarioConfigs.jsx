@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom"
 import "./TelaUsuarioConfigs.css"
 import{ GlobalContext } from '../contexts/GlobalContext'
 import { useContext } from 'react'
-import IconUserCircle from "../components/IconUserCircle"
 import ResenhasConfigs from "../components/ResenhasConfigs"
 import NavbarVertical from "../components/NavbarVertical"
 import axios from "axios"
@@ -156,13 +155,12 @@ const editarDados = async (campo) => {
         if (response.status === 200) {
           
           let usuariosAtualizado = vetorObjetosUsuarios.filter(e => e.usuario_id != dadosUsuarioLogado.usuario_id)
-          // usuariosAtualizado.splice(posicaoUsuario, 1)
           console.log(usuariosAtualizado)
           
           setVetorObjetosUsuarios(usuariosAtualizado)
 
           alert(`Conta deletada com sucesso!!`)
-          setUsuarioLogado(false) //hi
+          setUsuarioLogado(false)
           navigate(`/landingpage`)
             
         }
@@ -170,31 +168,25 @@ const editarDados = async (campo) => {
         console.error('Erro ao deletar cliente:', error);
       }
 
-      
-
-
-    }else{
-
+    } else {
       alert(`Senha incorreta, cancelando operação...`)
-
     }
-
   }
 
   useEffect(() => {
-        const fetchUsuarios = async () => {
-            try {
-                const response = await axios.get('http://localhost:3000/usuario'); // Faz a requisição para o backend
-                setVetorObjetosUsuarios(response.data); // Atualiza o vetor de usuários com os dados do backend
-            } catch (error) {
-                console.error('Erro ao buscar usuários:', error);
-            }
-        };
+    const fetchUsuarios = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/usuario'); // Faz a requisição para o backend
+        setVetorObjetosUsuarios(response.data); // Atualiza o vetor de usuários com os dados do backend
+      } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+      }
+    };
 
-        fetchUsuarios();
-    }, [setVetorObjetosUsuarios]);
+    fetchUsuarios();
+  }, [setVetorObjetosUsuarios]);
 
-
+    
 
 
   return (
@@ -222,7 +214,7 @@ const editarDados = async (campo) => {
 
               <div className="usuarioConfigs-bmpc-titulo">
 
-                <label className="lbl-titulos">Configurações de usuário</label>
+                <label className="lbl-titulos"></label>
                 <img 
                   src={editarFoto || dadosUsuarioLogado.url_foto} 
                   alt="Foto do usuário" 
@@ -230,17 +222,24 @@ const editarDados = async (campo) => {
                   style={{ width: '150px', height: '150px', borderRadius: '50%' }}
                 />
 
-                {/* <IconUserCircle/> */}
-                <div className="usuarioNomeDescricao">
-                  <h2>{dadosUsuarioLogado.usuario_nome}</h2>
-                  <label><p>{dadosUsuarioLogado.descricao || "Sua descrição..."}</p></label>
-                </div>
+                        <div className="usuarioNomeDescricao">
+                          <h2>{dadosUsuarioLogado.usuario_nome}</h2>
+                          <div className="campo-editavel">
+                          <textarea 
+                            className="lbl-infos"
+                            value={editarDescricao}
+                            onChange={(e) => setEditarDescricao(e.target.value)}
+                            placeholder={dadosUsuarioLogado.descricao || "Sua descrição..."}
+                          />
+                          <button className="btn-editar" onClick={() => editarDados("descricao")}>✏️</button>
+                          </div>
+                        </div>
 
-              </div>
+                        </div>
 
-              <div className="usuarioConfigs-bmpc-infos">
+                        <div className="usuarioConfigs-bmpc-infos">
 
-              {/* <label className="lbl-infos" >Usuário: {dadosUsuarioLogado.usuario_nome}</label> */}
+                        <div className="campo-editavel"></div>
               <div className="senha-container">
                 <label className="lbl-infos">
                   Senha: {mostrarSenha 
@@ -329,10 +328,12 @@ const editarDados = async (campo) => {
               </div> */}
 
               <div className="usuarioConfigs-bmpc-buttons">
-{/* 
-                <button className="btn" onClick={editarDados}>Editar dados</button>
-                <button className="btn" onClick={deslogarUsuario} >Deslogar</button>
-                <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button> */}
+ 
+                {/* <button className="btn" onClick={editarDados}>Editar dados</button> */}
+                 <div className="btn-deslogar-deletar">
+                 <button className="btn" onClick={deslogarUsuario} >Deslogar</button>
+                 <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button>
+                  </div>
                 <button className="btn-secao">Listas Personalizadas</button>
                 <button className="btn-secao">Resenhas</button>
               </div>
