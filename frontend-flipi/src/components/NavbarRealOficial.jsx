@@ -6,13 +6,16 @@ import { FaCog } from "react-icons/fa";
 import { GiNotebook } from "react-icons/gi";
 import { AiOutlineHome } from "react-icons/ai";
 import { HiOutlineCog } from "react-icons/hi";
-
+import { Link, useNavigate } from "react-router-dom"
 
 
 
 
 
 function NavbarRealOficial() {
+  
+  const navigate = useNavigate()
+
   return (
     <div className='navbar-container'>
 
