@@ -18,6 +18,11 @@ function TelaEscrivaninha() {
   const [mensagem, setMensagem] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [livroCarregado, setLivroCarregado] = useState(false)
+  const [capa, setCapa] = useState('')
+  const [autor, setAutor] = useState('')
+  const [editora, setEditora] = useState('')
+  const [tituloLivro, setTituloLivro] = useState('')
+  const [ano, setAno] = useState('')
 
   // Contextos e hooks
   const location = useLocation()
@@ -72,6 +77,12 @@ function TelaEscrivaninha() {
       await setLivroAcessado(response.data)
       setLivroCarregado(true)
       setMensagem('Livro encontrado com sucesso!')
+      setCapa(response.data.livro_capa)
+      setAno(response.data.livro_ano)
+      setEditora(response.data.editora.editora_nome)
+      setAutor(response.data.autores[0].autor_nome)
+      setTituloLivro(response.data.livro_titulo)
+      console.log(response.data)
       
       // Delay para visualização da mensagem
       await new Promise(resolve => setTimeout(resolve, 1500))
@@ -240,7 +251,7 @@ function TelaEscrivaninha() {
           <div className="info-container-livroContainer">
             <div className="livroContainer-capa">
               {livroCarregado ? (
-                <img className='capa-img' src={livroAcessado.capaLivro} alt="Capa do livro" />
+                <img className='capa-img' src={capa} alt="Capa do livro" />
               ) : (
                 <div className="capa-placeholder">Busque um livro pelo ISBN</div>
               )}
@@ -249,7 +260,7 @@ function TelaEscrivaninha() {
             <div className="livroContainer-desc">
               <div className="desc-livroTitulo"> 
                 <label className='livroTituloLbl'>
-                  {livroCarregado ? livroAcessado.tituloLivro : 'Título do Livro'}
+                  {tituloLivro}
                 </label>
               </div>
               <div className="desc-livroDesc">
@@ -264,13 +275,13 @@ function TelaEscrivaninha() {
 
           <div className="livroContainer-tags">
             <button className='tags-btnAutor'>
-              Autor: {livroCarregado ? livroAcessado.autorLivro : 'Não definido'}
+              Autor: {autor}
             </button>
             <button className='tags-btnEditora'>
-              Editora: {livroCarregado ? livroAcessado.editoraLivro : 'Não definida'}
+              Editora: {editora}
             </button>
             <button className='tags-btnData'>
-              Ano: {livroCarregado ? livroAcessado.anoLivro : 'Não definido'}
+              Ano: {ano}
             </button>
           </div>
 
