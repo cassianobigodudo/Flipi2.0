@@ -108,12 +108,10 @@ useEffect(() => {
         let novaResenha = {
           
             nomeUsuario: '', // Inicializa vazio; será atualizado abaixo
-            resenha_id: null,
             resenha_titulo: resenhaTitulo , // titulo da resenha 
             resenha_texto: resenha ,// Atribui o texto da resenha
             resenha_nota: notaResenha ,// Atribui a avaliação do livro feito pelo usuário
             resenha_curtidas: 0,
-            resenha_data: currentDate ,//Atribui a data de criação da resenha\\\
         }
         console.log(novaResenha)
 
