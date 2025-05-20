@@ -221,25 +221,21 @@ const editarDados = async (campo) => {
                   className="img-usuario"
                   style={{ width: '150px', height: '150px', borderRadius: '50%' }}
                 />
-
                         <div className="usuarioNomeDescricao">
                           <h2>{dadosUsuarioLogado.usuario_nome}</h2>
-                          <div className="campo-editavel">
-                          <textarea 
-                            className="lbl-infos"
-                            value={editarDescricao}
-                            onChange={(e) => setEditarDescricao(e.target.value)}
-                            placeholder={dadosUsuarioLogado.descricao || "Sua descrição..."}
-                          />
+                           <div className="campo-editavel">
+                              <textarea 
+                                className="lbl-infos"
+                                value={editarDescricao}
+                                onChange={(e) => setEditarDescricao(e.target.value)}
+                                placeholder={dadosUsuarioLogado.descricao || "Sua descrição..."}
+                              />
                           <button className="btn-editar" onClick={() => editarDados("descricao")}>✏️</button>
                           </div>
                         </div>
 
                         </div>
-
                         <div className="usuarioConfigs-bmpc-infos">
-
-                        <div className="campo-editavel"></div>
               <div className="senha-container">
                 <label className="lbl-infos">
                   Senha: {mostrarSenha 
@@ -256,6 +252,7 @@ const editarDados = async (campo) => {
                             👁️
                   </button>
                   </div>
+                  <div className="btns-change">
                   <div className="campo-editavel">
                   {/* <label>Email:</label> */}
                     <div className="input-container">
@@ -305,7 +302,6 @@ const editarDados = async (campo) => {
                   </div>
                 </div>
 
-
                 <div className="campo-editavel">
                   {/* <label>Senha:</label> */}
                   <div className="input-container">
@@ -319,59 +315,55 @@ const editarDados = async (campo) => {
                     <button className="btn-editar" onClick={() => editarDados("senha")}>✏️</button>
                   </div>
                 </div>
-
-                    
               </div>
 
               {/* <div className="usuarioConfigs-bmpc-inputs">
 
               </div> */}
 
-              <div className="usuarioConfigs-bmpc-buttons">
- 
+              <div className="campo-editavel">
                 {/* <button className="btn" onClick={editarDados}>Editar dados</button> */}
-                 <div className="btn-deslogar-deletar">
-                 <button className="btn" onClick={deslogarUsuario} >Deslogar</button>
-                 <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button>
-                  </div>
-                <button className="btn-secao">Listas Personalizadas</button>
-                <button className="btn-secao">Resenhas</button>
+                <div className="btn-deslogar-deletar">
+                  <button className="btn" onClick={deslogarUsuario} >Deslogar</button>
+                  <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button>
+                </div>
               </div>
-
+                <div className="listas-btn">
+              <button className="btn-secao">Listas Personalizadas</button>
+              <button className="btn-secao">Resenhas</button>
             </div>
+            </div>
+            {/* <div className="nivel-box">
+              <h3>Nível</h3>
+              <div className="nivel-numero">37</div>
+                <p>Progresso para o próximo nível...</p>
+              <div className="progresso">
+                <div className="preenchido" style="width: 20%"></div>
+              </div>
+            </div> */}
+          </div>
 
-            <div className="usuarioConfigs-body-meio-papel-resenhas">
-
-              <div className="usuarioConfigs-bmpr-titulo">
-
-                <label className="lbl-titulos">Minha resenhas</label>
+          <div className="usuarioConfigs-body-meio-papel-resenhas">
+            <div className="usuarioConfigs-bmpr-titulo">
+                <label className="lbl-titulos">Minhas resenhas</label>
                 {/* <label className="lbl-titulos">Minhas resenhas</label> */}
-
               </div>
 
               <div className="usuarioConfigs-bmpr-body">
-                
+
               <ResenhasConfigs/><ResenhasConfigs/><ResenhasConfigs/><ResenhasConfigs/>
               </div>
-
-          
-
             </div>
-
           </div>
         </div>
 
         <div className="usuarioConfigs-body-baixo">
-
         </div>
-
       </div>
 
       <div className="usuarioConfigs-navbar-container">
-     
       <NavbarVertical />
       </div>
-      
     </div>
   )
 }
