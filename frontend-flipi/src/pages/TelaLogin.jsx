@@ -102,6 +102,7 @@ function TelaLogin() {
                 alert('Login Incorreto.')
                 break;
             default:
+                console.log(variavel)
                 setPosicaoUsuarioID(vetorObjetosUsuarios[variavel].usuario_id)
                 alert('Login feito com sucesso!')
                 setUsuarioLogado(true)

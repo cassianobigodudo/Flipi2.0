@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import './ListasLivros.css'
 import CardLista from './CardLista';
 import MinhaLista from './MinhaLista';
 import axios from "axios";
-// import { GlobalContext } from '../contexts/GlobalContext';
-// const { usuarioLogado } = useContext(GlobalContext);
+import { GlobalContext } from "../contexts/GlobalContext";
 
 function ListasLivros() {
+
+    // const { posicaoUsuarioID, usuarioLogado } = useContext(GlobalContext);
 
     const [abriuForm, setAbriuForm] = useState(false);
     const [nomeLista, setNomeLista] = useState('');
@@ -36,10 +37,12 @@ function ListasLivros() {
     const salvarLista = async (e) => {
         e.preventDefault();
         try {
-          const res = await axios.post("http://localhost:3000/listas",
+          const res = await axios.post("http://localhost:3000/listas_personalizadas",
              {
                 nome: nomeLista,
                 descricao: descricaoLista
+                // usuario: posicaoUsuarioID
+                // usuario: usuarioLogado
             });
             alert("Lista criada com sucesso!");
             console.log("Lista criada:", res.data);
@@ -50,6 +53,8 @@ function ListasLivros() {
         } catch (err) {
           console.error(err);
           alert("Erro ao criar lista");
+        //   console.log('Posição do usuário:', posicaoUsuarioID)
+        //   console.log('Posição do usuário:', usuarioLogado)
         }
     };
 

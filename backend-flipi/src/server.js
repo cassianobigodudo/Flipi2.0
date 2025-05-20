@@ -122,8 +122,13 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
     }
 });
 
+// Rota para listar todas as listas criadas
+app.get('/listas_personalizadas', async (req, res) => {
+    
+});
+
 // Rota para criar uma nova lista
-app.post('/listas', async (req, res) => {
+app.post('/listas_personalizadas', async (req, res) => {
     console.log('Dados recebidos', req.body);
 
     const { nome, descricao } = req.body;
@@ -131,8 +136,8 @@ app.post('/listas', async (req, res) => {
     try {
         // Query para inserir a nova lista no banco de dados
         const result = await pool.query(
-            'INSERT INTO listas ( nome, descricao) VALUES ($1, $2) RETURNING *',
-            [ nome, descricao]
+            'INSERT INTO listas_personalizadas ( nome_lista, descricao_lista ) VALUES ($1, $2) RETURNING *',
+            [nome, descricao]
         );
 
         // Retorna a lista criada com status 201
