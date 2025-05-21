@@ -4,195 +4,198 @@ import EstrelasBtn from '../components/EstrelasBtn'
 import NavbarVertical from '../components/NavbarVertical'
 import { GlobalContext } from '../contexts/GlobalContext'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { use } from 'react'
 import axios from 'axios'
 
-
 function TelaEscrivaninha() {
+  // Estados
+  const [abrirCaixa, setAbrirCaixa] = useState(false)
+  const [resenhaTitulo, setResenhaTitulo] = useState('')
+  const [resenha, setResenha] = useState('')
+  const [notaResenha, setNotaResenha] = useState(0)
+  const [isbn, setIsbn] = useState('')
+  const [time, setTime] = useState(0)
+  const [listaResenhas, setListaResenhas] = useState([])
+  const [mensagem, setMensagem] = useState('')
+  const [livroCarregado, setLivroCarregado] = useState(false)
+  const [capa, setCapa] = useState('')
+  const [autor, setAutor] = useState('')
+  const [editora, setEditora] = useState('')
+  const [tituloLivro, setTituloLivro] = useState('')
+  const [ano, setAno] = useState('')
+  const [sinopse, setSinopse] = useState('')
 
-   useEffect (() => {
-
-     if(usuarioLogado == false){
-
-       alert('Não há usuário logado, por favor, cadastre-se ou entre na sua conta.')
-      navigate('/')
-     }
-
-   }, [])
-  
-  
-  
-  
+  // Contextos e hooks
   const location = useLocation()
   const navigate = useNavigate()
-  const {usuarioLogado} = useContext(GlobalContext)
+
+  const { usuarioLogado } = useContext(GlobalContext)
+  const { biblioteca, livroAcessado, setLivroAcessado, vetorObjetosUsuarios, posicaoUsuarioID } = useContext(GlobalContext)
 
 
-  const {biblioteca, livroAcessado, setLivroAcessado, vetorObjetosUsuarios, posicaoUsuarioID, dadosUsuarioLogado, livro, setListaResenhas, listaResenhas} = useContext(GlobalContext)
-  const [abrirCaixa, setAbrirCaixa] = useState(false)
-
-  //passando o valor do textarea para o usestate
-  const [resenhaTitulo, setResenhaTitulo] = useState()
-  const [resenha, setResenha] = useState()
-  const [notaResenha, setNotaResenha] = useState()
-  const [isbn, setIsbn] = useState()
-  const [time,setTime] = useState(0)
-
-    
-useEffect(() => {
-
-  const intervalo = setInterval(() => {
-
-
-    if (time <= 9){
-
-    setTime((timerAtual) => timerAtual+1)
-
-    } else{
-      
-    setTime((timerAtual) => timerAtual = 0)
+  // Efeitos
+  useEffect(() => {
+    const verificarUsuario = async () => {
+      if (!usuarioLogado) {
+        await new Promise(resolve => {
+          alert('Não há usuário logado, por favor, cadastre-se ou entre na sua conta.')
+          resolve()
+        })
+        navigate('/')
+      }
     }
-      
-    
-  }, 500);
+    verificarUsuario()
+  }, [usuarioLogado, navigate])
 
-  return () => clearInterval(intervalo)
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      setTime(prevTime => prevTime <= 9 ? prevTime + 1 : 0)
+    }, 500)
+    return () => clearInterval(intervalo)
+  }, [time])
 
-}, [time])
-
-  
-  
-
-
-  function dialogFunc() {
-
-    if (abrirCaixa == false){
-
-      setAbrirCaixa(true)
-     
-
-    }else{
-
-
-      setAbrirCaixa(false)
-      
-    }
-    
+  // Funções
+  const dialogFunc = () => {
+    setAbrirCaixa(!abrirCaixa)
   }
 
-  function verificarCampoResenha(){
-
-    if (resenha == ''){
-
-      return true
-    }
-    return false
-
-
+  const verificarCampoResenha = () => {
+    return resenha.trim() === '' || resenhaTitulo.trim() === '' || notaResenha === 0
   }
 
+  const buscarLivroPorISBN = async () => {
+    if (!isbn.trim()) {
+      setMensagem('Por favor, digite um ISBN válido')
+      return
+    }
 
-
-   const cadastrarResenha = async (e) => {
-
-    e.preventDefault()
-    if (verificarCampoResenha()) {
-
-      alert(`Por favor escreva uma resenha :)`)
-
-    } else {
-
-      const currentDate = new Date().toISOString();
-
+    try {
+      setMensagem('Buscando livro...')
       
-     
 
 
-        // Cria a nova resenha
-        let novaResenha = {
-            nomeUsuario: '', // Inicializa vazio; será atualizado abaixo
-            resenha_titulo: resenhaTitulo , // titulo da resenha 
-            resenha_texto: resenha ,// Atribui o texto da resenha
-            resenha_nota: notaResenha ,// Atribui a avaliação do livro feito pelo usuário
-            resenha_curtidas: 0,
-            usuario_id: posicaoUsuarioID, // Adicionar o ID do usuário aqui
-            livro_isbn: isbn,
-        }
-        console.log(novaResenha)
-
-        
-        console.log('hora do try')
-        const usuarioAtualizado = vetorObjetosUsuarios.find(e => e.usuario_id === posicaoUsuarioID);
-
-        if (usuarioAtualizado) {
-            novaResenha.nomeUsuario = usuarioAtualizado.usuario_apelido;
-        } else {
-            console.error('Usuário não encontrado!');
-            return;
-        }
+      const response = await axios.get(`http://localhost:3000/livro/${isbn}`)
+      await setLivroAcessado(response.data)
+      setLivroCarregado(true)
+      setMensagem('Livro encontrado com sucesso!')
+      setCapa(response.data.livro_capa)
+      setAno(response.data.livro_ano)
+      setEditora(response.data.editora.editora_nome)
+      setAutor(response.data.autores[0].autor_nome)
+      setTituloLivro(response.data.livro_titulo)
+      setSinopse(response.data.livro_sinopse)
+      console.log(response.data)
+      
+      setMensagem('')
+    } catch (error) {
+      if (error.response?.status === 404) {
 
         try {
-          console.log('entrei no try')
-            
-          const response = await axios.post('http://localhost:3000/resenha', novaResenha);
-            if (response.status === 201) {
-              console.log('respondi com 201')
+          setMensagem('Livro não encontrado. Buscando na OpenLibrary...')
+          
+          const addResponse = await axios.post(`http://localhost:3000/livro/isbn/${isbn}`)
+          await setLivroAcessado(addResponse.data)
+          setLivroCarregado(true)
+          setMensagem('Livro adicionado com sucesso!')
 
-              // Adiciona a resenha ao vetor
-              setListaResenhas([...listaResenhas, novaResenha])
-              console.log('coloquei a resenha dentro do vetor', listaResenhas) 
-             
-              
-              alert("resenha cadastrada com sucesso!");
-          }
-        } catch (error) {
-          console.error('Erro ao cadastrar resenha! :( -escrivaninha', error)
+          const response = await axios.get(`http://localhost:3000/livro/${isbn}`)
+          await setLivroAcessado(response.data)
+          setLivroCarregado(true)
+          setMensagem('Livro encontrado com sucesso!')
+          setCapa(response.data.livro_capa)
+          setAno(response.data.livro_ano)
+          setEditora(response.data.editora.editora_nome)
+          setAutor(response.data.autores[0].autor_nome)
+          setTituloLivro(response.data.livro_titulo)
+          setSinopse(response.data.livro_sinopse)
+          console.log(response.data)
+          setMensagem('')
+        } catch (addError) {
+          setMensagem('Erro ao buscar livro na OpenLibrary')
+          console.error('Erro:', addError)
+          setMensagem('')
         }
+      } else {
+        setMensagem('Erro ao buscar livro')
+        console.error('Erro:', error)
+        setMensagem('')
+      }
+    } finally {
 
-        // Busca o usuário logado pelo ID
-         // Atualiza o estado de `livroAcessado`
-        setLivroAcessado((prevState) => ({
-            ...prevState,
-            resenhasLivro: [...prevState.resenhasLivro, novaResenha], // Adiciona a nova resenha ao array
-        })); 
+    }
+  }
 
-
-        console.log('Nova resenha adicionada:', novaResenha);
+  const cadastrarResenha = async (e) => {
+    e.preventDefault()
+    
+    if (verificarCampoResenha()) {
+      await new Promise(resolve => {
+        alert('Por favor, preencha todos os campos da resenha :)')
+        resolve()
+      })
+      return
     }
 
+    if (!livroCarregado) {
+      await new Promise(resolve => {
+        alert('Por favor, busque um livro válido pelo ISBN antes de enviar a resenha')
+        resolve()
+      })
+      return
+    }
 
+    try {
+      setMensagem('Enviando resenha...')
+      
+      const currentDate = new Date().toISOString()
+      const usuarioAtualizado = vetorObjetosUsuarios.find(e => e.usuario_id === posicaoUsuarioID)
 
+      if (!usuarioAtualizado) {
+        throw new Error('Usuário não encontrado!')
+      }
 
-  } 
-  useEffect(() => {
-    
-    console.log(livroAcessado)
+      const novaResenha = {
+        nomeUsuario: usuarioAtualizado.usuario_apelido,
+        resenha_id: null,
+        resenha_titulo: resenhaTitulo,
+        resenha_texto: resenha,
+        resenha_nota: notaResenha,
+        resenha_curtidas: 0,
+        resenha_data: currentDate,
+        livro_isbn: livroAcessado.isbnLivro,
+        usuario_id: posicaoUsuarioID
+      }
 
-  }, [livroAcessado]) 
+      const response = await axios.post('http://localhost:3000/resenha', novaResenha)
+      
+      if (response.status === 201) {
+        await Promise.all([
+          setListaResenhas(prev => [...prev, response.data]),
+          setLivroAcessado(prev => ({
+            ...prev,
+            resenhasLivro: [...prev.resenhasLivro, response.data]
+          }))
+        ])
+
+        setResenhaTitulo('')
+        setResenha('')
+        setNotaResenha(0)
+        setMensagem('Resenha cadastrada com sucesso!')
+        
+        setMensagem('')
+      }
+    } catch (error) {
+      console.error('Erro ao cadastrar resenha:', error)
+      setMensagem('Erro ao cadastrar resenha. Tente novamente.')
+      setMensagem('')
+    } finally {
+    }
+  }
 
   return (
-    
-  <div className="tela-escrivaninha-container">
-
-    <div className="escrivaninha-mesa">
-
-
-      <div className="escrivaninha-navbarVertical">
-        <NavbarVertical />
-      </div>
-
-      <div className="escrivaninha-resenha-container">
-
-        <div className="resenha-container-textBlock">
-      
-         <input maxLength={40} className='inpt-tituloResenha' placeholder='TITULO...' type="text"
-          onChange={(event) => setResenhaTitulo(event.target.value)} 
-          value={resenhaTitulo} />
-         <textarea placeholder='Começe sua resenha aqui...' maxLength={1600} cols="10" rows="10"  className='inpt-resenha' name="resenha" id="" 
-          value={resenha}
-          onChange={(event) => setResenha(event.target.value)}
-         ></textarea>
-
+    <div className="tela-escrivaninha-container">
+      <div className="escrivaninha-mesa">
+        <div className="escrivaninha-navbarVertical">
+          <NavbarVertical />
         </div>
 
       </div>
@@ -209,79 +212,103 @@ useEffect(() => {
           onChange={(event) => setIsbn(event.target.value)}/>
         </div>
 
-        <div className="info-container-livroContainer">
-
-          <div className="livroContainer-capa">
-          <img className='capa-img' src={livroAcessado.capaLivro} alt="" />
+        <div className="escrivaninha-info-container">
+          <div className="info-container-isbn">
+            <label className='Infor-container-isbnlbl'>ISBN</label>
+            <button 
+              onClick={dialogFunc} 
+              className='infor-container-isbnQuestion'
+            >
+              ?
+            </button>
+            <input 
+              className='infor-container-isbnInpt' 
+              minLength={10} 
+              maxLength={13} 
+              type="number" 
+              placeholder='Código ISBN aqui...' 
+              value={isbn}
+              onChange={(e) => setIsbn(e.target.value)}
+              onBlur={buscarLivroPorISBN}
+            />
           </div>
 
-          <div className="livroContainer-desc">
-            <div className="desc-livroTitulo"> 
-              <label className='livroTituloLbl' htmlFor="">{livroAcessado.tituloLivro}</label>
+          <div className="info-container-livroContainer">
+            <div className="livroContainer-capa">
+              {livroCarregado ? (
+                <img className='capa-img' src={capa} alt="Capa do livro" />
+              ) : (
+                <div className="capa-placeholder">Busque um livro pelo ISBN</div>
+              )}
             </div>
-            <div className="desc-livroDesc">
 
-      <textarea readOnly className='livroDesc-textArea' value={livroAcessado.sinopseLivro} name="" id="">
-      </textarea>
-
-
-      
-
+            <div className="livroContainer-desc">
+              <div className="desc-livroTitulo"> 
+                <label className='livroTituloLbl'>
+                  {tituloLivro}
+                </label>
+              </div>
+              <div className="desc-livroDesc">
+                <textarea 
+                  readOnly 
+                  className='livroDesc-textArea' 
+                  value={sinopse}
+                />
+              </div>
             </div>
           </div>
 
 
-        </div>
-        <div className="livroContainer-tags">
-          <button className='tags-btnAutor' >Autor:  {livroAcessado.autorLivro}</button>
-          <button className='tags-btnEditora'>Editora:  {livroAcessado.editoraLivro}</button>
-          <button className='tags-btnData'>Ano:  {livroAcessado.anoLivro}</button>
-        </div>
-        <div className="livroContainer-nota">
-
-          <div className="nota-labelEspaco">
-
-          <button className='livroContainer-labelNota' htmlFor="">Avalie esse livro:</button>
+          <div className="livroContainer-tags">
+            <button className='tags-btnAutor'>
+              Autor: {autor}
+            </button>
+            <button className='tags-btnEditora'>
+              Editora: {editora}
+            </button>
+            <button className='tags-btnData'>
+              Ano: {ano}
+            </button>
 
           </div>
-          
-          <div className="estrelas-div">
 
-          <div className="estrelas-buttons">
+          <div className="livroContainer-nota">
+            <div className="nota-labelEspaco">
+              <button className='livroContainer-labelNota'>Avalie esse livro:</button>
+            </div>
             
-          <EstrelasBtn onRatingChange={setNotaResenha}/>
-          
-
+            <div className="estrelas-div">
+              <div className="estrelas-buttons">
+                <EstrelasBtn 
+                  onRatingChange={setNotaResenha} 
+                />
+              </div>
+            </div>
           </div>
 
+          <div className="livroContainer-enviar">
+            <button 
+              className='livroContainer-btnEnviar'  
+              onClick={cadastrarResenha}
+            >
+              {'ENVIAR RESENHA'}
+            </button>
+          </div>
         </div>
-        </div>
-        <div className="livroContainer-enviar">
-          <button className='livroContainer-btnEnviar'  onClick={cadastrarResenha} >ENVIAR RESENHA</button>
-        </div>
-
       </div>
 
-    </div>
-
       <dialog open={abrirCaixa}> 
-
         <div className="dialog-divAtivo">
-          <h1 className='dialogLbl' >O ISBN é um código de identificação de um livro, acesse vários desses códigos em- 
-          <a href="https://openlibrary.org/" target='_blank' >Open Library</a>,
-             Google Books ou sites de editoras para obter informações sobre um livro específico. 
-</h1>
-
+          <h1 className='dialogLbl'>
+            O ISBN é um código de identificação de um livro, acesse vários desses códigos em- 
+            <a href="https://openlibrary.org/" target='_blank' rel="noopener noreferrer">Open Library</a>,
+            Google Books ou sites de editoras para obter informações sobre um livro específico. 
+          </h1>
+          <button onClick={dialogFunc}>Fechar</button>
         </div>
-
       </dialog>
-
-
-  </div>    
-
- 
+    </div>    
   )
 }
 
 export default TelaEscrivaninha
-  

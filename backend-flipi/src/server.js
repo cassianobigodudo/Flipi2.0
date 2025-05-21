@@ -73,7 +73,7 @@ async function verificarTabelas(){
     const createEditoraQuery = `
     CREATE TABLE IF NOT EXISTS editora(
         editora_id SERIAL PRIMARY KEY,
-        editora_nome VARCHAR(40) NOT NULL
+        editora_nome TEXT NOT NULL
     );`
     await client.query(createEditoraQuery);
     console.log(`Tabela "editora" verificada/criada com sucesso.`);
@@ -81,7 +81,7 @@ async function verificarTabelas(){
     const createAutorQuery = `
     CREATE TABLE IF NOT EXISTS autor(
         autor_id SERIAL PRIMARY KEY,
-        autor_nome VARCHAR(40) NOT NULL
+        autor_nome TEXT NOT NULL
     );`
     await client.query(createAutorQuery);
     console.log(`Tabela "autor" verificada/criada com sucesso.`);
@@ -89,7 +89,7 @@ async function verificarTabelas(){
     const createGeneroQuery = `
     CREATE TABLE IF NOT EXISTS genero(
         genero_id SERIAL PRIMARY KEY,
-        genero_nome VARCHAR(40) NOT NULL
+        genero_nome TEXT NOT NULL
     );`
     await client.query(createGeneroQuery);
     console.log(`Tabela "genero" verificada/criada com sucesso.`);
@@ -99,11 +99,9 @@ async function verificarTabelas(){
         livro_isbn BIGINT PRIMARY KEY,
         livro_titulo VARCHAR(100) NOT NULL,
         livro_ano INTEGER NOT NULL,
-        livro_sinopse VARCHAR (400) NOT NULL,
-        livro_media INTEGER,
+        livro_sinopse TEXT NOT NULL,
+        livro_capa TEXT NOT NULL,
         editora_id INTEGER,
-        autor_id INTEGER,
-        genero_id INTEGER,
         CONSTRAINT fk_livro_editora FOREIGN KEY (editora_id) REFERENCES EDITORA (editora_id) ON UPDATE CASCADE ON DELETE RESTRICT
     );`
     await client.query(createLivroQuery);
@@ -163,6 +161,7 @@ async function buscarLivroPorISBN(isbn) {
     try {
         // Removendo hífens se houver
         const isbnLimpo = isbn.toString().replace(/-/g, '');
+        console.log(isbnLimpo)
         
         // Buscando informações do livro
         const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbnLimpo}&format=json&jscmd=data`);
@@ -179,7 +178,9 @@ async function buscarLivroPorISBN(isbn) {
             throw new Error('Livro não encontrado na API');
         }
         
+        console.log(data[chave].subjects[0])
         return data[chave];
+
     } catch (error) {
         console.error('Erro ao buscar livro:', error);
         throw error;
