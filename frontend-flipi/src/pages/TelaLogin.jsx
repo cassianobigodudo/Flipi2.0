@@ -42,87 +42,29 @@ function TelaLogin() {
         console.log(vetorObjetosUsuarios)
     }, [vetorObjetosUsuarios])
       
+    const verificarLogin = async (apelido, senha) => {
+        try{
+            const resposta = await axios.post('http://localhost:3000/login', {
+                usuario_apelido: apelido,
+                usuario_senha: senha
+            });
 
+            const dados = resposta.data;
+            console.log('Login Feito:', dados);
 
-    function verificarInputsRegistrados() {
-        
-        if (inputNomeUsuario == null || inputSenha == null){
-
-            return true
-
-        }
-
-        return false
-    }
-
-    
-    function verificarCadastroInexistente(){
-        
-        // console.log('Antes de iniciar o for')
-        for (let i = 0; i < vetorObjetosUsuarios.length; i++){
-            
-            // console.log('índice número '+ i)
-            if(vetorObjetosUsuarios[i].usuario_apelido == inputNomeUsuario){
-                
-                //!resolver a posicao do usuario no login
-                variavel = i
-                // console.log('oi eu passei aqui')
-                return false
+            setPosicaoUsuarioID(dados.usuario_id);
+            console.log('id do usuario:', posicaoUsuarioID)
+            setUsuarioLogado(true);
+            alert('Login feito com sucesso!');
+            navigate('/telaprincipal');
+        }catch (erro){
+            if (erro.response && erro.response.status === 401){
+                alert('Dados de autenticação inválidas!');
+            }else{
+                alert('Erro ao fazer login.');
             }
-            
         }
-        return true
-        
-    }
-    
-
-    function verificarLoginIncorreto(){
-
-        if (inputSenha == vetorObjetosUsuarios[variavel].usuario_senha){
-
-            return false
-        }else{
-            return true
-        }
-
-    }
-
-
-    const verificarLogin = async (e) => {
-        e.preventDefault()
-        switch (true){
-
-            case verificarInputsRegistrados():
-                alert('Verifique se todos os campos estão preenchidos.')
-                break;
-            case verificarCadastroInexistente():
-                alert('Nome de usuário inexistente.')
-                break;
-            case verificarLoginIncorreto():
-                alert('Login Incorreto.')
-                break;
-            default:
-                console.log(variavel)
-                setPosicaoUsuarioID(vetorObjetosUsuarios[variavel].usuario_id)
-                alert('Login feito com sucesso!')
-                setUsuarioLogado(true)
-                navigate("/telaprincipal")
-
-        }
-
-        // if (verificarInputsRegistrados()) {
-            
-        //     alert('Verifique se todos os campos estão preenchidos.')
-
-        // }else if(verificarCadastroInexistente()){
-
-        //     alert('Nome de usuário inexistente.')
-
-        // }else{
-        //     alert("boa")
-        // }
-
-    }
+    };
     
   return (<div className="container-tela-login">
     <div className="livro-login-container-esquerda">
@@ -153,7 +95,7 @@ function TelaLogin() {
         <div className="livro-login-primeiraLayerDireita">
             <div className="livro-login-conteudoLayerDireita">
                 <img className="imagem-parte-login" src="public\images\Hand holding pen-amico.png" alt="" />
-                <button className="botao-login" onClick={verificarLogin}>Entrar</button>
+                <button className="botao-login" onClick={() => verificarLogin(inputNomeUsuario, inputSenha)}>Entrar</button>
                 <Link className="label-nao-tem-conta" to="/telacadastro">Não tem uma conta?</Link>
             </div>
         </div>

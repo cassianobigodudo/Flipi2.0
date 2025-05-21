@@ -122,22 +122,35 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
     }
 });
 
-// Rota para listar todas as listas criadas
-app.get('/listas_personalizadas', async (req, res) => {
-    
+// -- JAIME --
+// Rota para buscar todas as listas de um usuário específico
+app.get('/listas_personalizadas/:criador_lista', async (req, res) => {
+    const { criador_lista } = req.params;
+
+    try {
+        const result = await pool.query(
+            'SELECT * FROM listas_personalizadas WHERE criador_lista = $1',
+            [criador_lista]
+        );
+
+        res.status(200).json(result.rows);
+    } catch (err) {
+        console.error('Erro ao buscar listas:', err.message);
+        res.status(500).json({ error: 'Erro ao buscar listas!' });
+    }
 });
 
 // Rota para criar uma nova lista
 app.post('/listas_personalizadas', async (req, res) => {
     console.log('Dados recebidos', req.body);
 
-    const { nome, descricao } = req.body;
+    const { nome, descricao, usuarioID } = req.body;
     
     try {
         // Query para inserir a nova lista no banco de dados
         const result = await pool.query(
-            'INSERT INTO listas_personalizadas ( nome_lista, descricao_lista ) VALUES ($1, $2) RETURNING *',
-            [nome, descricao]
+            'INSERT INTO listas_personalizadas ( nome_lista, descricao_lista, criador_lista ) VALUES ($1, $2, $3) RETURNING *',
+            [ nome, descricao, usuarioID ]
         );
 
         // Retorna a lista criada com status 201
@@ -145,6 +158,34 @@ app.post('/listas_personalizadas', async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ error: 'Erro ao criar lista!' });
+    }
+});
+
+//Rota para verificar o login 
+app.post('/login', async (req, res) => {
+    const { usuario_apelido, usuario_senha } = req.body;
+
+    try {
+        const resultado = await pool.query(
+            'SELECT * FROM usuario WHERE usuario_apelido = $1 AND usuario_senha = $2',
+            [usuario_apelido, usuario_senha]
+        );
+
+        if (resultado.rows.length > 0) {
+            const usuario = resultado.rows[0];
+            res.status(200).json({
+                mensagem: 'Login bem-sucedido!',
+                usuario_id: usuario.usuario_id,
+                usuario_nome: usuario.usuario_nome,
+                usuario_apelido: usuario.usuario_apelido,
+                usuario_email: usuario.usuario_email
+            });
+        } else {
+            res.status(401).json({ mensagem: 'Apelido ou senha incorretos.' });
+        }
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        res.status(500).json({ mensagem: 'Erro no servidor.' });
     }
 });
 

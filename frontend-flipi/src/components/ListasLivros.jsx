@@ -7,32 +7,24 @@ import { GlobalContext } from "../contexts/GlobalContext";
 
 function ListasLivros() {
 
-    // const { posicaoUsuarioID, usuarioLogado } = useContext(GlobalContext);
-
+    
     const [abriuForm, setAbriuForm] = useState(false);
     const [nomeLista, setNomeLista] = useState('');
     const [descricaoLista, setDescricaoLista] = useState('');
     const [listas, setListas] = useState([]);
     const [mostrarLista, setMostrarLista] = useState(false);
-
-    // function salvarLista(){
-
-    //     if (nomeLista === '' || descricaoLista === ''){
-    //         alert('Todos os campos do formulário devem ser preenchidos!')
-    //     }
-
-    //     if (nomeLista.trim() && descricaoLista.trim()) {
-    //         setListas(prevListas => {
-    //             const novasListas = [...prevListas, { nomeLista, descricaoLista }];
-    //             setNomeLista(""); // Limpa o input
-    //             setDescricaoLista(""); // Limpa o input
-    //             setAbriuForm(false); // Fecha o diálogo APÓS atualizar a lista
-    //             console.log(novasListas)
-    //             return novasListas;
-    //         });
-    //     }
-
-    // }
+    
+    
+    const { posicaoUsuarioID, usuarioLogado } = useContext(GlobalContext);
+    useEffect(() => {
+        axios.get(`http://localhost:3000/listas_personalizadas/${posicaoUsuarioID}`)
+            .then(res => {
+                setListas(res.data);
+            })
+            .catch(err => {
+                console.error('Erro ao buscar listas', err);
+            });
+    }, []);
 
     const salvarLista = async (e) => {
         e.preventDefault();
@@ -40,9 +32,8 @@ function ListasLivros() {
           const res = await axios.post("http://localhost:3000/listas_personalizadas",
              {
                 nome: nomeLista,
-                descricao: descricaoLista
-                // usuario: posicaoUsuarioID
-                // usuario: usuarioLogado
+                descricao: descricaoLista,
+                usuarioID: posicaoUsuarioID
             });
             alert("Lista criada com sucesso!");
             console.log("Lista criada:", res.data);
@@ -53,8 +44,6 @@ function ListasLivros() {
         } catch (err) {
           console.error(err);
           alert("Erro ao criar lista");
-        //   console.log('Posição do usuário:', posicaoUsuarioID)
-        //   console.log('Posição do usuário:', usuarioLogado)
         }
     };
 
@@ -80,7 +69,7 @@ function ListasLivros() {
 
             <div className="listas__body--card__listas">
 
-                {listas.length > 0 ? (
+                {/* {listas.length > 0 ? (
                         listas.map((lista, index) => (
 
                             <div className="card__lista" onClick={() => setMostrarLista(true)}>
@@ -90,7 +79,17 @@ function ListasLivros() {
                     ) : (
                             <p>Nenhuma lista criada ainda.</p>
                     )
-                }
+                } */}
+
+                {listas.length > 0 ? (
+                    listas.map((lista, index) => (
+                        <div className="card__lista" onClick={() => setMostrarLista(true)} key={index}>
+                            <CardLista titulo={lista.nome_lista} />
+                        </div>
+                    ))
+                ) : (
+                    <p>Nenhuma lista criada ainda.</p>
+                )}
  
             </div>
 
