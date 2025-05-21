@@ -20,7 +20,7 @@ function Navbar() {
         <button className="btnavbar" onClick={() => {navigate("/telaprincipal")}} >Página Inicial</button>
         <button className="btnavbar" onClick={() => {navigate("/telacadastro")}} >Cadastro</button>
         <button className="btnavbar" onClick={() => {navigate("/telalogin")}} >Login</button>
-        <button className="btnavbar" onClick={() => {navigate("/telaescrivaninha")}} >Escrivaninha</button>
+        <button className="btnavbar btnescrivaninha" onClick={() => {navigate("/telaescrivaninha")}} >Escrivaninha</button>
         <button className="btnavbar" onClick={() => {navigate("/telalivro")}} >Livro</button>
         <button className="btnavbar" onClick={() => {navigate("/telausuarioconfigs")}} >Config</button>
     </nav>

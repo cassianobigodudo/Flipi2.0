@@ -63,7 +63,7 @@
             }
                 .isbn-botao-container-ativado{
 
-                    height: 70%;
+                    height: 60%;
                     width: 25%;
                     background-color: var(--laranjaenferrujado);
                     display: flex;

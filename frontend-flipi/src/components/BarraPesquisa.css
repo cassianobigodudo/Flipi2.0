@@ -54,10 +54,10 @@
 
 .img-prendedor{
 
-  width: 200px;
+  width: 250px;
   /* margin-left: 200px; */
   /* margin-top: -300px; */
-  margin-bottom: 675px;
+  margin-bottom: 720px;
   position: absolute;
 
 }
@@ -163,7 +163,7 @@
     height: 60px;
     width: 90%;
     font-family: 'fonte-projeto';
-    font-size: 30px;
+    font-size: 20px;
     cursor: pointer;
     border: none;
     text-align: start;
@@ -178,7 +178,7 @@
 
   .checkbox-marcada{
 
-    width: 45px;
+    width: 46px;
 
   }
 

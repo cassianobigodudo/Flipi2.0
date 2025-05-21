@@ -130,6 +130,24 @@ async function verificarTabelas(){
     console.log(`Tabela "livro_genero" verificada/criada com sucesso.`)
 
     
+    //?-----RESENHA------?//
+
+    const createResenhaQuery= `
+   CREATE TABLE IF NOT EXISTS resenha(
+    resenha_id SERIAL PRIMARY KEY,
+    resenha_titulo VARCHAR(40),
+    resenha_texto VARCHAR(300) NOT NULL,
+    resenha_nota INT NOT NULL,
+    resenha_curtidas INT,
+    usuario_id INT NOT NULL,
+    livro_isbn BIGINT,
+
+    CONSTRAINT fk_usuario_id FOREIGN KEY (usuario_id) REFERENCES usuario (usuario_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_livro_isbn FOREIGN KEY (livro_isbn) REFERENCES livro (livro_isbn) ON UPDATE CASCADE ON DELETE RESTRICT
+);`
+    
+    await client.query(createResenhaQuery);
+    console.log(`Tabela  "resenha" verificada/criada com sucesso.`)
 
   client.release();
 //   await pool.end();
@@ -495,18 +513,18 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
 
 
 app.post('/resenha', async (req, res) => {
-    const {resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data } = req.body;
+    const {resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, usuario_id, livro_isbn} = req.body;
     try {
         const result = await pool.query(
             `INSERT INTO resenha 
-            (resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data) 
-            VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-            [resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, resenha_data ]
+            (resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, usuario_id, livro_isbn) 
+            VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+            [resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, usuario_id, livro_isbn]
         );
         res.status(201).json(result.rows[0]);
     } catch (err) {
         console.error(err.message);
-        res.status(500).json({ error: 'Erro ao cadastrar resenha!' });
+        res.status(500).json({ error: 'Erro ao cadastrar resenha!-Server' });
     }
 });
 

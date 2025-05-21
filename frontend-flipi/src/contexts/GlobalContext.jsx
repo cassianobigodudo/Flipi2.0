@@ -12,6 +12,7 @@ const [dadosUsuarioLogado, setDadosUsuarioLogado] = useState('')
 const [livroAcessado, setLivroAcessado] = useState('')
 const [listaResenhas, setListaResenhas] = useState([])
 const [mostrarFiltro, setMostrarFiltro] = useState(false)
+const [usuarioId, setUsuarioId] = useState()
 
 const [biblioteca, setBiblioteca] = useState([
     {
@@ -24,6 +25,9 @@ const [biblioteca, setBiblioteca] = useState([
         editoraLivro: 'Livraria Garnier',
         sinopseLivro: 'Dom Casmurro, a obra mais conhecida do escritor Machado de Assis, conta a história de Bentinho e Capitu, que, apaixonados na adolescência, têm que enfrentar um obstáculo à realização de seus anseios amorosos, pois a mãe de Bentinho, D. Glória, fez uma promessa de que seu filho seria padre. Assim, no seminário, Bentinho conhece Escobar, que se torna seu melhor amigo e encontra uma solução para o problema.',
         generoLivro: ['Romance', 'Realista'],
+        resenhasLivro: [{
+            
+        }],
         
     },
     {
@@ -278,7 +282,7 @@ const [biblioteca, setBiblioteca] = useState([
 
     return(
      
-        <GlobalContext.Provider value={{vetorObjetosUsuarios, setVetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuario, setPosicaoUsuario, posicaoUsuarioID, setPosicaoUsuarioID, dadosUsuarioLogado, setDadosUsuarioLogado, biblioteca, setBiblioteca, livroAcessado, setLivroAcessado,listaResenhas, setListaResenhas}}>
+        <GlobalContext.Provider value={{vetorObjetosUsuarios, setVetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuario, setPosicaoUsuario, posicaoUsuarioID, setPosicaoUsuarioID, dadosUsuarioLogado, setDadosUsuarioLogado, biblioteca, setBiblioteca, livroAcessado, setLivroAcessado,listaResenhas, setListaResenhas, usuarioId, setUsuarioId}}>
 
             {children}
         </GlobalContext.Provider>

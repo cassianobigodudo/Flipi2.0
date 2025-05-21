@@ -27,8 +27,10 @@ function TelaEscrivaninha() {
   // Contextos e hooks
   const location = useLocation()
   const navigate = useNavigate()
+
   const { usuarioLogado } = useContext(GlobalContext)
   const { biblioteca, livroAcessado, setLivroAcessado, vetorObjetosUsuarios, posicaoUsuarioID } = useContext(GlobalContext)
+
 
   // Efeitos
   useEffect(() => {
@@ -70,6 +72,7 @@ function TelaEscrivaninha() {
       setMensagem('Buscando livro...')
       
 
+
       const response = await axios.get(`http://localhost:3000/livro/${isbn}`)
       await setLivroAcessado(response.data)
       setLivroCarregado(true)
@@ -85,6 +88,7 @@ function TelaEscrivaninha() {
       setMensagem('')
     } catch (error) {
       if (error.response?.status === 404) {
+
         try {
           setMensagem('Livro não encontrado. Buscando na OpenLibrary...')
           
@@ -104,7 +108,6 @@ function TelaEscrivaninha() {
           setTituloLivro(response.data.livro_titulo)
           setSinopse(response.data.livro_sinopse)
           console.log(response.data)
-              
           setMensagem('')
         } catch (addError) {
           setMensagem('Erro ao buscar livro na OpenLibrary')
@@ -117,6 +120,7 @@ function TelaEscrivaninha() {
         setMensagem('')
       }
     } finally {
+
     }
   }
 
@@ -161,9 +165,6 @@ function TelaEscrivaninha() {
         usuario_id: posicaoUsuarioID
       }
 
-      // Delay para simular processamento
-      await new Promise(resolve => setTimeout(resolve, 800))
-
       const response = await axios.post('http://localhost:3000/resenha', novaResenha)
       
       if (response.status === 201) {
@@ -180,13 +181,11 @@ function TelaEscrivaninha() {
         setNotaResenha(0)
         setMensagem('Resenha cadastrada com sucesso!')
         
-        await new Promise(resolve => setTimeout(resolve, 2000))
         setMensagem('')
       }
     } catch (error) {
       console.error('Erro ao cadastrar resenha:', error)
       setMensagem('Erro ao cadastrar resenha. Tente novamente.')
-      await new Promise(resolve => setTimeout(resolve, 2000))
       setMensagem('')
     } finally {
     }
@@ -199,27 +198,18 @@ function TelaEscrivaninha() {
           <NavbarVertical />
         </div>
 
-        <div className="escrivaninha-resenha-container">
-          <div className="resenha-container-textBlock">
-            <input 
-              maxLength={40} 
-              className='inpt-tituloResenha' 
-              placeholder='TITULO...' 
-              type="text"
-              onChange={(e) => setResenhaTitulo(e.target.value)} 
-              value={resenhaTitulo} 
-            />
-            <textarea 
-              placeholder='Começe sua resenha aqui...' 
-              maxLength={1600} 
-              cols="10" 
-              rows="10"  
-              className='inpt-resenha' 
-              name="resenha" 
-              value={resenha}
-              onChange={(e) => setResenha(e.target.value)}
-            ></textarea>
-          </div>
+      </div>
+
+      <div className="escrivaninha-info-container">
+        <div className="info-container-isbn">
+
+          <button className='Infor-container-isbnlbl' >ISBN</button>
+
+          <button onClick={dialogFunc}  className='infor-container-isbnQuestion' >?</button>
+
+          <input className='infor-container-isbnInpt' minLength={10} maxLength={13} type="number" placeholder='Código ISBN aqui...' 
+          value={isbn}
+          onChange={(event) => setIsbn(event.target.value)}/>
         </div>
 
         <div className="escrivaninha-info-container">
@@ -268,6 +258,7 @@ function TelaEscrivaninha() {
             </div>
           </div>
 
+
           <div className="livroContainer-tags">
             <button className='tags-btnAutor'>
               Autor: {autor}
@@ -278,11 +269,12 @@ function TelaEscrivaninha() {
             <button className='tags-btnData'>
               Ano: {ano}
             </button>
+
           </div>
 
           <div className="livroContainer-nota">
             <div className="nota-labelEspaco">
-              <label className='livroContainer-labelNota'>Avalie esse livro:</label>
+              <button className='livroContainer-labelNota'>Avalie esse livro:</button>
             </div>
             
             <div className="estrelas-div">

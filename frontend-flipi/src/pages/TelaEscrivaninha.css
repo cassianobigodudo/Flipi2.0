@@ -164,7 +164,7 @@
     display: flex;
     margin-top: 2%;
     width: 100%;
-    font-size: 27px;
+    font-size: 38px;
     font-family: "fonte-projeto";
     color: rgb(176, 80, 7);
     font-weight: 900;
@@ -175,10 +175,7 @@
     animation: slideInLeft 1s ease-in-out;
 }
 
-.inpt-tituloResenha:hover{
 
-  font-size: 29px;
-}
 
 .inpt-tituloResenha:focus{
     outline-width: 0px;
@@ -187,7 +184,7 @@
 .inpt-resenha{
     resize: none;
     font-weight: 400;
-    font-size: 23px;
+    font-size: 28px;
     font-family: "fonte-projeto";
     padding-left: 20px;
     color: rgb(89, 68, 52);
@@ -218,15 +215,16 @@
 .Infor-container-isbnlbl{
     margin-top: 2%;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    text-align: center;
     color: var(--laranjaenferrujado);
     width: 13%;
     height: 34.5%;
-    font-size: 23px;
+    font-size: 30px;
     letter-spacing: 4px;
     background-color: #fef4e9;
-    border-radius: 3px;
+    border-style: none;
+    border-radius: 13px;
     animation: slideInTop 1.5s ease-in-out;
+    transition: 1s;
     
 }
 
@@ -248,8 +246,8 @@
     color: var(--laranjaenferrujado);
     width: 32%;
     height: 36%;
-    font-size: 20px;
-    letter-spacing: 3px;
+    font-size: 29px;
+    letter-spacing: 2px;
     background-color: #f9f3e5;
     border: none;
     border-radius: 13px;
@@ -264,7 +262,7 @@
     background-color: #80aee3;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 700;
-    font-size: 17px;
+    font-size: 22px;
     color: white;
     height: 3.2%;
     width: 1.5%;
@@ -279,7 +277,7 @@
 
 .infor-container-isbnQuestion:hover{
     opacity: 100%;
-    font-size: 21px;
+    font-size: 30px;
     background-color: rgb(80, 167, 160);
     height: 3.8%;
     width: 1.9%;
@@ -297,25 +295,24 @@
     outline-width: 0;
 }
 .infor-container-isbnInpt:hover{
-  margin-right: -3.3%;
-  width: 34%;
   transition: 1s;
 }
 
 dialog{
-    height: 110px;
+    height: 185px;
     width: 40%;
-    animation: fadeIn 0.8s ease-in-out;
+    transition: 1s;
+    animation: fadeIn 0.8s ease-in-out, 
 }
 
 .dialog-divAtivo{
-    height: 100%;
+    height: 75%;
     position: fixed;
-    width: 60%;
+    width: 85%;
     background-color: rgb(65, 143, 137);
     opacity: 94%;
-    margin-top: -290px;
-    margin-left: 60px;
+    margin-top: -400px;
+    margin-left: -20px;
     border-radius: 3px;
     transition: 1s;
     box-shadow: 0px 13px 17px rgba(63, 38, 35, 0.4);
@@ -333,16 +330,18 @@ dialog{
     border-radius: 3px;
     transition: 1s;
     box-shadow: 0px 13px 17px rgba(63, 38, 35, 0.4);
-    animation: fadeOut 0.8s ease-in-out;    
+    animation: fadeOut 0.8s ease-in-out, slideInLeft 1s ease-in-out;   
 }
 
 .dialogLbl{ 
+  padding: 10px;
     font-family: "fonte-projeto";
-    font-size: 20px;
+    font-size: 28px;
     color: rgb(255, 255, 255);
+    letter-spacing: 2px;
     margin: 5px;
     transition: 1s;
-    animation: fadeIn 1.5s ease-in-out;
+    animation: fadeIn 1.5s ease-in-out, slideInLeft 1s ease-in-out;  
 }
 
 .info-container-livroContainer{  
@@ -407,21 +406,24 @@ dialog{
     display: flex;
     justify-content: start;
     width: 80%;
+    text-align: center;
     margin-left: 5%;
     background-color: var(--laranjaenferrujado);
     border-radius: 2px;
     animation: slideInLeft 1.3s ease-in-out;
+    
 }
 
 .livroTituloLbl{
     text-align: start;
     font-family: "fonte-projeto-extra";
-    margin-top: 1%;
+    margin-top: 3%;
     margin-left: 2%;
     color: var(--corfundo);
     transition: 2s;
     font-size: 32px;
     animation: fadeIn 2.2s ease-in-out;
+    border: none;
 }
 
 .desc-livroDesc{
@@ -437,8 +439,8 @@ dialog{
     margin-top: 2%;
     height: 77.9%;
     width: 99%;
-    font-size: 19px;
-    letter-spacing: -1px;
+    font-size: 25px;
+    letter-spacing: -2px;
     resize: none;
     font-family: "fonte-projeto-extra";
     font-style: italic;
@@ -471,7 +473,7 @@ dialog{
     height: 76%; 
     width: 31%;
     font-family: "fonte-projeto";
-    font-size: 22px;
+    font-size: 35px;
     margin-bottom: 2%;
     color: #795041;
     border: none;
@@ -487,7 +489,7 @@ dialog{
     height: 76%; 
     width: 31%;
     font-family: "fonte-projeto";
-    font-size: 22px;
+    font-size: 35px;
     margin-bottom: 2%;
     color: #795041;
     border: none;
@@ -502,7 +504,7 @@ dialog{
     width: 31%;
     letter-spacing: 2px;
     font-family: "fonte-projeto";
-    font-size: 25px;
+    font-size: 38px;
     margin-bottom: 2%;
     color: #795041;
     border: none;
@@ -542,7 +544,7 @@ dialog{
     font-family: "fonte-projeto";
     text-align: center;
     color: #fef4e9;
-    font-size: 30px;
+    font-size: 39px;
     letter-spacing: 5px;
     height: 59%;
     width: 83%;
@@ -550,6 +552,8 @@ dialog{
     user-select: none;
     box-shadow: 0px 8px 7px rgba(39, 20, 15, 0.1);
     animation: fadeIn 2.2s ease-in-out;
+    border: none;
+    transition: 1s;
 }
 
 .estrelas-div{
@@ -592,7 +596,7 @@ dialog{
     height: 67%;
     width: 58%;
     font-family: "fonte-projeto";
-    font-size: 30px;
+    font-size: 39px;
     letter-spacing: 6px;
     border: none;
     border-radius: 2px;
