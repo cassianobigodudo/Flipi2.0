@@ -523,7 +523,7 @@ app.post('/resenha', async (req, res) => {
         res.status(201).json(result.rows[0]);
     } catch (err) {
         console.error(err.message);
-        res.status(500).json({ error: 'Erro ao cadastrar resenha!' });
+        res.status(500).json({ error: 'Erro ao cadastrar resenha!-Server' });
     }
 });
 

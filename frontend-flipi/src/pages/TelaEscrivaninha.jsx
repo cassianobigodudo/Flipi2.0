@@ -28,7 +28,7 @@ function TelaEscrivaninha() {
   const {usuarioLogado} = useContext(GlobalContext)
 
 
-  const {biblioteca, livroAcessado, setLivroAcessado, vetorObjetosUsuarios, posicaoUsuarioID, dadosUsuarioLogado, livro} = useContext(GlobalContext)
+  const {biblioteca, livroAcessado, setLivroAcessado, vetorObjetosUsuarios, posicaoUsuarioID, dadosUsuarioLogado, livro, setListaResenhas, listaResenhas} = useContext(GlobalContext)
   const [abrirCaixa, setAbrirCaixa] = useState(false)
 
   //passando o valor do textarea para o usestate
@@ -104,19 +104,33 @@ useEffect(() => {
 
       const currentDate = new Date().toISOString();
 
+      
+     
+
+
         // Cria a nova resenha
         let novaResenha = {
-          
             nomeUsuario: '', // Inicializa vazio; será atualizado abaixo
             resenha_titulo: resenhaTitulo , // titulo da resenha 
             resenha_texto: resenha ,// Atribui o texto da resenha
             resenha_nota: notaResenha ,// Atribui a avaliação do livro feito pelo usuário
             resenha_curtidas: 0,
+            usuario_id: posicaoUsuarioID, // Adicionar o ID do usuário aqui
+            livro_isbn: isbn,
         }
         console.log(novaResenha)
 
         
         console.log('hora do try')
+        const usuarioAtualizado = vetorObjetosUsuarios.find(e => e.usuario_id === posicaoUsuarioID);
+
+        if (usuarioAtualizado) {
+            novaResenha.nomeUsuario = usuarioAtualizado.usuario_apelido;
+        } else {
+            console.error('Usuário não encontrado!');
+            return;
+        }
+
         try {
           console.log('entrei no try')
             
@@ -132,19 +146,10 @@ useEffect(() => {
               alert("resenha cadastrada com sucesso!");
           }
         } catch (error) {
-          console.error('Erro ao cadastrar resenha! :(', error)
+          console.error('Erro ao cadastrar resenha! :( -escrivaninha', error)
         }
 
         // Busca o usuário logado pelo ID
-        const usuarioAtualizado = vetorObjetosUsuarios.find(e => e.usuario_id === posicaoUsuarioID);
-
-        if (usuarioAtualizado) {
-            novaResenha.nomeUsuario = usuarioAtualizado.usuario_apelido;
-        } else {
-            console.error('Usuário não encontrado!');
-            return;
-        }
-
          // Atualiza o estado de `livroAcessado`
         setLivroAcessado((prevState) => ({
             ...prevState,
@@ -195,7 +200,7 @@ useEffect(() => {
       <div className="escrivaninha-info-container">
         <div className="info-container-isbn">
 
-          <label className='Infor-container-isbnlbl' htmlFor="">ISBN</label>
+          <button className='Infor-container-isbnlbl' >ISBN</button>
 
           <button onClick={dialogFunc}  className='infor-container-isbnQuestion' >?</button>
 
@@ -236,7 +241,7 @@ useEffect(() => {
 
           <div className="nota-labelEspaco">
 
-          <label className='livroContainer-labelNota' htmlFor="">Avalie esse livro:</label>
+          <button className='livroContainer-labelNota' htmlFor="">Avalie esse livro:</button>
 
           </div>
           
