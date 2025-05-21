@@ -78,7 +78,7 @@ function TelaPrincipal() {
                                     <button className="btn-livro-home" onClick={() => 
                                         navigate("/telalivro", { state: { index: 0 } })}>
     
-                                        <div className="box"></div>
+                                        <div className="box-2"></div>
                                         <p className='titulos-livros'>{biblioteca[0].tituloLivro}</p>
                                     </button>
                                 </div>
@@ -270,14 +270,14 @@ function TelaPrincipal() {
                             
                                 
                                 <Link to="/telaprincipal">
-                                <button className="btns">
+                                <button className="btnss">
                                     <img src="../public/icons/ant-design--home-outlined.svg" alt="" className="icone-botao"/>
                                 </button>
                                 </Link>
     
     
                                 <Link to="/telaescrivaninha"> 
-                                <button className="btns"> 
+                                <button className="btnss"> 
                                 <img src="public/icons/escrita.png" alt="" className="icone-botao"/> 
                                 </button>
                                 </Link>
@@ -285,7 +285,7 @@ function TelaPrincipal() {
                             </div>
     
                             <Link to="/telausuarioconfigs"> 
-                            <button className="btns">  
+                            <button className="btnss">  
                             <img src="./public/images/setting.svg" alt="" className="icone-botao"/>
                             </button>
                             </Link>

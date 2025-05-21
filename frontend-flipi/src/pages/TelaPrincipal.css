@@ -91,21 +91,21 @@
     animation: fadeIn 0.5s ease-in-out;
 }
 
-.btns{
+.btnss{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50px;
-    width: 50px;
+    height: 30px;
     margin-bottom: 25px;
     border-radius: 50%;
     border: none;
     cursor: pointer;
     transition: 0.5s;
+    transform: scale(1.5);
 }
 
-.btns:hover {
-    transform: scale(1.1);
+.btnss:hover {
+    transform: scale(1.6);
     transition: 0.5s;
 }
 
@@ -213,22 +213,21 @@
     animation: slideInBottom 0.8s ease-in-out;
 }
 
-.box, .box-1, .box-3, .box-4, .box-5, .box-6, .box-7, .box-8, .box-9, .box-10, .box-11, .box-12, .box-13, .box-14, .box-15, .box-16 {
-    height: 105px;
-    width: 73px;
+.box-2, .box-1, .box-3, .box-4, .box-5, .box-6, .box-7, .box-8, .box-9, .box-10, .box-11, .box-12, .box-13, .box-14, .box-15, .box-16 {
+    height: 174px;
+    width: 120px;
     display: flex;
     align-items: center;
     padding-top: 100px;
     transition: 0.3s ease;
     background-size: contain;
     background-position: center;
-    background-repeat: no-repeat;
     animation: fadeIn 1s ease-in-out;
-    box-shadow: 0px 3px 5px rgba(87, 61, 47, 0.3);
+    box-shadow: 0px 3px 6px rgba(87, 61, 47, 0.3);
+    background-size: 100%;
 }
 
-.box {
-    width: 100px;
+.box-2{
     background-image: url('./images/dom_casmurro.jpg');
 }
 
@@ -406,15 +405,16 @@
 }
 
 .btn-next-page{
-    height: 30px;
-    width: 90px;
+    height: 40px;
+    width: 160px;
     margin-top: 1%;
     border: solid #d7beb1;
+    text-align: center;
     border-radius: 10px;
     cursor: pointer;
     color: #40454b;
     font-family: "fonte-projeto";
-    font-size: 20px;
+    font-size: 30px;
     font-weight: 700;
     margin-right: 10px;
     transition: 0.8s;
@@ -422,8 +422,7 @@
 }
 
 .btn-next-page:hover {
-    width: 100px;
-    font-size: 21px;
+    font-size: 31px;
     transition: 0.8s;
     background-color: #f5ece0;
 }
