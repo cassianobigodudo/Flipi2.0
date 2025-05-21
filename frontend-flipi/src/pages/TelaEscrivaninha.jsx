@@ -16,13 +16,13 @@ function TelaEscrivaninha() {
   const [time, setTime] = useState(0)
   const [listaResenhas, setListaResenhas] = useState([])
   const [mensagem, setMensagem] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
   const [livroCarregado, setLivroCarregado] = useState(false)
   const [capa, setCapa] = useState('')
   const [autor, setAutor] = useState('')
   const [editora, setEditora] = useState('')
   const [tituloLivro, setTituloLivro] = useState('')
   const [ano, setAno] = useState('')
+  const [sinopse, setSinopse] = useState('')
 
   // Contextos e hooks
   const location = useLocation()
@@ -67,11 +67,8 @@ function TelaEscrivaninha() {
     }
 
     try {
-      setIsLoading(true)
       setMensagem('Buscando livro...')
       
-      // Adicionado delay para visualização do loading
-      await new Promise(resolve => setTimeout(resolve, 500))
 
       const response = await axios.get(`http://localhost:3000/livro/${isbn}`)
       await setLivroAcessado(response.data)
@@ -82,38 +79,44 @@ function TelaEscrivaninha() {
       setEditora(response.data.editora.editora_nome)
       setAutor(response.data.autores[0].autor_nome)
       setTituloLivro(response.data.livro_titulo)
+      setSinopse(response.data.livro_sinopse)
       console.log(response.data)
       
-      // Delay para visualização da mensagem
-      await new Promise(resolve => setTimeout(resolve, 1500))
       setMensagem('')
     } catch (error) {
       if (error.response?.status === 404) {
         try {
           setMensagem('Livro não encontrado. Buscando na OpenLibrary...')
-          await new Promise(resolve => setTimeout(resolve, 1000))
           
           const addResponse = await axios.post(`http://localhost:3000/livro/isbn/${isbn}`)
           await setLivroAcessado(addResponse.data)
           setLivroCarregado(true)
           setMensagem('Livro adicionado com sucesso!')
-          
-          await new Promise(resolve => setTimeout(resolve, 1500))
+
+          const response = await axios.get(`http://localhost:3000/livro/${isbn}`)
+          await setLivroAcessado(response.data)
+          setLivroCarregado(true)
+          setMensagem('Livro encontrado com sucesso!')
+          setCapa(response.data.livro_capa)
+          setAno(response.data.livro_ano)
+          setEditora(response.data.editora.editora_nome)
+          setAutor(response.data.autores[0].autor_nome)
+          setTituloLivro(response.data.livro_titulo)
+          setSinopse(response.data.livro_sinopse)
+          console.log(response.data)
+              
           setMensagem('')
         } catch (addError) {
           setMensagem('Erro ao buscar livro na OpenLibrary')
           console.error('Erro:', addError)
-          await new Promise(resolve => setTimeout(resolve, 2000))
           setMensagem('')
         }
       } else {
         setMensagem('Erro ao buscar livro')
         console.error('Erro:', error)
-        await new Promise(resolve => setTimeout(resolve, 2000))
         setMensagem('')
       }
     } finally {
-      setIsLoading(false)
     }
   }
 
@@ -137,7 +140,6 @@ function TelaEscrivaninha() {
     }
 
     try {
-      setIsLoading(true)
       setMensagem('Enviando resenha...')
       
       const currentDate = new Date().toISOString()
@@ -187,7 +189,6 @@ function TelaEscrivaninha() {
       await new Promise(resolve => setTimeout(resolve, 2000))
       setMensagem('')
     } finally {
-      setIsLoading(false)
     }
   }
 
@@ -207,7 +208,6 @@ function TelaEscrivaninha() {
               type="text"
               onChange={(e) => setResenhaTitulo(e.target.value)} 
               value={resenhaTitulo} 
-              disabled={isLoading}
             />
             <textarea 
               placeholder='Começe sua resenha aqui...' 
@@ -218,7 +218,6 @@ function TelaEscrivaninha() {
               name="resenha" 
               value={resenha}
               onChange={(e) => setResenha(e.target.value)}
-              disabled={isLoading}
             ></textarea>
           </div>
         </div>
@@ -229,7 +228,6 @@ function TelaEscrivaninha() {
             <button 
               onClick={dialogFunc} 
               className='infor-container-isbnQuestion'
-              disabled={isLoading}
             >
               ?
             </button>
@@ -242,10 +240,7 @@ function TelaEscrivaninha() {
               value={isbn}
               onChange={(e) => setIsbn(e.target.value)}
               onBlur={buscarLivroPorISBN}
-              disabled={isLoading}
             />
-            {isLoading && <p className="mensagem-loading">Carregando...</p>}
-            {mensagem && <p className="mensagem-texto">{mensagem}</p>}
           </div>
 
           <div className="info-container-livroContainer">
@@ -267,7 +262,7 @@ function TelaEscrivaninha() {
                 <textarea 
                   readOnly 
                   className='livroDesc-textArea' 
-                  value={livroCarregado ? livroAcessado.sinopseLivro : 'Sinopse aparecerá aqui após buscar pelo ISBN'}
+                  value={sinopse}
                 />
               </div>
             </div>
@@ -294,7 +289,6 @@ function TelaEscrivaninha() {
               <div className="estrelas-buttons">
                 <EstrelasBtn 
                   onRatingChange={setNotaResenha} 
-                  disabled={!livroCarregado || isLoading}
                 />
               </div>
             </div>
@@ -304,9 +298,8 @@ function TelaEscrivaninha() {
             <button 
               className='livroContainer-btnEnviar'  
               onClick={cadastrarResenha}
-              disabled={!livroCarregado || isLoading}
             >
-              {isLoading ? 'ENVIANDO...' : 'ENVIAR RESENHA'}
+              {'ENVIAR RESENHA'}
             </button>
           </div>
         </div>

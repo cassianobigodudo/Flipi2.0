@@ -99,7 +99,7 @@ async function verificarTabelas(){
         livro_isbn BIGINT PRIMARY KEY,
         livro_titulo VARCHAR(100) NOT NULL,
         livro_ano INTEGER NOT NULL,
-        livro_sinopse VARCHAR (400) NOT NULL,
+        livro_sinopse TEXT NOT NULL,
         livro_capa TEXT NOT NULL,
         editora_id INTEGER,
         CONSTRAINT fk_livro_editora FOREIGN KEY (editora_id) REFERENCES EDITORA (editora_id) ON UPDATE CASCADE ON DELETE RESTRICT
