@@ -193,9 +193,26 @@ function TelaEscrivaninha() {
 
   return (
     <div className="tela-escrivaninha-container">
-      <div className="escrivaninha-mesa">
-        <div className="escrivaninha-navbarVertical">
-          <NavbarVertical />
+
+    <div className="escrivaninha-mesa">
+
+
+      <div className="escrivaninha-navbarVertical">
+        <NavbarVertical />
+      </div>
+
+      <div className="escrivaninha-resenha-container">
+
+        <div className="resenha-container-textBlock">
+      
+         <input maxLength={40} className='inpt-tituloResenha' placeholder='TITULO...' type="text"
+          onChange={(event) => setResenhaTitulo(event.target.value)} 
+          value={resenhaTitulo} />
+         <textarea placeholder='Começe sua resenha aqui...' maxLength={1600} cols="10" rows="10"  className='inpt-resenha' name="resenha" id="" 
+          value={resenha}
+          onChange={(event) => setResenha(event.target.value)}
+         ></textarea>
+
         </div>
 
       </div>
@@ -209,105 +226,82 @@ function TelaEscrivaninha() {
 
           <input className='infor-container-isbnInpt' minLength={10} maxLength={13} type="number" placeholder='Código ISBN aqui...' 
           value={isbn}
-          onChange={(event) => setIsbn(event.target.value)}/>
+          onChange={(event) => setIsbn(event.target.value)}
+	        onBlur={buscarLivroPorISBN}
+          />
         </div>
 
-        <div className="escrivaninha-info-container">
-          <div className="info-container-isbn">
-            <label className='Infor-container-isbnlbl'>ISBN</label>
-            <button 
-              onClick={dialogFunc} 
-              className='infor-container-isbnQuestion'
-            >
-              ?
-            </button>
-            <input 
-              className='infor-container-isbnInpt' 
-              minLength={10} 
-              maxLength={13} 
-              type="number" 
-              placeholder='Código ISBN aqui...' 
-              value={isbn}
-              onChange={(e) => setIsbn(e.target.value)}
-              onBlur={buscarLivroPorISBN}
-            />
+        <div className="info-container-livroContainer">
+
+          <div className="livroContainer-capa">
+          <img className='capa-img' src={capa} alt="" />
           </div>
 
-          <div className="info-container-livroContainer">
-            <div className="livroContainer-capa">
-              {livroCarregado ? (
-                <img className='capa-img' src={capa} alt="Capa do livro" />
-              ) : (
-                <div className="capa-placeholder">Busque um livro pelo ISBN</div>
-              )}
+          <div className="livroContainer-desc">
+            <div className="desc-livroTitulo"> 
+              <label className='livroTituloLbl' htmlFor="">{tituloLivro}</label>
             </div>
+            <div className="desc-livroDesc">
 
-            <div className="livroContainer-desc">
-              <div className="desc-livroTitulo"> 
-                <label className='livroTituloLbl'>
-                  {tituloLivro}
-                </label>
-              </div>
-              <div className="desc-livroDesc">
-                <textarea 
-                  readOnly 
-                  className='livroDesc-textArea' 
-                  value={sinopse}
-                />
-              </div>
+      <textarea readOnly className='livroDesc-textArea' value={sinopse} name="" id="">
+      </textarea>
+
+
+      
+
             </div>
           </div>
 
 
-          <div className="livroContainer-tags">
-            <button className='tags-btnAutor'>
-              Autor: {autor}
-            </button>
-            <button className='tags-btnEditora'>
-              Editora: {editora}
-            </button>
-            <button className='tags-btnData'>
-              Ano: {ano}
-            </button>
+        </div>
+        <div className="livroContainer-tags">
+          <button className='tags-btnAutor' >Autor:  {autor}</button>
+          <button className='tags-btnEditora'>Editora:  {editora}</button>
+          <button className='tags-btnData'>Ano:  {ano}</button>
+        </div>
+        <div className="livroContainer-nota">
+
+          <div className="nota-labelEspaco">
+
+          <button className='livroContainer-labelNota' htmlFor="">Avalie esse livro:</button>
 
           </div>
+          
+          <div className="estrelas-div">
 
-          <div className="livroContainer-nota">
-            <div className="nota-labelEspaco">
-              <button className='livroContainer-labelNota'>Avalie esse livro:</button>
-            </div>
+          <div className="estrelas-buttons">
             
-            <div className="estrelas-div">
-              <div className="estrelas-buttons">
-                <EstrelasBtn 
-                  onRatingChange={setNotaResenha} 
-                />
-              </div>
-            </div>
+          <EstrelasBtn onRatingChange={setNotaResenha}/>
+          
+
           </div>
 
-          <div className="livroContainer-enviar">
-            <button 
-              className='livroContainer-btnEnviar'  
-              onClick={cadastrarResenha}
-            >
-              {'ENVIAR RESENHA'}
-            </button>
-          </div>
         </div>
+        </div>
+        <div className="livroContainer-enviar">
+          <button className='livroContainer-btnEnviar'  onClick={cadastrarResenha} >ENVIAR RESENHA</button>
+        </div>
+
       </div>
 
+    </div>
+
       <dialog open={abrirCaixa}> 
+
         <div className="dialog-divAtivo">
-          <h1 className='dialogLbl'>
-            O ISBN é um código de identificação de um livro, acesse vários desses códigos em- 
-            <a href="https://openlibrary.org/" target='_blank' rel="noopener noreferrer">Open Library</a>,
-            Google Books ou sites de editoras para obter informações sobre um livro específico. 
-          </h1>
-          <button onClick={dialogFunc}>Fechar</button>
+          <h1 className='dialogLbl' >O ISBN é um código de identificação de um livro, acesse vários desses códigos em- 
+          <a href="https://openlibrary.org/" target='_blank' >Open Library</a>,
+             Google Books ou sites de editoras para obter informações sobre um livro específico. 
+</h1>
+
         </div>
+
       </dialog>
-    </div>    
+
+
+  </div>    
+
+ 
   )
 }
 
