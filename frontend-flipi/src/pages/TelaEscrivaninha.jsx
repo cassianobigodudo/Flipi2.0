@@ -185,7 +185,7 @@ function TelaEscrivaninha() {
       }
     } catch (error) {
       console.error('Erro ao cadastrar resenha:', error)
-      setMensagem('Erro ao cadastrar resenha. Tente novamente.')
+      setMensagem('Erro ao cadastrar resenha. Tente novamente"')
       setMensagem('')
     } finally {
     }
