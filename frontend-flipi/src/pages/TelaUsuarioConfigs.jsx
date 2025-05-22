@@ -333,14 +333,14 @@ const editarDados = async (campo) => {
               <button className="btn-secao">Resenhas</button>
             </div>
             </div>
-            {/* <div className="nivel-box">
+            <div className="nivel-box">
               <h3>Nível</h3>
               <div className="nivel-numero">37</div>
                 <p>Progresso para o próximo nível...</p>
               <div className="progresso">
-                <div className="preenchido" style="width: 20%"></div>
+                <div className="preenchido" style={{ width: "20%" }}></div>
               </div>
-            </div> */}
+            </div>
           </div>
 
           <div className="usuarioConfigs-body-meio-papel-resenhas">

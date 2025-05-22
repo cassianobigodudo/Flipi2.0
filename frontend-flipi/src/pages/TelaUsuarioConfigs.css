@@ -266,4 +266,22 @@
         padding: 10px;
         justify-items: left;
       }
+      .nivel-box{
+        background-color: #f4e2b4;
+        width: 100%;
+        padding: 10px;
+        justify-items: center;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-family: "fonte-projeto";
+        font-size: 30px;
+      }
+      .nivel-box p{
+        font-family: "fonte-projeto";
+        font-size: 30px;
+      }
+      .nivel-box h2{
+        font-family: "fonte-projeto";
+        font-size: 40px;
+      }
 
