@@ -131,7 +131,8 @@
             margin-right: 90px;
             flex-direction: column;
             height: 50vh;
-            width: 36vh;
+            width: 40vh;
+            margin-bottom: 50px;
             background-color: #ecd9b1;
             background-repeat: no-repeat;
             background-size: cover;
@@ -155,7 +156,7 @@
         .estrelas-btn-livro{
 
             margin-top: 5%;
-            width: 68%;
+            width: 88%;
         }
             .icone-estrela{
                 height: 35px;
@@ -173,11 +174,12 @@
         .textos{
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 9px;
             height: 100%;
             width: 100%;
             background-color: transparent;
             margin-bottom: 4%;
+            font-size: 40px;
             padding: 35px 35px 35px 0px;
         }
             .titulo-livro{
@@ -227,11 +229,13 @@
                 background-color:#fcf6e8;
                 border-radius: 5px;
                 box-shadow: 0px 6px 5px #c79a80;
-                font-size: 20px;
+                font-size: 35px;
+                overflow: scroll;
             }
 
             .lbl-sinopseLivro{
                 font-style: italic;
+                
             }
 
             .genero-livro{
@@ -248,9 +252,9 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    font-size: 20px;
-                    height: 35px;
-                    width: 150px;
+                    font-size: 33px;
+                    height: 65px;
+                    width: 180px;
                     color: var(--navbar);
                     background-color: #c85b34;
                     border-radius: 5px;
@@ -315,14 +319,14 @@
    }
     .botao-resenha{
 
-        height: 50px;
+        height: 82px;
         width: 200px;
         border: none;
         background-color: #c85b34;
         color: #fff;
         
         font-family: "fonte-projeto";
-        font-size: 40px;
+        font-size: 50px;
         font-style: italic;
         font-weight: bold;
         border-top-left-radius: 5px;
