@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { GlobalContext } from '../contexts/GlobalContext'
 import { useContext } from 'react'
+import { useNavigate } from "react-router-dom"
 import './BarraPesquisa.css'
+import axios from 'axios'
 
 // Componente Modal reutilizável
+
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
@@ -32,9 +35,24 @@ const GeneroCheckbox = ({ genre, isChecked, onChange }) => {
   );
 };
 
+
+
 function BarraPesquisa() {
+  
+const navigate = useNavigate()
+const [inptPesquisa, SetInptPesquisa] = useState('')
+
+async function PesquisarLivro(){
+
+  console.log('oi')
+  const response = await axios.get(`http://localhost:3000/livro/:${inptPesquisa}`)
+
+  console.log("teste frontend: ", response)
+}
+
   // Estado para controlar a abertura do modal
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   
   // Função para abrir e fechar o modal
   const openModal = () => setIsModalOpen(true);
@@ -108,13 +126,15 @@ function BarraPesquisa() {
       <input 
         type="text" 
         className='inpt-pesquisar' 
-        placeholder='Pesquise um livro em específico' 
+        placeholder='Pesquise um livro em específico'
+        value={inptPesquisa} 
+        onChange={(event) => SetInptPesquisa(event.target.value)}
       />
       
       {/* Botão de pesquisa */}
       <button 
         className="btn-pesquisa"
-        onClick={() => navigate("/telapesquisa")}
+        onClick={PesquisarLivro}
       >
         <img 
           className='icon-pesquisar' 

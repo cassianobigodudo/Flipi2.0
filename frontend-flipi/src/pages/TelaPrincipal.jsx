@@ -3,12 +3,12 @@ import './TelaPrincipal.css'
 import { Link, useNavigate } from "react-router-dom"
 import Navbar from '../components/Navbar'
 import { GlobalContext } from '../contexts/GlobalContext'
+import BarraPesquisa from '../components/BarraPesquisa'
 
 function TelaPrincipal() {
     
     const {posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, usuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado}=useContext(GlobalContext)
     const {biblioteca}=useContext(GlobalContext)
-    const navigate = useNavigate()
 
 
     useEffect (() => {
@@ -63,12 +63,7 @@ function TelaPrincipal() {
     
                             <div className="div-barra-de-pesquisa">
     
-                                <input className='inpt-pesquisa' type="text" placeholder='Pesquise um livro em específico'/>
-    
-                                <button className="btn-pesquisar"
-                                onClick={() => navigate("/telapesquisa")}>
-                                    <img className='icons-pesquisar' src="public/icons/big-search-len.png" alt="" />
-                                </button>
+                                <BarraPesquisa/>
     
                             </div>
     
