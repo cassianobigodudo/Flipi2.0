@@ -133,6 +133,8 @@
               .div-nome-do-site{
                   height: 100%;
                   width: 60%;
+                  
+                  font-size: 35px;
                   display: flex;
                   justify-content: center;
                   align-items: center;
@@ -151,8 +153,8 @@
                   font-size: 30px;
               }
                   .logo-site{
-                      height: 100px;
-                      width: 150px;
+                      height: 200px;
+                      width: 320px;
                       animation: pulse 2s infinite ease-in-out;
                   }
   
@@ -175,12 +177,12 @@
                   align-items: center;
                   flex-direction: column;
                   color: #40454b;
-                  font-size: 29px;
+                  font-size: 39px;
                   font-weight: 700;
                   padding: 25px;   
               }
                   .slogan-home{
-                      font-size: 50px;
+                      font-size: 70px;
                   }
   
               .div-btns{
