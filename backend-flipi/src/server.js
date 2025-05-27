@@ -136,7 +136,7 @@ async function verificarTabelas(){
    CREATE TABLE IF NOT EXISTS resenha(
     resenha_id SERIAL PRIMARY KEY,
     resenha_titulo VARCHAR(40),
-    resenha_texto VARCHAR(300) NOT NULL,
+    resenha_texto TEXT NOT NULL,
     resenha_nota INT NOT NULL,
     resenha_curtidas INT,
     usuario_id INT NOT NULL,

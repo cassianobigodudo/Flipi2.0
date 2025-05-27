@@ -29,7 +29,7 @@ function TelaEscrivaninha() {
   const navigate = useNavigate()
 
   const { usuarioLogado } = useContext(GlobalContext)
-  const { biblioteca, livroAcessado, setLivroAcessado, vetorObjetosUsuarios, posicaoUsuarioID } = useContext(GlobalContext)
+  const { biblioteca, livroAcessado, setLivroAcessado, vetorObjetosUsuarios, posicaoUsuarioID} = useContext(GlobalContext)
 
 
   // Efeitos
@@ -167,7 +167,8 @@ function TelaEscrivaninha() {
 
       const response = await axios.post('http://localhost:3000/resenha', novaResenha)
       
-      if (response.status === 201) {
+      
+     /*  if (response.status === 201) {
         await Promise.all([
           setListaResenhas(prev => [...prev, response.data]),
           setLivroAcessado(prev => ({
@@ -182,7 +183,8 @@ function TelaEscrivaninha() {
         setMensagem('Resenha cadastrada com sucesso!')
         
         setMensagem('')
-      }
+      } */
+
     } catch (error) {
       console.error('Erro ao cadastrar resenha:', error)
       setMensagem('Erro ao cadastrar resenha. Tente novamente"')
