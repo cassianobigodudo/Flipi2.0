@@ -189,22 +189,21 @@ const editarDados = async (campo) => {
     
 
 
+  // Calcula a pontuação com base na quantidade de resenhas do usuário
+  const resenhasUsuario = dadosUsuarioLogado.resenhas || [];
+  const pontuacao = resenhasUsuario.length * 10; // Exemplo: 10 pontos por resenha
+  const nivel = Math.floor(pontuacao / 100) + 1; // Exemplo: cada 100 pontos sobe de nível
+  const pontosProximoNivel = 100;
+  const progresso = ((pontuacao % pontosProximoNivel) / pontosProximoNivel) * 100;
+
   return (
     <div className="usuarioConfigs-container">
 
       <div className="usuarioConfigs-div-esquerda">
-
-
-
       </div>
 
       <div className="usuarioConfigs-body">
-        
-        
-        
-
         <div className="usuarioConfigs-body-cima">
-
         </div>
 
         <div className="usuarioConfigs-body-meio">
@@ -221,137 +220,157 @@ const editarDados = async (campo) => {
                   className="img-usuario"
                   style={{ width: '150px', height: '150px', borderRadius: '50%' }}
                 />
-                        <div className="usuarioNomeDescricao">
-                          <h2>{dadosUsuarioLogado.usuario_nome}</h2>
-                           <div className="campo-editavel">
-                              <textarea 
-                                className="lbl-infos"
-                                value={editarDescricao}
-                                onChange={(e) => setEditarDescricao(e.target.value)}
-                                placeholder={dadosUsuarioLogado.descricao || "Sua descrição..."}
-                              />
-                          <button className="btn-editar" onClick={() => editarDados("descricao")}>✏️</button>
-                          </div>
-                        </div>
-
-                        </div>
-                        <div className="usuarioConfigs-bmpc-infos">
-              <div className="senha-container">
-                <label className="lbl-infos">
-                  Senha: {mostrarSenha 
-                    ? dadosUsuarioLogado.usuario_senha 
-                    : "•".repeat(dadosUsuarioLogado.usuario_senha?.length || 0)}
-                </label>
-
-                <button 
-                  className="btn-olhoMagico"
-                  onMouseDown={() => setMostrarSenha(true)}   // mostrar ao pressionar
-                  onMouseUp={() => setMostrarSenha(false)}   // esconder ao soltar
-                   // esconder se mouse sair
-                          >
-                            👁️
-                  </button>
-                  </div>
-                  <div className="btns-change">
+                <div className="usuarioNomeDescricao">
+                  <h2>{dadosUsuarioLogado.usuario_nome}</h2>
                   <div className="campo-editavel">
-                  {/* <label>Email:</label> */}
-                    <div className="input-container">
-                    <input 
-                      type="text" 
-                      className="input"
-                      value={editarNome}
-                      onChange={(e) => setEditarNome(e.target.value)}
-                      placeholder={dadosUsuarioLogado.usuario_nome}
+                    <textarea 
+                      className="lbl-infos"
+                      value={editarDescricao}
+                      onChange={(e) => setEditarDescricao(e.target.value)}
+                      placeholder={dadosUsuarioLogado.descricao || "Sua descrição..."}
                     />
-                    <button className="btn-editar" onClick={() => editarDados("nome")}>✏️</button>
+                    <button
+                      className="btn-editar"
+                      onClick={async () => {
+                        if (!editarDescricao || editarDescricao === dadosUsuarioLogado.descricao) {
+                          alert("Descrição inválida ou igual à atual.");
+                          return;
+                        }
+                        try {
+                          const response = await axios.put(`http://localhost:3000/usuario/${dadosUsuarioLogado.usuario_id}`, {
+                            ...dadosUsuarioLogado,
+                            descricao: editarDescricao
+                          });
+                          if (response.status === 200) {
+                            setDadosUsuarioLogado(prev => ({
+                              ...prev,
+                              descricao: editarDescricao
+                            }));
+                            setEditarDescricao("");
+                            alert("Descrição atualizada com sucesso!");
+                          }
+                        } catch (error) {
+                          console.error("Erro ao atualizar descrição:", error);
+                        }
+                      }}
+                    >✏️</button>
+                  </div>
+                </div>
+
+              </div>
+              <div className="usuarioConfigs-bmpc-infos">
+                <div className="senha-container">
+                  <label className="lbl-infos">
+                    Senha: {mostrarSenha 
+                      ? dadosUsuarioLogado.usuario_senha 
+                      : "•".repeat(dadosUsuarioLogado.usuario_senha?.length || 0)}
+                  </label>
+
+                  <button 
+                    className="btn-olhoMagico"
+                    onMouseDown={() => setMostrarSenha(true)}
+                    onMouseUp={() => setMostrarSenha(false)}
+                  >
+                    👁️
+                  </button>
+                </div>
+                <div className="campos">
+                  <div className="btns-change">
+                    <div className="campo-editavel">
+                      <div className="input-container">
+                        <input 
+                          type="text" 
+                          className="input"
+                          value={editarNome}
+                          onChange={(e) => setEditarNome(e.target.value)}
+                          placeholder={dadosUsuarioLogado.usuario_nome}
+                        />
+                        <button className="btn-editar" onClick={() => editarDados("nome")}>✏️</button>
+                      </div>
+                    </div>
+
+                    <div className="campo-editavel">
+                      <div className="input-container">
+                        <input 
+                          type="email" 
+                          className="input"
+                          value={editarEmail} 
+                          onChange={(e) => setEditarEmail(e.target.value)}
+                          onBlur={() => {
+                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                            if (editarEmail && !emailRegex.test(editarEmail)) {
+                              alert("Por favor, insira um e-mail válido.");
+                              setEditarEmail("");
+                            }
+                          }}
+                          placeholder={dadosUsuarioLogado.usuario_email}
+                        />
+                        <button className="btn-editar" onClick={() => editarDados("email")}>✏️</button>
+                      </div>
+                    </div>
+
+                    <div className="campo-editavel">
+                      <div className="input-container">
+                        <input 
+                          type="text" 
+                          className="input"
+                          value={editarFoto} 
+                          onChange={(e) => setEditarFoto(e.target.value)}
+                          placeholder="Cole a URL da imagem" 
+                        />
+                        <button className="btn-editar" onClick={() => editarDados("foto")}>✏️</button>
+                      </div>
+                    </div>
+
+                    <div className="campo-editavel">
+                      <div className="input-container">
+                        <input 
+                          type="text" 
+                          className="input"
+                          value={editarSenha} 
+                          onChange={(e) => setEditarSenha(e.target.value)}
+                          placeholder="Editar Senha" 
+                        />
+                        <button className="btn-editar" onClick={() => editarDados("senha")}>✏️</button>
+                      </div>
                     </div>
                   </div>
 
                   <div className="campo-editavel">
-                    {/* <label>Foto (URL):</label> */}
-                  <div className="input-container">
-                    <input 
-                      type="email" 
-                      className="input"
-                      value={editarEmail} 
-                      onChange={(e) => setEditarEmail(e.target.value)} // Permite qualquer valor no estado
-                      onBlur={() => { // Valida o e-mail ao sair do campo
-                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex para validar e-mails
-                        if (editarEmail && !emailRegex.test(editarEmail)) {
-                          alert("Por favor, insira um e-mail válido.");
-                          setEditarEmail(""); // Limpa o campo se o e-mail for inválido
-                        }
-                      }}
-                      placeholder={dadosUsuarioLogado.usuario_email}
-                    />
-                    <button className="btn-editar" onClick={() => editarDados("email")}>✏️</button>
+                    <div className="btn-deslogar-deletar">
+                      <button className="btn" onClick={deslogarUsuario} >Deslogar</button>
+                      <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button>
+                    </div>
+                  </div>
+                  <div className="nivel-box">
+                    <h3>Nível</h3>
+                    <div className="nivel-numero">{nivel}</div>
+                    <p>Pontuação: {pontuacao} pontos</p>
+                    <p>Progresso para o próximo nível...</p>
+                    <div className="progresso">
+                      <div className="preenchido" style={{ width: `${progresso}%` }}></div>
+                    </div>
                   </div>
                 </div>
-
-                <div className="campo-editavel">
-                  {/* <label>Foto (URL):</label> */}
-                  <div className="input-container">
-                    <input 
-                      type="text" 
-                      className="input"
-                      value={editarFoto} 
-                      onChange={(e) => setEditarFoto(e.target.value)}
-                      placeholder="Cole a URL da imagem" 
-                    />
-                    <button className="btn-editar" onClick={() => editarDados("foto")}>✏️</button>
-                  </div>
-                </div>
-
-                <div className="campo-editavel">
-                  {/* <label>Senha:</label> */}
-                  <div className="input-container">
-                    <input 
-                      type="text" 
-                      className="input"
-                      value={editarSenha} 
-                      onChange={(e) => setEditarSenha(e.target.value)}
-                      placeholder="Editar Senha" 
-                    />
-                    <button className="btn-editar" onClick={() => editarDados("senha")}>✏️</button>
-                  </div>
-                </div>
-              </div>
-
-              {/* <div className="usuarioConfigs-bmpc-inputs">
-
-              </div> */}
-
-              <div className="campo-editavel">
-                {/* <button className="btn" onClick={editarDados}>Editar dados</button> */}
-                <div className="btn-deslogar-deletar">
-                  <button className="btn" onClick={deslogarUsuario} >Deslogar</button>
-                  <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button>
-                </div>
-              </div>
                 <div className="listas-btn">
-              <button className="btn-secao">Listas Personalizadas</button>
-              <button className="btn-secao">Resenhas</button>
-            </div>
-            </div>
-            <div className="nivel-box">
-              <h3>Nível</h3>
-              <div className="nivel-numero">37</div>
-                <p>Progresso para o próximo nível...</p>
-              <div className="progresso">
-                <div className="preenchido" style={{ width: "20%" }}></div>
+                  <button className="btn-secao">Listas Personalizadas</button>
+                  <button
+                    className="btn-secao"
+                    onClick={() => navigate("/telaescrivaninha")}
+                  >
+                    Resenhas
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="usuarioConfigs-body-meio-papel-resenhas">
-            <div className="usuarioConfigs-bmpr-titulo">
+            <div className="usuarioConfigs-body-meio-papel-resenhas">
+              <div className="usuarioConfigs-bmpr-titulo">
                 <label className="lbl-titulos">Minhas resenhas</label>
-                {/* <label className="lbl-titulos">Minhas resenhas</label> */}
               </div>
 
               <div className="usuarioConfigs-bmpr-body">
-
-              <ResenhasConfigs/><ResenhasConfigs/><ResenhasConfigs/><ResenhasConfigs/>
+                <ResenhasConfigs/><ResenhasConfigs/><ResenhasConfigs/><ResenhasConfigs/>
               </div>
             </div>
           </div>
@@ -362,7 +381,7 @@ const editarDados = async (campo) => {
       </div>
 
       <div className="usuarioConfigs-navbar-container">
-      <NavbarVertical />
+        <NavbarVertical />
       </div>
     </div>
   )

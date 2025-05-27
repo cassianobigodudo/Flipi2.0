@@ -113,6 +113,7 @@
                         font-family: "fonte-projeto";
                         font-size: 30px;
                         border: none;
+                        padding: 10px;
                     }
 
                     .input{
@@ -245,6 +246,7 @@
         font-size: 1.8rem;
         color: #c6552e;
         font-family: "fonte-projeto";
+        padding-left: 10px;
       }
       .btns-change{
         background-color: #f4e2b4;
@@ -268,7 +270,7 @@
       }
       .nivel-box{
         background-color: #f4e2b4;
-        width: 100%;
+        width: 315px;
         padding: 10px;
         justify-items: center;
         border-radius: 10px;
@@ -281,6 +283,24 @@
         font-size: 30px;
       }
       .nivel-box h2{
+        font-family: "fonte-projeto";
+        font-size: 40px;
+      }
+      .campos{
+        width: 100%;
+        padding: 10px;
+        justify-items: column;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-family: "fonte-projeto";
+        font-size: 30px;
+        /* background-color: #f4e2b4; */
+      }
+      .campos p{
+        font-family: "fonte-projeto";
+        font-size: 30px;
+      }
+      .campos h2{
         font-family: "fonte-projeto";
         font-size: 40px;
       }
