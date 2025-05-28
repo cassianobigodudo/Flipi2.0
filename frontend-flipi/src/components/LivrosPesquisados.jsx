@@ -2,18 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import './LivrosPesquisados.css';
 import { MdOutlineContentCopy } from "react-icons/md";
 
-function LivrosPesquisados() {
+function LivrosPesquisados({ livro }) {
   
   const [switchClassName, setSwitchClassName] = useState('isbn-botao-container');
   const [switchLabel, setSwitchLabel] = useState('ISBN');
-  const [numberISBN, setNumberISBN] = useState('9780689704505');
   
   // Criar uma referência para o elemento que queremos adicionar o evento de scroll
   const tituloRef = useRef(null);
   
   function SwitchISBN() {
     if(switchLabel === 'ISBN') {
-      setSwitchLabel(`ISBN: ${numberISBN}`);
+      setSwitchLabel(`ISBN: ${livro.livro_isbn}`);
     } else {
       setSwitchLabel('ISBN');
     }
@@ -57,32 +56,30 @@ function LivrosPesquisados() {
           {switchClassName === 'isbn-botao-container-ativado' && 
             <MdOutlineContentCopy 
               className='copy-icon' 
-              onClick={() => {navigator.clipboard.writeText(numberISBN)}} 
+              onClick={() => {navigator.clipboard.writeText(livro.livro_isbn)}} 
             />
           } 
         </div>
 
         <div className="pesquisado-container">
             <div className="livro-capa-container">
-              <img src="images/battle_royale.jpg" className='img-livro-pesquisado' alt="Capa do livro" />
+              <img src={livro.livro_capa} className='img-livro-pesquisado' alt={`Capa do livro ${livro.livro_titulo}`} />
             </div>
 
             <div className="livro-info-container">
                 <div className="titulo-autor-data-container">
                   <div className="titulo-livro-pesquisado" ref={tituloRef}>
-                    <label className='lbl-titulo-pesquisa'>Livro bonito que eu gosto muito, uma pena ele ser muito longo </label>
+                    <label className='lbl-titulo-pesquisa'>{livro.livro_titulo}</label>
                   </div>
 
                   <div className="autor-ano-pesquisado">
-                    <label className='lbl-autor'>Autor: Isabella Boscov Scandinavo</label>
-                    <label className='lbl-ano'>Ano: 2026</label>
-
+                    <label className='lbl-autor'>Autor: {livro.autor_nome || 'Não informado'}</label>
+                    <label className='lbl-ano'>Ano: {livro.livro_ano}</label>
                   </div>
                 </div>
 
                 <div className="sinopse-container">
-                  <label className='lbl-sinopse' >Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, nemo. Corporis, illum? Id, a. Quis voluptas fugiat odit accusamus veritatis minus sint cupiditate quibusdam porro omnis dignissimos quam, ipsam minima! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur debitis, soluta vitae hic, suscipit quia dignissimos ab quisquam ex quae placeat cumque voluptate provident necessitatibus praesentium rerum amet dicta reprehenderit.</label>
-
+                  <label className='lbl-sinopse'>{livro.livro_sinopse}</label>
                 </div>
             </div>
         </div>

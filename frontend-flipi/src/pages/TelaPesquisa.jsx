@@ -12,6 +12,8 @@ import Filtro from '../components/Filtro'
 
 
 function TelaPesquisa() {
+  
+  const {livrosPesquisados, setLivrosPesquisados} = useContext(GlobalContext)
 
 
   return (

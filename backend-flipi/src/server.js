@@ -525,11 +525,11 @@ app.get('/livro/:isbn', async (req, res) => {
     }
 });
 
-app.get('/livro/:titulo', async (req, res) => {
-
+app.get('/livro/buscar/:titulo', async (req, res) => {
     const { titulo } = req.params;
+    console.log(titulo)
     try {
-        const result = await pool.query(`SELECT * FROM livro WHERE livro_titulo ILIKE '%$1%'`, [titulo])
+        const result = await pool.query(`SELECT * FROM livro WHERE livro_titulo ILIKE $1`, [`%${titulo}%`])
 
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Nenhum livro encontrado' });
@@ -541,12 +541,6 @@ app.get('/livro/:titulo', async (req, res) => {
         console.error(err.message)
         res.status(500).json({ error: 'Erro ao buscar livro na barra de pesquisa'})
     }
-
-    // try {
-        
-    // } catch (e) {
-        
-    // }
 })
 
 app.get('/livro', async (req, res) => {
