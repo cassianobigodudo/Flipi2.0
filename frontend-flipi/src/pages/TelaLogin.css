@@ -139,7 +139,7 @@
   
   .label-titulos {
     color: var(--laranjaenferrujado);
-    font-size: 58px;
+    font-size: 118px;
     font-family: "fonte-projeto";
     display: flex;
     font-weight: bolder;
@@ -148,7 +148,7 @@
   
   .label-inputs {
     color: #40454b;
-    font-size: 38px;
+    font-size: 58px;
     font-family: "fonte-projeto";
     display: flex;
     font-weight: bold;
@@ -157,6 +157,7 @@
   }
   
   .inputs-login {
+    margin-top: 5px;
     color: #c85b34;
     font-size: 34px;
     font-weight: bold;
