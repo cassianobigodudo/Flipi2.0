@@ -161,7 +161,7 @@ function TelaEscrivaninha() {
         resenha_nota: notaResenha,
         resenha_curtidas: 0,
         resenha_data: currentDate,
-        livro_isbn: livroAcessado.isbnLivro,
+        livro_isbn: isbn,
         usuario_id: posicaoUsuarioID
       }
 
