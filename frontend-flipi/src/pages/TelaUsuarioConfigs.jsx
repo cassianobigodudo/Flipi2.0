@@ -227,9 +227,9 @@ function TelaUsuarioConfigs() {
                 />
                 <div className="usuarioNomeDescricao">
                   <h2>{dadosUsuarioLogado.usuario_nome}</h2>
-                  <div className="campo-editavel">
+                  <div className="campo-descricao">
                     <textarea
-                      className="lbl-infos"
+                      className="descrição"
                       value={editarDescricao}
                       onChange={(e) => setEditarDescricao(e.target.value)}
                       placeholder={dadosUsuarioLogado.descricao || "Sua descrição..."}
@@ -337,7 +337,7 @@ function TelaUsuarioConfigs() {
                   </div>
                 </div>
                 <div className="teste2">
-                  <h3>Nível</h3>
+                  <h3 className="nivel-titulo">Nível</h3>
                   <div className="nivel-numero">{nivel}</div>
                   <p>Pontuação: {pontuacao} pontos</p>
                   <p>Progresso para o próximo nível...</p>
@@ -351,7 +351,7 @@ function TelaUsuarioConfigs() {
                 <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button>
                </div>
                 <div className="listas-btn">
-                  <button className="btn-secao">Listas Personalizadas</button>
+                  <button className="btn-secao">Listas</button>
                   <button
                     className="btn-secao"
                     onClick={() => navigate("/telaescrivaninha")}
