@@ -4,9 +4,10 @@ import { Link, useNavigate } from "react-router-dom"
 import{ GlobalContext } from '../contexts/GlobalContext'
 import { useContext } from 'react'
 import axios from 'axios'
-useState
+import { useUser } from '../contexts/UserContext';
 
 function TelaLogin() {
+    const { loginUser } = useUser();
     let variavel
     
     const [inputNomeUsuario, setInputNomeUsuario] = useState('')
@@ -18,7 +19,6 @@ function TelaLogin() {
     useEffect (() => {
 
         if(usuarioLogado){
-    
           alert('Há um usuário já logado, por favor, deslogue nas configurações de usuário primeiro')
           navigate('/telaprincipal')
         }
@@ -36,14 +36,16 @@ function TelaLogin() {
 
         fetchUsuarios() // Chama a função ao montar o componente
     
-      }, [])
+    }, [])
 
-      useEffect(() => {
+    useEffect(() => {
         console.log(vetorObjetosUsuarios)
     }, [vetorObjetosUsuarios])
       
     const verificarLogin = async (apelido, senha) => {
+
         try{
+
             const resposta = await axios.post('http://localhost:3000/login', {
                 usuario_apelido: apelido,
                 usuario_senha: senha
@@ -52,17 +54,34 @@ function TelaLogin() {
             const dados = resposta.data;
             console.log('Login Feito:', dados);
 
+            // Use apenas o campo correto que seu backend retorna
+            const userId = dados.usuario_id; // ou o campo correto
+            
+            if (userId) {
+                loginUser(userId, {
+                    nome: dados.nome,
+                    email: dados.email
+                });
+                
+                navigate('/listas');
+            } else {
+                console.error('ID não encontrado na resposta');
+            }
+
             setPosicaoUsuarioID(dados.usuario_id);
             console.log('id do usuario:', posicaoUsuarioID)
             setUsuarioLogado(true);
             alert('Login feito com sucesso!');
             navigate('/telaprincipal');
+
         }catch (erro){
+
             if (erro.response && erro.response.status === 401){
                 alert('Dados de autenticação inválidas!');
             }else{
                 alert('Erro ao fazer login.');
             }
+
         }
     };
     

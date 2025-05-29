@@ -4,36 +4,80 @@ import CardLista from './CardLista';
 import MinhaLista from './MinhaLista';
 import axios from "axios";
 import { GlobalContext } from "../contexts/GlobalContext";
+import { useUser } from '../contexts/UserContext';
 
-function ListasLivros() {
+function ListasLivros({ userId }) {
 
-    
+
     const [abriuForm, setAbriuForm] = useState(false);
     const [nomeLista, setNomeLista] = useState('');
     const [descricaoLista, setDescricaoLista] = useState('');
     const [listas, setListas] = useState([]);
     const [mostrarLista, setMostrarLista] = useState(false);
     
-    
-    const { posicaoUsuarioID, usuarioLogado } = useContext(GlobalContext);
+    // const { posicaoUsuarioID } = useContext(GlobalContext);
+    const { usuarioID } = useUser();
+
+    //claude ia
     useEffect(() => {
-        axios.get(`http://localhost:3000/listas_personalizadas/${posicaoUsuarioID}`)
-            .then(res => {
-                setListas(res.data);
-            })
-            .catch(err => {
-                console.error('Erro ao buscar listas', err);
-            });
-    }, []);
+        const fetchListas = async () => {
+            console.log('ID do usuário no Listas:', usuarioID);
+            
+            if (!usuarioID) {
+                console.log('ID do usuário não encontrado');
+                return;
+            }
+
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/listas_personalizadas/usuario/${usuarioID}`
+                );
+                
+                console.log('Listas carregadas:', response.data);
+                setListas(response.data);
+                
+            } catch (error) {
+                console.error('Erro ao buscar listas:', error);
+            }
+        };
+
+        fetchListas();
+    }, [usuarioID]);
+
+    //chatgpt
+    // useEffect(() => {
+    //     console.log('ID do usuário atualizado:', posicaoUsuarioID);
+    // }, [posicaoUsuarioID]);
+
+    // useEffect(() => {
+
+    //     console.log('useEffect executado');
+    //     console.log('posicaoUsuarioID no useEffect:', posicaoUsuarioID);
+
+    //     if (!posicaoUsuarioID) {
+    //         console.log('ID do usuário não encontrado');
+    //         return;
+    //     }
+
+    //     axios.get(`http://localhost:3000/listas_personalizadas/${posicaoUsuarioID}`)
+    //         .then(res => {
+    //             setListas(res.data);
+    //         })
+    //         .catch(err => {
+    //             console.error('Erro ao buscar listas', err);
+    //             console.log(`id do usuário: ${posicaoUsuarioID}`)
+    //         });
+
+    // }, [posicaoUsuarioID]);
 
     const salvarLista = async (e) => {
         e.preventDefault();
         try {
           const res = await axios.post("http://localhost:3000/listas_personalizadas",
              {
-                nome: nomeLista,
-                descricao: descricaoLista,
-                usuarioID: posicaoUsuarioID
+                nome_lista: nomeLista,
+                descricao_lista: descricaoLista,
+                criador_lista: posicaoUsuarioID
             });
             alert("Lista criada com sucesso!");
             console.log("Lista criada:", res.data);
@@ -46,6 +90,19 @@ function ListasLivros() {
           alert("Erro ao criar lista");
         }
     };
+
+    // useEffect(() => {
+    //     async function fetchListas() {
+    //         try {
+    //             const response = await axios.get(`http://localhost:3000/listas_personalizadas/usuario/${userId}`);
+    //             setListas(response.data);
+    //         } catch (error) {
+    //             console.error('Erro ao buscar listas:', error);
+    //         }
+    //     }
+
+    //     fetchListas();
+    // }, [userId]);
 
   return (
     <div className='container__listas'>
@@ -69,22 +126,10 @@ function ListasLivros() {
 
             <div className="listas__body--card__listas">
 
-                {/* {listas.length > 0 ? (
-                        listas.map((lista, index) => (
-
-                            <div className="card__lista" onClick={() => setMostrarLista(true)}>
-                                <CardLista key={index} titulo={lista.nomeLista} />
-                            </div>
-                        ))
-                    ) : (
-                            <p>Nenhuma lista criada ainda.</p>
-                    )
-                } */}
-
                 {listas.length > 0 ? (
-                    listas.map((lista, index) => (
-                        <div className="card__lista" onClick={() => setMostrarLista(true)} key={index}>
-                            <CardLista titulo={lista.nome_lista} />
+                    listas.map((lista) => (
+                        <div className="card__lista" onClick={() => setMostrarLista(true)} key={lista.id}>
+                            <CardLista nome={lista.nome_lista} />
                         </div>
                     ))
                 ) : (

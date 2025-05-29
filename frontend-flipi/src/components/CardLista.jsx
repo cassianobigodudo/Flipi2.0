@@ -1,21 +1,11 @@
 import './CardLista.css'
 
-function CardLista({ titulo, capa }) {
+function CardLista({ nome }) {
   return (
     <div className='container__card--listas'>
 
-        <div className="img__card--listas">
+        <label htmlFor="" className="texto-nome-lista">{nome}</label>
 
-            <img src={capa} className='image__capa--listas'/>
-
-        </div>
-
-        <div className="title__card--listas">
-
-            <label htmlFor="">{titulo}</label>
-
-        </div>
-      
     </div>
   )
 }

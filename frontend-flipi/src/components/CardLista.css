@@ -1,34 +1,26 @@
 .container__card--listas{
-    height: 290px;
-    width: 220px;
-    background-color: #c85b34;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 400px;
+    background-color: var(--fundoDivs);
     border-radius: 10px;
     cursor: pointer;
     border: solid 1px #40454b;
+    border: none;
 }
-
-    .img__card--listas{
-        height: 70%;
-        width: 100%;
-        background-color: whitesmoke;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+    .container__card--listas:hover{
+        height: 110px;
+        width: 410px;
+        font-size: 25px;
+        font-weight: bolder;
+        transition: 1s;
+        box-shadow: 1px 1px 0px 4px var(--laranjaenferrujado);
     }
-        /* .image__capa--listas{
-            height: inherit;
-            width: inherit;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            border: none;
-        } */
 
-    .title__card--listas{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 30%;
-        width: 100%;
-        background-color: darkcyan;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
+    .texto-nome-lista{
+        color: var(--textos);
+        font-size: 20px;
+        font-weight: bold;
     }

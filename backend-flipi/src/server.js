@@ -124,13 +124,15 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
 
 // -- JAIME --
 // Rota para buscar todas as listas de um usuário específico
-app.get('/listas_personalizadas/:criador_lista', async (req, res) => {
-    const { criador_lista } = req.params;
+app.get('/listas_personalizadas/usuario/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const userID = parseInt(id)
 
     try {
         const result = await pool.query(
             'SELECT * FROM listas_personalizadas WHERE criador_lista = $1',
-            [criador_lista]
+            [userID]
         );
 
         res.status(200).json(result.rows);
@@ -144,13 +146,13 @@ app.get('/listas_personalizadas/:criador_lista', async (req, res) => {
 app.post('/listas_personalizadas', async (req, res) => {
     console.log('Dados recebidos', req.body);
 
-    const { nome, descricao, usuarioID } = req.body;
+    const { nome_lista, descricao_lista, criador_lista } = req.body;
     
     try {
         // Query para inserir a nova lista no banco de dados
         const result = await pool.query(
             'INSERT INTO listas_personalizadas ( nome_lista, descricao_lista, criador_lista ) VALUES ($1, $2, $3) RETURNING *',
-            [ nome, descricao, usuarioID ]
+            [ nome_lista, descricao_lista, criador_lista ]
         );
 
         // Retorna a lista criada com status 201
