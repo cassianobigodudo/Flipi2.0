@@ -20,8 +20,10 @@
 
         height: 100%;
         width: 87%;
-        background-color: var(--corfundo)
-
+        background-color: var(--corfundo);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
         .usuarioConfigs-body-cima{
 
@@ -262,11 +264,13 @@
         justify-items: center;
       }
       .listas-btn{
-        justify-content: left;
+        justify-content: center;
         background-color: #f4e2b4;
         width: 100%;
         padding: 10px;
-        justify-items: left;
+        align-items: center;
+        display: flex;
+        gap: 10px;
       }
       .nivel-box{
         background-color: #f4e2b4;
@@ -304,4 +308,27 @@
         font-family: "fonte-projeto";
         font-size: 40px;
       }
+      .teste{
+        width: 50%;
+        height: 150px;
+        background-color: #f4e2b4;
+        float: left;
+        }
+        .teste2{
+        width: 50%;
+        height: 150px;
+        background-color: #f4e2b4;
+        float: right;
+        font-family: "fonte-projeto";
+        justify-items: center;
 
+        }
+        .deslogar-deletar{
+        justify-content: center;
+        background-color: #f4e2b4;
+        width: 100%;
+        padding: 10px;
+        align-items: center;
+        display: flex;
+        gap: 10px;
+        }

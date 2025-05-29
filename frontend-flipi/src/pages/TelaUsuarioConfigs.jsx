@@ -1,32 +1,42 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import "./TelaUsuarioConfigs.css"
-import{ GlobalContext } from '../contexts/GlobalContext'
+import { GlobalContext } from '../contexts/GlobalContext'
 import { useContext } from 'react'
 import ResenhasConfigs from "../components/ResenhasConfigs"
 import NavbarVertical from "../components/NavbarVertical"
 import axios from "axios"
 
-
 function TelaUsuarioConfigs() {
 
-  const {posicaoUsuario, setPosicaoUsuario, posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, setVetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado}=useContext(GlobalContext)
-  const [editarNome, setEditarNome]=useState('')
-  const [editarEmail, setEditarEmail]=useState('')
-  const [editarDescricao, setEditarDescricao]=useState('')
-  const [editarFoto, setEditarFoto]=useState('')
-  const [editarSenha, setEditarSenha]=useState('')
+  const {
+    posicaoUsuario,
+    setPosicaoUsuario,
+    posicaoUsuarioID,
+    setPosicaoUsuarioID,
+    vetorObjetosUsuarios,
+    setVetorObjetosUsuarios,
+    usuarioLogado,
+    setUsuarioLogado,
+    dadosUsuarioLogado,
+    setDadosUsuarioLogado
+  } = useContext(GlobalContext)
+  const [editarNome, setEditarNome] = useState('')
+  const [editarEmail, setEditarEmail] = useState('')
+  const [editarDescricao, setEditarDescricao] = useState('')
+  const [editarFoto, setEditarFoto] = useState('')
+  const [editarSenha, setEditarSenha] = useState('')
   const [mostrarSenha, setMostrarSenha] = useState(false)
   const navigate = useNavigate()
 
-  useEffect (() => {
+  useEffect(() => {
 
-    if(usuarioLogado == false){
+    if (usuarioLogado == false) {
 
       alert('Não há usuário logado, por favor, cadastre-se ou entre na sua conta.')
       navigate('/')
 
-    }else{
+    } else {
 
       // for (let i = 0; i < vetorObjetosUsuarios.length; i++){
 
@@ -34,7 +44,7 @@ function TelaUsuarioConfigs() {
 
       //     setPosicaoUsuario(i)
       //   }
-        
+
       // }
 
       // let user = vetorObjetosUsuarios.filter((u) => u.usuario_id == posicaoUsuarioID)
@@ -44,32 +54,32 @@ function TelaUsuarioConfigs() {
 
   }, [])
 
-  function verificarInputsRegistrados(){
-    
-    if (editarNome == `` && editarEmail == `` && editarSenha == ``){
-      
+  function verificarInputsRegistrados() {
+
+    if (editarNome == `` && editarEmail == `` && editarSenha == ``) {
+
       return true
-      
-    }else{
+
+    } else {
       // alert(`oi`)
       return false
     }
   }
 
-  function verificarInputsIguais(){
+  function verificarInputsIguais() {
 
-    if (editarNome == dadosUsuarioLogado.usuario_nome || editarEmail == dadosUsuarioLogado.usuario_email || editarSenha == dadosUsuarioLogado.usuario_senha){
+    if (editarNome == dadosUsuarioLogado.usuario_nome || editarEmail == dadosUsuarioLogado.usuario_email || editarSenha == dadosUsuarioLogado.usuario_senha) {
       return true
-    }else{
+    } else {
       return false
     }
   }
 
-  function verificarEmailExistente(){
+  function verificarEmailExistente() {
 
-    for(let i = 0; i < vetorObjetosUsuarios.length; i++){
+    for (let i = 0; i < vetorObjetosUsuarios.length; i++) {
 
-      if (editarEmail == vetorObjetosUsuarios[i].usuario_email && posicaoUsuarioID != vetorObjetosUsuarios[i].usuario_id ){
+      if (editarEmail == vetorObjetosUsuarios[i].usuario_email && posicaoUsuarioID != vetorObjetosUsuarios[i].usuario_id) {
         return true
       }
 
@@ -81,59 +91,58 @@ function TelaUsuarioConfigs() {
 
   const fetchClientes = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/usuario');
-        setVetorObjetosUsuarios(response.data);
+      const response = await axios.get('http://localhost:3000/usuario');
+      setVetorObjetosUsuarios(response.data);
     } catch (error) {
-        console.error('Erro ao buscar clientes:', error);
+      console.error('Erro ao buscar clientes:', error);
     }
-};
+  };
 
-const editarDados = async (campo) => {
-  let novoValor;
-  switch (campo) {
-    case "nome":
-      if (!editarNome || editarNome === dadosUsuarioLogado.usuario_nome) return alert("Nome inválido ou igual ao atual.");
-      novoValor = { usuario_nome: editarNome };
-      break;
-    case "email":
-      if (!editarEmail || editarEmail === dadosUsuarioLogado.usuario_email) return alert("E-mail inválido ou igual ao atual.");
-      if (verificarEmailExistente()) return alert("E-mail já em uso.");
-      novoValor = { usuario_email: editarEmail };
-      break;
-    case "foto":
-      if (!editarFoto || editarFoto === dadosUsuarioLogado.url_foto) return alert("URL inválida ou igual à atual.");
-      novoValor = { url_foto: editarFoto };
-      break;
-    case "senha":
-      if (!editarSenha || editarSenha === dadosUsuarioLogado.usuario_senha) return alert("Senha inválida ou igual à atual.");
-      novoValor = { usuario_senha: editarSenha };
-      break;
-    default:
-      return;
-  }
-
-  const dadosAtualizados = { ...dadosUsuarioLogado, ...novoValor };
-
-  try {
-    const response = await axios.put(`http://localhost:3000/usuario/${dadosUsuarioLogado.usuario_id}`, dadosAtualizados);
-    if (response.status === 200) {
-      setDadosUsuarioLogado(dadosAtualizados);
-      fetchClientes();
-      alert("Dados atualizados com sucesso!");
-
-      // limpa apenas o campo atualizado
-      if (campo === "nome") setEditarNome("");
-      if (campo === "email") setEditarEmail("");
-      if (campo === "foto") setEditarFoto("");
-      if (campo === "senha") setEditarSenha("");
+  const editarDados = async (campo) => {
+    let novoValor;
+    switch (campo) {
+      case "nome":
+        if (!editarNome || editarNome === dadosUsuarioLogado.usuario_nome) return alert("Nome inválido ou igual ao atual.");
+        novoValor = { usuario_nome: editarNome };
+        break;
+      case "email":
+        if (!editarEmail || editarEmail === dadosUsuarioLogado.usuario_email) return alert("E-mail inválido ou igual ao atual.");
+        if (verificarEmailExistente()) return alert("E-mail já em uso.");
+        novoValor = { usuario_email: editarEmail };
+        break;
+      case "foto":
+        if (!editarFoto || editarFoto === dadosUsuarioLogado.url_foto) return alert("URL inválida ou igual à atual.");
+        novoValor = { url_foto: editarFoto };
+        break;
+      case "senha":
+        if (!editarSenha || editarSenha === dadosUsuarioLogado.usuario_senha) return alert("Senha inválida ou igual à atual.");
+        novoValor = { usuario_senha: editarSenha };
+        break;
+      default:
+        return;
     }
-  } catch (error) {
-    console.error("Erro ao atualizar:", error);
-  }
-};
 
+    const dadosAtualizados = { ...dadosUsuarioLogado, ...novoValor };
 
-  function deslogarUsuario(){
+    try {
+      const response = await axios.put(`http://localhost:3000/usuario/${dadosUsuarioLogado.usuario_id}`, dadosAtualizados);
+      if (response.status === 200) {
+        setDadosUsuarioLogado(dadosAtualizados);
+        fetchClientes();
+        alert("Dados atualizados com sucesso!");
+
+        // limpa apenas o campo atualizado
+        if (campo === "nome") setEditarNome("");
+        if (campo === "email") setEditarEmail("");
+        if (campo === "foto") setEditarFoto("");
+        if (campo === "senha") setEditarSenha("");
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar:", error);
+    }
+  };
+
+  function deslogarUsuario() {
 
     alert('Até mais!')
     setUsuarioLogado(false)
@@ -147,22 +156,21 @@ const editarDados = async (campo) => {
 
     let promptApagarConta = prompt('ATENÇÃO! Insira a sua senha na caixa abaixo se você realmente deseja deletar sua conta\n *Essa ação será irreversível, e todas as suas resenhas serão deletadas juntas*')
 
-    if(promptApagarConta == dadosUsuarioLogado.usuario_senha){
+    if (promptApagarConta == dadosUsuarioLogado.usuario_senha) {
 
-       
       try {
         const response = await axios.delete(`http://localhost:3000/usuario/${dadosUsuarioLogado.usuario_id}`);
         if (response.status === 200) {
-          
+
           let usuariosAtualizado = vetorObjetosUsuarios.filter(e => e.usuario_id != dadosUsuarioLogado.usuario_id)
           console.log(usuariosAtualizado)
-          
+
           setVetorObjetosUsuarios(usuariosAtualizado)
 
           alert(`Conta deletada com sucesso!!`)
           setUsuarioLogado(false)
           navigate(`/landingpage`)
-            
+
         }
       } catch (error) {
         console.error('Erro ao deletar cliente:', error);
@@ -185,9 +193,6 @@ const editarDados = async (campo) => {
 
     fetchUsuarios();
   }, [setVetorObjetosUsuarios]);
-
-    
-
 
   // Calcula a pontuação com base na quantidade de resenhas do usuário
   const resenhasUsuario = dadosUsuarioLogado.resenhas || [];
@@ -214,16 +219,16 @@ const editarDados = async (campo) => {
               <div className="usuarioConfigs-bmpc-titulo">
 
                 <label className="lbl-titulos"></label>
-                <img 
-                  src={editarFoto || dadosUsuarioLogado.url_foto} 
-                  alt="Foto do usuário" 
+                <img
+                  src={editarFoto || dadosUsuarioLogado.url_foto}
+                  alt="Foto do usuário"
                   className="img-usuario"
                   style={{ width: '150px', height: '150px', borderRadius: '50%' }}
                 />
                 <div className="usuarioNomeDescricao">
                   <h2>{dadosUsuarioLogado.usuario_nome}</h2>
                   <div className="campo-editavel">
-                    <textarea 
+                    <textarea
                       className="lbl-infos"
                       value={editarDescricao}
                       onChange={(e) => setEditarDescricao(e.target.value)}
@@ -261,12 +266,12 @@ const editarDados = async (campo) => {
               <div className="usuarioConfigs-bmpc-infos">
                 <div className="senha-container">
                   <label className="lbl-infos">
-                    Senha: {mostrarSenha 
-                      ? dadosUsuarioLogado.usuario_senha 
+                    Senha: {mostrarSenha
+                      ? dadosUsuarioLogado.usuario_senha
                       : "•".repeat(dadosUsuarioLogado.usuario_senha?.length || 0)}
                   </label>
 
-                  <button 
+                  <button
                     className="btn-olhoMagico"
                     onMouseDown={() => setMostrarSenha(true)}
                     onMouseUp={() => setMostrarSenha(false)}
@@ -274,84 +279,77 @@ const editarDados = async (campo) => {
                     👁️
                   </button>
                 </div>
-                <div className="campos">
-                  <div className="btns-change">
-                    <div className="campo-editavel">
-                      <div className="input-container">
-                        <input 
-                          type="text" 
-                          className="input"
-                          value={editarNome}
-                          onChange={(e) => setEditarNome(e.target.value)}
-                          placeholder={dadosUsuarioLogado.usuario_nome}
-                        />
-                        <button className="btn-editar" onClick={() => editarDados("nome")}>✏️</button>
-                      </div>
-                    </div>
-
-                    <div className="campo-editavel">
-                      <div className="input-container">
-                        <input 
-                          type="email" 
-                          className="input"
-                          value={editarEmail} 
-                          onChange={(e) => setEditarEmail(e.target.value)}
-                          onBlur={() => {
-                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                            if (editarEmail && !emailRegex.test(editarEmail)) {
-                              alert("Por favor, insira um e-mail válido.");
-                              setEditarEmail("");
-                            }
-                          }}
-                          placeholder={dadosUsuarioLogado.usuario_email}
-                        />
-                        <button className="btn-editar" onClick={() => editarDados("email")}>✏️</button>
-                      </div>
-                    </div>
-
-                    <div className="campo-editavel">
-                      <div className="input-container">
-                        <input 
-                          type="text" 
-                          className="input"
-                          value={editarFoto} 
-                          onChange={(e) => setEditarFoto(e.target.value)}
-                          placeholder="Cole a URL da imagem" 
-                        />
-                        <button className="btn-editar" onClick={() => editarDados("foto")}>✏️</button>
-                      </div>
-                    </div>
-
-                    <div className="campo-editavel">
-                      <div className="input-container">
-                        <input 
-                          type="text" 
-                          className="input"
-                          value={editarSenha} 
-                          onChange={(e) => setEditarSenha(e.target.value)}
-                          placeholder="Editar Senha" 
-                        />
-                        <button className="btn-editar" onClick={() => editarDados("senha")}>✏️</button>
-                      </div>
-                    </div>
-                  </div>
-
+                <div className="teste">
                   <div className="campo-editavel">
-                    <div className="btn-deslogar-deletar">
-                      <button className="btn" onClick={deslogarUsuario} >Deslogar</button>
-                      <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button>
+                    <div className="input-container">
+                      <input
+                        type="text"
+                        className="input"
+                        value={editarNome}
+                        onChange={(e) => setEditarNome(e.target.value)}
+                        placeholder={dadosUsuarioLogado.usuario_nome}
+                      />
+                      <button className="btn-editar" onClick={() => editarDados("nome")}>✏️</button>
                     </div>
                   </div>
-                  <div className="nivel-box">
-                    <h3>Nível</h3>
-                    <div className="nivel-numero">{nivel}</div>
-                    <p>Pontuação: {pontuacao} pontos</p>
-                    <p>Progresso para o próximo nível...</p>
-                    <div className="progresso">
-                      <div className="preenchido" style={{ width: `${progresso}%` }}></div>
+                  <div className="campo-editavel">
+                    <div className="input-container">
+                      <input
+                        type="email"
+                        className="input"
+                        value={editarEmail}
+                        onChange={(e) => setEditarEmail(e.target.value)}
+                        onBlur={() => {
+                          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                          if (editarEmail && !emailRegex.test(editarEmail)) {
+                            alert("Por favor, insira um e-mail válido.");
+                            setEditarEmail("");
+                          }
+                        }}
+                        placeholder={dadosUsuarioLogado.usuario_email}
+                      />
+                      <button className="btn-editar" onClick={() => editarDados("email")}>✏️</button>
+                    </div>
+                  </div>
+                  <div className="campo-editavel">
+                    <div className="input-container">
+                      <input
+                        type="text"
+                        className="input"
+                        value={editarFoto}
+                        onChange={(e) => setEditarFoto(e.target.value)}
+                        placeholder="Cole a URL da imagem"
+                      />
+                      <button className="btn-editar" onClick={() => editarDados("foto")}>✏️</button>
+                    </div>
+                  </div>
+                  <div className="campo-editavel">
+                    <div className="input-container">
+                      <input
+                        type="text"
+                        className="input"
+                        value={editarSenha}
+                        onChange={(e) => setEditarSenha(e.target.value)}
+                        placeholder="Editar Senha"
+                      />
+                      <button className="btn-editar" onClick={() => editarDados("senha")}>✏️</button>
                     </div>
                   </div>
                 </div>
+                <div className="teste2">
+                  <h3>Nível</h3>
+                  <div className="nivel-numero">{nivel}</div>
+                  <p>Pontuação: {pontuacao} pontos</p>
+                  <p>Progresso para o próximo nível...</p>
+                  <div className="progresso">
+                    <div className="preenchido" style={{ width: `${progresso}%` }}></div>
+                  </div>
+                </div>
+               </div>
+               <div className="deslogar-deletar">
+                <button className="btn" onClick={deslogarUsuario} >Deslogar</button>
+                <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button>
+               </div>
                 <div className="listas-btn">
                   <button className="btn-secao">Listas Personalizadas</button>
                   <button
@@ -360,7 +358,6 @@ const editarDados = async (campo) => {
                   >
                     Resenhas
                   </button>
-                </div>
               </div>
             </div>
 
@@ -370,7 +367,7 @@ const editarDados = async (campo) => {
               </div>
 
               <div className="usuarioConfigs-bmpr-body">
-                <ResenhasConfigs/><ResenhasConfigs/><ResenhasConfigs/><ResenhasConfigs/>
+                <ResenhasConfigs /><ResenhasConfigs /><ResenhasConfigs /><ResenhasConfigs />
               </div>
             </div>
           </div>
