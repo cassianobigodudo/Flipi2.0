@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './TelaPesquisa.css'
 import { Link, useNavigate } from "react-router-dom"
 import { GlobalContext } from '../contexts/GlobalContext'
@@ -14,6 +14,7 @@ import Filtro from '../components/Filtro'
 function TelaPesquisa() {
   
   const {livrosPesquisados, setLivrosPesquisados} = useContext(GlobalContext)
+  const [paginaAtual, setPaginaAtual] = useState(0);
 
 
   return (
@@ -27,13 +28,19 @@ function TelaPesquisa() {
             <div className="folha-esquerda">
               <Filtro/>
               <BarraPesquisa/>
-              <ContainerDosLivrosPesquisados/>
+              <ContainerDosLivrosPesquisados
+              lado='esquerdo'
+              paginaAtual={paginaAtual}
+              />
               <BottomPagina/>
             </div>
 
             <div className="folha-direita">
               <div className="vazio-pagina-direita"></div>
-              <ContainerDosLivrosPesquisados/>
+              <ContainerDosLivrosPesquisados
+              lado='direito'
+              paginaAtual={paginaAtual}
+              />
               <BottomPagina/>
             </div>
 

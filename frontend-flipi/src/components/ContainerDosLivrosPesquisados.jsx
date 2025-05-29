@@ -3,7 +3,7 @@ import './ContainerDosLivrosPesquisados.css'
 import LivrosPesquisados from './LivrosPesquisados'
 import { GlobalContext } from '../contexts/GlobalContext'
 
-function ContainerDosLivrosPesquisados() {
+function ContainerDosLivrosPesquisados({ lado, paginaAtual }) {
     const { livrosPesquisados } = useContext(GlobalContext);
     
     useEffect(() => {
@@ -14,8 +14,28 @@ function ContainerDosLivrosPesquisados() {
         }
     }, [livrosPesquisados])
 
-    // Pega o array de livros da propriedade 'data'
-    const livros = livrosPesquisados?.data || [];
+    const calcularIndices = () => {
+        const livrosPorPagina = 6; // 3 para cada lado
+        const inicioPagina = paginaAtual * livrosPorPagina;
+        
+        if (lado === 'esquerdo') {
+            // Lado esquerdo: livros 0,1,2 (página 0) ou 6,7,8 (página 1) etc
+            return {
+                inicio: inicioPagina,
+                fim: inicioPagina + 3
+            };
+        } else {
+            // Lado direito: livros 3,4,5 (página 0) ou 9,10,11 (página 1) etc
+            return {
+                inicio: inicioPagina + 3,
+                fim: inicioPagina + 6
+            };
+        }
+    };
+
+    const { inicio, fim } = calcularIndices();
+    const todosLivros = livrosPesquisados?.data || [];
+    const livros = todosLivros.slice(inicio, fim);
 
     return (
         <div className="livros-pesquisados-container">

@@ -9,6 +9,16 @@ function LivrosPesquisados({ livro }) {
   
   // Criar uma referência para o elemento que queremos adicionar o evento de scroll
   const tituloRef = useRef(null);
+// 
+  // useEffect(() => (
+  //   BuscarAutor()
+  // ), [])
+
+  // async function BuscarAutor(){
+
+  //   await axios.get()
+
+  // }
   
   function SwitchISBN() {
     if(switchLabel === 'ISBN') {
@@ -73,7 +83,7 @@ function LivrosPesquisados({ livro }) {
                   </div>
 
                   <div className="autor-ano-pesquisado">
-                    <label className='lbl-autor'>Autor: {livro.autor_nome || 'Não informado'}</label>
+                    <label className='lbl-autor'>Autor: {livro.autores || 'Não informado'}</label>
                     <label className='lbl-ano'>Ano: {livro.livro_ano}</label>
                   </div>
                 </div>

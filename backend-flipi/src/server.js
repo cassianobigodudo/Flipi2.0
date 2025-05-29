@@ -527,21 +527,80 @@ app.get('/livro/:isbn', async (req, res) => {
 
 app.get('/livro/buscar/:titulo', async (req, res) => {
     const { titulo } = req.params;
-    console.log(titulo)
+    const { generos, autor, editora, ano } = req.query;
+    
+    console.log('Filtros recebidos:', { titulo, generos, autor, editora, ano });
+    
     try {
-        const result = await pool.query(`SELECT * FROM livro WHERE livro_titulo ILIKE $1`, [`%${titulo}%`])
+        // Construir a query dinamicamente
+        let query = `
+            SELECT l.livro_isbn,
+                   l.livro_titulo,
+                   l.livro_ano,
+                   l.livro_sinopse,
+                   l.livro_capa,
+                   l.editora_id,
+                   STRING_AGG(DISTINCT a.autor_nome, ', ') AS autores, 
+                   STRING_AGG(DISTINCT g.genero_nome, ', ') AS generos
+            FROM livro l
+            LEFT JOIN livro_autor la ON l.livro_isbn = la.livro_isbn
+            LEFT JOIN autor a ON la.autor_id = a.autor_id
+            LEFT JOIN livro_genero lg ON l.livro_isbn = lg.livro_isbn
+            LEFT JOIN genero g ON lg.genero_id = g.genero_id
+            LEFT JOIN editora e ON l.editora_id = e.editora_id
+            WHERE l.livro_titulo ILIKE $1
+        `;
 
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Nenhum livro encontrado' });
+        const queryParams = [`%${titulo}%`];
+        let paramIndex = 2;
+
+        // Filtro por autor
+        if (autor) {
+            query += ` AND a.autor_nome ILIKE $${paramIndex}`;
+            queryParams.push(`%${autor}%`);
+            paramIndex++;
         }
-        console.log('resultados do backend: ', result.rows)
-        res.json(result.rows)
+
+        // Filtro por editora
+        if (editora) {
+            query += ` AND e.editora_nome ILIKE $${paramIndex}`;
+            queryParams.push(`%${editora}%`);
+            paramIndex++;
+        }
+
+        // Filtro por ano
+        if (ano) {
+            query += ` AND l.livro_ano = $${paramIndex}`;
+            queryParams.push(parseInt(ano));
+            paramIndex++;
+        }
+
+        // Filtro por gêneros
+        if (generos) {
+            const generosArray = generos.split(',');
+            const generosPlaceholders = generosArray.map((_, index) => 
+                `$${paramIndex + index}`
+            ).join(',');
+            
+            query += ` AND g.genero_nome IN (${generosPlaceholders})`;
+            queryParams.push(...generosArray);
+        }
+
+        query += ` GROUP BY l.livro_isbn, l.livro_titulo, l.livro_ano, l.livro_sinopse, l.livro_capa, l.editora_id`;
+
+        console.log('Query final:', query);
+        console.log('Parâmetros:', queryParams);
+
+        const result = await pool.query(query, queryParams);
+        
+        console.log('Resultados do backend:', result.rows);
+        res.json(result.rows);
         
     } catch (err) {
-        console.error(err.message)
-        res.status(500).json({ error: 'Erro ao buscar livro na barra de pesquisa'})
+        console.error(err.message);
+        res.status(500).json({ error: 'Erro ao buscar livro na barra de pesquisa' });
     }
-})
+});
 
 app.get('/livro', async (req, res) => {
     try {
