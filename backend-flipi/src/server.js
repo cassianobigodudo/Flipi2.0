@@ -543,6 +543,24 @@ app.get('/resenha', async (req, res) => {
         console.error('Erro ao buscar resenha: ', error)
         res.status(500).json({ error: 'Erro ao buscar resenha'})
 
+    }})
+
+
+    
+app.get('/resenha/:resenha_id', async (req, res) => {
+    const {resenha_id} = req.params;
+    try {
+
+        const result = await pool.query(
+            'SELECT * FROM resenha WHERE resenha_id = $1', [resenha_id]
+
+        )
+        res.status(200).json(result.rows)
+    } catch (error) {
+
+        console.error('Erro ao buscar resenha: ', error)
+        res.status(500).json({ error: 'Erro ao buscar resenha'})
+
     }
 
 

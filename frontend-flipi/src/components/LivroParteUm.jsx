@@ -1,32 +1,77 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import "./LivroParteUm.css"
 import LivroParteDois from "./LivroParteDois"
 import EstrelasBtn from "./EstrelasBtn"
 import NavbarVertical from "./NavbarVertical"
 import { GlobalContext } from "../contexts/GlobalContext"
-import { useLocation, useNavigate } from "react-router-dom";
+import { useFetcher, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios"
 
 function LivroParteUm() {
 
-    const {biblioteca, setLivroAcessado} = useContext(GlobalContext);
+    const {biblioteca, setLivroAcessado, livroAcessado} = useContext(GlobalContext);
     const location = useLocation();
     const navigate = useNavigate();
-
+    const [tituloLivro, setTituloLivro] = useState()
+    const [capa, setCapa] = useState()
+    const [ano, setAno] = useState()
+    const [sinopse, setSinopse] = useState()
+    const [autor, setAutor] = useState()
+    const [editora, setEditora] = useState()
+    const [isbn, setIsbn] = useState(9786586064377)
+    const [resenhaId, setResenhaId] = useState(3)
+    const [livroRecebido, setLivroRecebido] = useState('')
     // Verifica se o state tem o índice
-    const index = location.state?.index;
+/* 
+    const index = location.state?.index; */
 
-    // Pega o livro pelo índice
-    const livro = biblioteca[index]; 
+    // Pega o livro pelo índice/* 
+    /* 
+    const livro = biblioteca[index];   */
 
     // chama o componente dois do livro
     const [resenhas, setResenhas] = useState(false)
+
     
+    
+    
+    const pegarLivro = async () => {
+        
+        
+        
+        try {
+            // setMensagem('Buscando livro...')
+            
+            const response = await axios.get(`http://localhost:3000/livro/${isbn}`)
+            
+            
+            const dadosDoLivro = response?.data 
+
+            setTituloLivro(dadosDoLivro.livro_titulo)
+            setSinopse(dadosDoLivro.livro_sinopse)
+            setCapa(dadosDoLivro.livro_capa)
+            setAno(dadosDoLivro.livro_ano)
+            setEditora(dadosDoLivro.editora.editora_nome)
+            
+            console.log('Livro que foi puxado pelo get: ', dadosDoLivro)
+        } catch (error) {
+            console.error('Erro ao puxar os livros:', error)
+        }
+        
+    }
+
+    
+
     function escrivaninha(){
         
         // passando o livro para a variável
-        setLivroAcessado(livro)
+        /* 
+        setLivroAcessado(livro) */
         navigate("/telaescrivaninha")
     }
+    
+
+
 
   return (
     <div>
@@ -38,7 +83,7 @@ function LivroParteUm() {
                 <div className="parte-capa-livro">
 
                     <div className="capa-livro">
-                        <img src={livro.capaLivro} alt="" className="imagem-capa-livro"/>
+                        <img src={capa} alt="" className="imagem-capa-livro"/>
                     </div>
 
                     <div className="parte-classificacao">
@@ -56,28 +101,28 @@ function LivroParteUm() {
                     <div className="textos">
 
                         <div className="titulo-livro">
-                            <h6 className="h3-tituloLivro">Título: {livro.tituloLivro}</h6>
+                            <h6 className="h3-tituloLivro">Título: {tituloLivro}</h6>
                         </div>
 
                         <div className="descricao-livro">
-                            <h6 className="h4-descricaoLivro">ISBN: {livro.isbnLivro}</h6>
+                            <h6 className="h4-descricaoLivro">ISBN: {isbn}</h6>
                         </div>
 
                         <div className="descricao-livro">
-                            <h6>Autor/a: {livro.autorLivro}</h6>   <h6>Editora: {livro.editoraLivro}</h6>
+                            <h6>Autor/a: {autor} </h6>   <h6>Editora: {editora}</h6>
                         </div>
 
                         <div className="descricao-livro"> 
-                            <h6>Ano: {livro.anoLivro}</h6>
+                            <h6>Ano: {ano}</h6>
                         </div>
 
                         <div className="sinopse-livro">
 
-                            <label className="lbl-sinopseLivro" htmlFor="">{livro.sinopseLivro}</label>
+                            <label className="lbl-sinopseLivro" htmlFor="">{sinopse}</label>
 
                         </div>
 
-                        <div className="genero-livro">
+                      {/*   <div className="genero-livro">
 
                             {livro.generoLivro && livro.generoLivro.length > 0 ? (
                                 livro.generoLivro.map((genero, index) => (
@@ -87,7 +132,7 @@ function LivroParteUm() {
                                 <div className="box-genero">#SemGênero</div>
                             )}
 
-                        </div>
+                        </div> */}
 
                     </div>
 
@@ -97,9 +142,11 @@ function LivroParteUm() {
 
                     <button onClick={() => {navigate("/telaprincipal")}} className="botao-menuUm"> <img src="../public/icons/ant-design--home-outlined.svg" alt="" className="icone-botao"/> </button>
                     
-                    <button onClick={escrivaninha}  className="botao-menuDois"><img src="public/icons/escrita.png" alt="" className="icone-botao"/> </button>
+                    <button onClick={escrivaninha}  className="botao-menuDois"><img src="public/icons/escrita.png" alt="" className="icone-botao"/></button>
 
                     <button onClick={() => {navigate("/telausuarioconfigs")}} className="botao-menuTres"><img src="./public/images/setting.svg" alt="" className="icone-botao"/> </button>
+                    
+
 
                 </div>
 
@@ -107,15 +154,17 @@ function LivroParteUm() {
 
             <div className="parte-baixo">
 
-                <button className="botao-resenha">Resenhas |  {livro.resenhasLivro.length}</button>
+                <button className="botao-resenha">Resenhas |  </button>
 
-                <button className="botao-icone" onClick={ () => setResenhas(!resenhas)}><img src="./images/down.png" alt="" className="icone-down"/></button>
+                <button className="botao-icone" onClick={ () => setResenhas(!resenhas)}><img src="./images/down.png" alt="" className="icone-down"/></button> 
+                <button className="botao-icone" onClick={pegarLivro}><img src="./images/down.png" alt="" className="icone-down"/></button> 
+                
 
             </div>
 
             <div className="container-parte-resenhas">
-
-                {resenhas && <LivroParteDois nomeUsuario={"Jaime"} />}
+ 
+                {resenhas && <LivroParteDois nomeUsuario={"Jaime"} />} 
 
             </div>
 

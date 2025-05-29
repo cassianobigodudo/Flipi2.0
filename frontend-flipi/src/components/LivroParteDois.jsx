@@ -1,11 +1,41 @@
 import "./LivroParteDois.css"
 import { useContext, useState } from "react"
 import { GlobalContext } from '../contexts/GlobalContext'
+import axios from "axios";
 
 function LivroParteDois() {
 
     // const {biblioteca} = useContext(GlobalContext)
     const {biblioteca, setLivroAcessado} = useContext(GlobalContext);
+    const [resenhaTexto, setResenhaTexto] = useState('')
+    const [resenhaId, setResenhaId] = useState(1)
+
+
+    const pegarResenha = async () => {
+        
+        
+        
+        try {
+            // setMensagem('Buscando livro...')
+            
+            
+            const response = await axios.get(`http://localhost:3000/resenha/${resenhaId}`)
+            
+            
+            const dadosDaResenha = response?.data 
+
+            setResenhaTexto(dadosDaResenha.resenha_texto)
+
+
+            
+            
+            console.log('Id da resenha que foi puxado pelo get: ', dadosDaResenha)
+        } catch (error) {
+            console.error('Erro ao puxar os livros:', error)
+        }
+        
+    }
+    
     
   return (
     <div className="container-mae-resenhas">
@@ -36,13 +66,14 @@ function LivroParteDois() {
                                 {/* Texto da Resenha */}
                                 <div className="parte-resenha">
 
-                                    <label htmlFor="" className="texto-resenha">{resenha.resenhaUsuario}</label>
+                                    <label htmlFor="" className="texto-resenha">{resenhaTexto}</label>
 
                                 </div>
 
                                 {/* Curtidas */}
                                 <div className="parte-curtida">
 
+                                <button onClick={pegarResenha} ></button>
                                     <button className="botao-curtida">
 
                                         <img src="./images/like.svg" alt="Curtir" className="icone-curtida" />

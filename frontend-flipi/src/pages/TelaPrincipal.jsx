@@ -66,7 +66,7 @@ function TelaPrincipal() {
                                 <input className='inpt-pesquisa' type="text" placeholder='Pesquise um livro em específico'/>
     
                                 <button className="btn-pesquisar"
-                                onClick={() => navigate("/telapesquisa")}>
+                                    onClick={() => navigate("/telapesquisa", { state: { isbn: "2018055526" } })}>
                                     <img className='icons-pesquisar' src="public/icons/big-search-len.png" alt="" />
                                 </button>
     
@@ -76,10 +76,9 @@ function TelaPrincipal() {
     
                                 <div className="div-box-titulo">
                                     <button className="btn-livro-home" onClick={() => 
-                                        navigate("/telalivro", { state: { index: 0 } })}>
+                                        navigate("/telalivro")}>
     
                                         <div className="box-2"></div>
-                                        <p className='titulos-livros'>{biblioteca[0].tituloLivro}</p>
                                     </button>
                                 </div>
     
