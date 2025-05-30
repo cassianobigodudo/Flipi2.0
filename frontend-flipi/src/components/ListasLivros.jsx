@@ -15,69 +15,34 @@ function ListasLivros({ userId }) {
     const [listas, setListas] = useState([]);
     const [mostrarLista, setMostrarLista] = useState(false);
     
-    // const { posicaoUsuarioID } = useContext(GlobalContext);
-    const { usuarioID } = useUser();
-
-    //claude ia
+    const { posicaoUsuarioID, idUsuarioLogado } = useContext(GlobalContext);
+    console.log('id do usuario logado', idUsuarioLogado)
+    
     useEffect(() => {
-        const fetchListas = async () => {
-            console.log('ID do usuário no Listas:', usuarioID);
-            
-            if (!usuarioID) {
-                console.log('ID do usuário não encontrado');
-                return;
-            }
-
+        const buscarListas = async () => {
             try {
-                const response = await axios.get(
-                    `http://localhost:3000/listas_personalizadas/usuario/${usuarioID}`
-                );
-                
-                console.log('Listas carregadas:', response.data);
-                setListas(response.data);
-                
-            } catch (error) {
-                console.error('Erro ao buscar listas:', error);
+                const resposta = await axios.get(`http://localhost:3000/listas_personalizadas/usuario/${idUsuarioLogado}`);
+                setListas(resposta.data);
+            } catch (erro) {
+                console.error("Erro ao buscar listas:", erro);
             }
-        };
+            };
 
-        fetchListas();
-    }, [usuarioID]);
-
-    //chatgpt
-    // useEffect(() => {
-    //     console.log('ID do usuário atualizado:', posicaoUsuarioID);
-    // }, [posicaoUsuarioID]);
-
-    // useEffect(() => {
-
-    //     console.log('useEffect executado');
-    //     console.log('posicaoUsuarioID no useEffect:', posicaoUsuarioID);
-
-    //     if (!posicaoUsuarioID) {
-    //         console.log('ID do usuário não encontrado');
-    //         return;
-    //     }
-
-    //     axios.get(`http://localhost:3000/listas_personalizadas/${posicaoUsuarioID}`)
-    //         .then(res => {
-    //             setListas(res.data);
-    //         })
-    //         .catch(err => {
-    //             console.error('Erro ao buscar listas', err);
-    //             console.log(`id do usuário: ${posicaoUsuarioID}`)
-    //         });
-
-    // }, [posicaoUsuarioID]);
+            if (idUsuarioLogado) {
+                buscarListas();
+            }
+            
+    }, [idUsuarioLogado]);
 
     const salvarLista = async (e) => {
+
         e.preventDefault();
         try {
           const res = await axios.post("http://localhost:3000/listas_personalizadas",
              {
-                nome_lista: nomeLista,
-                descricao_lista: descricaoLista,
-                criador_lista: posicaoUsuarioID
+                nome: nomeLista,
+                descricao: descricaoLista,
+                criador: idUsuarioLogado
             });
             alert("Lista criada com sucesso!");
             console.log("Lista criada:", res.data);
@@ -89,20 +54,9 @@ function ListasLivros({ userId }) {
           console.error(err);
           alert("Erro ao criar lista");
         }
+
     };
 
-    // useEffect(() => {
-    //     async function fetchListas() {
-    //         try {
-    //             const response = await axios.get(`http://localhost:3000/listas_personalizadas/usuario/${userId}`);
-    //             setListas(response.data);
-    //         } catch (error) {
-    //             console.error('Erro ao buscar listas:', error);
-    //         }
-    //     }
-
-    //     fetchListas();
-    // }, [userId]);
 
   return (
     <div className='container__listas'>

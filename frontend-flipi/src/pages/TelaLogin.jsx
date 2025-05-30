@@ -7,14 +7,12 @@ import axios from 'axios'
 import { useUser } from '../contexts/UserContext';
 
 function TelaLogin() {
-    const { loginUser } = useUser();
     let variavel
     
     const [inputNomeUsuario, setInputNomeUsuario] = useState('')
     const [inputSenha, setInputSenha] = useState('')
     const navigate = useNavigate()
-    const {vetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuarioID, setPosicaoUsuarioID, setVetorObjetosUsuarios} = useContext(GlobalContext)
-
+    const {vetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuarioID, setPosicaoUsuarioID, setVetorObjetosUsuarios, idUsuarioLogado, setIdUsuarioLogado} = useContext(GlobalContext)
 
     useEffect (() => {
 
@@ -40,7 +38,14 @@ function TelaLogin() {
 
     useEffect(() => {
         console.log(vetorObjetosUsuarios)
-    }, [vetorObjetosUsuarios])
+    }, [vetorObjetosUsuarios]);
+
+    //esse useEffect me ajuda a ver o id do usuário em tempo real no console, uma vez que o useState é uma função asíncrona;
+    useEffect(() => {
+        if (idUsuarioLogado !== null) {
+        console.log('idUsuarioLogado atualizado para:', idUsuarioLogado);
+        }
+    }, [idUsuarioLogado]);
       
     const verificarLogin = async (apelido, senha) => {
 
@@ -53,24 +58,10 @@ function TelaLogin() {
 
             const dados = resposta.data;
             console.log('Login Feito:', dados);
-
-            // Use apenas o campo correto que seu backend retorna
-            const userId = dados.usuario_id; // ou o campo correto
-            
-            if (userId) {
-                loginUser(userId, {
-                    nome: dados.nome,
-                    email: dados.email
-                });
-                
-                navigate('/listas');
-            } else {
-                console.error('ID não encontrado na resposta');
-            }
-
-            setPosicaoUsuarioID(dados.usuario_id);
-            console.log('id do usuario:', posicaoUsuarioID)
             setUsuarioLogado(true);
+            setPosicaoUsuarioID(dados.usuario_id)
+            setIdUsuarioLogado(dados.usuario_id)
+            console.log('estou guardando esse id: ', idUsuarioLogado);
             alert('Login feito com sucesso!');
             navigate('/telaprincipal');
 
@@ -119,7 +110,7 @@ function TelaLogin() {
             </div>
         </div>
     </div>
-</div>
+    </div>
 
   )
 }

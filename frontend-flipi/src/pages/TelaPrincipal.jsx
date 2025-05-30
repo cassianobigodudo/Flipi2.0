@@ -6,7 +6,7 @@ import { GlobalContext } from '../contexts/GlobalContext'
 
 function TelaPrincipal() {
     
-    const {posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, usuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado}=useContext(GlobalContext)
+    const {posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, usuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado, idUsuarioLogado}=useContext(GlobalContext)
     const {biblioteca}=useContext(GlobalContext)
     const navigate = useNavigate()
 
@@ -43,6 +43,10 @@ function TelaPrincipal() {
         console.log(dadosUsuarioLogado)
 
       }, [dadosUsuarioLogado])
+
+    useEffect(() => {
+        console.log('ID do usuário logado na tela principal:', idUsuarioLogado);
+    }, []);
 
 
       return (

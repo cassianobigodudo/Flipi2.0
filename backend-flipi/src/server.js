@@ -9,7 +9,7 @@ const pool = new Pool({
     user: 'postgres', // Substitua pelo seu usuário do PostgreSQL / PGAdmin
     host: 'localhost',
     database: 'FlipiDB', // Nome da sua database no PostgreSQL / PGAdmin
-    password: 'senai', // Substitua pela sua senha do PostgreSQL / PGAdmin
+    password: 'jaime@db', // Substitua pela sua senha do PostgreSQL / PGAdmin
     port: 5432, // Porta padrão do PostgreSQL
 })
 
@@ -123,7 +123,7 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
 });
 
 // -- JAIME --
-// Rota para buscar todas as listas de um usuário específico
+//Rota para buscar todas as listas de um usuário específico
 app.get('/listas_personalizadas/usuario/:id', async (req, res) => {
     const { id } = req.params;
 
@@ -146,13 +146,13 @@ app.get('/listas_personalizadas/usuario/:id', async (req, res) => {
 app.post('/listas_personalizadas', async (req, res) => {
     console.log('Dados recebidos', req.body);
 
-    const { nome_lista, descricao_lista, criador_lista } = req.body;
+    const { nome, descricao, criador } = req.body;
     
     try {
         // Query para inserir a nova lista no banco de dados
         const result = await pool.query(
             'INSERT INTO listas_personalizadas ( nome_lista, descricao_lista, criador_lista ) VALUES ($1, $2, $3) RETURNING *',
-            [ nome_lista, descricao_lista, criador_lista ]
+            [ nome, descricao, criador ]
         );
 
         // Retorna a lista criada com status 201
