@@ -16,6 +16,8 @@ function TelaPesquisa() {
   const {livrosPesquisados, setLivrosPesquisados} = useContext(GlobalContext)
   const [paginaAtual, setPaginaAtual] = useState(0);
 
+  const limitePesquisa = Math.round(livrosPesquisados.length / 6)
+
 
   return (
     <div className='container-pesquisa'>
@@ -32,7 +34,9 @@ function TelaPesquisa() {
               lado='esquerdo'
               paginaAtual={paginaAtual}
               />
-              <BottomPagina/>
+              <BottomPagina
+              lado='esquerdo'
+              paginaAtual={paginaAtual}/>
             </div>
 
             <div className="folha-direita">
@@ -41,7 +45,9 @@ function TelaPesquisa() {
               lado='direito'
               paginaAtual={paginaAtual}
               />
-              <BottomPagina/>
+              <BottomPagina
+              lado='direito'
+              paginaAtual={paginaAtual}/>
             </div>
 
             <div className="vazio-direita">
