@@ -18,8 +18,8 @@ function LivroParteUm() {
     const [sinopse, setSinopse] = useState()
     const [autor, setAutor] = useState()
     const [editora, setEditora] = useState()
-    const [isbn, setIsbn] = useState(9786586064377)
-    const [resenhaId, setResenhaId] = useState(3)
+    const [isbn, setIsbn] = useState(9780543859327)
+    const [resenhaId, setResenhaId] = useState(2)
     const [livroRecebido, setLivroRecebido] = useState('')
     // Verifica se o state tem o índice
 /* 
@@ -35,23 +35,26 @@ function LivroParteUm() {
     
     
     
-    const pegarLivro = async () => {
+    async function pegarLivro(){
         
         
         
         try {
             // setMensagem('Buscando livro...')
-            
+            console.log('entrei no try')
             const response = await axios.get(`http://localhost:3000/livro/${isbn}`)
             
+            console.log('entrei na rota')
             
             const dadosDoLivro = response?.data 
-
+            console.log('puxei as infos')
+            
             setTituloLivro(dadosDoLivro.livro_titulo)
             setSinopse(dadosDoLivro.livro_sinopse)
             setCapa(dadosDoLivro.livro_capa)
             setAno(dadosDoLivro.livro_ano)
             setEditora(dadosDoLivro.editora.editora_nome)
+            console.log('setei as infos')
             
             console.log('Livro que foi puxado pelo get: ', dadosDoLivro)
         } catch (error) {
@@ -89,7 +92,7 @@ function LivroParteUm() {
                     <div className="parte-classificacao">
                         <div className="estrelas-btn-livro">
 
-                            <EstrelasBtn />
+                           
 
                         </div>        
                     </div>

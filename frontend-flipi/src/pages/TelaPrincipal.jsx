@@ -3,12 +3,38 @@ import './TelaPrincipal.css'
 import { Link, useNavigate } from "react-router-dom"
 import Navbar from '../components/Navbar'
 import { GlobalContext } from '../contexts/GlobalContext'
+import axios from 'axios'
 
 function TelaPrincipal() {
     
     const {posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, usuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado}=useContext(GlobalContext)
     const {biblioteca}=useContext(GlobalContext)
+    const [livros, setLivros] = useState([])
+
     const navigate = useNavigate()
+
+    
+    const atulizarcatalogo = async () => {
+
+        try {
+            // setMensagem('Buscando livro...')
+            const response = await axios.get(`http://localhost:3000/livro`)
+                      
+            const dadosDoLivro = response?.data 
+            
+            setLivros(dadosDoLivro)
+            
+            console.log('Livro que foi puxado pelo get: ', dadosDoLivro)
+        } catch (error) {
+            console.error('Erro ao puxar os livros:', error)
+        }
+
+
+
+        
+    }
+
+
 
 
     useEffect (() => {
@@ -31,6 +57,10 @@ function TelaPrincipal() {
         }
     
       }, [])
+      
+      const getLivroByIndex = (index) => {
+        return livros[index] || { livro_titulo: 'Carregando...', livro_capa: '' }
+    }
 
       useEffect (() => {
 
@@ -55,7 +85,9 @@ function TelaPrincipal() {
     
                     <div className='retangulo-tres'>
     
-                        <div className='div-espaco-vazio'>                     
+                        <div className='div-espaco-vazio'>      
+
+                            <button onClick={atulizarcatalogo} >TESTAR</button>               
     
                         </div>
     
@@ -69,6 +101,8 @@ function TelaPrincipal() {
                                     onClick={() => navigate("/telapesquisa", { state: { isbn: "2018055526" } })}>
                                     <img className='icons-pesquisar' src="public/icons/big-search-len.png" alt="" />
                                 </button>
+                                
+                                <p className='titulos-livros'>{getLivroByIndex(1).livro_titulo}</p>
     
                             </div>
     
@@ -79,6 +113,7 @@ function TelaPrincipal() {
                                         navigate("/telalivro")}>
     
                                         <div className="box-2"></div>
+                                        <p className='titulos-livros'>{getLivroByIndex(0).livro_titulo}</p>
                                     </button>
                                 </div>
     
@@ -87,7 +122,7 @@ function TelaPrincipal() {
                                         navigate("/telalivro", { state: { index: 1 } })}>
     
                                         <div className="box-1"></div>
-                                        <p className='titulos-livros'>{biblioteca[1].tituloLivro}</p>
+                                        <p className='titulos-livros'>{getLivroByIndex(1).livro_titulo}</p>
                                     </button>
                                 </div>
     
@@ -96,7 +131,7 @@ function TelaPrincipal() {
                                         navigate("/telalivro", { state: { index: 5 } })}>
     
                                         <div className="box-3"></div>
-                                        <p className='titulos-livros'>{biblioteca[5].tituloLivro}</p>
+                                        <p className='titulos-livros'>{getLivroByIndex(2).livro_titulo}</p>
                                     </button>
                                 </div>
     
@@ -105,7 +140,7 @@ function TelaPrincipal() {
                                         navigate("/telalivro", { state: { index: 3 } })}>
     
                                         <div className="box-4"></div>
-                                        <p className='titulos-livros'>{biblioteca[3].tituloLivro}</p>
+                                        <p className='titulos-livros'>{getLivroByIndex(3).livro_titulo}</p>
                                     </button>
                                 </div>
                                 
@@ -118,7 +153,7 @@ function TelaPrincipal() {
                                         navigate("/telalivro", { state: { index: 6 } })}>
     
                                         <div className="box-5"></div>
-                                        <p className='titulos-livros'>{biblioteca[6].tituloLivro}</p>
+                                        <p className='titulos-livros'>{getLivroByIndex(4).livro_titulo}</p>
                                     </button>
                                 </div>
     
@@ -127,7 +162,7 @@ function TelaPrincipal() {
                                         navigate("/telalivro", { state: { index: 7 } })}>
     
                                         <div className="box-6"></div>
-                                        <p className='titulos-livros'>{biblioteca[7].tituloLivro}</p>
+                                        <p className='titulos-livros'>{getLivroByIndex(5).livro_titulo}</p>
                                     </button>
                                 </div>
     
@@ -136,7 +171,7 @@ function TelaPrincipal() {
                                         navigate("/telalivro", { state: { index: 8 } })}>
     
                                         <div className="box-7"></div>
-                                        <p className='titulos-livros'>{biblioteca[8].tituloLivro}</p>
+                                        <p className='titulos-livros'>{getLivroByIndex(6).livro_titulo}</p>
                                     </button>
                                 </div>
     
@@ -145,7 +180,7 @@ function TelaPrincipal() {
                                         navigate("/telalivro", { state: { index: 9 } })}>
     
                                         <div className="box-8"></div>
-                                        <p className='titulos-livros'>{biblioteca[9].tituloLivro}</p>
+                                        <p className='titulos-livros'>{getLivroByIndex(7).livro_titulo}</p>
                                     </button>
                                 </div>
     

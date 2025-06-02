@@ -385,6 +385,7 @@ app.get('/livro/:isbn', async (req, res) => {
     const { isbn } = req.params;                       // Obtém o ISBN da URL
     
     try {
+        
         const livro = await buscarLivroCompleto(isbn); // Busca o livro completo
         res.json(livro);                              // Retorna o livro
     } catch (err) {

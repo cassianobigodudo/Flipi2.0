@@ -7,10 +7,10 @@ function LivroParteDois() {
 
     // const {biblioteca} = useContext(GlobalContext)
     const {biblioteca, setLivroAcessado} = useContext(GlobalContext);
-    const [resenhaTexto, setResenhaTexto] = useState('')
-    const [resenhaId, setResenhaId] = useState(1)
+    const [resenhaId, setResenhaId] = useState(2)
+    const [resenha, setResenha] = useState('')
 
-
+    
     const pegarResenha = async () => {
         
         
@@ -24,12 +24,19 @@ function LivroParteDois() {
             
             const dadosDaResenha = response?.data 
 
-            setResenhaTexto(dadosDaResenha.resenha_texto)
+            setResenha(dadosDaResenha[0])
+
+
+
+            
 
 
             
             
             console.log('Id da resenha que foi puxado pelo get: ', dadosDaResenha)
+            
+            console.log('Current resenha state:', resenha)
+            JSON.stringify(resenha, null, 2)
         } catch (error) {
             console.error('Erro ao puxar os livros:', error)
         }
@@ -46,9 +53,7 @@ function LivroParteDois() {
 
                 <div className="box-resenha">
 
-                    {biblioteca[0].resenhasLivro && biblioteca[0].resenhasLivro.length > 0 ? (
-                        biblioteca[0].resenhasLivro.map((resenha, index) => (
-                            <div key={index} className="resenha-container">
+                            <div className="resenha-container">
 
                                 {/* Foto e Nome */}
                                 <div className="parte-foto-nome">
@@ -59,36 +64,35 @@ function LivroParteDois() {
 
                                     </div>
 
-                                    <h3>{resenha.nomeUsuario}</h3>
+                                    <h3>{resenha.resenha_autor}{resenha.resenha_titulo}</h3>
 
                                 </div>
 
                                 {/* Texto da Resenha */}
                                 <div className="parte-resenha">
 
-                                    <label htmlFor="" className="texto-resenha">{resenhaTexto}</label>
+                                    <label htmlFor="" className="texto-resenha">{resenha.resenha_texto}</label>
 
                                 </div>
 
                                 {/* Curtidas */}
                                 <div className="parte-curtida">
 
-                                <button onClick={pegarResenha} ></button>
+                                <button onClick={pegarResenha} >TEST</button>
                                     <button className="botao-curtida">
 
                                         <img src="./images/like.svg" alt="Curtir" className="icone-curtida" />
 
                                     </button>
 
-                                    <label htmlFor="" className="label-curtidas">CURTIDAS</label>
+                                    <label htmlFor="" className="label-curtidas">{resenha.resenha_curtidas}</label>
 
                                 </div>
 
                             </div>
-                        ))
-                    ) : (
-                        <div className="box-resenha-vazio">Nenhuma resenha disponível</div>
-                    )}
+                   
+                        <div className="box-resenha-vazio"></div>
+                   
 
                 </div>
 
