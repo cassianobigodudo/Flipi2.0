@@ -55,6 +55,7 @@
     /* background-color: var(--fundoDivs); */
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
+    padding: 1%;
 }
 
 .usuarioConfigs-bmpc-titulo {
@@ -92,6 +93,8 @@
     margin-right: 1px;
     padding-left: 3%;
     padding-right: 3%;
+    padding-top: 3%;
+
 }
 
 .lbl-infos {
@@ -102,8 +105,8 @@
 }
 
 .input {
-    height: 35px;
-    width: 92%;
+    height: 30px; 
+    width: 91%;
     padding: 7px;
     border-radius: 10px;
     border-width: 2px;
@@ -112,6 +115,8 @@
     font-family: "fonte-projeto";
     font-size: 26px;
     background-color: #fffdec;
+    border: thin;
+    margin: 1%;
 }
 
 .usuarioConfigs-bmpc-buttons {
@@ -134,7 +139,7 @@
     width: 35%;
     height: 70%;
     font-family: "fonte-projeto";
-    font-size: 25px;
+    font-size: 30px;
     transition: 0.2s;
     border: none;
     background-color: var(--fundoDivs);
@@ -330,7 +335,7 @@
     border: none;
     padding: 10px;
     background-color: #f4e2b4;
-    width: 94%;
+    width: 99%;
     border-radius: 10px;
 }
 .campo-descricao{
@@ -347,5 +352,18 @@
     background-color: #FCF6E8;
     width: 70%;
     height: 30%;
-    
+    text-align-last: center;
+    border-radius: 20px;
+}
+.nivel-numero{
+    margin-bottom: 3%;
+    width: 20%;
+    height: 30%;
+    background-color: #d45c35;
+    color: white;
+    text-align-last: center;
+    align-content: space-evenly;
+    margin-top: 5%;
+    border-radius: 5px;
+    font-size: xx-large;
 }

@@ -201,6 +201,54 @@ function TelaUsuarioConfigs() {
   const pontosProximoNivel = 100;
   const progresso = ((pontuacao % pontosProximoNivel) / pontosProximoNivel) * 100;
 
+  // Função para salvar todas as alterações de uma vez
+  const salvarAlteracoes = async () => {
+    // Verifica se algum campo foi alterado
+    const alteracoes = {};
+    if (editarNome && editarNome !== dadosUsuarioLogado.usuario_nome) {
+      alteracoes.usuario_nome = editarNome;
+    }
+    if (editarEmail && editarEmail !== dadosUsuarioLogado.usuario_email) {
+      if (verificarEmailExistente()) {
+        alert("E-mail já em uso.");
+        return;
+      }
+      alteracoes.usuario_email = editarEmail;
+    }
+    if (editarFoto && editarFoto !== dadosUsuarioLogado.url_foto) {
+      alteracoes.url_foto = editarFoto;
+    }
+    if (editarDescricao && editarDescricao !== (dadosUsuarioLogado.descricao || "")) {
+      alteracoes.descricao = editarDescricao;
+    }
+    if (editarSenha && editarSenha !== dadosUsuarioLogado.usuario_senha) {
+      alteracoes.usuario_senha = editarSenha;
+    }
+
+    if (Object.keys(alteracoes).length === 0) {
+      alert("Nenhuma alteração feita");
+      return;
+    }
+
+    const dadosAtualizados = { ...dadosUsuarioLogado, ...alteracoes };
+
+    try {
+      const response = await axios.put(`http://localhost:3000/usuario/${dadosUsuarioLogado.usuario_id}`, dadosAtualizados);
+      if (response.status === 200) {
+        setDadosUsuarioLogado(dadosAtualizados);
+        fetchClientes();
+        alert("Dados atualizados com sucesso!");
+        setEditarNome("");
+        setEditarEmail("");
+        setEditarFoto("");
+        setEditarDescricao("");
+        setEditarSenha("");
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar:", error);
+    }
+  };
+
   return (
     <div className="usuarioConfigs-container">
 
@@ -233,52 +281,18 @@ function TelaUsuarioConfigs() {
                       value={editarDescricao}
                       onChange={(e) => setEditarDescricao(e.target.value)}
                       placeholder={dadosUsuarioLogado.descricao || "Sua descrição..."}
-                    />
-                    <button
-                      className="btn-editar"
-                      onClick={async () => {
-                        if (!editarDescricao || editarDescricao === dadosUsuarioLogado.descricao) {
-                          alert("Descrição inválida ou igual à atual.");
-                          return;
-                        }
-                        try {
-                          const response = await axios.put(`http://localhost:3000/usuario/${dadosUsuarioLogado.usuario_id}`, {
-                            ...dadosUsuarioLogado,
-                            descricao: editarDescricao
-                          });
-                          if (response.status === 200) {
-                            setDadosUsuarioLogado(prev => ({
-                              ...prev,
-                              descricao: editarDescricao
-                            }));
-                            setEditarDescricao("");
-                            alert("Descrição atualizada com sucesso!");
-                          }
-                        } catch (error) {
-                          console.error("Erro ao atualizar descrição:", error);
+                      onKeyDown={async (e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
+                          await salvarAlteracoes();
                         }
                       }}
-                    >✏️</button>
+                    />
                   </div>
                 </div>
 
               </div>
               <div className="usuarioConfigs-bmpc-infos">
-                <div className="senha-container">
-                  <label className="lbl-infos">
-                    Senha: {mostrarSenha
-                      ? dadosUsuarioLogado.usuario_senha
-                      : "•".repeat(dadosUsuarioLogado.usuario_senha?.length || 0)}
-                  </label>
-
-                  <button
-                    className="btn-olhoMagico"
-                    onMouseDown={() => setMostrarSenha(true)}
-                    onMouseUp={() => setMostrarSenha(false)}
-                  >
-                    👁️
-                  </button>
-                </div>
                 <div className="teste">
                   <div className="campo-editavel">
                     <div className="input-container">
@@ -288,8 +302,12 @@ function TelaUsuarioConfigs() {
                         value={editarNome}
                         onChange={(e) => setEditarNome(e.target.value)}
                         placeholder={dadosUsuarioLogado.usuario_nome}
+                        onKeyDown={async (e) => {
+                          if (e.key === "Enter") {
+                            await salvarAlteracoes();
+                          }
+                        }}
                       />
-                      <button className="btn-editar" onClick={() => editarDados("nome")}>✏️</button>
                     </div>
                   </div>
                   <div className="campo-editavel">
@@ -307,8 +325,12 @@ function TelaUsuarioConfigs() {
                           }
                         }}
                         placeholder={dadosUsuarioLogado.usuario_email}
+                        onKeyDown={async (e) => {
+                          if (e.key === "Enter") {
+                            await salvarAlteracoes();
+                          }
+                        }}
                       />
-                      <button className="btn-editar" onClick={() => editarDados("email")}>✏️</button>
                     </div>
                   </div>
                   <div className="campo-editavel">
@@ -319,20 +341,28 @@ function TelaUsuarioConfigs() {
                         value={editarFoto}
                         onChange={(e) => setEditarFoto(e.target.value)}
                         placeholder="Cole a URL da imagem"
+                        onKeyDown={async (e) => {
+                          if (e.key === "Enter") {
+                            await salvarAlteracoes();
+                          }
+                        }}
                       />
-                      <button className="btn-editar" onClick={() => editarDados("foto")}>✏️</button>
                     </div>
                   </div>
                   <div className="campo-editavel">
                     <div className="input-container">
                       <input
-                        type="text"
+                        type="password"
                         className="input"
                         value={editarSenha}
                         onChange={(e) => setEditarSenha(e.target.value)}
-                        placeholder="Editar Senha"
+                        placeholder="Nova senha"
+                        onKeyDown={async (e) => {
+                          if (e.key === "Enter") {
+                            await salvarAlteracoes();
+                          }
+                        }}
                       />
-                      <button className="btn-editar" onClick={() => editarDados("senha")}>✏️</button>
                     </div>
                   </div>
                 </div>
@@ -340,7 +370,6 @@ function TelaUsuarioConfigs() {
                   <h3 className="nivel-titulo">Nível</h3>
                   <div className="nivel-numero">{nivel}</div>
                   <p>Pontuação: {pontuacao} pontos</p>
-                  <p>Progresso para o próximo nível...</p>
                   <div className="progresso">
                     <div className="preenchido" style={{ width: `${progresso}%` }}></div>
                   </div>
