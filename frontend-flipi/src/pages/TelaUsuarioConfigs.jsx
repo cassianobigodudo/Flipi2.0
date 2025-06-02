@@ -201,52 +201,22 @@ function TelaUsuarioConfigs() {
   const pontosProximoNivel = 100;
   const progresso = ((pontuacao % pontosProximoNivel) / pontosProximoNivel) * 100;
 
-  // Função para salvar todas as alterações de uma vez
-  const salvarAlteracoes = async () => {
-    // Verifica se algum campo foi alterado
-    const alteracoes = {};
-    if (editarNome && editarNome !== dadosUsuarioLogado.usuario_nome) {
-      alteracoes.usuario_nome = editarNome;
-    }
-    if (editarEmail && editarEmail !== dadosUsuarioLogado.usuario_email) {
-      if (verificarEmailExistente()) {
-        alert("E-mail já em uso.");
-        return;
-      }
-      alteracoes.usuario_email = editarEmail;
-    }
-    if (editarFoto && editarFoto !== dadosUsuarioLogado.url_foto) {
-      alteracoes.url_foto = editarFoto;
-    }
-    if (editarDescricao && editarDescricao !== (dadosUsuarioLogado.descricao || "")) {
-      alteracoes.descricao = editarDescricao;
-    }
-    if (editarSenha && editarSenha !== dadosUsuarioLogado.usuario_senha) {
-      alteracoes.usuario_senha = editarSenha;
-    }
-
-    if (Object.keys(alteracoes).length === 0) {
-      alert("Nenhuma alteração feita");
+  // Função para lidar com a alteração da senha
+  const handleSenhaClick = async () => {
+    const senhaAtual = prompt("Digite sua senha atual para alterar:");
+    if (senhaAtual === null) return; // Cancelado
+    if (senhaAtual !== dadosUsuarioLogado.usuario_senha) {
+      alert("Senha atual incorreta!");
       return;
     }
-
-    const dadosAtualizados = { ...dadosUsuarioLogado, ...alteracoes };
-
-    try {
-      const response = await axios.put(`http://localhost:3000/usuario/${dadosUsuarioLogado.usuario_id}`, dadosAtualizados);
-      if (response.status === 200) {
-        setDadosUsuarioLogado(dadosAtualizados);
-        fetchClientes();
-        alert("Dados atualizados com sucesso!");
-        setEditarNome("");
-        setEditarEmail("");
-        setEditarFoto("");
-        setEditarDescricao("");
-        setEditarSenha("");
-      }
-    } catch (error) {
-      console.error("Erro ao atualizar:", error);
+    const novaSenha = prompt("Digite a nova senha:");
+    if (novaSenha === null || novaSenha.trim() === "") {
+      alert("Nova senha não pode ser vazia.");
+      return;
     }
+    setEditarSenha(novaSenha);
+    // Opcional: já chama salvarAlteracoes ou deixa para o usuário apertar Enter
+    // await editarDados("senha");
   };
 
   return (
@@ -357,11 +327,13 @@ function TelaUsuarioConfigs() {
                         value={editarSenha}
                         onChange={(e) => setEditarSenha(e.target.value)}
                         placeholder="Nova senha"
+                        onClick={handleSenhaClick}
                         onKeyDown={async (e) => {
                           if (e.key === "Enter") {
                             await salvarAlteracoes();
                           }
                         }}
+                        readOnly // Para evitar digitação direta, só via pop-up
                       />
                     </div>
                   </div>
