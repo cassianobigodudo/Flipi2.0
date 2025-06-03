@@ -26,7 +26,7 @@ function TelaUsuarioConfigs() {
   const [editarDescricao, setEditarDescricao] = useState('')
   const [editarFoto, setEditarFoto] = useState('')
   const [editarSenha, setEditarSenha] = useState('')
-  const [mostrarSenha, setMostrarSenha] = useState(false)
+  // const [mostrarSenha, setMostrarSenha] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -118,6 +118,10 @@ function TelaUsuarioConfigs() {
         if (!editarSenha || editarSenha === dadosUsuarioLogado.usuario_senha) return alert("Senha inválida ou igual à atual.");
         novoValor = { usuario_senha: editarSenha };
         break;
+      case "descricao":
+        if (!editarDescricao || editarDescricao === dadosUsuarioLogado.usuario_descricao) return alert("Descrição inválida ou igual à atual.");
+        novoValor = { usuario_descricao: editarDescricao };
+        break;
       default:
         return;
     }
@@ -136,6 +140,7 @@ function TelaUsuarioConfigs() {
         if (campo === "email") setEditarEmail("");
         if (campo === "foto") setEditarFoto("");
         if (campo === "senha") setEditarSenha("");
+        if (campo === "descricao") setEditarDescricao("");
       }
     } catch (error) {
       console.error("Erro ao atualizar:", error);
@@ -219,6 +224,32 @@ function TelaUsuarioConfigs() {
     // await editarDados("senha");
   };
 
+  // Função para salvar todas as alterações feitas nos campos editáveis
+  const salvarAlteracoes = async () => {
+    // Nome
+    if (editarNome && editarNome !== dadosUsuarioLogado.usuario_nome) {
+      await editarDados("nome");
+    }
+    // Email
+    if (editarEmail && editarEmail !== dadosUsuarioLogado.usuario_email) {
+      await editarDados("email");
+    }
+    // Foto
+    if (editarFoto && editarFoto !== dadosUsuarioLogado.url_foto) {
+      await editarDados("foto");
+    }
+    // Senha
+    if (editarSenha && editarSenha !== dadosUsuarioLogado.usuario_senha) {
+      await editarDados("senha");
+    }
+    // Descrição (caso queira salvar também, adicione lógica aqui)
+    if (editarDescricao && editarDescricao !== dadosUsuarioLogado.descricao) {
+      // Implemente a lógica para salvar a descrição se necessário
+      await editarDados("descricao");
+    }
+  };
+
+  // Sistema de descrição/bio editável
   return (
     <div className="usuarioConfigs-container">
 
@@ -247,16 +278,23 @@ function TelaUsuarioConfigs() {
                   <h2>{dadosUsuarioLogado.usuario_nome}</h2>
                   <div className="campo-descricao">
                     <textarea
-                      className="descrição"
+                      className="descricao"
                       value={editarDescricao}
                       onChange={(e) => setEditarDescricao(e.target.value)}
-                      placeholder={dadosUsuarioLogado.descricao || "Sua descrição..."}
+                      placeholder={dadosUsuarioLogado.usuario_descricao || "Sua descrição..."}
+                      onFocus={(e) => {
+                        if (!editarDescricao && dadosUsuarioLogado.usuario_descricao) {
+                          setEditarDescricao(dadosUsuarioLogado.usuario_descricao);
+                        }
+                      }}
                       onKeyDown={async (e) => {
                         if (e.key === "Enter" && !e.shiftKey) {
                           e.preventDefault();
-                          await salvarAlteracoes();
+                          await editarDados("descricao");
                         }
                       }}
+                      rows={3}
+                      style={{ resize: "none" }}
                     />
                   </div>
                 </div>
@@ -274,6 +312,7 @@ function TelaUsuarioConfigs() {
                         placeholder={dadosUsuarioLogado.usuario_nome}
                         onKeyDown={async (e) => {
                           if (e.key === "Enter") {
+                            e.preventDefault();
                             await salvarAlteracoes();
                           }
                         }}
@@ -287,16 +326,19 @@ function TelaUsuarioConfigs() {
                         className="input"
                         value={editarEmail}
                         onChange={(e) => setEditarEmail(e.target.value)}
-                        onBlur={() => {
+                        onBlur={async () => {
                           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                           if (editarEmail && !emailRegex.test(editarEmail)) {
                             alert("Por favor, insira um e-mail válido.");
                             setEditarEmail("");
+                          } else {
+                            await salvarAlteracoes();
                           }
                         }}
                         placeholder={dadosUsuarioLogado.usuario_email}
                         onKeyDown={async (e) => {
                           if (e.key === "Enter") {
+                            e.preventDefault();
                             await salvarAlteracoes();
                           }
                         }}
@@ -313,6 +355,7 @@ function TelaUsuarioConfigs() {
                         placeholder="Cole a URL da imagem"
                         onKeyDown={async (e) => {
                           if (e.key === "Enter") {
+                            e.preventDefault();
                             await salvarAlteracoes();
                           }
                         }}
@@ -330,10 +373,11 @@ function TelaUsuarioConfigs() {
                         onClick={handleSenhaClick}
                         onKeyDown={async (e) => {
                           if (e.key === "Enter") {
+                            e.preventDefault();
                             await salvarAlteracoes();
                           }
                         }}
-                        readOnly // Para evitar digitação direta, só via pop-up
+                        readOnly
                       />
                     </div>
                   </div>
