@@ -34,7 +34,7 @@ const GeneroCheckbox = ({ genre, isChecked, onChange }) => {
   );
 };
 
-function BarraPesquisa() {
+function BarraPesquisa({setPaginaAtual}) {
   
   const navigate = useNavigate()
   const [inptPesquisa, SetInptPesquisa] = useState('')
@@ -42,15 +42,22 @@ function BarraPesquisa() {
   const [inptFiltroAutor, setInptFiltroAutor] = useState('')
   const [inptFiltroEditora, setInptFiltroEditora] = useState('')
   const [inptFiltroAno, setInptFiltroAno] = useState('')
+
+
   
   useEffect(() => {
     console.log("Livros que foram encontrados: ", livrosPesquisados)
   }, [livrosPesquisados])
 
   async function PesquisarLivro(){
-    // Preparar os gêneros selecionados
+    // Preparar os gêneros selecionados - CORRIGIDO
     const generosAtivos = Object.keys(generosSelecionados)
         .filter(key => generosSelecionados[key])
+        .map(genreId => {
+            // Encontrar o dbName correspondente ao ID
+            const genero = generos.find(g => g.id === genreId);
+            return genero ? genero.dbName : genreId;
+        })
         .join(',');
 
     // Montar os parâmetros da URL
@@ -68,16 +75,22 @@ function BarraPesquisa() {
     console.log('URL da requisição:', url);
     const response = await axios.get(url);
     setLivrosPesquisados(response);
+    setPaginaAtual(0)
     navigate('/telapesquisa');
 }
 
-  function AplicarFiltros(){
-    console.log(generosSelecionados)
-    console.log(inptFiltroAutor, inptFiltroEditora, inptFiltroAno)
-    
-    // Fechar o modal mantendo as informações
-    setIsModalOpen(false)
+function AplicarFiltros(){
+  console.log(generosSelecionados)
+  console.log(inptFiltroAutor, inptFiltroEditora, inptFiltroAno)
+  
+  // Fechar o modal
+  setIsModalOpen(false)
+  
+  // Aplicar os filtros fazendo uma nova pesquisa
+  if (inptPesquisa.trim()) {
+      PesquisarLivro()
   }
+}
 
   // Função para resetar todos os filtros quando clicar no X
   function ResetarFiltros(){

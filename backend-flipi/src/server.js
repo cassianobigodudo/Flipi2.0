@@ -575,14 +575,23 @@ app.get('/livro/buscar/:titulo', async (req, res) => {
             paramIndex++;
         }
 
-        // Filtro por gêneros
+        // Filtro por gêneros - TODOS os gêneros devem estar presentes
         if (generos) {
-            const generosArray = generos.split(',');
+            const generosArray = generos.split(',').map(g => g.trim());
             const generosPlaceholders = generosArray.map((_, index) => 
                 `$${paramIndex + index}`
             ).join(',');
             
-            query += ` AND g.genero_nome IN (${generosPlaceholders})`;
+            // Subconsulta para garantir que o livro tenha TODOS os gêneros especificados
+            query += ` AND l.livro_isbn IN (
+                SELECT lg_inner.livro_isbn 
+                FROM livro_genero lg_inner
+                JOIN genero g_inner ON lg_inner.genero_id = g_inner.genero_id
+                WHERE g_inner.genero_nome IN (${generosPlaceholders})
+                GROUP BY lg_inner.livro_isbn
+                HAVING COUNT(DISTINCT g_inner.genero_nome) = ${generosArray.length}
+            )`;
+            
             queryParams.push(...generosArray);
         }
 

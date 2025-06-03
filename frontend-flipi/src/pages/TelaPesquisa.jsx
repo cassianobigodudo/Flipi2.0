@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './TelaPesquisa.css'
 import { Link, useNavigate } from "react-router-dom"
 import { GlobalContext } from '../contexts/GlobalContext'
@@ -16,7 +16,11 @@ function TelaPesquisa() {
   const {livrosPesquisados, setLivrosPesquisados} = useContext(GlobalContext)
   const [paginaAtual, setPaginaAtual] = useState(0);
 
-  const limitePesquisa = Math.round(livrosPesquisados.length / 6)
+
+  useState(() =>(
+
+    console.log('Pagina atual: ', paginaAtual)
+  ), [paginaAtual])
 
 
   return (
@@ -29,14 +33,16 @@ function TelaPesquisa() {
             </div>
             <div className="folha-esquerda">
               <Filtro/>
-              <BarraPesquisa/>
+              <BarraPesquisa
+              setPaginaAtual={setPaginaAtual}/>
               <ContainerDosLivrosPesquisados
               lado='esquerdo'
               paginaAtual={paginaAtual}
               />
               <BottomPagina
               lado='esquerdo'
-              paginaAtual={paginaAtual}/>
+              paginaAtual={paginaAtual}
+              setPaginaAtual={setPaginaAtual}/>
             </div>
 
             <div className="folha-direita">
@@ -47,7 +53,8 @@ function TelaPesquisa() {
               />
               <BottomPagina
               lado='direito'
-              paginaAtual={paginaAtual}/>
+              paginaAtual={paginaAtual}
+              setPaginaAtual={setPaginaAtual}/>
             </div>
 
             <div className="vazio-direita">

@@ -6,13 +6,13 @@ import { GlobalContext } from '../contexts/GlobalContext'
 function ContainerDosLivrosPesquisados({ lado, paginaAtual }) {
     const { livrosPesquisados } = useContext(GlobalContext);
     
-    useEffect(() => {
-        console.log("Livros que foram trazidos do globalcontext ", livrosPesquisados)
-        // Para debug: veja também o array de livros específico
-        if (livrosPesquisados?.data) {
-            console.log("Array de livros: ", livrosPesquisados.data)
-        }
-    }, [livrosPesquisados])
+    // useEffect(() => {
+    //     console.log("Livros que foram trazidos do globalcontext ", livrosPesquisados)
+    //     // Para debug: veja também o array de livros específico
+    //     if (livrosPesquisados?.data) {
+    //         console.log("Array de livros: ", livrosPesquisados.data)
+    //     }
+    // }, [livrosPesquisados])
 
     const calcularIndices = () => {
         const livrosPorPagina = 6; // 3 para cada lado
