@@ -72,17 +72,24 @@
 }
     .listas__body--card__listas{
         display: flex;
-        justify-content: start;
+        justify-content: center;
         align-items: start;
-        padding: 15px;
         height: 98%;
         width: 98%;
         background-color: #FCF6E8;
-        border-radius: 20px;
-        gap: 20px;
-        flex-wrap: wrap;
-        color: #40454b;
+        
     }
+        .card__listas{
+            display: flex;
+            justify-content: center;
+            height: auto;
+            background-color: transparent;
+            border-radius: 20px;
+            gap: 40px;
+            flex-wrap: wrap;
+            color: #40454b;
+            padding: 15px;
+        }
     
     dialog{
         height: 300px;

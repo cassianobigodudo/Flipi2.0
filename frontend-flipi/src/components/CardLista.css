@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100px;
-    width: 400px;
+    width: 450px;
     background-color: var(--fundoDivs);
     border-radius: 10px;
     cursor: pointer;
@@ -12,7 +12,7 @@
 }
     .container__card--listas:hover{
         height: 110px;
-        width: 410px;
+        width: 450px;
         font-size: 25px;
         font-weight: bolder;
         transition: 1s;
@@ -21,6 +21,6 @@
 
     .texto-nome-lista{
         color: var(--textos);
-        font-size: 20px;
+        font-size: 25px;
         font-weight: bold;
     }

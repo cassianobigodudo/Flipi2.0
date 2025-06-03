@@ -8,8 +8,8 @@ const app = express()
 const pool = new Pool({
     user: 'postgres', // Substitua pelo seu usuário do PostgreSQL / PGAdmin
     host: 'localhost',
-    database: 'FlipiDB', // Nome da sua database no PostgreSQL / PGAdmin
-    password: 'jaime@db', // Substitua pela sua senha do PostgreSQL / PGAdmin
+    database: 'flipidb', // Nome da sua database no PostgreSQL / PGAdmin
+    password: 'senai', // Substitua pela sua senha do PostgreSQL / PGAdmin
     port: 5432, // Porta padrão do PostgreSQL
 })
 
@@ -154,6 +154,7 @@ app.post('/listas_personalizadas', async (req, res) => {
             'INSERT INTO listas_personalizadas ( nome_lista, descricao_lista, criador_lista ) VALUES ($1, $2, $3) RETURNING *',
             [ nome, descricao, criador ]
         );
+        console.dir("recebendo resultado ", result)
 
         // Retorna a lista criada com status 201
         res.status(201).json(result.rows[0]);

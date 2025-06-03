@@ -8,6 +8,7 @@ function MinhaLista() {
   const [confirmacao, setConfirmacao] = useState(false)
   const {biblioteca} = useGlobalContext();
   const [livroClicado, setLivroClicado] = useState();
+  const [caixaEdicao, setCaixaEdicao] = useState(false);
 
   function cancelarAdicao(){
     alert('cancelado!!!')
@@ -25,6 +26,10 @@ function MinhaLista() {
     setLivroClicado(livro.tituloLivro)
   }
 
+  function opcoesedicao(){
+    setCaixaEdicao(!caixaEdicao)
+  }
+
   return (
     <div className='container__lista--livros'>
 
@@ -32,7 +37,12 @@ function MinhaLista() {
 
         <div className="lista__name">
 
-          <label className='nome__lista'>Nome da Lista</label>
+          <div className="nome__lista--editar">
+            <label className='nome__lista'>Nome da Lista</label>
+          </div>
+          <div className="editar__lista">
+            <button className="botao__editar--lista" onClick={opcoesedicao}><img src="./public/icons/barra-de-menu.png" alt="" className="img__editar--lista" /></button>
+          </div>
 
         </div>
 
@@ -74,7 +84,6 @@ function MinhaLista() {
             <div className="lista__livros">
 
               {biblioteca.map((livro) => (
-                // <CapaLivro key={livro.isbnLivro} capa={livro.capaLivro} titulo={livro.tituloLivro} onClick={() => alert(`Olá ${livro.tituloLivro}`)}/>
                 <CapaLivro key={livro.isbnLivro} capa={livro.capaLivro} titulo={livro.tituloLivro} onClick={cliquenolivro}/>
               ))}
 
@@ -107,7 +116,15 @@ function MinhaLista() {
 
             </div>
 
+          </div>
 
+        </dialog>
+
+        <dialog open={caixaEdicao} className='dialog__edicao'>
+
+          <div className="container__edicao">
+            <button className="botao__edicao--listas">Editar lista</button>
+            <button className="botao__edicao--listas">Apagar lista</button>
           </div>
 
         </dialog>

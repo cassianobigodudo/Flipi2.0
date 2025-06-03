@@ -15,7 +15,7 @@ function PaginaTesteJaime() {
             <div className="container--left">
 
                 <button className="botao__criar--lista" onClick={() => setTela(<ListasLivros />)}>Minhas Listas</button>
-                <button className="botao__criar--lista" onClick={() => setTela(<MinhaLista />)}>Visualizar Lista</button>
+                {/* <button className="botao__criar--lista" onClick={() => setTela(<MinhaLista />)}>Visualizar Lista</button> */}
                 
             </div>
 
