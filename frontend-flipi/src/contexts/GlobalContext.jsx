@@ -13,6 +13,7 @@ const [livroAcessado, setLivroAcessado] = useState('')
 const [listaResenhas, setListaResenhas] = useState([])
 const [mostrarFiltro, setMostrarFiltro] = useState(false)
 const [usuarioId, setUsuarioId] = useState()
+const [livrosPesquisados, setLivrosPesquisados] = useState([])
 
 const [biblioteca, setBiblioteca] = useState([
     {
@@ -282,7 +283,7 @@ const [biblioteca, setBiblioteca] = useState([
 
     return(
      
-        <GlobalContext.Provider value={{vetorObjetosUsuarios, setVetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuario, setPosicaoUsuario, posicaoUsuarioID, setPosicaoUsuarioID, dadosUsuarioLogado, setDadosUsuarioLogado, biblioteca, setBiblioteca, livroAcessado, setLivroAcessado,listaResenhas, setListaResenhas, usuarioId, setUsuarioId}}>
+        <GlobalContext.Provider value={{livrosPesquisados, setLivrosPesquisados, vetorObjetosUsuarios, setVetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuario, setPosicaoUsuario, posicaoUsuarioID, setPosicaoUsuarioID, dadosUsuarioLogado, setDadosUsuarioLogado, biblioteca, setBiblioteca, livroAcessado, setLivroAcessado,listaResenhas, setListaResenhas, usuarioId, setUsuarioId}}>
 
             {children}
         </GlobalContext.Provider>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './TelaPesquisa.css'
 import { Link, useNavigate } from "react-router-dom"
 import { GlobalContext } from '../contexts/GlobalContext'
@@ -12,6 +12,15 @@ import Filtro from '../components/Filtro'
 
 
 function TelaPesquisa() {
+  
+  const {livrosPesquisados, setLivrosPesquisados} = useContext(GlobalContext)
+  const [paginaAtual, setPaginaAtual] = useState(0);
+
+
+  useState(() =>(
+
+    console.log('Pagina atual: ', paginaAtual)
+  ), [paginaAtual])
 
 
   return (
@@ -24,15 +33,28 @@ function TelaPesquisa() {
             </div>
             <div className="folha-esquerda">
               <Filtro/>
-              <BarraPesquisa/>
-              <ContainerDosLivrosPesquisados/>
-              <BottomPagina/>
+              <BarraPesquisa
+              setPaginaAtual={setPaginaAtual}/>
+              <ContainerDosLivrosPesquisados
+              lado='esquerdo'
+              paginaAtual={paginaAtual}
+              />
+              <BottomPagina
+              lado='esquerdo'
+              paginaAtual={paginaAtual}
+              setPaginaAtual={setPaginaAtual}/>
             </div>
 
             <div className="folha-direita">
               <div className="vazio-pagina-direita"></div>
-              <ContainerDosLivrosPesquisados/>
-              <BottomPagina/>
+              <ContainerDosLivrosPesquisados
+              lado='direito'
+              paginaAtual={paginaAtual}
+              />
+              <BottomPagina
+              lado='direito'
+              paginaAtual={paginaAtual}
+              setPaginaAtual={setPaginaAtual}/>
             </div>
 
             <div className="vazio-direita">
