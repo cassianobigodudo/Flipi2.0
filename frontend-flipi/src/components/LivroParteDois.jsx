@@ -1,23 +1,27 @@
-import "./LivroParteDois.css"
-import { useContext, useState } from "react"
+import "./livroParteDois.css"
+import { useContext, useEffect, useState } from "react"
 import { GlobalContext } from '../contexts/GlobalContext'
 import axios from "axios";
 
-function LivroParteDois() {
+function livroParteDois({livroSelecionado}) {
 
     // const {biblioteca} = useContext(GlobalContext)
-    const {biblioteca, setLivroAcessado} = useContext(GlobalContext);
-    const [resenhaId, setResenhaId] = useState(2)
+    const {biblioteca, setlivroAcessado} = useContext(GlobalContext);
+    const [isbnLivro, setIsbnLivro] = useState()
+    const [resenhaId, setResenhaId] = useState('')
     const [resenha, setResenha] = useState('')
 
-    
-    const pegarResenha = async () => {
+
+
+   
+     const pegarResenha = async () => {
         
-        
-        
+
+
         try {
-            // setMensagem('Buscando livro...')
+            // setMensagem('Buscando livroSelecionado...')
             
+      
             
             const response = await axios.get(`http://localhost:3000/resenha/${resenhaId}`)
             
@@ -26,23 +30,53 @@ function LivroParteDois() {
 
             setResenha(dadosDaResenha[0])
 
-
-
-            
-
-
-            
-            
             console.log('Id da resenha que foi puxado pelo get: ', dadosDaResenha)
-            
-            console.log('Current resenha state:', resenha)
-            JSON.stringify(resenha, null, 2)
+            JSON.stringify(resenha)
+            console.log('livro selecionado:',livroSelecionado)
+
         } catch (error) {
-            console.error('Erro ao puxar os livros:', error)
+            console.error('Erro ao puxar os livroSelecionados:', error)
         }
         
+    if(resenha == "hahhahahaha"){
+        alert("OH NÃO")
     }
-    
+}
+
+
+ const verificar = async () =>{
+
+
+    if(livroSelecionado.livro_isbn != resenha.livro_isbn){
+
+        setResenha("hahhahahaha")
+        alert("aAAAAAAAAAAAAAAAHHHHHHHHHH")
+    }else{
+        return
+    }
+
+
+}
+
+useEffect(() => {
+    verificar()
+   }, [livroSelecionado])
+
+useEffect(() => {
+    pegarResenha()
+   }, [livroSelecionado])
+   
+   useEffect(() => {
+       if (livroSelecionado != null) {
+           console.log('livroSelecionado recebido:', livroSelecionado)
+           
+           if (livroSelecionado.livroSelecionado_isbn != null) {
+               pegarlivroSelecionado(livroSelecionado.livroSelecionado_isbn)
+           } else {
+               setIsbnLivro(livroSelecionado.livroSelecionado_isbn || '')
+           }
+       }
+   }, [livroSelecionado])
     
   return (
     <div className="container-mae-resenhas">
@@ -64,7 +98,7 @@ function LivroParteDois() {
 
                                     </div>
 
-                                    <h3>{resenha.resenha_autor}{resenha.resenha_titulo}</h3>
+                                    <h3>{resenha.resenha_id}{resenha.resenha_titulo} {resenha.livro_isbn}</h3>
 
                                 </div>
 
@@ -104,4 +138,4 @@ function LivroParteDois() {
   )
 }
 
-export default LivroParteDois
+export default livroParteDois
