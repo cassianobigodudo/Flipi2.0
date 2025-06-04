@@ -17,7 +17,7 @@ function TelaPesquisa() {
   const [paginaAtual, setPaginaAtual] = useState(0);
 
 
-  useState(() =>(
+  useEffect(() =>(
 
     console.log('Pagina atual: ', paginaAtual)
   ), [paginaAtual])

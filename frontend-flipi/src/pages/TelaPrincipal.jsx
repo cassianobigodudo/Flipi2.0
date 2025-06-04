@@ -9,6 +9,7 @@ function TelaPrincipal() {
     
     const {posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, usuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado}=useContext(GlobalContext)
     const {biblioteca}=useContext(GlobalContext)
+    const [paginaAtual, setPaginaAtual] = useState(0);
 
 
     useEffect (() => {
@@ -63,7 +64,9 @@ function TelaPrincipal() {
     
                             <div className="div-barra-de-pesquisa">
     
-                                <BarraPesquisa/>
+                                <BarraPesquisa
+                                setPaginaAtual={setPaginaAtual}
+                                />
     
                             </div>
     

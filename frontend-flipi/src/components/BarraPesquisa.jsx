@@ -75,7 +75,14 @@ function BarraPesquisa({setPaginaAtual}) {
     console.log('URL da requisição:', url);
     const response = await axios.get(url);
     setLivrosPesquisados(response);
-    setPaginaAtual(0)
+
+    if (typeof setPaginaAtual === 'function') {
+      setPaginaAtual(0);
+      console.log('oi eu sou um merda')
+  } else {
+      console.error('setPaginaAtual não é uma função:', setPaginaAtual);
+  }
+
     navigate('/telapesquisa');
 }
 
