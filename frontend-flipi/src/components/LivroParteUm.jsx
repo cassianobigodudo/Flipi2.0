@@ -7,7 +7,7 @@ import { GlobalContext } from "../contexts/GlobalContext"
 import { useFetcher, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios"
 
-function LivroParteUm({ livro }) {
+function LivroParteUm({ livro, indexResenha}) {
 
     const {biblioteca, setLivroAcessado, livroAcessado} = useContext(GlobalContext);
     const location = useLocation();
@@ -143,7 +143,7 @@ function LivroParteUm({ livro }) {
                 </div>
 
                 <div className="container-parte-resenhas">
-                    {resenhas && <LivroParteDois livroSelecionado={livro} />} 
+                    {resenhas && <LivroParteDois livroSelecionado={livro} resenhaInd={indexResenha}/>} 
                 </div>
             </div>
         </div>

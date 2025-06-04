@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { GlobalContext } from '../contexts/GlobalContext'
 import axios from "axios";
 
-function livroParteDois({livroSelecionado}) {
+function livroParteDois({livroSelecionado, resenhaInd}) {
 
     // const {biblioteca} = useContext(GlobalContext)
     const {biblioteca, setlivroAcessado} = useContext(GlobalContext);
@@ -14,7 +14,7 @@ function livroParteDois({livroSelecionado}) {
 
 
    
-     const pegarResenha = async () => {
+     const pegarResenha = async (resenhaInd) => {
         
 
 
@@ -23,48 +23,34 @@ function livroParteDois({livroSelecionado}) {
             
       
             
-            const response = await axios.get(`http://localhost:3000/resenha/${resenhaId}`)
+            console.log(resenhaInd)
+            const response = await axios.get(`http://localhost:3000/resenha/${resenhaInd}`)
             
             
             const dadosDaResenha = response?.data 
 
-            setResenha(dadosDaResenha[0])
 
-            console.log('Id da resenha que foi puxado pelo get: ', dadosDaResenha)
+            if (dadosDaResenha && dadosDaResenha.length > 0) {
+                setResenha(dadosDaResenha[0]) 
+            } else {
+                setResenha({}) 
+            }
+
+            console.log(resenhaInd)
+
+            console.log('resenha que foi puxado pelo get: ', dadosDaResenha)
             JSON.stringify(resenha)
-            console.log('livro selecionado:',livroSelecionado)
 
         } catch (error) {
-            console.error('Erro ao puxar os livroSelecionados:', error)
+            console.error('Erro ao puxar a resenha:', error)
+            console.log('Index', resenhaInd)
         }
         
-    if(resenha == "hahhahahaha"){
-        alert("OH NÃO")
-    }
-}
-
-
- const verificar = async () =>{
-
-
-    if(livroSelecionado.livro_isbn != resenha.livro_isbn){
-
-        setResenha("hahhahahaha")
-        alert("aAAAAAAAAAAAAAAAHHHHHHHHHH")
-    }else{
-        return
-    }
-
-
 }
 
 useEffect(() => {
-    verificar()
-   }, [livroSelecionado])
-
-useEffect(() => {
-    pegarResenha()
-   }, [livroSelecionado])
+    pegarResenha(resenhaInd)
+   }, [resenhaInd, livroSelecionado])
    
    useEffect(() => {
        if (livroSelecionado != null) {
@@ -98,7 +84,7 @@ useEffect(() => {
 
                                     </div>
 
-                                    <h3>{resenha.resenha_id}{resenha.resenha_titulo} {resenha.livro_isbn}</h3>
+                                    <h3>{resenha.resenha_id} {resenha.resenha_titulo} {resenha.livro_isbn}</h3>
 
                                 </div>
 
@@ -112,7 +98,6 @@ useEffect(() => {
                                 {/* Curtidas */}
                                 <div className="parte-curtida">
 
-                                <button onClick={pegarResenha} >TEST</button>
                                     <button className="botao-curtida">
 
                                         <img src="./images/like.svg" alt="Curtir" className="icone-curtida" />

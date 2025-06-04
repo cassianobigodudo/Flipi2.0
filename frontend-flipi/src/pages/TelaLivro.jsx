@@ -9,7 +9,7 @@ function TelaLivro() {
   const [livros, setLivros] = useState([])
   const [livroSelecionado, setLivroSelecionado] = useState(null)
   const location = useLocation()
-
+  const [resenhaInd, setResenhaInd] = useState(null)
   const atualizarCatalogo = async () => {
     try {
         const response = await axios.get(`http://localhost:3000/livro`)
@@ -33,13 +33,14 @@ function TelaLivro() {
     const stateData = location.state
     
     const livroSelecionado = getLivroByIndex(stateData.index)
+    setResenhaInd((stateData.index)+1)
       
       setLivroSelecionado(livroSelecionado)
     },[location.state, livros])
 
   return (
     <div className="container-mae">
-      <LivroParteUm livro={livroSelecionado} />
+      <LivroParteUm livro={livroSelecionado}  indexResenha={resenhaInd}/>
     </div>
   )
 }
