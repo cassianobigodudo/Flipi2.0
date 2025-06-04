@@ -3,7 +3,16 @@ import './MinhaLista.css'
 import { useGlobalContext } from '../contexts/GlobalContext'
 import CapaLivro from './CapaLivro';
 
-function MinhaLista() {
+function MinhaLista({ 
+  nomeLista, 
+  descricaoLista,
+  lista, 
+  voltar, 
+  listas, 
+  setListas, 
+  listaSelecionada, 
+  setListaSelecionada 
+  }) {
   const [abriuCaixa, setAbriuCaixa] = useState(false)
   const [confirmacao, setConfirmacao] = useState(false)
   const {biblioteca} = useGlobalContext();
@@ -16,7 +25,7 @@ function MinhaLista() {
   }
 
   function confirmarAdicao(){
-    //é nessa função que vou adicionar o livro a lista personalizada do usuário
+  
     alert('adicionado!!!')
     setConfirmacao(false)
   }
@@ -30,6 +39,31 @@ function MinhaLista() {
     setCaixaEdicao(!caixaEdicao)
   }
 
+  async function deletarLista(id) {
+    try {
+        const response = await fetch(`http://localhost:3000/listas_personalizadas/${id}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+          setListas(prev => prev.filter(lista => lista.id !== id));
+      
+          if (listaSelecionada?.id === id) {
+            setListaSelecionada(null);
+            voltar();
+          }
+
+          alert('Lista deletada com sucesso!');
+        } else {
+            const data = await response.json();
+            alert(data.message || 'Erro ao deletar a lista');
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+  }
+
+
   return (
     <div className='container__lista--livros'>
 
@@ -38,7 +72,7 @@ function MinhaLista() {
         <div className="lista__name">
 
           <div className="nome__lista--editar">
-            <label className='nome__lista'>Nome da Lista</label>
+            <label className='nome__lista'>{nomeLista}</label>
           </div>
           <div className="editar__lista">
             <button className="botao__editar--lista" onClick={opcoesedicao}><img src="./public/icons/barra-de-menu.png" alt="" className="img__editar--lista" /></button>
@@ -48,7 +82,7 @@ function MinhaLista() {
 
         <div className="lista__description">
 
-          <label className='descricao__lista'>Descrição da lista: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint distinctio enim ex tempore. Dolorem facere assumenda error maxime neque aspernatur molestiae vitae velit repudiandae odit quas eum eos, odio reprehenderit! Lorem ipsum dolor sit amet consectetur adipisicing elit.</label>
+          <label className='descricao__lista'>{descricaoLista}</label>
 
         </div>
 
@@ -124,7 +158,7 @@ function MinhaLista() {
 
           <div className="container__edicao">
             <button className="botao__edicao--listas">Editar lista</button>
-            <button className="botao__edicao--listas">Apagar lista</button>
+            <button className="botao__edicao--listas" onClick={() => deletarLista(lista.id)}>Apagar lista</button>
           </div>
 
         </dialog>

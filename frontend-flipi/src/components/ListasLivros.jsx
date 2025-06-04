@@ -62,8 +62,14 @@ function ListasLivros() {
 
         {listaSelecionada ? (
             <MinhaLista 
+                nomeLista={listaSelecionada.nome_lista} 
+                descricaoLista={listaSelecionada.descricao_lista}
                 lista={listaSelecionada}
                 voltar={() => setListaSelecionada(null)}
+                listas={listas}
+                setListas={setListas}
+                listaSelecionada={listaSelecionada}
+                setListaSelecionada={setListaSelecionada}
             />
         ) : (
 
