@@ -147,7 +147,8 @@ function TelaEscrivaninha() {
       setMensagem('Enviando resenha...')
       
       const currentDate = new Date().toISOString()
-      const usuarioAtualizado = vetorObjetosUsuarios.find(e => e.usuario_id === posicaoUsuarioID)
+      const usuarioAtualizado = vetorObjetosUsuarios.find(e => e.usuario_id 
+                                                          = posicaoUsuarioID)
 
       if (!usuarioAtualizado) {
         throw new Error('Usuário não encontrado!')
@@ -196,12 +197,19 @@ function TelaEscrivaninha() {
 
     <div className="escrivaninha-mesa">
 
+      <div className="escrivaninha-documento">
+                  
+           <div className="documento-folha">
+    
+              <div className="folha-topo">
 
-      <div className="escrivaninha-navbarVertical">
-        <NavbarVertical />
-      </div>
+                <button className='folha-topo-btn'>
+                  <img className='img-lixo-escrivaninha' src="public\images\output-onlinepngtools.png" alt="" /> 
+                </button>
+              
+                <input maxLength={18} className='inpt-tituloResenha' placeholder='TITULO' type="text" />
 
-      <div className="escrivaninha-resenha-container">
+
 
         <div className="resenha-container-textBlock">
       
@@ -213,12 +221,16 @@ function TelaEscrivaninha() {
           onChange={(event) => setResenha(event.target.value)}
          ></textarea>
 
-        </div>
+                <textarea placeholder='Começe sua resenha aqui...' maxLength={800} className='inpt-resenha' name="resenha" id="" cols="10" rows="10" 
+                value={resenha}
+                onChange={(event) => setResenha(event.target.value)}
+                ></textarea>
 
-      </div>
+              
+              </div>
 
-      <div className="escrivaninha-info-container">
-        <div className="info-container-isbn">
+              <div className="folha-desfecho">
+
 
           <button className='Infor-container-isbnlbl' >ISBN</button>
 
@@ -229,9 +241,10 @@ function TelaEscrivaninha() {
           onChange={(event) => setIsbn(event.target.value)}
 	        onBlur={buscarLivroPorISBN}
           />
+
         </div>
 
-        <div className="info-container-livroContainer">
+        <div className="escrivaninha-container-generoIsbn">
 
           <div className="livroContainer-capa">
           <img className='capa-img' src={capa} alt="" />
@@ -247,11 +260,12 @@ function TelaEscrivaninha() {
       </textarea>
 
 
+
       
 
             </div>
-          </div>
 
+            <div className="informacoesLivro-direita">
 
         </div>
         <div className="livroContainer-tags">
@@ -261,20 +275,34 @@ function TelaEscrivaninha() {
         </div>
         <div className="livroContainer-nota">
 
-          <div className="nota-labelEspaco">
+                  <div className="meio-sinopse">
 
           <button className='livroContainer-labelNota' htmlFor="">Avalie esse livro:</button>
 
-          </div>
+
+                  <textarea className='sinopse-textArea' value={livroAcessado.sinopseLivro} name="" id="" cols="30" rows="10" readOnly></textarea>
           
-          <div className="estrelas-div">
+                  </div>                   
+
 
           <div className="estrelas-buttons">
             
           <EstrelasBtn onRatingChange={setNotaResenha}/>
           
 
-          </div>
+              <div className="informacoesLivro-direita-generos">
+                <label className='lbl-generos' htmlFor="">Generos</label>
+          
+                {livroAcessado && livroAcessado.generoLivro.length > 0 ? (
+                  livroAcessado.generoLivro.map((genero, indice) => (
+                    <div key={indice} className="btn-generos">#{genero}</div>
+                      ))
+                      ) : (
+                    <div className="btn-generos">#SemGênero</div>
+                )}
+                
+              </div>
+
 
         </div>
         </div>
@@ -282,11 +310,23 @@ function TelaEscrivaninha() {
           <button className='livroContainer-btnEnviar'  onClick={cadastrarResenha} >ENVIAR RESENHA</button>
         </div>
 
-      </div>
 
-    </div>
+            <div className="generoIsbn-desfecho">
 
-      <dialog open={abrirCaixa}> 
+              <label className='desfecho-lbl' htmlFor="">Nota do livro: </label>
+
+              <div className="estrelas-div">
+
+                <EstrelasBtn />
+
+              </div>
+        
+              <button className='btn-escrivaninha' onClick={cadastrarResenha}>CADASTRAR → </button>
+
+            </div>
+
+          </div>    
+
 
         <div className="dialog-divAtivo">
           <h1 className='dialogLbl' >O ISBN é um código de identificação de um livro, acesse vários desses códigos em- 
@@ -296,8 +336,13 @@ function TelaEscrivaninha() {
 
         </div>
 
-      </dialog>
+        <div className="escrivaninha-navbarVertical">
 
+          <NavbarVertical />
+
+        </div>
+
+    </div>
 
   </div>    
 

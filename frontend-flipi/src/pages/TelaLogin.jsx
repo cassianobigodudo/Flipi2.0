@@ -99,7 +99,7 @@ function TelaLogin() {
                 alert('Nome de usuário inexistente.')
                 break;
             case verificarLoginIncorreto():
-                alert('Login Incorreto.')
+                alert('Usuário ou senha incorretos.')
                 break;
             default:
                 console.log(vetorObjetosUsuarios[variavel].usuario_id)

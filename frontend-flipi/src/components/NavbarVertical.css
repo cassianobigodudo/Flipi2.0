@@ -2,7 +2,7 @@
 .div-navbarVertical{
 
     display: flex;
-    justify-content: start;
+    justify-content: left;
     align-items: center;
     flex-direction: column;
     gap: 15px;

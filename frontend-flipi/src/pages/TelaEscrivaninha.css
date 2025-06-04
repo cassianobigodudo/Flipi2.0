@@ -196,8 +196,8 @@
     border: none;
     transition: 1s;
     animation: slideInLeft 1s ease-in-out;
-}
 
+}
 
 .inpt-resenha:focus{
     outline-width: 0px;
