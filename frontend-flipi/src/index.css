@@ -1,3 +1,5 @@
+
+
 *{
   margin: 0;
   padding: 0;
@@ -14,7 +16,7 @@
   --fundoDivs: #cb9375;
   --navbar: #fdfaf3;
   --textos: #40454b;
-  
+  --hoverBotao: #ff911b;
 }
 
 ::-webkit-scrollbar{
@@ -28,12 +30,31 @@
 
   border-radius: 2px;
   
-  background-color: #c78066;
+  background-color: #d6a47a;
+  cursor: pointer;
+  transition: 1s;
+  animation: pulse 2s infinite ease-in-out;
 }
 
+
+
+::selection{
+  color: rgb(255, 255, 255);
+  background-color: #e08e65;
+}
 
 
 @font-face {
   font-family: "fonte-projeto";
   src: url(./font/Amatic_SC/AmaticSC-Bold.ttf);
+}
+
+@font-face {
+  font-family: "fonte-projeto-extra";
+  src: url(./font/KleeOne-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'mais-legivel';
+  src: url(./font/Afacad/static/Afacad-Medium.ttf);
 }

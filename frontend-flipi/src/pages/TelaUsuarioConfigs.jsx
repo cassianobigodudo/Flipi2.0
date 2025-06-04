@@ -172,10 +172,11 @@ function TelaUsuarioConfigs() {
 
           setVetorObjetosUsuarios(usuariosAtualizado)
 
-          alert(`Conta deletada com sucesso!!`)
-          setUsuarioLogado(false)
-          navigate(`/landingpage`)
 
+          alert(`Conta deletada com sucesso.`)
+          setUsuarioLogado(false) //hi
+          navigate(`/`)
+            
         }
       } catch (error) {
         console.error('Erro ao deletar cliente:', error);

@@ -1,9 +1,106 @@
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+}
+  
+@keyframes slideInLeft {
+    from {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+      transform: translateX(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+}
+
+@keyframes slideInTop {
+    from {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+}
+
+@keyframes slideInBottom {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.09);
+    }
+    100% {
+      transform: scale(1);
+    }
+}
+
+@keyframes lightPulse { 
+    0% {
+        box-shadow: 0px 0px 5px rgb(110, 186, 230);
+    }
+    50% {
+        box-shadow: 0px 0px 15px rgb(159, 216, 226);
+    }
+    100% {
+        box-shadow: 0px 0px 5px rgb(110, 186, 230);
+    }
+}
+
+@keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+}
+
 .container-tela{
     display: block;
     flex-direction: column;
     background-color: whitesmoke;
     height: 90vh;
     width: 180vh;
+    animation: fadeIn 0.5s ease-in-out;
     
 }
    .parte-cima{
@@ -27,14 +124,14 @@
     }
         .capa-livro{
             box-shadow: 0px 10px 9px #a07e5c;
-             margin: 10px; 
+             margin: -6px; 
             display: flex;
             justify-content: center;
             align-items: center;
             margin-right: 90px;
             flex-direction: column;
-            height: 54vh;
-            width: 45vh;
+            height: 50vh;
+            width: 36vh;
             background-color: #ecd9b1;
             background-repeat: no-repeat;
             background-size: cover;
@@ -42,7 +139,7 @@
         }
             .imagem-capa-livro{
                 /* height: 80vh; */
-                width:36vh;
+                width:100%;
             }
         .parte-classificacao{ 
             display: flex;
@@ -58,7 +155,7 @@
         .estrelas-btn-livro{
 
             margin-top: 5%;
-            width: 60%;
+            width: 68%;
         }
             .icone-estrela{
                 height: 35px;
@@ -232,20 +329,20 @@
         border-bottom-left-radius: 5px;
     }
     .botao-icone{
-        height: 50px;
-        width: 50px;
+        height: 76%;
+        width: 6%;
+        
         border: none;
         background-color: #c85b34;
         cursor: pointer;
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
         
-        transition: 1S ease-in-out;
+        transition: 0.5S ease-in-out;
     }
         .botao-icone:hover{
-            margin-left: 20PX;
     
-            background-color: #e44101;
+            background-color: #d67446;
             transition: 0.5S ease-in-out;
         }
         .icone-down{

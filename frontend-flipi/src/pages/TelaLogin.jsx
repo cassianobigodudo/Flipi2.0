@@ -12,7 +12,7 @@ function TelaLogin() {
     const [inputNomeUsuario, setInputNomeUsuario] = useState('')
     const [inputSenha, setInputSenha] = useState('')
     const navigate = useNavigate()
-    const {vetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuarioID, setPosicaoUsuarioID, setVetorObjetosUsuarios} = useContext(GlobalContext)
+    const {vetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuarioID, setPosicaoUsuarioID, setVetorObjetosUsuarios, usuarioId, setUsuarioId} = useContext(GlobalContext)
 
 
     useEffect (() => {
@@ -102,6 +102,8 @@ function TelaLogin() {
                 alert('Usuário ou senha incorretos.')
                 break;
             default:
+                console.log(vetorObjetosUsuarios[variavel].usuario_id)
+                setUsuarioId(vetorObjetosUsuarios[variavel].usuario_id)
                 setPosicaoUsuarioID(vetorObjetosUsuarios[variavel].usuario_id)
                 alert('Login feito com sucesso!')
                 setUsuarioLogado(true)
@@ -123,8 +125,6 @@ function TelaLogin() {
 
     }
     
-
-
   return (<div className="container-tela-login">
     <div className="livro-login-container-esquerda">
         <div className="livro-login-primeiraLayer-esquerda">

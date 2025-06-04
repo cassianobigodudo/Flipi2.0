@@ -3,12 +3,12 @@ import './TelaPrincipal.css'
 import { Link, useNavigate } from "react-router-dom"
 import Navbar from '../components/Navbar'
 import { GlobalContext } from '../contexts/GlobalContext'
+import BarraPesquisa from '../components/BarraPesquisa'
 
 function TelaPrincipal() {
     
     const {posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, usuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado}=useContext(GlobalContext)
     const {biblioteca}=useContext(GlobalContext)
-    const navigate = useNavigate()
 
 
     useEffect (() => {
@@ -63,11 +63,7 @@ function TelaPrincipal() {
     
                             <div className="div-barra-de-pesquisa">
     
-                                <input className='inpt-pesquisa' type="text" placeholder='Pesquise um livro em específico'/>
-    
-                                <button className="btn-pesquisar">
-                                    <img className='icons-pesquisar' src="public/icons/big-search-len.png" alt="" />
-                                </button>
+                                <BarraPesquisa/>
     
                             </div>
     
@@ -77,7 +73,7 @@ function TelaPrincipal() {
                                     <button className="btn-livro-home" onClick={() => 
                                         navigate("/telalivro", { state: { index: 0 } })}>
     
-                                        <div className="box"></div>
+                                        <div className="box-2"></div>
                                         <p className='titulos-livros'>{biblioteca[0].tituloLivro}</p>
                                     </button>
                                 </div>
@@ -269,14 +265,14 @@ function TelaPrincipal() {
                             
                                 
                                 <Link to="/telaprincipal">
-                                <button className="btns">
+                                <button className="btnss">
                                     <img src="../public/icons/ant-design--home-outlined.svg" alt="" className="icone-botao"/>
                                 </button>
                                 </Link>
     
     
                                 <Link to="/telaescrivaninha"> 
-                                <button className="btns"> 
+                                <button className="btnss"> 
                                 <img src="public/icons/escrita.png" alt="" className="icone-botao"/> 
                                 </button>
                                 </Link>
@@ -284,7 +280,7 @@ function TelaPrincipal() {
                             </div>
     
                             <Link to="/telausuarioconfigs"> 
-                            <button className="btns">  
+                            <button className="btnss">  
                             <img src="./public/images/setting.svg" alt="" className="icone-botao"/>
                             </button>
                             </Link>
