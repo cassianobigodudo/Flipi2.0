@@ -1,628 +1,628 @@
 @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  from {
+    opacity: 0;
   }
-
-  @keyframes fadeOut {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
+  to {
+    opacity: 1;
   }
-  
-  @keyframes slideInLeft {
-    from {
-      transform: translateX(-50px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
   }
-
-  /* Adding more animations for variety */
-  @keyframes slideInRight {
-    from {
-      transform: translateX(50px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
+  to {
+    opacity: 0;
   }
+}
 
-  @keyframes slideInTop {
-    from {
-      transform: translateY(-50px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
   }
-
-  @keyframes slideInBottom {
-    from {
-      transform: translateY(50px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
+}
 
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.09);
-    }
-    100% {
-      transform: scale(1);
-    }
+/* Adding more animations for variety */
+@keyframes slideInRight {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
   }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 
-  @keyframes lightPulse { 
-    0% {
-        box-shadow: 0px 0px 5px rgb(110, 186, 230);
+@keyframes slideInTop {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 
+@keyframes slideInBottom {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
   50% {
-        box-shadow: 0px 0px 15px rgb(159, 216, 226);
+    transform: scale(1.09);
   }
   100% {
-    box-shadow: 0px 0px 5px rgb(110, 186, 230);
+    transform: scale(1);
   }
-    
-  }
+}
 
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+@keyframes lightPulse { 
+  0% {
+      box-shadow: 0px 0px 5px rgb(110, 186, 230);
+
+}
+50% {
+      box-shadow: 0px 0px 15px rgb(159, 216, 226);
+}
+100% {
+  box-shadow: 0px 0px 5px rgb(110, 186, 230);
+}
   
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .tela-escrivaninha-container{
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    font-family: "fonte-projeto";
-    background-color: #ecd8c7;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font-family: "fonte-projeto";
+  background-color: #ecd8c7;
 }
 
 .escrivaninha-mesa{
-    display: flex;
-    height: 100%;
-    width: 100%;
-    background-image: url('./public/images/Group 1 (1).png');
-    background-size: 100%;
-    background-repeat: no-repeat;
-    border-radius: 3px;
-    border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;
-    border-style: solid;
-    border-color: #8c5d47;
-    animation: fadeIn 1.5s ease-in-out;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-image: url('./public/images/Group 1 (1).png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  border-style: solid;
+  border-color: #8c5d47;
+  animation: fadeIn 1.5s ease-in-out;
 }
 
 .escrivaninha-navbarVertical{
-    display: flex;
-    background-color: rgb(249, 238, 222);
-    height: 100%;
-    width: 5%;
-    flex-direction: column;
-    user-select: none;
-    animation: slideInLeft 1s ease-in-out;
+  display: flex;
+  background-color: rgb(249, 238, 222);
+  height: 100%;
+  width: 5%;
+  flex-direction: column;
+  user-select: none;
+  animation: slideInLeft 1s ease-in-out;
 }
 
 .escrivaninha-resenha-container{
-    display: flex;
-    height: 100%;
-    width: 45%;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 1.2s ease-in-out;
+  display: flex;
+  height: 100%;
+  width: 45%;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 1.2s ease-in-out;
 }
 
 .resenha-container-textBlock{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 80%;
-    width: 75%;
-    background-color: rgb(255, 243, 225);
-    margin-bottom: 10%;
-    box-shadow: 0px 3px 10px rgba(87, 61, 47, 0.5);
-    border-radius: 1px;
-    animation: slideInBottom 1.3s ease-in-out;
-    transition: 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 80%;
+  width: 75%;
+  background-color: rgb(255, 243, 225);
+  margin-bottom: 10%;
+  box-shadow: 0px 3px 10px rgba(87, 61, 47, 0.5);
+  border-radius: 1px;
+  animation: slideInBottom 1.3s ease-in-out;
+  transition: 0.5s;
 }
 
 
 .resenha-container-textBlock:hover{
-    margin-top: -20px;
-    transition: 0.5s;
+  margin-top: -20px;
+  transition: 0.5s;
 }
 .inpt-tituloResenha{
-    display: flex;
-    margin-top: 2%;
-    width: 100%;
-    font-size: 38px;
-    font-family: "fonte-projeto";
-    color: rgb(176, 80, 7);
-    font-weight: 900;
-    text-align: center;
-    border: none;
-    background: none;
-    transition: 1s;
-    animation: slideInLeft 1s ease-in-out;
+  display: flex;
+  margin-top: 2%;
+  width: 100%;
+  font-size: 38px;
+  font-family: "fonte-projeto";
+  color: rgb(176, 80, 7);
+  font-weight: 900;
+  text-align: center;
+  border: none;
+  background: none;
+  transition: 1s;
+  animation: slideInLeft 1s ease-in-out;
 }
 
 
 
 .inpt-tituloResenha:focus{
-    outline-width: 0px;
+  outline-width: 0px;
 }
 
 .inpt-resenha{
-    resize: none;
-    font-weight: 400;
-    font-size: 28px;
-    font-family: "fonte-projeto";
-    padding-left: 20px;
-    color: rgb(89, 68, 52);
-    padding-right: 20px;
-    text-align: start;
-    font-weight: 500;
-    height: 100%;
-    width: 100%;
-    border: none;
-    transition: 1s;
-    animation: slideInLeft 1s ease-in-out;
-
+  resize: none;
+  font-weight: 400;
+  font-size: 28px;
+  font-family: "fonte-projeto";
+  padding-left: 20px;
+  color: rgb(89, 68, 52);
+  padding-right: 20px;
+  text-align: start;
+  font-weight: 500;
+  height: 100%;
+  width: 100%;
+  border: none;
+  transition: 1s;
+  animation: slideInLeft 1s ease-in-out;
 }
 
+
 .inpt-resenha:focus{
-    outline-width: 0px;
+  outline-width: 0px;
 }
 
 .escrivaninha-info-container{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-    width: 58%;
-    animation: slideInRight 1.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 58%;
+  animation: slideInRight 1.3s ease-in-out;
 }
 
 .Infor-container-isbnlbl{
-    margin-top: 2%;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: var(--laranjaenferrujado);
-    width: 13%;
-    height: 34.5%;
-    font-size: 30px;
-    letter-spacing: 4px;
-    background-color: #fef4e9;
-    border-style: none;
-    border-radius: 13px;
-    animation: slideInTop 1.5s ease-in-out;
-    transition: 1s;
-    
+  margin-top: 2%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: var(--laranjaenferrujado);
+  width: 13%;
+  height: 34.5%;
+  font-size: 30px;
+  letter-spacing: 4px;
+  background-color: #fef4e9;
+  border-style: none;
+  border-radius: 13px;
+  animation: slideInTop 1.5s ease-in-out;
+  transition: 1s;
+  
 }
 
 .info-container-isbn{  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 13%;
-    width: 100%;
-    user-select: none;
-    animation: fadeIn 1.7s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 13%;
+  width: 100%;
+  user-select: none;
+  animation: fadeIn 1.7s ease-in-out;
 }
 
 .infor-container-isbnInpt{ 
-    margin-top: 2%;
-    font-family: "fonte-projeto";
-    margin-left: 6px;
-    text-align: center;
-    color: var(--laranjaenferrujado);
-    width: 32%;
-    height: 36%;
-    font-size: 29px;
-    letter-spacing: 2px;
-    background-color: #f9f3e5;
-    border: none;
-    border-radius: 13px;
-    transition: 1s;
-}
-
-.infor-container-isbnQuestion{
-    position: absolute;
-    text-align: center;
-    margin-left: -11%;
-    margin-bottom: 1%;
-    background-color: #80aee3;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: 700;
-    font-size: 22px;
-    color: white;
-    height: 3.2%;
-    width: 1.5%;
-    border: none;
-    border-radius: 200px;
-    transition: 2s;
-    opacity: 90%;
-    cursor: pointer;
-    animation: pulse 2s infinite ease-in-out;
-    animation: lightPulse 2s infinite ease-in-out;
-}
-
-.infor-container-isbnQuestion:hover{
-    opacity: 100%;
-    font-size: 30px;
-    background-color: rgb(80, 167, 160);
-    height: 3.8%;
-    width: 1.9%;
-    transition: 1s;
-}
-
-.infor-container-isbnQuestion:active{
-    transition: 0.01s; 
-    height: 4.2%;
-    width: 2%;
-    background-color: rgb(166, 211, 196);
-}
-
-.infor-container-isbnInpt:focus{
-    outline-width: 0;
-}
-.infor-container-isbnInpt:hover{
+  margin-top: 2%;
+  font-family: "fonte-projeto";
+  margin-left: 6px;
+  text-align: center;
+  color: var(--laranjaenferrujado);
+  width: 32%;
+  height: 36%;
+  font-size: 29px;
+  letter-spacing: 2px;
+  background-color: #f9f3e5;
+  border: none;
+  border-radius: 13px;
   transition: 1s;
 }
 
+.infor-container-isbnQuestion{
+  position: absolute;
+  text-align: center;
+  margin-left: -11%;
+  margin-bottom: 1%;
+  background-color: #80aee3;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: white;
+  height: 3.2%;
+  width: 1.5%;
+  border: none;
+  border-radius: 200px;
+  transition: 2s;
+  opacity: 90%;
+  cursor: pointer;
+  animation: pulse 2s infinite ease-in-out;
+  animation: lightPulse 2s infinite ease-in-out;
+}
+
+.infor-container-isbnQuestion:hover{
+  opacity: 100%;
+  font-size: 30px;
+  background-color: rgb(80, 167, 160);
+  height: 3.8%;
+  width: 1.9%;
+  transition: 1s;
+}
+
+.infor-container-isbnQuestion:active{
+  transition: 0.01s; 
+  height: 4.2%;
+  width: 2%;
+  background-color: rgb(166, 211, 196);
+}
+
+.infor-container-isbnInpt:focus{
+  outline-width: 0;
+}
+.infor-container-isbnInpt:hover{
+transition: 1s;
+}
+
 dialog{
-    height: 185px;
-    width: 40%;
-    transition: 1s;
-    animation: fadeIn 0.8s ease-in-out, 
+  height: 185px;
+  width: 40%;
+  transition: 1s;
+  animation: fadeIn 0.8s ease-in-out, 
 }
 
 .dialog-divAtivo{
-    height: 75%;
-    position: fixed;
-    width: 85%;
-    background-color: rgb(65, 143, 137);
-    opacity: 94%;
-    margin-top: -400px;
-    margin-left: -20px;
-    border-radius: 3px;
-    transition: 1s;
-    box-shadow: 0px 13px 17px rgba(63, 38, 35, 0.4);
-    animation: fadeIn 0.8s ease-in-out, slideInLeft 1s ease-in-out;
+  height: 75%;
+  position: fixed;
+  width: 85%;
+  background-color: rgb(65, 143, 137);
+  opacity: 94%;
+  margin-top: -400px;
+  margin-left: -20px;
+  border-radius: 3px;
+  transition: 1s;
+  box-shadow: 0px 13px 17px rgba(63, 38, 35, 0.4);
+  animation: fadeIn 0.8s ease-in-out, slideInLeft 1s ease-in-out;
 }
 
 .dialog-divDesativado{
-    height: 100%;
-    position: fixed;
-    width: 60%;
-    background-color: rgb(65, 143, 137);
-    opacity: 0%;
-    margin-top: -290px;
-    margin-left: 60px;
-    border-radius: 3px;
-    transition: 1s;
-    box-shadow: 0px 13px 17px rgba(63, 38, 35, 0.4);
-    animation: fadeOut 0.8s ease-in-out, slideInLeft 1s ease-in-out;   
+  height: 100%;
+  position: fixed;
+  width: 60%;
+  background-color: rgb(65, 143, 137);
+  opacity: 0%;
+  margin-top: -290px;
+  margin-left: 60px;
+  border-radius: 3px;
+  transition: 1s;
+  box-shadow: 0px 13px 17px rgba(63, 38, 35, 0.4);
+  animation: fadeOut 0.8s ease-in-out, slideInLeft 1s ease-in-out;   
 }
 
 .dialogLbl{ 
-  padding: 10px;
-    font-family: "fonte-projeto";
-    font-size: 28px;
-    color: rgb(255, 255, 255);
-    letter-spacing: 2px;
-    margin: 5px;
-    transition: 1s;
-    animation: fadeIn 1.5s ease-in-out, slideInLeft 1s ease-in-out;  
+padding: 10px;
+  font-family: "fonte-projeto";
+  font-size: 28px;
+  color: rgb(255, 255, 255);
+  letter-spacing: 2px;
+  margin: 5px;
+  transition: 1s;
+  animation: fadeIn 1.5s ease-in-out, slideInLeft 1s ease-in-out;  
 }
 
 .info-container-livroContainer{  
-    display: flex;
-    flex-direction: row;
-    height: 36%;
-    margin-right: 4%;
-    width: 96%;
-    background-image: url(./public/images/fundo-livro-container.png);
-    background-size: 100%;
-    background-repeat: no-repeat; 
-    border-radius: 1px;
-    box-shadow: 0px 70px 10px rgba(39, 20, 15, 0.3);
-    animation: slideInBottom 1.2s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  height: 36%;
+  margin-right: 4%;
+  width: 96%;
+  background-image: url(./public/images/fundo-livro-container.png);
+  background-size: 100%;
+  background-repeat: no-repeat; 
+  border-radius: 1px;
+  box-shadow: 0px 70px 10px rgba(39, 20, 15, 0.3);
+  animation: slideInBottom 1.2s ease-in-out;
 }
 
 .livroContainer-capa{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1.8%;
-    height: 83%;
-    width: 20%;
-    margin-left: 2%;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    opacity: 90%;
-    box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.5);
-    transition: 2s;
-    border-radius: 2px;
-    user-select: none;
-    animation: fadeIn 1.8s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.8%;
+  height: 83%;
+  width: 20%;
+  margin-left: 2%;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  opacity: 90%;
+  box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.5);
+  transition: 2s;
+  border-radius: 2px;
+  user-select: none;
+  animation: fadeIn 1.8s ease-in-out;
 }
 
 .livroContainer-capa:hover{
-    margin-top: 1%;
-    margin-left: 5%;
-    box-shadow: 0px 13px 17px rgba(0, 0, 0, 0.3);
-    transition: 2s;
-    height: 91%;
-    width: 22%;
-    overflow: hidden;
+  margin-top: 1%;
+  margin-left: 5%;
+  box-shadow: 0px 13px 17px rgba(0, 0, 0, 0.3);
+  transition: 2s;
+  height: 91%;
+  width: 22%;
+  overflow: hidden;
 }
 
 .capa-img{
-    height: 100%;
-    width: 100%;
-    animation: fadeIn 2s ease-in-out;
+  height: 100%;
+  width: 100%;
+  animation: fadeIn 2s ease-in-out;
 }
 
 .livroContainer-desc{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 72%;
-    animation: slideInRight 1.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 72%;
+  animation: slideInRight 1.5s ease-in-out;
 }
 
 .desc-livroTitulo{
-    height: 25%;
-    margin-top: 2.8%;
-    display: flex;
-    justify-content: start;
-    width: 80%;
-    text-align: center;
-    margin-left: 5%;
-    background-color: var(--laranjaenferrujado);
-    border-radius: 2px;
-    animation: slideInLeft 1.3s ease-in-out;
-    
+  height: 25%;
+  margin-top: 2.8%;
+  display: flex;
+  justify-content: start;
+  width: 80%;
+  text-align: center;
+  margin-left: 5%;
+  background-color: var(--laranjaenferrujado);
+  border-radius: 2px;
+  animation: slideInLeft 1.3s ease-in-out;
+  
 }
 
 .livroTituloLbl{
-    text-align: start;
-    font-family: "fonte-projeto-extra";
-    margin-top: 3%;
-    margin-left: 2%;
-    color: var(--corfundo);
-    transition: 2s;
-    font-size: 32px;
-    animation: fadeIn 2.2s ease-in-out;
-    border: none;
+  text-align: start;
+  font-family: "fonte-projeto-extra";
+  margin-top: 3%;
+  margin-left: 2%;
+  color: var(--corfundo);
+  transition: 2s;
+  font-size: 32px;
+  animation: fadeIn 2.2s ease-in-out;
+  border: none;
 }
 
 .desc-livroDesc{
-  margin-top: 2%;
-    height: 66%;
-    width: 95%;
-    margin-left: 5%;
-    animation: fadeIn 1.7s ease-in-out;
+margin-top: 2%;
+  height: 66%;
+  width: 95%;
+  margin-left: 5%;
+  animation: fadeIn 1.7s ease-in-out;
 }
 
 .livroDesc-textArea{
-  color: #795041;
-    margin-top: 2%;
-    height: 77.9%;
-    width: 99%;
-    font-size: 25px;
-    letter-spacing: -2px;
-    resize: none;
-    font-family: "fonte-projeto-extra";
-    font-style: italic;
-    border: none;
-    transition: 1s;
-    animation: fadeIn 2s ease-in-out;
+color: #795041;
+  margin-top: 2%;
+  height: 77.9%;
+  width: 99%;
+  font-size: 25px;
+  letter-spacing: -2px;
+  resize: none;
+  font-family: "fonte-projeto-extra";
+  font-style: italic;
+  border: none;
+  transition: 1s;
+  animation: fadeIn 2s ease-in-out;
 }
 
 .livroDesc-textArea:hover{
-    transition: 5s;
+  transition: 5s;
 }
 
 .livroDesc-textArea:focus-visible{
-    outline-width: 0;
+  outline-width: 0;
 }
 
 .livroContainer-tags{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    height: 10%;
-    margin-right: 4.1%;
-    width: 95.9%;
-    background-color: var(--corfundo);
-    animation: slideInBottom 1.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  height: 10%;
+  margin-right: 4.1%;
+  width: 95.9%;
+  background-color: var(--corfundo);
+  animation: slideInBottom 1.5s ease-in-out;
 }
 
 .tags-btnAutor{
-    height: 76%; 
-    width: 31%;
-    font-family: "fonte-projeto";
-    font-size: 35px;
-    margin-bottom: 2%;
-    color: #795041;
-    border: none;
-    border-radius: 2px;
-    overflow-y: scroll;
-    transition: 1s;
-    white-space: horizontal;
-    animation: fadeIn 2.1s ease-in-out;
+  height: 76%; 
+  width: 31%;
+  font-family: "fonte-projeto";
+  font-size: 35px;
+  margin-bottom: 2%;
+  color: #795041;
+  border: none;
+  border-radius: 2px;
+  overflow-y: scroll;
+  transition: 1s;
+  white-space: horizontal;
+  animation: fadeIn 2.1s ease-in-out;
 }
 
 .tags-btnEditora{
-    margin-left: 2.3%;
-    height: 76%; 
-    width: 31%;
-    font-family: "fonte-projeto";
-    font-size: 35px;
-    margin-bottom: 2%;
-    color: #795041;
-    border: none;
-    border-radius: 2px;
-    overflow-y: scroll;
-    animation: fadeIn 2.3s ease-in-out;
+  margin-left: 2.3%;
+  height: 76%; 
+  width: 31%;
+  font-family: "fonte-projeto";
+  font-size: 35px;
+  margin-bottom: 2%;
+  color: #795041;
+  border: none;
+  border-radius: 2px;
+  overflow-y: scroll;
+  animation: fadeIn 2.3s ease-in-out;
 }
 
 .tags-btnData{
-    margin-left: 2.3%;
-    height: 76%; 
-    width: 31%;
-    letter-spacing: 2px;
-    font-family: "fonte-projeto";
-    font-size: 38px;
-    margin-bottom: 2%;
-    color: #795041;
-    border: none;
-    border-radius: 2px;
-    overflow-y: scroll;
-    transition: 1s;
-    animation: fadeIn 2.5s ease-in-out;
+  margin-left: 2.3%;
+  height: 76%; 
+  width: 31%;
+  letter-spacing: 2px;
+  font-family: "fonte-projeto";
+  font-size: 38px;
+  margin-bottom: 2%;
+  color: #795041;
+  border: none;
+  border-radius: 2px;
+  overflow-y: scroll;
+  transition: 1s;
+  animation: fadeIn 2.5s ease-in-out;
 }
 
 .livroContainer-nota{
-    display: flex;
-    user-select: none;
-    justify-content: center;
-    align-items: center;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    margin-right: 4%;
-    flex-direction: row;
-    height: 10.6%;
-    width: 96%;
-    animation: slideInBottom 1.7s ease-in-out;
+  display: flex;
+  user-select: none;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  margin-right: 4%;
+  flex-direction: row;
+  height: 10.6%;
+  width: 96%;
+  animation: slideInBottom 1.7s ease-in-out;
 }
 
 .nota-labelEspaco{
-    width: 48.5%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--fundoelementos);
-    border-radius: 2px;
-    box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.2);
-    animation: slideInLeft 1.9s ease-in-out;
+  width: 48.5%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--fundoelementos);
+  border-radius: 2px;
+  box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.2);
+  animation: slideInLeft 1.9s ease-in-out;
 }
 
 .livroContainer-labelNota{
-    font-family: "fonte-projeto";
-    text-align: center;
-    color: #fef4e9;
-    font-size: 39px;
-    letter-spacing: 5px;
-    height: 59%;
-    width: 83%;
-    background-color: var(--laranjaenferrujado);
-    user-select: none;
-    box-shadow: 0px 8px 7px rgba(39, 20, 15, 0.1);
-    animation: fadeIn 2.2s ease-in-out;
-    border: none;
-    transition: 1s;
+  font-family: "fonte-projeto";
+  text-align: center;
+  color: #fef4e9;
+  font-size: 39px;
+  letter-spacing: 5px;
+  height: 59%;
+  width: 83%;
+  background-color: var(--laranjaenferrujado);
+  user-select: none;
+  box-shadow: 0px 8px 7px rgba(39, 20, 15, 0.1);
+  animation: fadeIn 2.2s ease-in-out;
+  border: none;
+  transition: 1s;
 }
 
 .estrelas-div{
-    display: flex;
-    border-radius: 3px;
-    width: 48.5%;
-    height: 100%;
-    margin-left: 3.5%;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    background-color: #947878;
-    box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.2);
-    animation: slideInRight 1.9s ease-in-out;
+  display: flex;
+  border-radius: 3px;
+  width: 48.5%;
+  height: 100%;
+  margin-left: 3.5%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  background-color: #947878;
+  box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.2);
+  animation: slideInRight 1.9s ease-in-out;
 }
 
 .estrelas-buttons{
-    height: 100%;
-    width: 100%;
-    border-radius: 2px;
-    background-color: #fff2db;
-    animation: fadeIn 2.4s ease-in-out;
+  height: 100%;
+  width: 100%;
+  border-radius: 2px;
+  background-color: #fff2db;
+  animation: fadeIn 2.4s ease-in-out;
 }
 
 .livroContainer-enviar{
-    height: 9.5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 4%;
-    width: 66%;
-    background-color: var(--fundoelementos);
-    border-radius: 1px;
-    box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.2);
-    animation: slideInBottom 2.1s ease-in-out;
+  height: 9.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 4%;
+  width: 66%;
+  background-color: var(--fundoelementos);
+  border-radius: 1px;
+  box-shadow: 0px 5px 5px rgba(54, 31, 25, 0.2);
+  animation: slideInBottom 2.1s ease-in-out;
 }
 
 .livroContainer-btnEnviar{
-    cursor: pointer;
-    height: 67%;
-    width: 58%;
-    font-family: "fonte-projeto";
-    font-size: 39px;
-    letter-spacing: 6px;
-    border: none;
-    border-radius: 2px;
-    color: #fef4e9;
-    background-color: var(--laranjaenferrujado);
-    border-radius: 2px;
-    user-select: none;
-    transition: 0.8s;
+  cursor: pointer;
+  height: 67%;
+  width: 58%;
+  font-family: "fonte-projeto";
+  font-size: 39px;
+  letter-spacing: 6px;
+  border: none;
+  border-radius: 2px;
+  color: #fef4e9;
+  background-color: var(--laranjaenferrujado);
+  border-radius: 2px;
+  user-select: none;
+  transition: 0.8s;
 }
 
 .livroContainer-btnEnviar:hover{
-    transition: 1s;
-    width: 78%;
-    font-size: 32px;
-    letter-spacing: 13px;
-    height: 68%;
-    width: 79%;
+  transition: 1s;
+  width: 78%;
+  font-size: 38px;
+  letter-spacing: 13px;
+  height: 68%;
+  width: 79%;
 }
 
 .livroContainer-btnEnviar:active{
-    transition: 0.1s;
-    background-color: #ff911b;
+  transition: 0.1s;
+  background-color: #ff911b;
 }
 
 .livroContainer-btnEnviar:active{
-    width: 80%;
-    transition: 0.2s;
-    letter-spacing: 14px;
+  width: 80%;
+  transition: 0.2s;
+  letter-spacing: 14px;
 }
