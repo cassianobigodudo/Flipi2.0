@@ -286,7 +286,7 @@ function TelaPrincipal() {
                                 
                             </div>
     
-//                             <Link to="/paginatestejaime"> 
+                            {/* <Link to="/paginatestejaime">  */}
                             <Link to="/telausuarioconfigs"> 
                               <button className="btnss">  
                               <img src="./public/images/setting.svg" alt="" className="icone-botao"/>
@@ -307,4 +307,4 @@ function TelaPrincipal() {
     }
     
     
-    export default TelaPrincipal
+export default TelaPrincipal
