@@ -1,0 +1,315 @@
+.container__lista--livros{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 95%;
+    width: 95%;
+    background-color: #F4E2B4;
+    border-radius: 20px;
+}
+
+    .lista__header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 20%;
+        width: 100%;
+    }
+        .lista__name{
+            display: flex;
+            height: 30%;
+            width: 100%;
+        }
+            .nome__lista--editar{
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                padding: 20px;
+                height: 100%;
+                width: 70%;
+                background-color: transparent;
+            }
+                .nome__lista{
+                    font-size: 25px;
+                    font-weight: bolder;
+                    color: #40454b;
+                }
+
+            .editar__lista{
+                display: flex;
+                justify-content: end;
+                align-items: center;
+                padding: 20px;
+                height: 100%;
+                width: 30%;
+                background-color: transparent;
+            }
+                .botao__editar--lista{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: none;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    height: 50px;
+                    width: 50px;
+                }
+                .img__editar--lista{
+                    height: 98%;
+                    width: 98%;
+                }
+
+        .lista__description{
+            display: flex;
+            justify-content: start;
+            align-items: start;
+            padding: 20px;
+            height: 70%;
+            width: 100%;
+        }
+            .descricao__lista{
+                font-size: 25px;
+                font-weight: bold;
+                color: #40454b;
+            }       
+
+    .lista__body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80%;
+        width: 100%;
+        background-color: transparent;      
+    }
+        .lista__body--books{
+            display: flex;
+            justify-content: start;
+            align-items: start;
+            gap: 10px;
+            padding: 15px 15px;
+            height: 98%;
+            width: 98%;
+            background-color: #FCF6E8;
+            border-radius: 20px;
+        }
+            .botao__add--livro{
+                height: 230px;
+                width: 170px;
+                background-color: #F4E2B4;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .img__adicionar{
+                height: 70px;
+                width: 70px;
+            }
+
+    dialog{
+        height: 600px;
+        background-color: transparent;
+        border: none;
+        border-radius: 20px;
+        width: 50%;
+        position: fixed;
+        top: 60%;
+        left: 50.3%;
+        transform: translate(-10%, -50%);
+    }
+        .container__livros{
+            height: 95%;
+            width: 95%;
+            background-color: #F4E2B4;
+            border-radius: 20px;
+        }
+            .fechar__caixa{
+                display: flex;
+                background-color: transparent;
+                height: 10%;
+                width: 100%;
+            }
+            
+                .pesquisar__livro{
+                    display: flex;
+                    justify-content: start;
+                    align-items: center;
+                    height: 100%;
+                    width: 50%;
+                    background-color: transparent;
+                }
+                    .input__pesquisar--livro{
+                        padding-left: 5px;
+                        height: 30px;
+                        width: 250px;
+                        border-top-left-radius: 10px;
+                        border-bottom-left-radius: 10px;
+                        border: none;
+                        background-color: #FCF6E8;
+                        font-size: 15px; 
+                    }
+                    .btn__pesquisa--livro{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 30px;
+                        width: 30px;
+                        border: none;
+                        background-color: #FCF6E8;
+                        border-top-right-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                        cursor: pointer;
+                    }
+                        .img__pesquisar{
+                            height: 25px;
+                            width: 25px;
+                        }
+                        .btn__pesquisa--livro:hover{
+                            background-color: var(--fundoDivs);
+                        }
+                
+                .botao__fechar{
+                    display: flex;
+                    justify-content: end;
+                    align-items: center;
+                    padding-right: 10px;
+                    height: 100%;
+                    width: 50%;
+                    background-color: transparent;
+                }
+                    .btn__fechar--caixa{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        cursor: pointer;
+                        height: 30px;
+                        width: 30px;
+                        border: solid 1px var(--laranjaenferrujado);
+                        /* border: none; */
+                        border-radius: 5px;
+                    }
+
+            .lista__livros{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: auto;
+                flex-wrap: wrap;
+                gap: 30px;
+                height: 90%;
+                width: 100%;
+                padding: 10px;
+            }
+
+        .container__confirmacao{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 180px;
+            width: 350px;
+            background-color: var(--corfundo);
+            border-radius: 20px;
+            position: relative;
+            top: -20%;
+            left: 30%;
+        }
+                .confirmacao__fechar{
+                    display: flex;
+                    justify-content: end;
+                    align-items: center;
+                    padding-right: 10px;
+                    height: 15%;
+                    width: 100%;
+                    background-color: transparent;
+                }
+                    .fechar__confirmacao{
+                        border: solid 0.5px var(--fundoelementos);
+                        cursor: pointer;
+                        border-radius: 5px;
+                    }
+                .confirmacao__textos{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 20px;
+                    font-weight: bold;
+                    color: var(--textos);
+                    height: 60%;
+                    width: 100%;
+                    background-color: transparent;
+                    padding: 10px;
+                }
+                .confirmacao__botoes{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 15px;
+                    height: 25%;
+                    width: 100%;
+                    background-color: transparent;
+                }
+                    .botoes__confirmacao{
+                        height: 25px;
+                        width: 100px;
+                        border-radius: 15px;
+                        background-color: var(--fundoelementos);
+                        color: var(--textos);
+                        cursor: pointer;
+                        font-size: 15px;
+                        font-weight: bold;
+                        border: none;
+                    }
+                        .botoes__confirmacao:hover{
+                            height: 27px;
+                            width: 120px;
+                            background-color: var(--fundoDivs);
+                            color: var(--textos);
+                            font-size: 18px;
+                            font-weight: bolder
+                        }
+
+
+    .dialog__edicao{
+        height: 150px;
+        background-color: transparent;
+        border: none;
+        border-radius: 20px;
+        width: 15%;
+        position: fixed;
+        top: 16%;
+        left: 78%;
+        transform: translate(-10%, -50%);
+    }
+        .container__edicao{
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            flex-direction: column;
+            padding: 10px;
+            gap: 15px;
+            height: 99%;
+            width: 99%;
+            background-color: transparent;
+            border-radius: 5px;
+        }
+            .botao__edicao--listas{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 25px;
+                font-weight: bolder;
+                border: none;
+                border-radius: 10px;
+                height: 50px;
+                width: 270px;
+                background-color: var(--fundoDivs);
+                color: var(--textos);
+                cursor: pointer;
+            }
+                .botao__edicao--listas:hover{
+                    height: 55px;
+                    width: 300px;
+                    box-shadow: 0px 0px 2px 4px var(--laranjaenferrujado);
+                }

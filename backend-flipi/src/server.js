@@ -153,7 +153,6 @@ async function verificarTabelas(){
 //   await pool.end();
 }
 
-
 app.use(cors())
 app.use(express.json())
 
@@ -639,7 +638,7 @@ app.post('/usuario', async (req, res) => {
     }
 })
 
-// Rota para buscar todos os clientes
+// Rota para buscar todos os usuários
 app.get('/usuario', async (req, res) => {
 
     try {
@@ -657,7 +656,7 @@ app.get('/usuario', async (req, res) => {
 
 })
 
-// Rota para buscar um cliente por ID
+// Rota para buscar um usuário por ID
 app.get('/usuario/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -726,9 +725,99 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
     }
 });
 
+// -- JAIME --
+// Rota para criar uma nova lista
+app.post('/listas_personalizadas', async (req, res) => {
+    console.log('Dados recebidos', req.body);
+
+    const { nome, descricao, criador } = req.body;
+    
+    try {
+        // Query para inserir a nova lista no banco de dados
+        const result = await pool.query(
+            'INSERT INTO listas_personalizadas ( nome_lista, descricao_lista, criador_lista ) VALUES ($1, $2, $3) RETURNING *',
+            [ nome, descricao, criador ]
+        );
+        console.dir("recebendo resultado ", result)
+
+        // Retorna a lista criada com status 201
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Erro ao criar lista!' });
+    }
+});
+
+//Rota para buscar todas as listas de um usuário específico
+app.get('/listas_personalizadas/usuario/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const userID = parseInt(id)
+
+    try {
+        const result = await pool.query(
+            'SELECT * FROM listas_personalizadas WHERE criador_lista = $1',
+            [userID]
+        );
+
+        res.status(200).json(result.rows);
+    } catch (err) {
+        console.error('Erro ao buscar listas:', err.message);
+        res.status(500).json({ error: 'Erro ao buscar listas!' });
+    }
+});
+
+//Rota para deletar uma lista
+app.delete('/listas_personalizadas/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try{
+        const result = await pool.query(
+            'DELETE FROM listas_personalizadas WHERE id = $1', [id]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ message: 'Lista não encontrada' });
+        }
+      
+        res.status(200).json({ message: 'Lista deletada com sucesso' });
+    } 
+    catch (error) {
+        console.error('Erro ao deletar a lista:', error);
+        res.status(500).json({ error: 'Erro interno ao deletar a lista' });
+    }
+    
+});
+
+//Rota para verificar o login 
+app.post('/login', async (req, res) => {
+    const { usuario_apelido, usuario_senha } = req.body;
+
+    try {
+        const resultado = await pool.query(
+            'SELECT * FROM usuario WHERE usuario_apelido = $1 AND usuario_senha = $2',
+            [usuario_apelido, usuario_senha]
+        );
+
+        if (resultado.rows.length > 0) {
+            const usuario = resultado.rows[0];
+            res.status(200).json({
+                mensagem: 'Login bem-sucedido!',
+                usuario_id: usuario.usuario_id,
+                usuario_nome: usuario.usuario_nome,
+                usuario_apelido: usuario.usuario_apelido,
+                usuario_email: usuario.usuario_email
+            });
+        } else {
+            res.status(401).json({ mensagem: 'Apelido ou senha incorretos.' });
+        }
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        res.status(500).json({ mensagem: 'Erro no servidor.' });
+    }
+});
 
 //* TABELA RESENHA
-
 
 app.post('/resenha', async (req, res) => {
     const {resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, usuario_id, livro_isbn} = req.body;

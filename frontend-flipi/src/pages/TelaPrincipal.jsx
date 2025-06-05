@@ -7,7 +7,7 @@ import BarraPesquisa from '../components/BarraPesquisa'
 
 function TelaPrincipal() {
     
-    const {posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, usuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado}=useContext(GlobalContext)
+    const {posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, usuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado, idUsuarioLogado}=useContext(GlobalContext)
     const {biblioteca}=useContext(GlobalContext)
     const [paginaAtual, setPaginaAtual] = useState(0);
 
@@ -44,6 +44,10 @@ function TelaPrincipal() {
         console.log(dadosUsuarioLogado)
 
       }, [dadosUsuarioLogado])
+
+    useEffect(() => {
+        console.log('ID do usuário logado na tela principal:', idUsuarioLogado);
+    }, []);
 
 
       return (
@@ -268,24 +272,25 @@ function TelaPrincipal() {
                             
                                 
                                 <Link to="/telaprincipal">
-                                <button className="btnss">
-                                    <img src="../public/icons/ant-design--home-outlined.svg" alt="" className="icone-botao"/>
-                                </button>
+                                  <button className="btnss">
+                                      <img src="../public/icons/ant-design--home-outlined.svg" alt="" className="icone-botao"/>
+                                  </button>
                                 </Link>
     
     
-                                <Link to="/telaescrivaninha"> 
-                                <button className="btnss"> 
-                                <img src="public/icons/escrita.png" alt="" className="icone-botao"/> 
-                                </button>
+                                <Link to="/telaescrivaninha">             
+                                  <button className="btnss"> 
+                                  <img src="public/icons/escrita.png" alt="" className="icone-botao"/> 
+                                  </button>
                                 </Link>
                                 
                             </div>
     
+//                             <Link to="/paginatestejaime"> 
                             <Link to="/telausuarioconfigs"> 
-                            <button className="btnss">  
-                            <img src="./public/images/setting.svg" alt="" className="icone-botao"/>
-                            </button>
+                              <button className="btnss">  
+                              <img src="./public/images/setting.svg" alt="" className="icone-botao"/>
+                              </button>
                             </Link>
     
                         </div>

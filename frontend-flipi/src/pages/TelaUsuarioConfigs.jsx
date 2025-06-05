@@ -255,6 +255,7 @@ function TelaUsuarioConfigs() {
     <div className="usuarioConfigs-container">
 
       <div className="usuarioConfigs-div-esquerda">
+
       </div>
 
       <div className="usuarioConfigs-body">
@@ -302,6 +303,7 @@ function TelaUsuarioConfigs() {
 
               </div>
               <div className="usuarioConfigs-bmpc-infos">
+
                 <div className="teste">
                   <div className="campo-editavel">
                     <div className="input-container">
