@@ -72,16 +72,17 @@
 }
     .listas__body--card__listas{
         display: flex;
-        justify-content: center;
+        justify-content: start;
         align-items: start;
         height: 98%;
         width: 98%;
         background-color: #FCF6E8;
+        padding: 12px;
         
     }
         .card__listas{
             display: flex;
-            justify-content: center;
+            justify-content: start;
             height: auto;
             background-color: transparent;
             border-radius: 20px;
