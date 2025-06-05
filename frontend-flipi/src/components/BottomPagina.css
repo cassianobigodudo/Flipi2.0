@@ -1,0 +1,71 @@
+.bottom-pagina{
+
+    height: 12%;
+    /* background-color: magenta; */
+    /* justify-content: space-evenly; */
+    
+}
+
+.linhas-container{
+    
+    height: 53%;
+    /* background-color: blue; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+    }
+
+        .linha-um{
+            /* margin: 5px; */
+            height: 10%;
+            width: 90%;
+            background-color:#D7BEB1;
+            border-radius: 10px;
+        }
+        
+        .linha-dois{
+            /* margin: 15px; */
+            height: 8.5%;
+            width: 70%;
+            background-color:#D7BEB1;
+            border-radius: 10px;
+        }  
+
+    .bottom-esquerdo{
+        height: 47%;
+        /* background-color: green; */
+        display: flex;
+        align-items: center;
+        /* flex-direction: column; */
+        /* justify-content: center; */
+        
+    }
+
+    .bottom-direito{
+        height: 47%;
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        /* background-color: green; */
+
+    }
+
+        .btn-trocar-pagina{
+
+            height: 30px;
+            width: 120px;
+            margin: 1%;
+            border: solid #d7beb1;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #40454b;
+            font-family: "mais-legivel";
+            font-size: 15px;
+            font-weight: 700;
+            margin-right: 10px;
+
+        }

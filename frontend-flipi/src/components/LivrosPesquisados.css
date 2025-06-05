@@ -1,0 +1,213 @@
+.livro-unidade-pesquisado{
+
+    height: 33.33%;
+    /* background-color: blue; */
+
+}
+
+    .isbn-container{
+
+        height: 18%;
+        /* background-color: yellow; */
+        display: flex;
+        align-items: end;
+
+    }
+
+        .copy-icon{
+
+            color: var(--laranjaenferrujado);
+            margin: 2px;
+            cursor: pointer;
+            /* font-size: 50px; */
+            transition: 1s;
+            font-size: 23px;
+            
+        }
+        
+        .copy-icon:active{
+            
+            color: green;
+            margin: 2px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .isbn-botao-container{
+
+            height: 70%;
+            width: 7%;
+            background-color: var(--laranjaenferrujado);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--fundoelementos);
+            border-style: solid;
+            border-width: 2px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.4s;
+            border-radius: 5px;
+            margin-left: 30px;
+        }
+
+        
+            .lbl-isbn{
+                
+                cursor: pointer;
+                /* transition: 0.4s; */
+                text-align: row;
+                font-size: 18px;
+                white-space: nowrap;
+                font-family: 'mais-legivel';
+            }
+                .isbn-botao-container-ativado{
+
+                    height: 60%;
+                    width: 25%;
+                    background-color: var(--laranjaenferrujado);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--fundoelementos);
+                    border-style: solid;
+                    border-width: 2px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    overflow: hidden;
+                    transition: 0.4s;
+                    margin-left: 30px;
+                }
+
+    .pesquisado-container{
+
+        height: 82.1%;
+        /* background-color: green; */
+        display: flex;
+    }
+
+        .livro-capa-container{
+
+            height: 100%;
+            width: 22%;
+            /* background-color: purple; */
+            display: flex;
+            justify-content: end;
+
+
+        }
+
+        .img-livro-pesquisado{
+
+            height: 100%;
+            margin-right: 10px ;
+
+        }
+
+        .livro-info-container{
+
+            height: 100%;
+            width: 78%;
+            
+        }
+
+            .titulo-autor-data-container{
+
+                height: 28%;
+                width: 100%;
+                /* background-color: brown; */
+                display: flex;
+
+            }
+
+                .titulo-livro-pesquisado{
+
+                    height: 100%;
+                    width: 60%;
+                    background-color: var(--laranjaenferrujado);
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: row;
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                    /* overscroll-behavior-x: contain; */
+                    /* Desabilita a barra de rolagem visível mas mantém a funcionalidade */
+                }
+                
+                    .titulo-livro-pesquisado::-webkit-scrollbar {
+                        height: 6px;
+                    }
+                    .titulo-livro-pesquisado::-webkit-scrollbar-track{
+                        background-color: var(--laranjaenferrujado);
+                        overflow: auto;
+                        background: var(--textos);
+                    }
+                    
+                    
+                    .titulo-livro-pesquisado::-webkit-scrollbar-thumb{
+                        border-radius: 0px;
+                        background: var(--fundoelementos);
+                        opacity: calc(0);
+                    }
+
+/* 
+                .titulo-livro-pesquisado::-webkit-scrollbar {
+                    display: none;
+                } */
+
+                    .lbl-titulo-pesquisa{
+
+                        font-family: "fonte-projeto";
+                        font-size: 36px;
+                        margin-bottom: 2.5px;
+                        white-space: nowrap;
+                        margin-left: 5px;
+                        margin-right: 5px;
+
+                    }
+
+                .autor-ano-pesquisado{
+
+                    width: 40%;
+                    height: 100%;
+                    /* background-color: darkviolet; */
+                    display: flex;
+                    flex-direction: column;
+                    /* font-family: 'fonte-projeto'; */
+                    
+                    
+                }
+                
+                    .lbl-autor{
+                        font-family: 'mais-legivel';
+                        font-size: 15px;
+                        padding-left: 5px;
+                    }
+                    
+                    .lbl-ano{
+                        padding-left: 5px;
+                    
+                        font-size: 15px;
+                        font-family: 'mais-legivel';
+
+                    }
+
+                .sinopse-container{
+
+                    height: 65%;
+                    width: 94%;
+                    background-color: #F8EBCE;
+                    margin-top: 2%;
+                    display: flex;
+                    border-radius: 3px;
+                }
+                
+                    .lbl-sinopse{
+                        padding-left: 3px;
+                        padding-right: 3px;
+                        font-size: 20px;
+                        font-family: 'mais-legivel';
+                        overflow: auto;
+
+                    }

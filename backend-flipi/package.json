@@ -1,7 +1,8 @@
 {
   "name": "backend-flipi",
   "version": "1.0.0",
-  "description": "",
+  "type": "module",
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
   "main": "src/server.js",
   "scripts": {
     "start": "nodemon src/server.js"
@@ -20,6 +21,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "node-fetch": "^3.3.2",
     "pg": "^8.13.1"
   }
 }

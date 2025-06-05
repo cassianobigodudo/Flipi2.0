@@ -12,7 +12,8 @@ function TelaLogin() {
     const [inputNomeUsuario, setInputNomeUsuario] = useState('')
     const [inputSenha, setInputSenha] = useState('')
     const navigate = useNavigate()
-    const {vetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuarioID, setPosicaoUsuarioID, setVetorObjetosUsuarios, idUsuarioLogado, setIdUsuarioLogado} = useContext(GlobalContext)
+    
+    const {vetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuarioID, setPosicaoUsuarioID, setVetorObjetosUsuarios, usuarioId, setUsuarioId, idUsuarioLogado, setIdUsuarioLogado} = useContext(GlobalContext)
 
     useEffect (() => {
 
@@ -72,9 +73,11 @@ function TelaLogin() {
             }else{
                 alert('Erro ao fazer login.');
             }
-
+            
         }
-    };
+        return true
+        
+    }  
     
   return (<div className="container-tela-login">
     <div className="livro-login-container-esquerda">
