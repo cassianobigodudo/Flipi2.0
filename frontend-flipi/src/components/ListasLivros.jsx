@@ -6,8 +6,8 @@ import axios from "axios";
 import { GlobalContext } from "../contexts/GlobalContext";
 
 function ListasLivros() {
+    
     const [listaSelecionada, setListaSelecionada] = useState(null);
-
     const [abriuForm, setAbriuForm] = useState(false);
     const [nomeLista, setNomeLista] = useState('');
     const [descricaoLista, setDescricaoLista] = useState('');

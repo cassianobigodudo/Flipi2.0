@@ -3,10 +3,10 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 95%;
-    width: 95%;
+    height: 100%;
+    width: 100%;
     background-color: #F4E2B4;
-    border-radius: 20px;
+    /* border-radius: 20px; */
 }
 
 .listas__header{
