@@ -2,18 +2,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px;
-    width: 350px;
+    height: 80px;
+    width: 300px;
     background-color: var(--fundoDivs);
     border-radius: 10px;
     cursor: pointer;
-    border: solid 1px #40454b;
+    /* border: solid 1px #40454b; */
     border: none;
-
 }
     .container__card--listas:hover{
-        height: 105px;
-        width: 350px;
+        height: 90px;
+        width: 310px;
         font-size: 25px;
         font-weight: bolder;
         transition: 1s;

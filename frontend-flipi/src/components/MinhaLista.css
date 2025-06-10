@@ -107,15 +107,15 @@
                 width: 70px;
             }
 
-    dialog{
-        height: 600px;
+    .dialog_add-listas{
+        height: 500px;
         background-color: transparent;
         border: none;
         border-radius: 20px;
-        width: 50%;
+        width: 35%;
         position: fixed;
         top: 60%;
-        left: 50.3%;
+        left: 53%;
         transform: translate(-10%, -50%);
     }
         .container__livros{
@@ -278,8 +278,8 @@
         border-radius: 20px;
         width: 15%;
         position: fixed;
-        top: 16%;
-        left: 78%;
+        top: 20%;
+        left: 69%;
         transform: translate(-10%, -50%);
     }
         .container__edicao{
@@ -298,18 +298,18 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                font-size: 25px;
+                font-size: 20px;
                 font-weight: bolder;
                 border: none;
                 border-radius: 10px;
-                height: 50px;
-                width: 270px;
+                height: 40px;
+                width: 200px;
                 background-color: var(--fundoDivs);
                 color: var(--textos);
                 cursor: pointer;
             }
                 .botao__edicao--listas:hover{
-                    height: 55px;
-                    width: 300px;
+                    height: 40px;
+                    width: 210px;
                     box-shadow: 0px 0px 2px 4px var(--laranjaenferrujado);
                 }

@@ -128,6 +128,23 @@ async function verificarTabelas(){
     );`
     await client.query(createLivroGeneroQuery);
     console.log(`Tabela "livro_genero" verificada/criada com sucesso.`)
+    
+    //Criação automática da tabela de listas personalizadas
+    const createListQuery= `
+    CREATE TABLE IF NOT EXISTS listas_personalizadas(
+        id SERIAL PRIMARY KEY, 	
+        criador_lista INTEGER NOT NULL REFERENCES usuario(usuario_id),
+        nome_lista TEXT NOT NULL, 	
+        descricao_lista TEXT NOT NULL, 	
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 	
+        isbn_livros BIGINT[],
+        CONSTRAINT fk_criador_lista FOREIGN KEY (criador_lista)
+            REFERENCES usuario(usuario_id)
+            ON DELETE CASCADE   
+    );`
+    await client.query(createListQuery);
+    console.log(`Tabela "listas_personalizadas" verificada/criada com sucesso.`)
+
 
     
     //?-----RESENHA------?//
@@ -818,7 +835,6 @@ app.post('/login', async (req, res) => {
 });
 
 //* TABELA RESENHA
-
 app.post('/resenha', async (req, res) => {
     const {resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, usuario_id, livro_isbn} = req.body;
     try {

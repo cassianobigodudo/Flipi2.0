@@ -4,14 +4,9 @@
     align-items: center;
     flex-direction: column;
     background-color: darkcyan;
-    height: 230px;
+    height: 200px;
     width: 140px;
 }
-    /* .box__livro:hover{
-        filter: blur(5px);
-        opacity: 0.9;
-        background-color: #dfdcd9;
-    } */
 
     .capa__livro{
         display: flex;

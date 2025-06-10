@@ -98,7 +98,7 @@ function MinhaLista({
 
       </div>
 
-        <dialog open={abriuCaixa}>
+        <dialog open={abriuCaixa} className='dialog_add-listas'>
 
           <div className="container__livros">
 
