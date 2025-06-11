@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import{ GlobalContext } from '../contexts/GlobalContext'
 import { useContext } from 'react'
 import axios from 'axios'
-import { useUser } from '../contexts/UserContext';
+// import { useUser } from '../contexts/UserContext';
 
 function TelaLogin() {
     let variavel

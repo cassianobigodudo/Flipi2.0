@@ -806,6 +806,46 @@ app.delete('/listas_personalizadas/:id', async (req, res) => {
     
 });
 
+//adição de isbn do livro a lista
+app.patch("/listas_personalizadas/:id/adicionar-livro", async (req, res) => {
+    const idLista = req.params.id;
+    const { isbnLivro } = req.body;
+
+    try {
+        
+        const isbnParaBanco = parseInt(isbnLivro);
+        
+        // Primeiro verifica se a lista existe
+        const listaExiste = await db.query(
+            "SELECT * FROM listas_personalizadas WHERE id = $1",
+            [idLista]
+        );
+        
+        if (listaExiste.rows.length === 0) {
+            return res.status(404).json({ erro: "Lista não encontrada" });
+        }
+        
+        // Verifica se o livro já está na lista
+        const isbnArray = listaExiste.rows[0].isbn_livros || [];
+        if (isbnArray.includes(isbnParaBanco)) {
+            return res.status(400).json({ erro: "Livro já está na lista" });
+        }
+        
+        const resultado = await db.query(
+            `UPDATE listas_personalizadas 
+             SET isbn_livros = array_append(COALESCE(isbn_livros, '{}'), $1)
+             WHERE id = $2
+             RETURNING *;`,
+            [isbnParaBanco, idLista]
+        );
+
+        res.status(200).json(resultado.rows[0]);
+    } catch (erro) {
+        console.error("Erro ao adicionar livro: ", erro);
+        res.status(500).json({ erro: "Erro interno do servidor" });
+    }
+});
+
 //Rota para verificar o login 
 app.post('/login', async (req, res) => {
     const { usuario_apelido, usuario_senha } = req.body;

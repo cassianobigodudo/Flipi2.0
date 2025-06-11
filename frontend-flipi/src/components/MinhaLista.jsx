@@ -2,39 +2,78 @@ import { useState } from 'react'
 import './MinhaLista.css'
 import { useGlobalContext } from '../contexts/GlobalContext'
 import CapaLivro from './CapaLivro';
+import axios from 'axios';
 
 function MinhaLista({ 
   nomeLista, 
   descricaoLista,
   lista, 
+  setLista, 
   voltar, 
   listas, 
   setListas, 
   listaSelecionada, 
-  setListaSelecionada 
+  setListaSelecionada,
+  biblioteca
   }) {
+
   const [abriuCaixa, setAbriuCaixa] = useState(false)
   const [confirmacao, setConfirmacao] = useState(false)
-  const {biblioteca} = useGlobalContext();
+  // const {biblioteca} = useGlobalContext();
   const [livroClicado, setLivroClicado] = useState();
   const [caixaEdicao, setCaixaEdicao] = useState(false);
 
-  function cancelarAdicao(){
-    alert('cancelado!!!')
-    setConfirmacao(false)
-  }
+  // function cancelarAdicao(){
+  //   alert('cancelado!!!')
+  //   setConfirmacao(false)
+  // }
 
-  function confirmarAdicao(){
+  // function confirmarAdicao(){
+  //   alert('adicionado!!!')
+  //   setConfirmacao(false)
+  // }
+
+
+  //adicionar um livro a uma lista
   
-    alert('adicionado!!!')
-    setConfirmacao(false)
-  }
+  const adicionarLivro = async (livro) => {
+    try {
+      // Verificação de segurança
+      if (!listaSelecionada || !listaSelecionada.id) {
+        alert("Erro: Lista não selecionada!");
+        return;
+      }
 
-  function cliquenolivro(){
-    setConfirmacao(true)
-    setLivroClicado(livro.tituloLivro)
-  }
+      const resposta = await axios.patch(
+        `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}/adicionar-livro`,
+        {
+          isbnLivro: livro.isbnLivro // Agora está correto com sua estrutura!
+        }
+      );
 
+      // Atualiza a lista local com os dados retornados do backend
+      setLista(resposta.data);
+      
+      // Também atualiza a lista no estado global se necessário
+      const listasAtualizadas = listas.map(l => 
+        l.id === listaSelecionada.id ? resposta.data : l
+      );
+      setListas(listasAtualizadas);
+      
+      alert(`"${livro.tituloLivro}" adicionado com sucesso!`);
+    } catch (erro) {
+      console.error("Erro ao adicionar livro:", erro);
+      
+      // Mensagem de erro mais específica baseada na resposta do servidor
+      if (erro.response?.data?.erro) {
+        alert(erro.response.data.erro);
+      } else {
+        alert("Erro ao adicionar o livro à lista.");
+      }
+    }
+  };
+
+  //editar ou excluir uma lista
   function opcoesedicao(){
     setCaixaEdicao(!caixaEdicao)
   }
@@ -118,7 +157,11 @@ function MinhaLista({
             <div className="lista__livros">
 
               {biblioteca.map((livro) => (
-                <CapaLivro key={livro.isbnLivro} capa={livro.capaLivro} titulo={livro.tituloLivro} onClick={cliquenolivro}/>
+                <CapaLivro 
+                  key={livro.isbnLivro || livro.isbn || livro.id} 
+                  capa={livro.capaLivro} 
+                  titulo={livro.tituloLivro} 
+                  onClick={() => adicionarLivro(livro)}/>
               ))}
 
             </div>
@@ -127,7 +170,7 @@ function MinhaLista({
 
         </dialog>
 
-        <dialog open={confirmacao}>
+        {/* <dialog open={confirmacao}>
 
           <div className="container__confirmacao">
 
@@ -152,7 +195,7 @@ function MinhaLista({
 
           </div>
 
-        </dialog>
+        </dialog> */}
 
         <dialog open={caixaEdicao} className='dialog__edicao'>
 
