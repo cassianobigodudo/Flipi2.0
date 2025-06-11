@@ -23,17 +23,6 @@ function MinhaLista({
   const [livroClicado, setLivroClicado] = useState();
   const [caixaEdicao, setCaixaEdicao] = useState(false);
 
-  // function cancelarAdicao(){
-  //   alert('cancelado!!!')
-  //   setConfirmacao(false)
-  // }
-
-  // function confirmarAdicao(){
-  //   alert('adicionado!!!')
-  //   setConfirmacao(false)
-  // }
-
-
   //adicionar um livro a uma lista
   
   const adicionarLivro = async (livro) => {
