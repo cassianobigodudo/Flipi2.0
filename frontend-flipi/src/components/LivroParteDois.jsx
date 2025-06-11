@@ -1,11 +1,68 @@
-import "./LivroParteDois.css"
-import { useContext, useState } from "react"
+import "./livroParteDois.css"
+import { useContext, useEffect, useState } from "react"
 import { GlobalContext } from '../contexts/GlobalContext'
+import axios from "axios";
 
-function LivroParteDois() {
+function livroParteDois({livroSelecionado, resenhaInd}) {
 
     // const {biblioteca} = useContext(GlobalContext)
-    const {biblioteca, setLivroAcessado} = useContext(GlobalContext);
+    const {biblioteca, setlivroAcessado} = useContext(GlobalContext);
+    const [isbnLivro, setIsbnLivro] = useState()
+    const [resenhaId, setResenhaId] = useState('')
+    const [resenha, setResenha] = useState('')
+
+
+
+   
+     const pegarResenha = async (resenhaInd) => {
+        
+
+
+        try {
+            // setMensagem('Buscando livroSelecionado...')
+            
+      
+            
+            console.log(resenhaInd)
+            const response = await axios.get(`http://localhost:3000/resenha/${resenhaInd}`)
+            
+            
+            const dadosDaResenha = response?.data 
+
+
+            if (dadosDaResenha && dadosDaResenha.length > 0) {
+                setResenha(dadosDaResenha[0]) 
+            } else {
+                setResenha({}) 
+            }
+
+            console.log(resenhaInd)
+
+            console.log('resenha que foi puxado pelo get: ', dadosDaResenha)
+            JSON.stringify(resenha)
+
+        } catch (error) {
+            console.error('Erro ao puxar a resenha:', error)
+            console.log('Index', resenhaInd)
+        }
+        
+}
+
+useEffect(() => {
+    pegarResenha(resenhaInd)
+   }, [resenhaInd, livroSelecionado])
+   
+   useEffect(() => {
+       if (livroSelecionado != null) {
+           console.log('livroSelecionado recebido:', livroSelecionado)
+           
+           if (livroSelecionado.livroSelecionado_isbn != null) {
+               pegarlivroSelecionado(livroSelecionado.livroSelecionado_isbn)
+           } else {
+               setIsbnLivro(livroSelecionado.livroSelecionado_isbn || '')
+           }
+       }
+   }, [livroSelecionado])
     
   return (
     <div className="container-mae-resenhas">
@@ -16,9 +73,7 @@ function LivroParteDois() {
 
                 <div className="box-resenha">
 
-                    {biblioteca[0].resenhasLivro && biblioteca[0].resenhasLivro.length > 0 ? (
-                        biblioteca[0].resenhasLivro.map((resenha, index) => (
-                            <div key={index} className="resenha-container">
+                            <div className="resenha-container">
 
                                 {/* Foto e Nome */}
                                 <div className="parte-foto-nome">
@@ -29,14 +84,14 @@ function LivroParteDois() {
 
                                     </div>
 
-                                    <h3>{resenha.nomeUsuario}</h3>
+                                    <h3>{resenha.resenha_id} {resenha.resenha_titulo} {resenha.livro_isbn}</h3>
 
                                 </div>
 
                                 {/* Texto da Resenha */}
                                 <div className="parte-resenha">
 
-                                    <label htmlFor="" className="texto-resenha">{resenha.resenhaUsuario}</label>
+                                    <label htmlFor="" className="texto-resenha">{resenha.resenha_texto}</label>
 
                                 </div>
 
@@ -49,15 +104,14 @@ function LivroParteDois() {
 
                                     </button>
 
-                                    <label htmlFor="" className="label-curtidas">CURTIDAS</label>
+                                    <label htmlFor="" className="label-curtidas">{resenha.resenha_curtidas}</label>
 
                                 </div>
 
                             </div>
-                        ))
-                    ) : (
-                        <div className="box-resenha-vazio">Nenhuma resenha disponível</div>
-                    )}
+                   
+                        <div className="box-resenha-vazio"></div>
+                   
 
                 </div>
 
@@ -69,4 +123,4 @@ function LivroParteDois() {
   )
 }
 
-export default LivroParteDois
+export default livroParteDois

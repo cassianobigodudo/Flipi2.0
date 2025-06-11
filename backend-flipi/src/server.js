@@ -136,7 +136,7 @@ async function verificarTabelas(){
    CREATE TABLE IF NOT EXISTS resenha(
     resenha_id SERIAL PRIMARY KEY,
     resenha_titulo VARCHAR(40),
-    resenha_texto VARCHAR(300) NOT NULL,
+    resenha_texto TEXT NOT NULL,
     resenha_nota INT NOT NULL,
     resenha_curtidas INT,
     usuario_id INT NOT NULL,
@@ -516,6 +516,7 @@ app.get('/livro/:isbn', async (req, res) => {
     const { isbn } = req.params;                       // Obtém o ISBN da URL
     
     try {
+        
         const livro = await buscarLivroCompleto(isbn); // Busca o livro completo
         res.json(livro);                              // Retorna o livro
     } catch (err) {
@@ -842,6 +843,24 @@ app.get('/resenha', async (req, res) => {
 
         const result = await pool.query(
             'SELECT * FROM resenha'
+
+        )
+        res.status(200).json(result.rows)
+    } catch (error) {
+
+        console.error('Erro ao buscar resenha: ', error)
+        res.status(500).json({ error: 'Erro ao buscar resenha'})
+
+    }})
+
+
+    
+app.get('/resenha/:resenha_id', async (req, res) => {
+    const {resenha_id} = req.params;
+    try {
+
+        const result = await pool.query(
+            'SELECT * FROM resenha WHERE resenha_id = $1', [resenha_id]
 
         )
         res.status(200).json(result.rows)
