@@ -153,7 +153,6 @@ async function verificarTabelas(){
 //   await pool.end();
 }
 
-
 app.use(cors())
 app.use(express.json())
 
@@ -236,7 +235,90 @@ async function obterOuCriarAutor(nome) {
     }
 }
 
-// Função para obter ou criar um gênero
+const mapeamentoGeneros = {
+    // Ficção Científica
+    'science fiction': 'Ficção Científica','sci-fi': 'Ficção Científica','dystopian': 'Ficção Científica','utopian': 'Ficção Científica','space': 'Ficção Científica','future': 'Ficção Científica','cyberpunk': 'Ficção Científica','aliens': 'Ficção Científica','time travel': 'Ficção Científica',
+    
+    // Thriller
+    'thriller': 'Thriller','thrillers': 'Thriller','suspense': 'Thriller','psychological thriller': 'Thriller','spy': 'Thriller','espionage': 'Thriller',
+    
+    // Fantasia
+    'fantasy': 'Fantasia','fantasy fiction': 'Fantasia','magic': 'Fantasia','magical realism': 'Fantasia','wizards': 'Fantasia','dragons': 'Fantasia','mythology': 'Fantasia','fairy tales': 'Fantasia','supernatural': 'Fantasia',
+    
+    // Comédia
+    'comedy': 'Comédia','humor': 'Comédia','humorous': 'Comédia','satire': 'Comédia','parody': 'Comédia','comic': 'Comédia','funny': 'Comédia',
+    
+    // Biografia
+    'biography': 'Biografia','autobiography': 'Biografia','memoirs': 'Biografia','life stories': 'Biografia','biographical': 'Biografia',
+    
+    // Crimes
+    'crime': 'Crimes','criminal': 'Crimes','detective': 'Crimes','mystery': 'Crimes','mystery fiction': 'Crimes','detective stories': 'Crimes','police': 'Crimes','murder': 'Crimes','investigation': 'Crimes','noir': 'Crimes',
+    
+    // Ação e Aventura
+    'action': 'Ação e Aventura','adventure': 'Ação e Aventura','action & adventure': 'Ação e Aventura','adventure stories': 'Ação e Aventura','expeditions': 'Ação e Aventura','survival': 'Ação e Aventura','quest': 'Ação e Aventura',
+    
+    // Romance
+    'romance': 'Romance','love stories': 'Romance','romantic fiction': 'Romance','love': 'Romance','relationships': 'Romance','romantic': 'Romance',
+    
+    // Terror
+    'horror': 'Terror','horror stories': 'Terror','ghost stories': 'Terror','ghosts': 'Terror','monsters': 'Terror','scary': 'Terror','fear': 'Terror','haunted': 'Terror',
+    
+    // Medieval
+    'medieval': 'Medieval','middle ages': 'Medieval','knights': 'Medieval','castles': 'Medieval','feudal': 'Medieval','chivalry': 'Medieval','crusades': 'Medieval',
+    
+    // Drama
+    'drama': 'Drama','dramatic': 'Drama','family': 'Drama','psychological': 'Drama','emotional': 'Drama','tragedy': 'Drama','tragic': 'Drama',
+    
+    // Outros mapeamentos úteis
+    'fiction': 'Drama','novels': 'Drama','literature': 'Drama','historical fiction': 'Medieval','war': 'Ação e Aventura','military': 'Ação e Aventura','western': 'Ação e Aventura','pirates': 'Ação e Aventura'
+};
+
+// Função para mapear assuntos da OpenLibrary para gêneros tradicionais
+function mapearGenerosLiterarios(assuntosOpenLibrary) {
+    const generosEncontrados = new Set();
+    
+    if (!assuntosOpenLibrary || !Array.isArray(assuntosOpenLibrary)) {
+        return [];
+    }
+    
+    assuntosOpenLibrary.forEach(assunto => {
+        try {
+            // Extrai o texto do assunto (pode ser string ou objeto)
+            let assuntoTexto;
+            if (typeof assunto === 'string') {
+                assuntoTexto = assunto;
+            } else if (typeof assunto === 'object' && assunto !== null) {
+                // Se for objeto, tenta extrair propriedades comuns
+                assuntoTexto = assunto.name || assunto.title || assunto.subject || assunto.toString();
+            } else {
+                // Se não conseguir extrair texto, pula este item
+                return;
+            }
+            
+            // Normaliza o assunto para minúsculas para comparação
+            const assuntoNormalizado = assuntoTexto.toLowerCase().trim();
+            
+            // Verifica correspondência exata
+            if (mapeamentoGeneros[assuntoNormalizado]) {
+                generosEncontrados.add(mapeamentoGeneros[assuntoNormalizado]);
+            } else {
+                // Verifica se o assunto contém alguma palavra-chave dos gêneros
+                Object.keys(mapeamentoGeneros).forEach(chave => {
+                    if (assuntoNormalizado.includes(chave) || chave.includes(assuntoNormalizado)) {
+                        generosEncontrados.add(mapeamentoGeneros[chave]);
+                    }
+                });
+            }
+        } catch (error) {
+            console.log('Erro ao processar assunto:', assunto, error.message);
+            // Continua processando os outros assuntos
+        }
+    });
+    
+    return Array.from(generosEncontrados);
+}
+
+// Função modificada para obter ou criar um gênero (apenas gêneros mapeados)
 async function obterOuCriarGenero(nome) {
     if (!nome) return null;
     
@@ -260,86 +342,6 @@ async function obterOuCriarGenero(nome) {
         client.release();
     }
 }
-
-// Rota para adicionar um livro usando o ISBN da OpenLibrary
-app.post('/livro/isbn/:isbn', async (req, res) => {
-    const { isbn } = req.params;                     // Obtém o ISBN da URL
-    const client = await pool.connect();             // Conecta ao banco
-    
-    try {
-        await client.query('BEGIN');                 // Inicia uma transação
-        
-        // Verifica se o livro já existe no banco
-        const livroExistente = await client.query('SELECT * FROM livro WHERE livro_isbn = $1', [isbn]);
-        if (livroExistente.rows.length > 0) {
-            await client.query('ROLLBACK');          // Desfaz a transação
-            return res.status(400).json({ error: 'Livro já existe no banco de dados' });
-        }
-        
-        // Busca dados do livro na API
-        const dadosLivro = await buscarLivroPorISBN(isbn);
-        
-        // Extrai informações relevantes
-        const titulo = dadosLivro.title || 'Título não disponível';
-        // Extrai o ano usando regex para encontrar 4 dígitos juntos (ano)
-        const ano = dadosLivro.publish_date ? parseInt(dadosLivro.publish_date.match(/\d{4}/)[0]) : 0;
-        // Extrai a sinopse de diferentes possíveis locais nos dados retornados
-        const sinopse = dadosLivro.excerpts ? dadosLivro.excerpts[0].text : (dadosLivro.description ? 
-                       (typeof dadosLivro.description === 'string' ? dadosLivro.description : dadosLivro.description.value) : 
-                       'Sinopse não disponível');
-        const limitedSinopse = sinopse.substring(0, 399); // Limita a 400 caracteres
-        
-        // Obtém URL da capa do livro (se disponível)
-        const capa = dadosLivro.cover ? dadosLivro.cover.large || dadosLivro.cover.medium || dadosLivro.cover.small : null;
-        
-        // Obtém ou cria editora
-        const editoraNome = dadosLivro.publishers && dadosLivro.publishers.length > 0 ? dadosLivro.publishers[0].name : null;
-        const editoraId = editoraNome ? await obterOuCriarEditora(editoraNome) : null;
-        
-        // Insere o livro no banco
-        const livroResult = await client.query(
-            'INSERT INTO livro (livro_isbn, livro_titulo, livro_ano, livro_sinopse, editora_id, livro_capa) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-            [isbn, titulo, ano, limitedSinopse, editoraId, capa]
-        );
-        
-        // Processa e insere autores
-        if (dadosLivro.authors && dadosLivro.authors.length > 0) {
-            for (const autorInfo of dadosLivro.authors) {
-                const autorId = await obterOuCriarAutor(autorInfo.name);
-                await client.query(
-                    'INSERT INTO livro_autor (livro_isbn, autor_id) VALUES ($1, $2)',
-                    [isbn, autorId]
-                );
-            }
-        }
-        
-        // Processa e insere gêneros/assuntos
-        if (dadosLivro.subjects && dadosLivro.subjects.length > 0) {
-        // Não limita mais a 5 gêneros, usa todos os gêneros disponíveis
-            for (const generoInfo of dadosLivro.subjects) {
-                const generoNome = typeof generoInfo === 'string' ? generoInfo : generoInfo.name;
-                const generoId = await obterOuCriarGenero(generoNome);
-                await client.query(
-                    'INSERT INTO livro_genero (livro_isbn, genero_id) VALUES ($1, $2)',
-                    [isbn, generoId]
-                );
-            }
-        }
-        
-        await client.query('COMMIT');               // Confirma a transação
-        
-        // Busca o livro completo com suas relações para retornar na resposta
-        const livroCompleto = await buscarLivroCompleto(isbn);
-        res.status(201).json(livroCompleto);        // Retorna o livro criado (código 201: Created)
-        
-    } catch (err) {
-        await client.query('ROLLBACK');             // Desfaz a transação em caso de erro
-        console.error('Erro ao adicionar livro:', err.message);
-        res.status(500).json({ error: 'Erro ao adicionar livro', detalhes: err.message });
-    } finally {
-        client.release();                           // Libera a conexão
-    }
-});
 
 // Função para buscar livro completo com suas relações
 async function buscarLivroCompleto(isbn) {
@@ -381,6 +383,135 @@ async function buscarLivroCompleto(isbn) {
     }
 }
 
+// Modifique a rota para usar o novo sistema de mapeamento
+app.post('/livro/isbn/:isbn', async (req, res) => {
+    const { isbn } = req.params;
+    const client = await pool.connect();
+    
+    try {
+        await client.query('BEGIN');
+        
+        // Verifica se o livro já existe no banco
+        const livroExistente = await client.query('SELECT * FROM livro WHERE livro_isbn = $1', [isbn]);
+        if (livroExistente.rows.length > 0) {
+            await client.query('ROLLBACK');
+            return res.status(400).json({ error: 'Livro já existe no banco de dados' });
+        }
+        
+        // Busca dados do livro na API
+        const dadosLivro = await buscarLivroPorISBN(isbn);
+        
+        // Extrai informações relevantes
+        const titulo = dadosLivro.title || 'Título não disponível';
+        const ano = dadosLivro.publish_date ? parseInt(dadosLivro.publish_date.match(/\d{4}/)[0]) : 0;
+        const sinopse = dadosLivro.excerpts ? dadosLivro.excerpts[0].text : (dadosLivro.description ? 
+                       (typeof dadosLivro.description === 'string' ? dadosLivro.description : dadosLivro.description.value) : 
+                       'Sinopse não disponível');
+        const limitedSinopse = sinopse.substring(0, 399);
+        
+        const capa = dadosLivro.cover ? dadosLivro.cover.large || dadosLivro.cover.medium || dadosLivro.cover.small : null;
+        
+        // Obtém ou cria editora
+        const editoraNome = dadosLivro.publishers && dadosLivro.publishers.length > 0 ? dadosLivro.publishers[0].name : null;
+        const editoraId = editoraNome ? await obterOuCriarEditora(editoraNome) : null;
+        
+        // Insere o livro no banco
+        const livroResult = await client.query(
+            'INSERT INTO livro (livro_isbn, livro_titulo, livro_ano, livro_sinopse, editora_id, livro_capa) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+            [isbn, titulo, ano, limitedSinopse, editoraId, capa]
+        );
+        
+        // Processa e insere autores
+        if (dadosLivro.authors && dadosLivro.authors.length > 0) {
+            for (const autorInfo of dadosLivro.authors) {
+                const autorId = await obterOuCriarAutor(autorInfo.name);
+                await client.query(
+                    'INSERT INTO livro_autor (livro_isbn, autor_id) VALUES ($1, $2)',
+                    [isbn, autorId]
+                );
+            }
+        }
+        
+        // *** NOVA LÓGICA PARA GÊNEROS ***
+        // Mapeia os assuntos da OpenLibrary para gêneros literários tradicionais
+        if (dadosLivro.subjects && dadosLivro.subjects.length > 0) {
+            console.log('Assuntos originais da OpenLibrary:', dadosLivro.subjects);
+            
+            // Mapeia os assuntos para gêneros tradicionais
+            const generosLiterarios = mapearGenerosLiterarios(dadosLivro.subjects);
+            console.log('Gêneros mapeados:', generosLiterarios);
+            
+            // Insere apenas os gêneros mapeados
+            for (const generoNome of generosLiterarios) {
+                const generoId = await obterOuCriarGenero(generoNome);
+                if (generoId) {
+                    await client.query(
+                        'INSERT INTO livro_genero (livro_isbn, genero_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+                        [isbn, generoId]
+                    );
+                }
+            }
+            
+            // Se nenhum gênero foi mapeado, adiciona "Drama" como padrão
+            if (generosLiterarios.length === 0) {
+                console.log('Nenhum gênero mapeado, adicionando "Drama" como padrão');
+                const generoId = await obterOuCriarGenero('Drama');
+                if (generoId) {
+                    await client.query(
+                        'INSERT INTO livro_genero (livro_isbn, genero_id) VALUES ($1, $2)',
+                        [isbn, generoId]
+                    );
+                }
+            }
+        }
+        
+        await client.query('COMMIT');
+        
+        // Busca o livro completo com suas relações para retornar na resposta
+        const livroCompleto = await buscarLivroCompleto(isbn);
+        res.status(201).json(livroCompleto);
+        
+    } catch (err) {
+        await client.query('ROLLBACK');
+        console.error('Erro ao adicionar livro:', err.message);
+        res.status(500).json({ error: 'Erro ao adicionar livro', detalhes: err.message });
+    } finally {
+        client.release();
+    }
+});
+
+// Rota para listar todos os gêneros cadastrados (útil para debug e visualização)
+app.get('/generos', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM genero ORDER BY genero_nome');
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Erro ao buscar gêneros' });
+    }
+});
+
+// Rota para buscar livros por gênero
+app.get('/livros/genero/:genero_id', async (req, res) => {
+    const { genero_id } = req.params;
+    try {
+        const result = await pool.query(`
+            SELECT l.*, g.genero_nome 
+            FROM livro l 
+            JOIN livro_genero lg ON l.livro_isbn = lg.livro_isbn 
+            JOIN genero g ON lg.genero_id = g.genero_id 
+            WHERE g.genero_id = $1
+        `, [genero_id]);
+        
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Erro ao buscar livros por gênero' });
+    }
+});
+
+
+
 app.get('/livro/:isbn', async (req, res) => {
     const { isbn } = req.params;                       // Obtém o ISBN da URL
     
@@ -391,6 +522,92 @@ app.get('/livro/:isbn', async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(404).json({ error: 'Livro não encontrado' });
+    }
+});
+
+app.get('/livro/buscar/:titulo', async (req, res) => {
+    const { titulo } = req.params;
+    const { generos, autor, editora, ano } = req.query;
+    
+    console.log('Filtros recebidos:', { titulo, generos, autor, editora, ano });
+    
+    try {
+        // Construir a query dinamicamente
+        let query = `
+            SELECT l.livro_isbn,
+                   l.livro_titulo,
+                   l.livro_ano,
+                   l.livro_sinopse,
+                   l.livro_capa,
+                   l.editora_id,
+                   STRING_AGG(DISTINCT a.autor_nome, ', ') AS autores, 
+                   STRING_AGG(DISTINCT g.genero_nome, ', ') AS generos
+            FROM livro l
+            LEFT JOIN livro_autor la ON l.livro_isbn = la.livro_isbn
+            LEFT JOIN autor a ON la.autor_id = a.autor_id
+            LEFT JOIN livro_genero lg ON l.livro_isbn = lg.livro_isbn
+            LEFT JOIN genero g ON lg.genero_id = g.genero_id
+            LEFT JOIN editora e ON l.editora_id = e.editora_id
+            WHERE l.livro_titulo ILIKE $1
+        `;
+
+        const queryParams = [`%${titulo}%`];
+        let paramIndex = 2;
+
+        // Filtro por autor
+        if (autor) {
+            query += ` AND a.autor_nome ILIKE $${paramIndex}`;
+            queryParams.push(`%${autor}%`);
+            paramIndex++;
+        }
+
+        // Filtro por editora
+        if (editora) {
+            query += ` AND e.editora_nome ILIKE $${paramIndex}`;
+            queryParams.push(`%${editora}%`);
+            paramIndex++;
+        }
+
+        // Filtro por ano
+        if (ano) {
+            query += ` AND l.livro_ano = $${paramIndex}`;
+            queryParams.push(parseInt(ano));
+            paramIndex++;
+        }
+
+        // Filtro por gêneros - TODOS os gêneros devem estar presentes
+        if (generos) {
+            const generosArray = generos.split(',').map(g => g.trim());
+            const generosPlaceholders = generosArray.map((_, index) => 
+                `$${paramIndex + index}`
+            ).join(',');
+            
+            // Subconsulta para garantir que o livro tenha TODOS os gêneros especificados
+            query += ` AND l.livro_isbn IN (
+                SELECT lg_inner.livro_isbn 
+                FROM livro_genero lg_inner
+                JOIN genero g_inner ON lg_inner.genero_id = g_inner.genero_id
+                WHERE g_inner.genero_nome IN (${generosPlaceholders})
+                GROUP BY lg_inner.livro_isbn
+                HAVING COUNT(DISTINCT g_inner.genero_nome) = ${generosArray.length}
+            )`;
+            
+            queryParams.push(...generosArray);
+        }
+
+        query += ` GROUP BY l.livro_isbn, l.livro_titulo, l.livro_ano, l.livro_sinopse, l.livro_capa, l.editora_id`;
+
+        console.log('Query final:', query);
+        console.log('Parâmetros:', queryParams);
+
+        const result = await pool.query(query, queryParams);
+        
+        console.log('Resultados do backend:', result.rows);
+        res.json(result.rows);
+        
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Erro ao buscar livro na barra de pesquisa' });
     }
 });
 
@@ -422,7 +639,7 @@ app.post('/usuario', async (req, res) => {
     }
 })
 
-// Rota para buscar todos os clientes
+// Rota para buscar todos os usuários
 app.get('/usuario', async (req, res) => {
 
     try {
@@ -440,7 +657,7 @@ app.get('/usuario', async (req, res) => {
 
 })
 
-// Rota para buscar um cliente por ID
+// Rota para buscar um usuário por ID
 app.get('/usuario/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -473,12 +690,12 @@ app.get('/usuario/apelido/:apelido', async (req, res) => {
 // Rota para atualizar um cliente
 app.put('/usuario/:usuario_id', async (req, res) => {
     const { usuario_id } = req.params;
-    const { usuario_nome, usuario_email, usuario_senha  } = req.body;
+    const { usuario_nome, usuario_email, usuario_senha, url_foto  } = req.body;
     try {
         console.log('entrei no try')
         const result = await pool.query(
-            'UPDATE usuario SET usuario_nome = $1, usuario_email = $2, usuario_senha = $3 WHERE usuario_id = $4 RETURNING *',
-            [usuario_nome, usuario_email, usuario_senha, usuario_id]
+            'UPDATE usuario SET usuario_nome = $1, usuario_email = $2, usuario_senha = $3, url_foto = $5 WHERE usuario_id = $4 RETURNING *',
+            [usuario_nome, usuario_email, usuario_senha, usuario_id, url_foto]
         );
         console.log('fiz a query')
         console.log(usuario_id)
@@ -509,9 +726,99 @@ app.delete('/usuario/:usuario_id', async (req, res) => {
     }
 });
 
+// -- JAIME --
+// Rota para criar uma nova lista
+app.post('/listas_personalizadas', async (req, res) => {
+    console.log('Dados recebidos', req.body);
+
+    const { nome, descricao, criador } = req.body;
+    
+    try {
+        // Query para inserir a nova lista no banco de dados
+        const result = await pool.query(
+            'INSERT INTO listas_personalizadas ( nome_lista, descricao_lista, criador_lista ) VALUES ($1, $2, $3) RETURNING *',
+            [ nome, descricao, criador ]
+        );
+        console.dir("recebendo resultado ", result)
+
+        // Retorna a lista criada com status 201
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Erro ao criar lista!' });
+    }
+});
+
+//Rota para buscar todas as listas de um usuário específico
+app.get('/listas_personalizadas/usuario/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const userID = parseInt(id)
+
+    try {
+        const result = await pool.query(
+            'SELECT * FROM listas_personalizadas WHERE criador_lista = $1',
+            [userID]
+        );
+
+        res.status(200).json(result.rows);
+    } catch (err) {
+        console.error('Erro ao buscar listas:', err.message);
+        res.status(500).json({ error: 'Erro ao buscar listas!' });
+    }
+});
+
+//Rota para deletar uma lista
+app.delete('/listas_personalizadas/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try{
+        const result = await pool.query(
+            'DELETE FROM listas_personalizadas WHERE id = $1', [id]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ message: 'Lista não encontrada' });
+        }
+      
+        res.status(200).json({ message: 'Lista deletada com sucesso' });
+    } 
+    catch (error) {
+        console.error('Erro ao deletar a lista:', error);
+        res.status(500).json({ error: 'Erro interno ao deletar a lista' });
+    }
+    
+});
+
+//Rota para verificar o login 
+app.post('/login', async (req, res) => {
+    const { usuario_apelido, usuario_senha } = req.body;
+
+    try {
+        const resultado = await pool.query(
+            'SELECT * FROM usuario WHERE usuario_apelido = $1 AND usuario_senha = $2',
+            [usuario_apelido, usuario_senha]
+        );
+
+        if (resultado.rows.length > 0) {
+            const usuario = resultado.rows[0];
+            res.status(200).json({
+                mensagem: 'Login bem-sucedido!',
+                usuario_id: usuario.usuario_id,
+                usuario_nome: usuario.usuario_nome,
+                usuario_apelido: usuario.usuario_apelido,
+                usuario_email: usuario.usuario_email
+            });
+        } else {
+            res.status(401).json({ mensagem: 'Apelido ou senha incorretos.' });
+        }
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        res.status(500).json({ mensagem: 'Erro no servidor.' });
+    }
+});
 
 //* TABELA RESENHA
-
 
 app.post('/resenha', async (req, res) => {
     const {resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, usuario_id, livro_isbn} = req.body;

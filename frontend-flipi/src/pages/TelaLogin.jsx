@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import{ GlobalContext } from '../contexts/GlobalContext'
 import { useContext } from 'react'
 import axios from 'axios'
-useState
+import { useUser } from '../contexts/UserContext';
 
 function TelaLogin() {
     let variavel
@@ -12,13 +12,12 @@ function TelaLogin() {
     const [inputNomeUsuario, setInputNomeUsuario] = useState('')
     const [inputSenha, setInputSenha] = useState('')
     const navigate = useNavigate()
-    const {vetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuarioID, setPosicaoUsuarioID, setVetorObjetosUsuarios, usuarioId, setUsuarioId} = useContext(GlobalContext)
-
+    
+    const {vetorObjetosUsuarios, usuarioLogado, setUsuarioLogado, posicaoUsuarioID, setPosicaoUsuarioID, setVetorObjetosUsuarios, usuarioId, setUsuarioId, idUsuarioLogado, setIdUsuarioLogado} = useContext(GlobalContext)
 
     useEffect (() => {
 
         if(usuarioLogado){
-    
           alert('Há um usuário já logado, por favor, deslogue nas configurações de usuário primeiro')
           navigate('/telaprincipal')
         }
@@ -36,94 +35,49 @@ function TelaLogin() {
 
         fetchUsuarios() // Chama a função ao montar o componente
     
-      }, [])
+    }, [])
 
-      useEffect(() => {
+    useEffect(() => {
         console.log(vetorObjetosUsuarios)
-    }, [vetorObjetosUsuarios])
-      
+    }, [vetorObjetosUsuarios]);
 
-
-    function verificarInputsRegistrados() {
-        
-        if (inputNomeUsuario == null || inputSenha == null){
-
-            return true
-
+    //esse useEffect me ajuda a ver o id do usuário em tempo real no console, uma vez que o useState é uma função asíncrona;
+    useEffect(() => {
+        if (idUsuarioLogado !== null) {
+        console.log('idUsuarioLogado atualizado para:', idUsuarioLogado);
         }
+    }, [idUsuarioLogado]);
+      
+    const verificarLogin = async (apelido, senha) => {
 
-        return false
-    }
+        try{
 
-    
-    function verificarCadastroInexistente(){
-        
-        // console.log('Antes de iniciar o for')
-        for (let i = 0; i < vetorObjetosUsuarios.length; i++){
-            
-            // console.log('índice número '+ i)
-            if(vetorObjetosUsuarios[i].usuario_apelido == inputNomeUsuario){
-                
-                //!resolver a posicao do usuario no login
-                variavel = i
-                // console.log('oi eu passei aqui')
-                return false
+            const resposta = await axios.post('http://localhost:3000/login', {
+                usuario_apelido: apelido,
+                usuario_senha: senha
+            });
+
+            const dados = resposta.data;
+            console.log('Login Feito:', dados);
+            setUsuarioLogado(true);
+            setPosicaoUsuarioID(dados.usuario_id)
+            setIdUsuarioLogado(dados.usuario_id)
+            console.log('estou guardando esse id: ', idUsuarioLogado);
+            alert('Login feito com sucesso!');
+            navigate('/telaprincipal');
+
+        }catch (erro){
+
+            if (erro.response && erro.response.status === 401){
+                alert('Dados de autenticação inválidas!');
+            }else{
+                alert('Erro ao fazer login.');
             }
             
         }
         return true
         
-    }
-    
-
-    function verificarLoginIncorreto(){
-
-        if (inputSenha == vetorObjetosUsuarios[variavel].usuario_senha){
-
-            return false
-        }else{
-            return true
-        }
-
-    }
-
-
-    const verificarLogin = async (e) => {
-        e.preventDefault()
-        switch (true){
-
-            case verificarInputsRegistrados():
-                alert('Verifique se todos os campos estão preenchidos.')
-                break;
-            case verificarCadastroInexistente():
-                alert('Nome de usuário inexistente.')
-                break;
-            case verificarLoginIncorreto():
-                alert('Login Incorreto.')
-                break;
-            default:
-                console.log(vetorObjetosUsuarios[variavel].usuario_id)
-                setUsuarioId(vetorObjetosUsuarios[variavel].usuario_id)
-                setPosicaoUsuarioID(vetorObjetosUsuarios[variavel].usuario_id)
-                alert('Login feito com sucesso!')
-                setUsuarioLogado(true)
-                navigate("/telaprincipal")
-
-        }
-
-        // if (verificarInputsRegistrados()) {
-            
-        //     alert('Verifique se todos os campos estão preenchidos.')
-
-        // }else if(verificarCadastroInexistente()){
-
-        //     alert('Nome de usuário inexistente.')
-
-        // }else{
-        //     alert("boa")
-        // }
-
-    }
+    }  
     
   return (<div className="container-tela-login">
     <div className="livro-login-container-esquerda">
@@ -154,12 +108,12 @@ function TelaLogin() {
         <div className="livro-login-primeiraLayerDireita">
             <div className="livro-login-conteudoLayerDireita">
                 <img className="imagem-parte-login" src="public\images\Hand holding pen-amico.png" alt="" />
-                <button className="botao-login" onClick={verificarLogin}>Entrar</button>
+                <button className="botao-login" onClick={() => verificarLogin(inputNomeUsuario, inputSenha)}>Entrar</button>
                 <Link className="label-nao-tem-conta" to="/telacadastro">Não tem uma conta?</Link>
             </div>
         </div>
     </div>
-</div>
+    </div>
 
   )
 }

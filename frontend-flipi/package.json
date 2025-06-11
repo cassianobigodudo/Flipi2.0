@@ -28,5 +28,10 @@
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
     "vite": "^5.4.1"
-  }
+  },
+  "description": "O trabalho desenvolvido pelo nosso grupo, cujo membros são Abílio Alfredo Francisco (Abivisu2), Cassiano Calazans Coelho Machado (cassianobigodudo), Jaime António Cá (jaime-ac) e José Vitor de Mattos Pinheiro (Jouusey) é referente a construção de um site com caráter de BIBLIOTECA VIRTUAL. A finalidade do site é posssilibitar que usuários cadastrados possam registrar livros que já leram em suas respectivas bibliotecas e com o principal objetivo de compartilhar uma resenha sobre o livro registrado no site, servindo dessa forma como uma ferramenta de recomendação de livros para outros usuários, baseada no compartilhamento de resenhas de livros.",
+  "main": "eslint.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

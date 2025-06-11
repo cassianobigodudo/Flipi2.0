@@ -1,0 +1,26 @@
+.container__card--listas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 450px;
+    background-color: var(--fundoDivs);
+    border-radius: 10px;
+    cursor: pointer;
+    border: solid 1px #40454b;
+    border: none;
+}
+    .container__card--listas:hover{
+        height: 110px;
+        width: 450px;
+        font-size: 25px;
+        font-weight: bolder;
+        transition: 1s;
+        box-shadow: 1px 1px 0px 4px var(--laranjaenferrujado);
+    }
+
+    .texto-nome-lista{
+        color: var(--textos);
+        font-size: 25px;
+        font-weight: bold;
+    }

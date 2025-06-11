@@ -3,14 +3,17 @@ import './TelaPrincipal.css'
 import { Link, useNavigate } from "react-router-dom"
 import Navbar from '../components/Navbar'
 import { GlobalContext } from '../contexts/GlobalContext'
+import BarraPesquisa from '../components/BarraPesquisa'
 import axios from 'axios'
 
+
 function TelaPrincipal() {
-    const { posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, usuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado } = useContext(GlobalContext)
+    const { posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, usuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado, idUsuarioLogado } = useContext(GlobalContext)
     const { biblioteca } = useContext(GlobalContext)
     const [livros, setLivros] = useState([])
 
     const navigate = useNavigate()
+
 
     const atualizarCatalogo = async () => {
         try {
@@ -51,6 +54,7 @@ function TelaPrincipal() {
     }, [dadosUsuarioLogado])
 
     return (
+
         <div className='container-tela-principal'>
             <div className='retangulo-um'>
                 <div className='retangulo-dois'>
@@ -60,10 +64,12 @@ function TelaPrincipal() {
 
                         <div className="div-livros-esquerda">
                             <div className="div-barra-de-pesquisa">
+
                                 <input className='inpt-pesquisa' type="text" placeholder='Pesquise um livro em específico' />
                                 <button className="btn-pesquisar" onClick={() => navigate("/telapesquisa")}>
                                     <img className='icons-pesquisar' src="public/icons/big-search-len.png" alt="" />
                                 </button>
+
                             </div>
 
                             <div className="div-Fila-livros">
@@ -273,6 +279,7 @@ function TelaPrincipal() {
                         <div className="div-elementos">
                             <div className="div-home-escrivaninha">
                                 <Link to="/telaprincipal">
+
                                     <button className="btnss">
                                         <img src="../public/icons/ant-design--home-outlined.svg" alt="" className="icone-botao" />
                                     </button>
@@ -282,6 +289,7 @@ function TelaPrincipal() {
                                     <button className="btnss">
                                         <img src="public/icons/escrita.png" alt="" className="icone-botao" />
                                     </button>
+
                                 </Link>
                             </div>
 
@@ -289,6 +297,7 @@ function TelaPrincipal() {
                                 <button className="btnss">
                                     <img src="./public/images/setting.svg" alt="" className="icone-botao" />
                                 </button>
+
                             </Link>
                         </div>
                     </div>
@@ -297,5 +306,6 @@ function TelaPrincipal() {
         </div>
     )
 }
+
 
 export default TelaPrincipal
