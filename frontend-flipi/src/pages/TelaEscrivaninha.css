@@ -334,7 +334,7 @@ dialog{
 }
 
 .dialogLbl{ 
-  padding: 10px;
+    padding: 10px;
     font-family: "fonte-projeto";
     font-size: 28px;
     color: rgb(255, 255, 255);
