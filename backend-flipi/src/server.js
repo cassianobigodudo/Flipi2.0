@@ -851,6 +851,38 @@ app.patch("/listas_personalizadas/:id/adicionar-livro", async (req, res) => {
     }
 });
 
+//rota para apagar um livro de uma lista
+// PATCH /listas_personalizadas/:id/remover-livro
+app.patch('/listas_personalizadas/:id/remover-livro', async (req, res) => {
+    const { id } = req.params; // ID da lista
+    const { isbnLivro } = req.body; // ISBN do livro a remover (como string)
+  
+    try {
+      // Verifica se a lista existe
+      const listaResult = await pool.query('SELECT * FROM listas_personalizadas WHERE id = $1', [id]);
+  
+      if (listaResult.rowCount === 0) {
+        return res.status(404).json({ erro: 'Lista não encontrada.' });
+      }
+  
+      // Remove o ISBN do array (PostgreSQL: array_remove)
+      const updateResult = await pool.query(
+        `UPDATE listas_personalizadas 
+         SET isbn_livros = array_remove(isbn_livros, $1)
+         WHERE id = $2
+         RETURNING *`,
+        [isbnLivro, id]
+      );
+  
+      return res.status(200).json(updateResult.rows[0]);
+  
+    } catch (erro) {
+      console.error('Erro ao remover livro da lista:', erro);
+      return res.status(500).json({ erro: 'Erro interno ao remover livro da lista.' });
+    }
+  });
+  
+
 //Rota para verificar o login 
 app.post('/login', async (req, res) => {
     const { usuario_apelido, usuario_senha } = req.body;

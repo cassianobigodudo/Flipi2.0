@@ -21,6 +21,8 @@ function MinhaLista({
   const [confirmacao, setConfirmacao] = useState(false)
   const [livroClicado, setLivroClicado] = useState();
   const [caixaEdicao, setCaixaEdicao] = useState(false);
+  const [mostrarBotaoDeletar, setMostrarBotaoDeletar] = useState(false);
+
 
   //adicionar um livro a uma lista
   const adicionarLivro = async (livro) => {
@@ -64,6 +66,32 @@ function MinhaLista({
   function opcoesedicao(){
     setCaixaEdicao(!caixaEdicao)
   }
+
+  function editarLista() {
+    setMostrarBotaoDeletar(prev => !prev)
+  }
+
+  //remover livro da lista
+  const removerLivroDaLista = async (isbnLivro) => {
+    setCaixaEdicao(false)
+    try {
+      const resposta = await axios.patch(
+        `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}/remover-livro`,
+        { isbnLivro: String(isbnLivro) }
+      );
+  
+      setLista(resposta.data);
+  
+      const listasAtualizadas = listas.map(l =>
+        l.id === listaSelecionada.id ? resposta.data : l
+      );
+      setListas(listasAtualizadas);
+    } catch (erro) {
+      console.error("Erro ao remover livro:", erro);
+      alert("Erro ao remover livro da lista.");
+    }
+  };
+  
 
   async function deletarLista(id) {
     try {
@@ -128,6 +156,8 @@ function MinhaLista({
                 capa={livro.capaLivro}
                 titulo={livro.tituloLivro}
                 onClick={() => {}}
+                visualizarLixeira={mostrarBotaoDeletar}
+                deletarLivro={() => removerLivroDaLista(isbn)}
               />
             );
           })}
@@ -201,7 +231,7 @@ function MinhaLista({
         <dialog open={caixaEdicao} className='dialog__edicao'>
 
           <div className="container__edicao">
-            <button className="botao__edicao--listas">Editar lista</button>
+            <button className="botao__edicao--listas" onClick={editarLista}>Editar lista</button>
             <button className="botao__edicao--listas" onClick={() => deletarLista(lista.id)}>Apagar lista</button>
           </div>
 
