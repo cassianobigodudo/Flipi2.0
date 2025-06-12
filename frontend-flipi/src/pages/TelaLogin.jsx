@@ -50,6 +50,12 @@ function TelaLogin() {
       
     const verificarLogin = async (apelido, senha) => {
 
+        if(inputNomeUsuario == '' || inputSenha == ''){
+
+            alert('Verifique se todos os campos estão preenchidos')
+
+        }
+
         try{
 
             const resposta = await axios.post('http://localhost:3000/login', {

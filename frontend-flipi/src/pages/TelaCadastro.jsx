@@ -32,7 +32,7 @@ export default function TelaCadastro() {
 
     function verificarInputsRegistrados() {
         
-        if (inputNomeCompleto == null || inputNomeUsuario == null || inputEmail == null || inputSenha == null){
+        if (inputNomeCompleto == '' || inputNomeUsuario == '' || inputEmail == '' || inputSenha == ''){
 
             return true
 
