@@ -9,34 +9,31 @@ function livroParteDois({livroSelecionado, resenhaInd}) {
     const {biblioteca, setlivroAcessado} = useContext(GlobalContext);
     const [isbnLivro, setIsbnLivro] = useState()
     const [resenhaId, setResenhaId] = useState('')
-    const [resenha, setResenha] = useState('')
+    const [resenha, setResenha] = useState([])
+    const [usuario, setUsuario] = useState([])
 
 
-
-   
+    
      const pegarResenha = async (resenhaInd) => {
         
 
 
         try {
-            // setMensagem('Buscando livroSelecionado...')
-            
-      
             
             console.log(resenhaInd)
-            const response = await axios.get(`http://localhost:3000/resenha/${resenhaInd}`)
+            const response = await axios.get(`http://localhost:3000/resenha`)
             
             
             const dadosDaResenha = response?.data 
 
 
             if (dadosDaResenha && dadosDaResenha.length > 0) {
-                setResenha(dadosDaResenha[0]) 
+                setResenha(dadosDaResenha[resenhaInd]) 
             } else {
                 setResenha({}) 
             }
 
-            console.log(resenhaInd)
+            console.log()
 
             console.log('resenha que foi puxado pelo get: ', dadosDaResenha)
             JSON.stringify(resenha)
@@ -48,9 +45,36 @@ function livroParteDois({livroSelecionado, resenhaInd}) {
         
 }
 
-useEffect(() => {
+const pegarUserName = async () => {
+        
+
+
+    try {
+        
+
+        console.log()
+        const response = await axios.get(`http://localhost:3000/usuario/${resenha.usuario_id}`)
+        
+        
+        const dadosDoUsuario = response?.data 
+
+        setUsuario(dadosDoUsuario)
+
+        console.log('dado do usuario que foi puxado pelo get: ', dadosDoUsuario)
+
+        JSON.stringify(usuario)
+
+    } catch (error) {
+        console.error('Erro ao puxar o usuario:', error)
+    }
+    
+}
+
+    useEffect(() => {
     pegarResenha(resenhaInd)
-   }, [resenhaInd, livroSelecionado])
+    }, [resenhaInd, livroSelecionado])
+   
+
    
    useEffect(() => {
        if (livroSelecionado != null) {
@@ -62,8 +86,15 @@ useEffect(() => {
                setIsbnLivro(livroSelecionado.livroSelecionado_isbn || '')
            }
        }
-   }, [livroSelecionado])
-    
+   }, [livroSelecionado, resenhaInd])
+
+
+   useEffect(() => {
+    if (resenha.usuario_id) {  
+        pegarUserName(resenha.usuario_id)
+    }
+}, [resenha.usuario_id])
+   
   return (
     <div className="container-mae-resenhas">
 
@@ -84,7 +115,8 @@ useEffect(() => {
 
                                     </div>
 
-                                    <h3>{resenha.resenha_id} {resenha.resenha_titulo} {resenha.livro_isbn}</h3>
+                                    <h2> {usuario.usuario_apelido}</h2>
+                                    <h2> {resenha.resenha_titulo} </h2>
 
                                 </div>
 
@@ -108,6 +140,7 @@ useEffect(() => {
 
                                 </div>
 
+                            
                             </div>
                    
                         <div className="box-resenha-vazio"></div>
