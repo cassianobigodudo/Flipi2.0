@@ -10,6 +10,29 @@
     }
   }
 
+
+  .h1-titulo{
+
+    font-family: 'fonte-projeto';
+    font-size: 80px
+
+  }
+
+  .flipi-lp-titulo{
+    height: 30%;
+    display: flex;
+    align-items: center;
+    background-color: blue;
+    justify-content: center;
+    }
+
+.header-vazio{
+
+    height: 13%;
+    background-color: red;
+
+}
+
 .container-landing-page{
     height: 100vh;
     display: flex;
@@ -153,8 +176,7 @@
                   font-size: 30px;
               }
                   .logo-site{
-                      height: 200px;
-                      width: 320px;
+                    width: 275px;
                       animation: pulse 2s infinite ease-in-out;
                   }
   
