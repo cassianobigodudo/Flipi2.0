@@ -1,14 +1,54 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState  } from 'react'
 import { useNavigate } from "react-router-dom"
 import './LandingPage.css'
 import Navbar from '../components/Navbar'
 import { GlobalContext } from '../contexts/GlobalContext'
+import axios from 'axios'
 
 function LandingPage() {
 
     const navigate = useNavigate()
-    const {biblioteca} = useContext(GlobalContext)
-    
+    const { posicaoUsuarioID, setPosicaoUsuarioID, vetorObjetosUsuarios, usuarioLogado, dadosUsuarioLogado, setDadosUsuarioLogado, idUsuarioLogado } = useContext(GlobalContext)
+    const { biblioteca } = useContext(GlobalContext)
+    const [livros, setLivros] = useState([])
+
+    const atualizarCatalogo = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3000/livro`)
+            const dadosDoLivro = response?.data
+            setLivros(dadosDoLivro)
+            console.log('Livro que foi puxado pelo get: ', dadosDoLivro)
+        } catch (error) {
+            console.error('Erro ao puxar os livros:', error)
+        }
+    }
+
+    useEffect(() => {
+        console.log(vetorObjetosUsuarios)
+
+        if (usuarioLogado === true) {
+            for (let i = 0; i < vetorObjetosUsuarios.length; i++) {
+                if (vetorObjetosUsuarios[i].usuario_id === posicaoUsuarioID) {
+                    setPosicaoUsuarioID(vetorObjetosUsuarios[i].usuario_id)
+                    let ul = vetorObjetosUsuarios.filter((u) => u.usuario_id === posicaoUsuarioID)
+                    setDadosUsuarioLogado(ul[0])
+                }
+            }
+        }
+        atualizarCatalogo()
+    }, [])
+
+    const getLivroByIndex = (index) => {
+        return livros[index] || { livro_titulo: 'Carregando...', livro_capa: '' }
+    }
+
+    useEffect(() => {
+        console.log(posicaoUsuarioID)
+    }, [posicaoUsuarioID])
+
+    useEffect(() => {
+        console.log(dadosUsuarioLogado)
+    }, [dadosUsuarioLogado])
 
   return (
 
@@ -84,44 +124,52 @@ function LandingPage() {
 
                             <div className="div-box-titulo">
 
-                                <button className="btn-livro-home" onClick={() => 
-                                    navigate("/telalivro", { state: { index: 18 } })}>
-                                
-                                    <div className="box-19"></div>
-                                    <p className='titulos-livros'>{biblioteca[18].tituloLivro}</p>
-
-                                </button>
-
-                            </div>
-
-                            <div className="div-box-titulo">
-                                <button className="btn-livro-home" onClick={() => 
-                                    navigate("/telalivro", { state: { index: 19 } })}>      
-
-                                    <div className="box-20"></div>
-                                    <p className='titulos-livros'>{biblioteca[19].tituloLivro}</p>
-                                </button>
-                            </div>
-
-                            <div className="div-box-titulo">
-
-                                <button className="btn-livro-home" onClick={() => 
-                                    navigate("/telalivro", { state: { index: 0 } })}>
-                                   
-                                    <div className="box"></div>
-                                    <p className='titulos-livros'>{biblioteca[0].tituloLivro}</p>
-
-                                </button>
+                            <button className="btn-livro-home" onClick={() => navigate("/telalivro", { state: { index: 0 } })}>
+                                        {getLivroByIndex(0).livro_capa ? (
+                                            <img src={getLivroByIndex(0).livro_capa} alt="" />
+                                        ) : (
+                                            <div className="box-placeholder"></div>
+                                        )}
+                                        <p className='titulos-livros'>{getLivroByIndex(0).livro_titulo}</p>
+                                    </button>
 
                             </div>
 
                             <div className="div-box-titulo">
-                                <button className="btn-livro-home" onClick={() => 
-                                    navigate("/telalivro", { state: { index: 2 } })}>      
-                        
-                                    <div className="box-br"></div>
-                                    <p className='titulos-livros'>{biblioteca[2].tituloLivro}</p>
-                                </button>
+
+                                    <button className="btn-livro-home" onClick={() => navigate("/telalivro", { state: { index: 1 } })}>
+                                        {getLivroByIndex(1).livro_capa ? (
+                                            <img src={getLivroByIndex(1).livro_capa} alt="" />
+                                        ) : (
+                                            <div className="box-placeholder"></div>
+                                        )}
+                                        <p className='titulos-livros'>{getLivroByIndex(1).livro_titulo}</p>
+                                    </button>
+                            </div>
+
+                            <div className="div-box-titulo">
+
+                                    <button className="btn-livro-home" onClick={() => navigate("/telalivro", { state: { index: 2 } })}>
+                                        {getLivroByIndex(2).livro_capa ? (
+                                            <img src={getLivroByIndex(2).livro_capa} alt="" />
+                                        ) : (
+                                            <div className="box-placeholder"></div>
+                                        )}
+                                        <p className='titulos-livros'>{getLivroByIndex(2).livro_titulo}</p>
+                                    </button>
+
+                            </div>
+
+                            <div className="div-box-titulo">
+
+                                    <button className="btn-livro-home" onClick={() => navigate("/telalivro", { state: { index: 3 } })}>
+                                        {getLivroByIndex(3).livro_capa ? (
+                                            <img src={getLivroByIndex(3).livro_capa} alt="" />
+                                        ) : (
+                                            <div className="box-placeholder"></div>
+                                        )}
+                                        <p className='titulos-livros'>{getLivroByIndex(3).livro_titulo}</p>
+                                    </button>
                             </div>
     
                         </div>
@@ -130,44 +178,54 @@ function LandingPage() {
 
                             <div className="div-box-titulo">
 
-                                <button className="btn-livro-home" onClick={() => 
-                                    navigate("/telalivro", { state: { index: 4 } })}>
-
-                                    <div className="box-bichos"></div>
-                                    <p className='titulos-livros'>{biblioteca[4].tituloLivro}</p>
-
-                                </button>
-
-                            </div>
-
-                            <div className="div-box-titulo">
-                                <button className="btn-livro-home" onClick={() => 
-                                    navigate("/telalivro", { state: { index: 1 } })}>      
-
-                                    <div className="box-1"></div>
-                                    <p className='titulos-livros'>{biblioteca[1].tituloLivro}</p>
-                                </button>
-                            </div>
-
-                            <div className="div-box-titulo">
-
-                                <button className="btn-livro-home" onClick={() => 
-                                    navigate("/telalivro", { state: { index: 6 } })}>
-                                
-                                    <div className="box-5"></div>
-                                    <p className='titulos-livros'>{biblioteca[6].tituloLivro}</p>
-
-                                </button>
+                                    <button className="btn-livro-home" onClick={() => navigate("/telalivro", { state: { index: 4 } })}>
+                                        {getLivroByIndex(4).livro_capa ? (
+                                            <img src={getLivroByIndex(4).livro_capa} alt="" />
+                                        ) : (
+                                            <div className="box-placeholder"></div>
+                                        )}
+                                        <p className='titulos-livros'>{getLivroByIndex(4).livro_titulo}</p>
+                                    </button>
 
                             </div>
 
                             <div className="div-box-titulo">
-                                <button className="btn-livro-home" onClick={() => 
-                                    navigate("/telalivro", { state: { index: 7 } })}>      
 
-                                    <div className="box-6"></div>
-                                    <p className='titulos-livros'>{biblioteca[7].tituloLivro}</p>
-                                </button>
+                                    <button className="btn-livro-home" onClick={() => navigate("/telalivro", { state: { index: 5 } })}>
+                                        {getLivroByIndex(5).livro_capa ? (
+                                            <img src={getLivroByIndex(5).livro_capa} alt="" />
+                                        ) : (
+                                            <div className="box-placeholder"></div>
+                                        )}
+                                        <p className='titulos-livros'>{getLivroByIndex(5).livro_titulo}</p>
+                                    </button>
+
+                            </div>
+
+                            <div className="div-box-titulo">
+
+                                    <button className="btn-livro-home" onClick={() => navigate("/telalivro", { state: { index: 6 } })}>
+                                        {getLivroByIndex(6).livro_capa ? (
+                                            <img src={getLivroByIndex(6).livro_capa} alt="" />
+                                        ) : (
+                                            <div className="box-placeholder"></div>
+                                        )}
+                                        <p className='titulos-livros'>{getLivroByIndex(6).livro_titulo}</p>
+                                    </button>
+
+                            </div>
+
+                            <div className="div-box-titulo">
+
+                                    <button className="btn-livro-home" onClick={() => navigate("/telalivro", { state: { index: 7 } })}>
+                                        {getLivroByIndex(7).livro_capa ? (
+                                            <img src={getLivroByIndex(7).livro_capa} alt="" />
+                                        ) : (
+                                            <div className="box-placeholder"></div>
+                                        )}
+                                        <p className='titulos-livros'>{getLivroByIndex(7).livro_titulo}</p>
+                                    </button>
+                                    
                             </div>
 
                         </div>
