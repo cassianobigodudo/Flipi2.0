@@ -6,6 +6,7 @@
     background-color: darkcyan;
     height: 200px;
     width: 140px;
+    cursor: pointer;
 }
 
     .capa__livro{
@@ -26,5 +27,8 @@
         align-items: center;
         height: 30%;
         width: 100%;
-        background-color: rgb(145, 80, 80);
+        background-color: var(--fundoDivs);
+        color: var(--textos);
+        font-size: 14px;
+        font-weight: bold;
     }

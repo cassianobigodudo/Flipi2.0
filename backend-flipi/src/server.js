@@ -137,7 +137,7 @@ async function verificarTabelas(){
         nome_lista TEXT NOT NULL, 	
         descricao_lista TEXT NOT NULL, 	
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 	
-        isbn_livros BIGINT[],
+        isbn_livros TEXT[],
         CONSTRAINT fk_criador_lista FOREIGN KEY (criador_lista)
             REFERENCES usuario(usuario_id)
             ON DELETE CASCADE   
@@ -811,35 +811,40 @@ app.patch("/listas_personalizadas/:id/adicionar-livro", async (req, res) => {
     const idLista = req.params.id;
     const { isbnLivro } = req.body;
 
+    console.log('requisição recebida:', { idLista, isbnLivro });
+
     try {
-        
-        const isbnParaBanco = parseInt(isbnLivro);
+
+        const isbnParaBanco = isbnLivro;
         
         // Primeiro verifica se a lista existe
-        const listaExiste = await db.query(
+        const listaExiste = await pool.query(
             "SELECT * FROM listas_personalizadas WHERE id = $1",
             [idLista]
         );
         
         if (listaExiste.rows.length === 0) {
+            console.log('Lista não encontrada!')
             return res.status(404).json({ erro: "Lista não encontrada" });
         }
         
         // Verifica se o livro já está na lista
         const isbnArray = listaExiste.rows[0].isbn_livros || [];
+        console.log('ISBNSs atuais na lista:', isbnArray);
         if (isbnArray.includes(isbnParaBanco)) {
             return res.status(400).json({ erro: "Livro já está na lista" });
         }
         
-        const resultado = await db.query(
+        const resultado = await pool.query(
             `UPDATE listas_personalizadas 
              SET isbn_livros = array_append(COALESCE(isbn_livros, '{}'), $1)
              WHERE id = $2
              RETURNING *;`,
             [isbnParaBanco, idLista]
         );
-
+        console.log('livro adicionado com sucesso:', resultado.rows[0])
         res.status(200).json(resultado.rows[0]);
+
     } catch (erro) {
         console.error("Erro ao adicionar livro: ", erro);
         res.status(500).json({ erro: "Erro interno do servidor" });

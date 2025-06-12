@@ -193,7 +193,7 @@
 }
 
 .btn-secao {
-    background-color: #d45c35;
+    background-color: var(--laranjaenferrujado);
     border: none;
     padding: 1px 2px;
     color: white;
@@ -204,6 +204,7 @@
     font-size: 34px;
     width: 35%;
     height: 75%;
+    cursor: pointer;
 }
 
 .btn-editar {

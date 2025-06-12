@@ -19,12 +19,10 @@ function MinhaLista({
 
   const [abriuCaixa, setAbriuCaixa] = useState(false)
   const [confirmacao, setConfirmacao] = useState(false)
-  // const {biblioteca} = useGlobalContext();
   const [livroClicado, setLivroClicado] = useState();
   const [caixaEdicao, setCaixaEdicao] = useState(false);
 
   //adicionar um livro a uma lista
-  
   const adicionarLivro = async (livro) => {
     try {
       // Verificação de segurança
@@ -36,7 +34,7 @@ function MinhaLista({
       const resposta = await axios.patch(
         `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}/adicionar-livro`,
         {
-          isbnLivro: livro.isbnLivro // Agora está correto com sua estrutura!
+          isbnLivro: String(livro.isbnLivro) // Agora está correto com sua estrutura!
         }
       );
 
@@ -119,6 +117,20 @@ function MinhaLista({
       <div className="lista__body">
 
         <div className="lista__body--books">
+
+          {lista?.isbn_livros?.map((isbn) => {
+            const livro = biblioteca.find(l => l.isbnLivro === isbn || l.isbn === isbn);
+            if (!livro) return null;
+
+            return (
+              <CapaLivro
+                key={isbn}
+                capa={livro.capaLivro}
+                titulo={livro.tituloLivro}
+                onClick={() => {}}
+              />
+            );
+          })}
 
           <button className="botao__add--livro" onClick={() => setAbriuCaixa(true)}><img className='img__adicionar' src="./teste/adicionar.svg" alt="" /></button>
 

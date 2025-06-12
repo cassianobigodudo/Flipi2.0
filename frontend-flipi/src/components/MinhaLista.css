@@ -87,16 +87,18 @@
             display: flex;
             justify-content: start;
             align-items: start;
-            gap: 10px;
+            flex-wrap: wrap;
+            gap: 20px;
             padding: 15px 15px;
             height: 98%;
             width: 98%;
             background-color: #FCF6E8;
             border-radius: 20px;
+            overflow-y: auto;
         }
             .botao__add--livro{
-                height: 230px;
-                width: 170px;
+                height: 200px;
+                width: 140px;
                 background-color: #F4E2B4;
                 border: none;
                 border-radius: 5px;
@@ -135,6 +137,7 @@
                     display: flex;
                     justify-content: start;
                     align-items: center;
+                    padding-left: 10px;
                     height: 100%;
                     width: 50%;
                     background-color: transparent;
@@ -142,7 +145,7 @@
                     .input__pesquisar--livro{
                         padding-left: 5px;
                         height: 30px;
-                        width: 250px;
+                        width: 300px;
                         border-top-left-radius: 10px;
                         border-bottom-left-radius: 10px;
                         border: none;
