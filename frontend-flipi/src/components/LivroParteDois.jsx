@@ -10,10 +10,11 @@ function livroParteDois({livroSelecionado, resenhaInd}) {
     const [isbnLivro, setIsbnLivro] = useState()
     const [resenhaId, setResenhaId] = useState('')
     const [resenha, setResenha] = useState([])
-    const [usuario, setUsuario] = useState([])
+    const [usuario, setUsuario] = useState('')
 
 
-    
+
+   
      const pegarResenha = async (resenhaInd) => {
         
 
@@ -21,19 +22,19 @@ function livroParteDois({livroSelecionado, resenhaInd}) {
         try {
             
             console.log(resenhaInd)
-            const response = await axios.get(`http://localhost:3000/resenha`)
+            const response = await axios.get(`http://localhost:3000/resenha/${resenhaInd}`)
             
             
             const dadosDaResenha = response?.data 
 
 
             if (dadosDaResenha && dadosDaResenha.length > 0) {
-                setResenha(dadosDaResenha[resenhaInd]) 
+                setResenha(dadosDaResenha[0]) 
             } else {
                 setResenha({}) 
             }
 
-            console.log()
+            console.log(resenhaInd)
 
             console.log('resenha que foi puxado pelo get: ', dadosDaResenha)
             JSON.stringify(resenha)
@@ -140,10 +141,8 @@ const pegarUserName = async () => {
 
                                 </div>
 
-                            
                             </div>
-                   
-                        <div className="box-resenha-vazio"></div>
+                          
                    
 
                 </div>
