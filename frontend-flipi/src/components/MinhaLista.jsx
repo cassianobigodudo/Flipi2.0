@@ -2,42 +2,96 @@ import { useState } from 'react'
 import './MinhaLista.css'
 import { useGlobalContext } from '../contexts/GlobalContext'
 import CapaLivro from './CapaLivro';
+import axios from 'axios';
 
 function MinhaLista({ 
   nomeLista, 
   descricaoLista,
   lista, 
+  setLista, 
   voltar, 
   listas, 
   setListas, 
   listaSelecionada, 
-  setListaSelecionada 
+  setListaSelecionada,
+  biblioteca
   }) {
+
   const [abriuCaixa, setAbriuCaixa] = useState(false)
   const [confirmacao, setConfirmacao] = useState(false)
-  const {biblioteca} = useGlobalContext();
   const [livroClicado, setLivroClicado] = useState();
   const [caixaEdicao, setCaixaEdicao] = useState(false);
+  const [mostrarBotaoDeletar, setMostrarBotaoDeletar] = useState(false);
 
-  function cancelarAdicao(){
-    alert('cancelado!!!')
-    setConfirmacao(false)
-  }
 
-  function confirmarAdicao(){
-  
-    alert('adicionado!!!')
-    setConfirmacao(false)
-  }
+  //adicionar um livro a uma lista
+  const adicionarLivro = async (livro) => {
+    try {
+      // Verificação de segurança
+      if (!listaSelecionada || !listaSelecionada.id) {
+        alert("Erro: Lista não selecionada!");
+        return;
+      }
 
-  function cliquenolivro(){
-    setConfirmacao(true)
-    setLivroClicado(livro.tituloLivro)
-  }
+      const resposta = await axios.patch(
+        `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}/adicionar-livro`,
+        {
+          isbnLivro: String(livro.isbnLivro) // Agora está correto com sua estrutura!
+        }
+      );
 
+      // Atualiza a lista local com os dados retornados do backend
+      setLista(resposta.data);
+      
+      // Também atualiza a lista no estado global se necessário
+      const listasAtualizadas = listas.map(l => 
+        l.id === listaSelecionada.id ? resposta.data : l
+      );
+      setListas(listasAtualizadas);
+      
+      alert(`"${livro.tituloLivro}" adicionado com sucesso!`);
+    } catch (erro) {
+      console.error("Erro ao adicionar livro:", erro);
+      
+      // Mensagem de erro mais específica baseada na resposta do servidor
+      if (erro.response?.data?.erro) {
+        alert(erro.response.data.erro);
+      } else {
+        alert("Erro ao adicionar o livro à lista.");
+      }
+    }
+  };
+
+  //editar ou excluir uma lista
   function opcoesedicao(){
     setCaixaEdicao(!caixaEdicao)
   }
+
+  function editarLista() {
+    setMostrarBotaoDeletar(prev => !prev)
+  }
+
+  //remover livro da lista
+  const removerLivroDaLista = async (isbnLivro) => {
+    setCaixaEdicao(false)
+    try {
+      const resposta = await axios.patch(
+        `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}/remover-livro`,
+        { isbnLivro: String(isbnLivro) }
+      );
+  
+      setLista(resposta.data);
+  
+      const listasAtualizadas = listas.map(l =>
+        l.id === listaSelecionada.id ? resposta.data : l
+      );
+      setListas(listasAtualizadas);
+    } catch (erro) {
+      console.error("Erro ao remover livro:", erro);
+      alert("Erro ao remover livro da lista.");
+    }
+  };
+  
 
   async function deletarLista(id) {
     try {
@@ -92,13 +146,29 @@ function MinhaLista({
 
         <div className="lista__body--books">
 
+          {lista?.isbn_livros?.map((isbn) => {
+            const livro = biblioteca.find(l => l.isbnLivro === isbn || l.isbn === isbn);
+            if (!livro) return null;
+
+            return (
+              <CapaLivro
+                key={isbn}
+                capa={livro.capaLivro}
+                titulo={livro.tituloLivro}
+                onClick={() => {}}
+                visualizarLixeira={mostrarBotaoDeletar}
+                deletarLivro={() => removerLivroDaLista(isbn)}
+              />
+            );
+          })}
+
           <button className="botao__add--livro" onClick={() => setAbriuCaixa(true)}><img className='img__adicionar' src="./teste/adicionar.svg" alt="" /></button>
 
         </div>
 
       </div>
 
-        <dialog open={abriuCaixa}>
+        <dialog open={abriuCaixa} className='dialog_add-listas'>
 
           <div className="container__livros">
 
@@ -118,7 +188,11 @@ function MinhaLista({
             <div className="lista__livros">
 
               {biblioteca.map((livro) => (
-                <CapaLivro key={livro.isbnLivro} capa={livro.capaLivro} titulo={livro.tituloLivro} onClick={cliquenolivro}/>
+                <CapaLivro 
+                  key={livro.isbnLivro || livro.isbn || livro.id} 
+                  capa={livro.capaLivro} 
+                  titulo={livro.tituloLivro} 
+                  onClick={() => adicionarLivro(livro)}/>
               ))}
 
             </div>
@@ -127,7 +201,7 @@ function MinhaLista({
 
         </dialog>
 
-        <dialog open={confirmacao}>
+        {/* <dialog open={confirmacao}>
 
           <div className="container__confirmacao">
 
@@ -152,12 +226,12 @@ function MinhaLista({
 
           </div>
 
-        </dialog>
+        </dialog> */}
 
         <dialog open={caixaEdicao} className='dialog__edicao'>
 
           <div className="container__edicao">
-            <button className="botao__edicao--listas">Editar lista</button>
+            <button className="botao__edicao--listas" onClick={editarLista}>Editar lista</button>
             <button className="botao__edicao--listas" onClick={() => deletarLista(lista.id)}>Apagar lista</button>
           </div>
 
