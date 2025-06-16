@@ -33,7 +33,7 @@
     display: flex;
     align-items: center;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     padding: 20px;
 }
 
@@ -178,6 +178,7 @@
     height: 93.1%;
     border-bottom-right-radius: 10px;
     overflow: auto;
+    display: flex;
 }
 
 .usuarioConfigs-body-baixo {
@@ -249,6 +250,7 @@
     gap: 10px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    align-items: flex-end;
 }
 
 .nivel-box {
@@ -327,7 +329,7 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     padding-top: 25px;
-
+    align-items: stretch;
 }
 .descricao{
     font-family: "fonte-projeto";

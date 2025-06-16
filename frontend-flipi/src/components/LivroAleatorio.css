@@ -1,7 +1,12 @@
-.livro-aleatorio{
-
-    /* height: 1000%; */
-    width: 97%;
-    padding-left: 3px;
-
+.livro-aleatorio {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+.livro-aleatorio-container {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center;     /* Centraliza verticalmente */
+  height: 100%;            /* Ajuste conforme necessário */
 }
