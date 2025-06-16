@@ -18,11 +18,14 @@ function MinhaLista({
   }) {
 
   const [abriuCaixa, setAbriuCaixa] = useState(false)
-  const [confirmacao, setConfirmacao] = useState(false)
-  const [livroClicado, setLivroClicado] = useState();
   const [caixaEdicao, setCaixaEdicao] = useState(false);
   const [mostrarBotaoDeletar, setMostrarBotaoDeletar] = useState(false);
+  const [editarNome, setEditarNome] = useState(false)
+  const [editarDescricao, setEditarDescricao] = useState(false)
 
+  // Estados para os valores temporários durante a edição
+  const [nomeTemporario, setNomeTemporario] = useState(nomeLista)
+  const [descricaoTemporaria, setDescricaoTemporaria] = useState(descricaoLista)
 
   //adicionar um livro a uma lista
   const adicionarLivro = async (livro) => {
@@ -70,6 +73,93 @@ function MinhaLista({
   function editarLista() {
     setMostrarBotaoDeletar(prev => !prev)
   }
+
+   // Função para habilitar edição do nome
+   function habilitarEdicaoNome(){
+    setEditarNome(true)
+    setNomeTemporario(nomeLista) // Carrega o valor atual
+  }
+
+  // Função para habilitar edição da descrição
+  function habilitarEdicaoDescricao(){
+    setEditarDescricao(true)
+    setDescricaoTemporaria(descricaoLista) // Carrega o valor atual
+  }
+
+  
+  // Função para salvar as alterações do nome
+  const salvarNome = async () => {
+    try {
+      const resposta = await axios.patch(
+        `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}`,
+        {
+          nomeLista: nomeTemporario
+        }
+      );
+
+      // Atualiza o estado da lista atual
+      setLista(prev => ({ ...prev, nomeLista: nomeTemporario }));
+      
+      // Atualiza no estado global de listas
+      const listasAtualizadas = listas.map(l => 
+        l.id === listaSelecionada.id ? { ...l, nomeLista: nomeTemporario } : l
+      );
+      setListas(listasAtualizadas);
+
+      // Desabilita o modo de edição
+      setEditarNome(false);
+      
+      alert("Nome da lista atualizado com sucesso!");
+    } catch (erro) {
+      console.error("Erro ao salvar nome:", erro);
+      alert("Erro ao salvar o nome da lista.");
+      // Restaura o valor original em caso de erro
+      setNomeTemporario(nomeLista);
+    }
+  };
+
+  // Função para salvar as alterações da descrição
+  const salvarDescricao = async () => {
+    try {
+      const resposta = await axios.patch(
+        `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}`,
+        {
+          descricaoLista: descricaoTemporaria
+        }
+      );
+
+      // Atualiza o estado da lista atual
+      setLista(prev => ({ ...prev, descricaoLista: descricaoTemporaria }));
+      
+      // Atualiza no estado global de listas
+      const listasAtualizadas = listas.map(l => 
+        l.id === listaSelecionada.id ? { ...l, descricaoLista: descricaoTemporaria } : l
+      );
+      setListas(listasAtualizadas);
+
+      // Desabilita o modo de edição
+      setEditarDescricao(false);
+      
+      alert("Descrição da lista atualizada com sucesso!");
+    } catch (erro) {
+      console.error("Erro ao salvar descrição:", erro);
+      alert("Erro ao salvar a descrição da lista.");
+      // Restaura o valor original em caso de erro
+      setDescricaoTemporaria(descricaoLista);
+    }
+  };
+
+  // Função para cancelar edição do nome
+  const cancelarEdicaoNome = () => {
+    setNomeTemporario(nomeLista); // Restaura o valor original
+    setEditarNome(false);
+  };
+
+  // Função para cancelar edição da descrição
+  const cancelarEdicaoDescricao = () => {
+    setDescricaoTemporaria(descricaoLista); // Restaura o valor original
+    setEditarDescricao(false);
+  };
 
   //remover livro da lista
   const removerLivroDaLista = async (isbnLivro) => {
@@ -126,7 +216,28 @@ function MinhaLista({
         <div className="lista__name">
 
           <div className="nome__lista--editar">
-            <label className='nome__lista'>{nomeLista}</label>
+            <input 
+              type="text" 
+              className="dados-lista"
+              value={editarNome ? nomeTemporario : nomeLista}
+              disabled={!editarNome}
+              onChange={(e) => setNomeTemporario(e.target.value)}
+            />
+            {!editarNome ? (
+              <button className="botao-editar-dados-lista" onClick={habilitarEdicaoNome}>
+                <img src="./public/icons/button-edit.svg" alt="Editar" className='img-botao-editar-dados'/>
+              </button>
+            ) : (
+              <div className="botoes-edicao">
+                <button className="botao-salvar-dados-lista" onClick={salvarNome}>
+                  ✓
+                </button>
+                <button className="botao-cancelar-dados-lista" onClick={cancelarEdicaoNome}>
+                  ✗
+                </button>
+              </div>
+            )}
+            {/* <button className="botao-editar-dados-lista" onClick={habilitarEdicaoNome}><img src="./public/icons/button-edit.svg" alt="" className='img-botao-editar-dados'/></button> */}
           </div>
           <div className="editar__lista">
             <button className="botao__editar--lista" onClick={opcoesedicao}><img src="./public/icons/barra-de-menu.png" alt="" className="img__editar--lista" /></button>
@@ -136,7 +247,29 @@ function MinhaLista({
 
         <div className="lista__description">
 
-          <label className='descricao__lista'>{descricaoLista}</label>
+          <textarea 
+            name="" 
+            id="" 
+            className="dados-lista-descricao"
+            value={editarDescricao ? descricaoTemporaria : descricaoLista}
+            disabled={!editarDescricao}
+            onChange={(e) => setDescricaoTemporaria(e.target.value)}
+          />
+          {!editarDescricao ? (
+            <button className="botao-editar-dados-lista" onClick={habilitarEdicaoDescricao}>
+              <img src="./public/icons/button-edit.svg" alt="Editar" className='img-botao-editar-dados'/>
+            </button>
+          ) : (
+            <div className="botoes-edicao">
+              <button className="botao-salvar-dados-lista" onClick={salvarDescricao}>
+                ✓
+              </button>
+              <button className="botao-cancelar-dados-lista" onClick={cancelarEdicaoDescricao}>
+                ✗
+              </button>
+            </div>
+          )}
+          {/* <button className="botao-editar-dados-lista" onClick={habilitarEdicaoDescricao}><img src="./public/icons/button-edit.svg" alt="" className='img-botao-editar-dados'/></button> */}
 
         </div>
 
@@ -200,33 +333,6 @@ function MinhaLista({
           </div>
 
         </dialog>
-
-        {/* <dialog open={confirmacao}>
-
-          <div className="container__confirmacao">
-
-            <div className="confirmacao__fechar">
-
-              <button className='fechar__confirmacao' onClick={() => setConfirmacao(false)}>❌</button>
-
-            </div>
-
-            <div className="confirmacao__textos">
-
-              <label htmlFor="" className="textos__confirmacao">Quer adicionar "{livroClicado}" a sua lista?</label>
-
-            </div>
-
-            <div className="confirmacao__botoes">
-
-              <button className="botoes__confirmacao" onClick={cancelarAdicao}>Cancelar</button>
-              <button className="botoes__confirmacao" onClick={confirmarAdicao}>Adicionar</button>
-
-            </div>
-
-          </div>
-
-        </dialog> */}
 
         <dialog open={caixaEdicao} className='dialog__edicao'>
 

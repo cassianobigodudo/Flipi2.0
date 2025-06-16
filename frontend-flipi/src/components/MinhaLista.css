@@ -29,13 +29,35 @@
                 padding: 20px;
                 height: 100%;
                 width: 70%;
+                gap: 10px;
                 background-color: transparent;
             }
-                .nome__lista{
-                    font-size: 25px;
+                .dados-lista{
+                    height: 40px;
+                    width: 300px;
+                    font-size: 20px;
                     font-weight: bolder;
-                    color: #40454b;
+                    border: none;
                 }
+                .dados-lista-descricao{
+                    min-height: 50px;
+                    min-width: 450px;
+                    max-height: 100px;
+                    max-width: 470px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    border: none;
+                }
+                .botao-editar-dados-lista{
+                    border: none;
+                    cursor: pointer;
+                    height: 20px;
+                    width: 20px;
+                }
+                    .img-botao-editar-dados{
+                        height: inherit;
+                        width: inherit;
+                    }
 
             .editar__lista{
                 display: flex;
@@ -68,12 +90,31 @@
             padding: 20px;
             height: 70%;
             width: 100%;
-        }
-            .descricao__lista{
-                font-size: 25px;
-                font-weight: bold;
-                color: #40454b;
-            }       
+            gap: 10px;
+        } 
+        
+        .botoes-edicao {
+            display: flex;
+            gap: 5px;
+          }
+          
+          .botao-salvar-dados-lista,
+          .botao-cancelar-dados-lista {
+            padding: 5px 8px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+          }
+          
+          .botao-salvar-dados-lista {
+            background-color: #4CAF50;
+            color: white;
+          }
+          
+          .botao-cancelar-dados-lista {
+            background-color: #f44336;
+            color: white;
+          }
 
     .lista__body{
         display: flex;
@@ -282,7 +323,7 @@
         width: 15%;
         position: fixed;
         top: 20%;
-        left: 69%;
+        left: 70%;
         transform: translate(-10%, -50%);
     }
         .container__edicao{
@@ -291,7 +332,7 @@
             align-items: end;
             flex-direction: column;
             padding: 10px;
-            gap: 15px;
+            gap: 10px;
             height: 99%;
             width: 99%;
             background-color: transparent;
@@ -301,12 +342,12 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                font-size: 20px;
+                font-size: 15px;
                 font-weight: bolder;
                 border: none;
                 border-radius: 10px;
-                height: 40px;
-                width: 200px;
+                height: 30px;
+                width: 150px;
                 background-color: var(--fundoDivs);
                 color: var(--textos);
                 cursor: pointer;
