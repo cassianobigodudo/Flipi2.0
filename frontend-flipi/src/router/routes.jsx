@@ -11,7 +11,7 @@ import TelaUsuarioConfigs from "../pages/TelaUsuarioConfigs";
 import TelaPrincipal from "../pages/TelaPrincipal";
 import LandingPage from "../pages/LandingPage";
 import TelaLivro from "../pages/TelaLivro";
-import PaginaTesteJaime from "../pages/PaginaTesteJaime";
+// import PaginaTesteJaime from "../pages/PaginaTesteJaime";
 import TelaPesquisa from "../pages/TelaPesquisa";
 
 const router = createBrowserRouter([

@@ -7,13 +7,13 @@
     background-color: var(--fundoDivs);
     border-radius: 10px;
     cursor: pointer;
-    /* border: solid 1px #40454b; */
     border: none;
 }
     .container__card--listas:hover{
+        cursor: pointer;
         height: 90px;
         width: 310px;
-        font-size: 25px;
+        font-size: 40px;
         font-weight: bolder;
         transition: 1s;
         box-shadow: 1px 1px 0px 4px var(--laranjaenferrujado);
@@ -21,6 +21,8 @@
 
     .texto-nome-lista{
         color: var(--textos);
-        font-size: 25px;
+        font-size: 30px;
         font-weight: bold;
+        font-family: "fonte-projeto";
+        cursor: pointer;
     }
