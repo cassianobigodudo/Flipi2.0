@@ -1,72 +1,107 @@
-import "./LivroParteDois.css"
-import { useContext, useState } from "react"
+import "./livroParteDois.css"
+import { useContext, useEffect, useState } from "react"
 import { GlobalContext } from '../contexts/GlobalContext'
+import axios from "axios";
+import ResenhaLivro from "./ResenhaLivro";
 
-function LivroParteDois() {
+function LivroParteDois({livroSelecionado, resenhaInd}) {
 
-    // const {biblioteca} = useContext(GlobalContext)
-    const {biblioteca, setLivroAcessado} = useContext(GlobalContext);
-    
-  return (
-    <div className="container-mae-resenhas">
+    const {biblioteca, setlivroAcessado} = useContext(GlobalContext);
+    const [isbnLivro, setIsbnLivro] = useState()
+    const [resenhaId, setResenhaId] = useState('')
 
-        <div className="container-resenhas">
+    const [resenhas, setResenhas] = useState([])
+    const [usuarios, setUsuarios] = useState({})
 
-            <div className="container-resenha-usuarios">
 
-                <div className="box-resenha">
+    const pegarResenhasDoLivro = async (isbn) => {
+        try {
 
-                    {biblioteca[0].resenhasLivro && biblioteca[0].resenhasLivro.length > 0 ? (
-                        biblioteca[0].resenhasLivro.map((resenha, index) => (
-                            <div key={index} className="resenha-container">
+            console.log('Buscando resenhas do livro ISBN:', isbn)
+            const response = await axios.get(`http://localhost:3000/resenha`)
+            const todasResenhas = response?.data 
 
-                                {/* Foto e Nome */}
-                                <div className="parte-foto-nome">
+            if (todasResenhas && todasResenhas.length > 0) {
+                const resenhasDoLivro = todasResenhas.filter(resenha => 
+                    resenha.livro_isbn === isbn
+                )
+                setResenhas(resenhasDoLivro)
+                console.log('Resenhas do livro:', resenhasDoLivro)
 
-                                    <div className="foto-perfil">
+            } else {
+                setResenhas([])
+            }
 
-                                        <img src="./images/icone-usuario.png" alt="Foto de perfil" className="imagem-perfil" />
 
-                                    </div>
+        } catch (error) {
+            console.error('Erro ao puxar as resenhas:', error)
+        }
+    }
 
-                                    <h3>{resenha.nomeUsuario}</h3>
+    const pegarUsuarios = async (resenhasDoLivro) => {
+        try {
+            const usuariosUnicos = [...new Set(resenhasDoLivro.map(resenha => resenha.usuario_id))]
+            const usuariosData = {}
+            
+            for (const usuarioId of usuariosUnicos) {
+                const response = await axios.get(`http://localhost:3000/usuario/${usuarioId}`)
+                usuariosData[usuarioId] = response.data
+            }
+            
+            setUsuarios(usuariosData)
+            console.log('Dados dos usuários:', usuariosData)
+        } catch (error) {
+            console.error('Erro ao puxar os usuários:', error)
+        }
+    }
 
-                                </div>
+    useEffect(() => {
+        console.log('Resenhas atualizadas:', resenhas)
+    }, [resenhas])
 
-                                {/* Texto da Resenha */}
-                                <div className="parte-resenha">
+    useEffect(() => {
+        if (livroSelecionado && livroSelecionado.livro_isbn) {
+            console.log('Livro selecionado:', livroSelecionado)
+            pegarResenhasDoLivro(livroSelecionado.livro_isbn)
+        }
+    }, [livroSelecionado])
 
-                                    <label htmlFor="" className="texto-resenha">{resenha.resenhaUsuario}</label>
-
-                                </div>
-
-                                {/* Curtidas */}
-                                <div className="parte-curtida">
-
-                                    <button className="botao-curtida">
-
-                                        <img src="./images/like.svg" alt="Curtir" className="icone-curtida" />
-
-                                    </button>
-
-                                    <label htmlFor="" className="label-curtidas">CURTIDAS</label>
-
+    useEffect(() => {
+        if (resenhas.length > 0) {  
+            pegarUsuarios(resenhas)
+        }
+    }, [resenhas])
+   
+    return (
+        <div className="container-mae-resenhas">
+            <div className="container-resenhas">
+                <div className="container-resenha-usuarios">
+                    
+                    {resenhas.length === 0 ? (
+                        <p>Nenhuma resenha encontrada para este livro.</p>
+                    ) : (
+                        resenhas.map((resenhaOrganizada, pos) => (
+                            <div key={pos} className="box-resenha">
+                                <div className="resenha-container">
+                                    <ResenhaLivro 
+                                        resenhaTitulo={resenhaOrganizada.resenha_titulo}
+                                        resenhaTexto={resenhaOrganizada.resenha_texto}
+                                        resenhaCurtidas={resenhaOrganizada.resenha_curtidas}
+                                        resenhaNota={resenhaOrganizada.resenha_nota}
+                                        usuarioId={resenhaOrganizada.usuario_id}
+                                        usuarioApelido={usuarios[resenhaOrganizada.usuario_id]?.usuario_apelido}
+                                    />
                                 </div>
 
                             </div>
                         ))
-                    ) : (
-                        <div className="box-resenha-vazio">Nenhuma resenha disponível</div>
                     )}
+                    
 
                 </div>
-
             </div>
-
         </div>
-      
-    </div>
-  )
+    )
 }
 
 export default LivroParteDois

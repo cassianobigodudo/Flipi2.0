@@ -306,12 +306,12 @@ dialog{
 }
 
 .dialog-divAtivo{
-  height: 75%;
+  height: 25%;
   position: fixed;
   width: 85%;
   background-color: rgb(65, 143, 137);
   opacity: 94%;
-  margin-top: -400px;
+  margin-top: -200px;
   margin-left: -20px;
   border-radius: 3px;
   transition: 1s;
@@ -334,6 +334,7 @@ dialog{
 }
 
 .dialogLbl{ 
+
 padding: 10px;
   font-family: "fonte-projeto";
   font-size: 28px;

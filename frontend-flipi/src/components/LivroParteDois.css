@@ -10,6 +10,17 @@
     }
   }
 
+  @keyframes slideLeft {
+    from {
+      transform: translatex(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translatex(0);
+      opacity: 1;
+    }
+  }
+
 .container-mae-resenhas{
     display: flex;
     background-color: whitesmoke;
@@ -49,6 +60,7 @@
             margin: 2% 5% 4% 5%;
             border-radius: 10px;
             gap: 40px;
+            animation: slideLeft 0.5s ease-in-out;
         }
 
         .box-resenha-vazio{
@@ -106,8 +118,9 @@
                 height: 200px;
             }
                 .texto-resenha{
-                    font-size: 18px;
+                    font-size: 38px;
                     font-family: "fonte-projeto";
+                    animation: slideLeft 0.5s ease-in-out;
                 }
 
             .parte-curtida{
