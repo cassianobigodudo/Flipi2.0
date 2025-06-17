@@ -13,7 +13,7 @@ function TelaPrincipal() {
 
 
     useEffect (() => {
-        console.log(vetorObjetosUsuarios)
+        // console.log(vetorObjetosUsuarios)
 
         if(usuarioLogado == true){
     
@@ -41,7 +41,7 @@ function TelaPrincipal() {
 
       useEffect (() => {
 
-        console.log(dadosUsuarioLogado)
+        // console.log(dadosUsuarioLogado)
 
       }, [dadosUsuarioLogado])
 

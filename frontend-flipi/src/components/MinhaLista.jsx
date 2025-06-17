@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './MinhaLista.css'
 import { useGlobalContext } from '../contexts/GlobalContext'
 import CapaLivro from './CapaLivro';
@@ -87,8 +87,8 @@ function MinhaLista({
   }
 
   
-  // Função para salvar as alterações do nome
-  const salvarNome = async () => {
+   // Função para salvar as alterações do nome
+   const salvarNome = async () => {
     try {
       const resposta = await axios.patch(
         `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}`,
@@ -97,14 +97,27 @@ function MinhaLista({
         }
       );
 
-      // Atualiza o estado da lista atual
-      setLista(prev => ({ ...prev, nomeLista: nomeTemporario }));
+      // Atualiza o estado da lista atual com os dados retornados do backend
+      const listaAtualizada = {
+        ...lista,
+        nomeLista: resposta.data.nome_lista || nomeTemporario
+      };
+      setLista(listaAtualizada);
       
       // Atualiza no estado global de listas
       const listasAtualizadas = listas.map(l => 
-        l.id === listaSelecionada.id ? { ...l, nomeLista: nomeTemporario } : l
+        l.id === listaSelecionada.id ? {
+          ...l,
+          nomeLista: resposta.data.nome_lista || nomeTemporario
+        } : l
       );
       setListas(listasAtualizadas);
+
+      // Atualiza a lista selecionada também
+      setListaSelecionada(prev => ({
+        ...prev,
+        nomeLista: resposta.data.nome_lista || nomeTemporario
+      }));
 
       // Desabilita o modo de edição
       setEditarNome(false);
@@ -118,8 +131,8 @@ function MinhaLista({
     }
   };
 
-  // Função para salvar as alterações da descrição
-  const salvarDescricao = async () => {
+   // Função para salvar as alterações da descrição
+   const salvarDescricao = async () => {
     try {
       const resposta = await axios.patch(
         `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}`,
@@ -128,14 +141,27 @@ function MinhaLista({
         }
       );
 
-      // Atualiza o estado da lista atual
-      setLista(prev => ({ ...prev, descricaoLista: descricaoTemporaria }));
+      // Atualiza o estado da lista atual com os dados retornados do backend
+      const listaAtualizada = {
+        ...lista,
+        descricaoLista: resposta.data.descricao_lista || descricaoTemporaria
+      };
+      setLista(listaAtualizada);
       
       // Atualiza no estado global de listas
       const listasAtualizadas = listas.map(l => 
-        l.id === listaSelecionada.id ? { ...l, descricaoLista: descricaoTemporaria } : l
+        l.id === listaSelecionada.id ? {
+          ...l,
+          descricaoLista: resposta.data.descricao_lista || descricaoTemporaria
+        } : l
       );
       setListas(listasAtualizadas);
+
+      // Atualiza a lista selecionada também
+      setListaSelecionada(prev => ({
+        ...prev,
+        descricaoLista: resposta.data.descricao_lista || descricaoTemporaria
+      }));
 
       // Desabilita o modo de edição
       setEditarDescricao(false);
@@ -207,6 +233,11 @@ function MinhaLista({
     }
   }
 
+  useEffect(() => {
+    setNomeTemporario(nomeLista);
+    setDescricaoTemporaria(descricaoLista);
+  }, [nomeLista, descricaoLista]);  
+
 
   return (
     <div className='container__lista--livros'>
@@ -219,7 +250,7 @@ function MinhaLista({
             <input 
               type="text" 
               className="dados-lista"
-              value={editarNome ? nomeTemporario : nomeLista}
+              value={nomeTemporario}
               disabled={!editarNome}
               onChange={(e) => setNomeTemporario(e.target.value)}
             />
@@ -237,7 +268,7 @@ function MinhaLista({
                 </button>
               </div>
             )}
-            {/* <button className="botao-editar-dados-lista" onClick={habilitarEdicaoNome}><img src="./public/icons/button-edit.svg" alt="" className='img-botao-editar-dados'/></button> */}
+           
           </div>
           <div className="editar__lista">
             <button className="botao__editar--lista" onClick={opcoesedicao}><img src="./public/icons/barra-de-menu.png" alt="" className="img__editar--lista" /></button>
@@ -251,7 +282,7 @@ function MinhaLista({
             name="" 
             id="" 
             className="dados-lista-descricao"
-            value={editarDescricao ? descricaoTemporaria : descricaoLista}
+            value={descricaoTemporaria}
             disabled={!editarDescricao}
             onChange={(e) => setDescricaoTemporaria(e.target.value)}
           />
@@ -269,7 +300,6 @@ function MinhaLista({
               </button>
             </div>
           )}
-          {/* <button className="botao-editar-dados-lista" onClick={habilitarEdicaoDescricao}><img src="./public/icons/button-edit.svg" alt="" className='img-botao-editar-dados'/></button> */}
 
         </div>
 

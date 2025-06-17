@@ -784,6 +784,63 @@ app.get('/listas_personalizadas/usuario/:id', async (req, res) => {
     }
 });
 
+// Rota para atualizar nome e/ou descrição de uma lista
+app.patch('/listas_personalizadas/:id', async (req, res) => {
+    console.log('Dados recebidos:', req.body);
+    
+    const { id } = req.params;
+    const { nomeLista, descricaoLista } = req.body;
+    
+    try {
+        // Construir a query dinamicamente baseado nos campos enviados
+        let updateFields = [];
+        let values = [];
+        let paramIndex = 1;
+        
+        if (nomeLista !== undefined) {
+            updateFields.push(`nome_lista = $${paramIndex}`);
+            values.push(nomeLista);
+            paramIndex++;
+        }
+        
+        if (descricaoLista !== undefined) {
+            updateFields.push(`descricao_lista = $${paramIndex}`);
+            values.push(descricaoLista);
+            paramIndex++;
+        }
+        
+        if (updateFields.length === 0) {
+            return res.status(400).json({ error: 'Nenhum campo para atualizar foi fornecido' });
+        }
+        
+        // Adicionar o ID no final dos valores
+        values.push(parseInt(id));
+        
+        const query = `
+            UPDATE listas_personalizadas 
+            SET ${updateFields.join(', ')} 
+            WHERE id = $${paramIndex} 
+            RETURNING *
+        `;
+        
+        console.log('Query:', query);
+        console.log('Values:', values);
+        
+        const result = await pool.query(query, values);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Lista não encontrada' });
+        }
+        
+        // Retornar a lista atualizada
+        res.status(200).json(result.rows[0]);
+        
+    } catch (err) {
+        console.error('Erro ao atualizar lista:', err.message);
+        res.status(500).json({ error: 'Erro ao atualizar lista!' });
+    }
+});
+
 //Rota para deletar uma lista
 app.delete('/listas_personalizadas/:id', async (req, res) => {
     const { id } = req.params;
@@ -852,7 +909,6 @@ app.patch("/listas_personalizadas/:id/adicionar-livro", async (req, res) => {
 });
 
 //rota para apagar um livro de uma lista
-// PATCH /listas_personalizadas/:id/remover-livro
 app.patch('/listas_personalizadas/:id/remover-livro', async (req, res) => {
     const { id } = req.params; // ID da lista
     const { isbnLivro } = req.body; // ISBN do livro a remover (como string)
