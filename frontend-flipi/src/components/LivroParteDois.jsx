@@ -2,157 +2,106 @@ import "./livroParteDois.css"
 import { useContext, useEffect, useState } from "react"
 import { GlobalContext } from '../contexts/GlobalContext'
 import axios from "axios";
+import ResenhaLivro from "./ResenhaLivro";
 
-function livroParteDois({livroSelecionado, resenhaInd}) {
+function LivroParteDois({livroSelecionado, resenhaInd}) {
 
-    // const {biblioteca} = useContext(GlobalContext)
     const {biblioteca, setlivroAcessado} = useContext(GlobalContext);
     const [isbnLivro, setIsbnLivro] = useState()
     const [resenhaId, setResenhaId] = useState('')
-    const [resenha, setResenha] = useState([])
-    const [usuario, setUsuario] = useState('')
+
+    const [resenhas, setResenhas] = useState([])
+    const [usuarios, setUsuarios] = useState({})
 
 
-
-   
-     const pegarResenha = async (resenhaInd) => {
-        
-
-
+    const pegarResenhasDoLivro = async (isbn) => {
         try {
-            
-            console.log(resenhaInd)
-            const response = await axios.get(`http://localhost:3000/resenha/${resenhaInd}`)
-            
-            
-            const dadosDaResenha = response?.data 
 
+            console.log('Buscando resenhas do livro ISBN:', isbn)
+            const response = await axios.get(`http://localhost:3000/resenha`)
+            const todasResenhas = response?.data 
 
-            if (dadosDaResenha && dadosDaResenha.length > 0) {
-                setResenha(dadosDaResenha[0]) 
+            if (todasResenhas && todasResenhas.length > 0) {
+                const resenhasDoLivro = todasResenhas.filter(resenha => 
+                    resenha.livro_isbn === isbn
+                )
+                setResenhas(resenhasDoLivro)
+                console.log('Resenhas do livro:', resenhasDoLivro)
+
             } else {
-                setResenha({}) 
+                setResenhas([])
             }
 
-            console.log(resenhaInd)
-
-            console.log('resenha que foi puxado pelo get: ', dadosDaResenha)
-            JSON.stringify(resenha)
 
         } catch (error) {
-            console.error('Erro ao puxar a resenha:', error)
-            console.log('Index', resenhaInd)
+            console.error('Erro ao puxar as resenhas:', error)
         }
-        
-}
-
-const pegarUserName = async () => {
-        
-
-
-    try {
-        
-
-        console.log()
-        const response = await axios.get(`http://localhost:3000/usuario/${resenha.usuario_id}`)
-        
-        
-        const dadosDoUsuario = response?.data 
-
-        setUsuario(dadosDoUsuario)
-
-        console.log('dado do usuario que foi puxado pelo get: ', dadosDoUsuario)
-
-        JSON.stringify(usuario)
-
-    } catch (error) {
-        console.error('Erro ao puxar o usuario:', error)
     }
-    
-}
+
+    const pegarUsuarios = async (resenhasDoLivro) => {
+        try {
+            const usuariosUnicos = [...new Set(resenhasDoLivro.map(resenha => resenha.usuario_id))]
+            const usuariosData = {}
+            
+            for (const usuarioId of usuariosUnicos) {
+                const response = await axios.get(`http://localhost:3000/usuario/${usuarioId}`)
+                usuariosData[usuarioId] = response.data
+            }
+            
+            setUsuarios(usuariosData)
+            console.log('Dados dos usuários:', usuariosData)
+        } catch (error) {
+            console.error('Erro ao puxar os usuários:', error)
+        }
+    }
 
     useEffect(() => {
-    pegarResenha(resenhaInd)
-    }, [resenhaInd, livroSelecionado])
+        console.log('Resenhas atualizadas:', resenhas)
+    }, [resenhas])
+
+    useEffect(() => {
+        if (livroSelecionado && livroSelecionado.livro_isbn) {
+            console.log('Livro selecionado:', livroSelecionado)
+            pegarResenhasDoLivro(livroSelecionado.livro_isbn)
+        }
+    }, [livroSelecionado])
+
+    useEffect(() => {
+        if (resenhas.length > 0) {  
+            pegarUsuarios(resenhas)
+        }
+    }, [resenhas])
    
-
-   
-   useEffect(() => {
-       if (livroSelecionado != null) {
-           console.log('livroSelecionado recebido:', livroSelecionado)
-           
-           if (livroSelecionado.livroSelecionado_isbn != null) {
-               pegarlivroSelecionado(livroSelecionado.livroSelecionado_isbn)
-           } else {
-               setIsbnLivro(livroSelecionado.livroSelecionado_isbn || '')
-           }
-       }
-   }, [livroSelecionado, resenhaInd])
-
-
-   useEffect(() => {
-    if (resenha.usuario_id) {  
-        pegarUserName(resenha.usuario_id)
-    }
-}, [resenha.usuario_id])
-   
-  return (
-    <div className="container-mae-resenhas">
-
-        <div className="container-resenhas">
-
-            <div className="container-resenha-usuarios">
-
-                <div className="box-resenha">
-
-                            <div className="resenha-container">
-
-                                {/* Foto e Nome */}
-                                <div className="parte-foto-nome">
-
-                                    <div className="foto-perfil">
-
-                                        <img src="./images/icone-usuario.png" alt="Foto de perfil" className="imagem-perfil" />
-
-                                    </div>
-
-                                    <h2> {usuario.usuario_apelido}</h2>
-                                    <h2> {resenha.resenha_titulo} </h2>
-
-                                </div>
-
-                                {/* Texto da Resenha */}
-                                <div className="parte-resenha">
-
-                                    <label htmlFor="" className="texto-resenha">{resenha.resenha_texto}</label>
-
-                                </div>
-
-                                {/* Curtidas */}
-                                <div className="parte-curtida">
-
-                                    <button className="botao-curtida">
-
-                                        <img src="./images/like.svg" alt="Curtir" className="icone-curtida" />
-
-                                    </button>
-
-                                    <label htmlFor="" className="label-curtidas">{resenha.resenha_curtidas}</label>
-
+    return (
+        <div className="container-mae-resenhas">
+            <div className="container-resenhas">
+                <div className="container-resenha-usuarios">
+                    
+                    {resenhas.length === 0 ? (
+                        <p>Nenhuma resenha encontrada para este livro.</p>
+                    ) : (
+                        resenhas.map((resenhaOrganizada, pos) => (
+                            <div key={pos} className="box-resenha">
+                                <div className="resenha-container">
+                                    <ResenhaLivro 
+                                        resenhaTitulo={resenhaOrganizada.resenha_titulo}
+                                        resenhaTexto={resenhaOrganizada.resenha_texto}
+                                        resenhaCurtidas={resenhaOrganizada.resenha_curtidas}
+                                        resenhaNota={resenhaOrganizada.resenha_nota}
+                                        usuarioId={resenhaOrganizada.usuario_id}
+                                        usuarioApelido={usuarios[resenhaOrganizada.usuario_id]?.usuario_apelido}
+                                    />
                                 </div>
 
                             </div>
-                          
-                   
+                        ))
+                    )}
+                    
 
                 </div>
-
             </div>
-
         </div>
-      
-    </div>
-  )
+    )
 }
 
-export default livroParteDois
+export default LivroParteDois
