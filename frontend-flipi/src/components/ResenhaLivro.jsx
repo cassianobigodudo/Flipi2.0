@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-function ResenhaLivro({resenhaTitulo, resenhaTexto, usuarioId, resenhaCurtidas}) {
+function ResenhaLivro({resenhaTitulo, resenhaTexto, usuarioId, resenhaCurtidas, usuarioApelido}) {
   
 
   console.log('RESENHA TITULO: ', resenhaTitulo)
@@ -13,9 +13,9 @@ function ResenhaLivro({resenhaTitulo, resenhaTexto, usuarioId, resenhaCurtidas})
 
   return (
     <div>
-
+      
       <h2>{resenhaTitulo}</h2>
-      <h3>{usuarioId}</h3>
+      <h3>{usuarioApelido}</h3>
       <h3>{resenhaTexto}</h3>
       <h3>{resenhaCurtidas}</h3>
 
