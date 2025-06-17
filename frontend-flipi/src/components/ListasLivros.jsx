@@ -4,6 +4,7 @@ import CardLista from './CardLista';
 import MinhaLista from './MinhaLista';
 import axios from "axios";
 import { GlobalContext } from "../contexts/GlobalContext";
+import { livros } from '../contexts/Livros';
 
 function ListasLivros() {
     
@@ -12,6 +13,7 @@ function ListasLivros() {
     const [nomeLista, setNomeLista] = useState('');
     const [descricaoLista, setDescricaoLista] = useState('');
     const [listas, setListas] = useState([]);
+    const { biblioteca } = useContext(GlobalContext);
     
     const { idUsuarioLogado } = useContext(GlobalContext);
     console.log('id do usuario logado', idUsuarioLogado)
@@ -70,6 +72,8 @@ function ListasLivros() {
                 setListas={setListas}
                 listaSelecionada={listaSelecionada}
                 setListaSelecionada={setListaSelecionada}
+                setLista={setListaSelecionada}
+                biblioteca={biblioteca} // passe o contexto da biblioteca aqui
             />
         ) : (
 
@@ -112,7 +116,7 @@ function ListasLivros() {
 
                 </div>
 
-                    <dialog open={abriuForm}>
+                    <dialog open={abriuForm} className='dialog_lista-livros'>
 
                         <div className="form__listas">
 

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './CapaLivro.css'
 
-function CapaLivro({ capa, titulo, onClick }) {
+function CapaLivro({ capa, titulo, deletarLivro, visualizarLixeira, onClick }) {
+
   return (
     <div className='box__livro' onClick={onClick}>
 
@@ -16,6 +17,19 @@ function CapaLivro({ capa, titulo, onClick }) {
             <label htmlFor="">{titulo}</label>
 
         </div>
+        
+        {visualizarLixeira && (
+        <div className="apagar__livro" onClick={(e) => {
+          e.stopPropagation(); // Evita que o clique no botão dispare o onClick da capa
+          deletarLivro?.();
+        }}>
+          <img
+            src="./public/icons/delete-book.svg"
+            alt="Apagar livro"
+            className="image-delete-book"
+          />
+        </div>
+      )}
   
     </div>
   )

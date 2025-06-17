@@ -128,6 +128,23 @@ async function verificarTabelas(){
     );`
     await client.query(createLivroGeneroQuery);
     console.log(`Tabela "livro_genero" verificada/criada com sucesso.`)
+    
+    //Criação automática da tabela de listas personalizadas
+    const createListQuery= `
+    CREATE TABLE IF NOT EXISTS listas_personalizadas(
+        id SERIAL PRIMARY KEY, 	
+        criador_lista INTEGER NOT NULL REFERENCES usuario(usuario_id),
+        nome_lista TEXT NOT NULL, 	
+        descricao_lista TEXT NOT NULL, 	
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 	
+        isbn_livros TEXT[],
+        CONSTRAINT fk_criador_lista FOREIGN KEY (criador_lista)
+            REFERENCES usuario(usuario_id)
+            ON DELETE CASCADE   
+    );`
+    await client.query(createListQuery);
+    console.log(`Tabela "listas_personalizadas" verificada/criada com sucesso.`)
+
 
     
     //?-----RESENHA------?//
@@ -790,6 +807,83 @@ app.delete('/listas_personalizadas/:id', async (req, res) => {
     
 });
 
+//adição de isbn do livro a lista
+app.patch("/listas_personalizadas/:id/adicionar-livro", async (req, res) => {
+    const idLista = req.params.id;
+    const { isbnLivro } = req.body;
+
+    console.log('requisição recebida:', { idLista, isbnLivro });
+
+    try {
+
+        const isbnParaBanco = isbnLivro;
+        
+        // Primeiro verifica se a lista existe
+        const listaExiste = await pool.query(
+            "SELECT * FROM listas_personalizadas WHERE id = $1",
+            [idLista]
+        );
+        
+        if (listaExiste.rows.length === 0) {
+            console.log('Lista não encontrada!')
+            return res.status(404).json({ erro: "Lista não encontrada" });
+        }
+        
+        // Verifica se o livro já está na lista
+        const isbnArray = listaExiste.rows[0].isbn_livros || [];
+        console.log('ISBNSs atuais na lista:', isbnArray);
+        if (isbnArray.includes(isbnParaBanco)) {
+            return res.status(400).json({ erro: "Livro já está na lista" });
+        }
+        
+        const resultado = await pool.query(
+            `UPDATE listas_personalizadas 
+             SET isbn_livros = array_append(COALESCE(isbn_livros, '{}'), $1)
+             WHERE id = $2
+             RETURNING *;`,
+            [isbnParaBanco, idLista]
+        );
+        console.log('livro adicionado com sucesso:', resultado.rows[0])
+        res.status(200).json(resultado.rows[0]);
+
+    } catch (erro) {
+        console.error("Erro ao adicionar livro: ", erro);
+        res.status(500).json({ erro: "Erro interno do servidor" });
+    }
+});
+
+//rota para apagar um livro de uma lista
+// PATCH /listas_personalizadas/:id/remover-livro
+app.patch('/listas_personalizadas/:id/remover-livro', async (req, res) => {
+    const { id } = req.params; // ID da lista
+    const { isbnLivro } = req.body; // ISBN do livro a remover (como string)
+  
+    try {
+      // Verifica se a lista existe
+      const listaResult = await pool.query('SELECT * FROM listas_personalizadas WHERE id = $1', [id]);
+  
+      if (listaResult.rowCount === 0) {
+        return res.status(404).json({ erro: 'Lista não encontrada.' });
+      }
+  
+      // Remove o ISBN do array (PostgreSQL: array_remove)
+      const updateResult = await pool.query(
+        `UPDATE listas_personalizadas 
+         SET isbn_livros = array_remove(isbn_livros, $1)
+         WHERE id = $2
+         RETURNING *`,
+        [isbnLivro, id]
+      );
+  
+      return res.status(200).json(updateResult.rows[0]);
+  
+    } catch (erro) {
+      console.error('Erro ao remover livro da lista:', erro);
+      return res.status(500).json({ erro: 'Erro interno ao remover livro da lista.' });
+    }
+  });
+  
+
 //Rota para verificar o login 
 app.post('/login', async (req, res) => {
     const { usuario_apelido, usuario_senha } = req.body;
@@ -819,7 +913,6 @@ app.post('/login', async (req, res) => {
 });
 
 //* TABELA RESENHA
-
 app.post('/resenha', async (req, res) => {
     const {resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, usuario_id, livro_isbn} = req.body;
     try {

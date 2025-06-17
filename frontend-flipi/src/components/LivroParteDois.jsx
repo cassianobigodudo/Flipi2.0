@@ -9,11 +9,14 @@ function LivroParteDois({livroSelecionado, resenhaInd}) {
     const {biblioteca, setlivroAcessado} = useContext(GlobalContext);
     const [isbnLivro, setIsbnLivro] = useState()
     const [resenhaId, setResenhaId] = useState('')
+
     const [resenhas, setResenhas] = useState([])
     const [usuarios, setUsuarios] = useState({})
 
+
     const pegarResenhasDoLivro = async (isbn) => {
         try {
+
             console.log('Buscando resenhas do livro ISBN:', isbn)
             const response = await axios.get(`http://localhost:3000/resenha`)
             const todasResenhas = response?.data 
@@ -24,9 +27,11 @@ function LivroParteDois({livroSelecionado, resenhaInd}) {
                 )
                 setResenhas(resenhasDoLivro)
                 console.log('Resenhas do livro:', resenhasDoLivro)
+
             } else {
                 setResenhas([])
             }
+
 
         } catch (error) {
             console.error('Erro ao puxar as resenhas:', error)
@@ -87,10 +92,12 @@ function LivroParteDois({livroSelecionado, resenhaInd}) {
                                         usuarioApelido={usuarios[resenhaOrganizada.usuario_id]?.usuario_apelido}
                                     />
                                 </div>
+
                             </div>
                         ))
                     )}
                     
+
                 </div>
             </div>
         </div>
