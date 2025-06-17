@@ -82,6 +82,7 @@ function LivroParteDois({livroSelecionado, resenhaInd}) {
                                         resenhaTitulo={resenhaOrganizada.resenha_titulo}
                                         resenhaTexto={resenhaOrganizada.resenha_texto}
                                         resenhaCurtidas={resenhaOrganizada.resenha_curtidas}
+                                        resenhaNota={resenhaOrganizada.resenha_nota}
                                         usuarioId={resenhaOrganizada.usuario_id}
                                         usuarioApelido={usuarios[resenhaOrganizada.usuario_id]?.usuario_apelido}
                                     />
