@@ -52,7 +52,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    /* background-color: var(--fundoDivs); */
+    background-color: #FCF6E8;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     padding: 1%;
@@ -339,6 +339,7 @@
     background-color: #f4e2b4;
     width: 109%;
     border-radius: 10px;
+    resize: "none" 
 }
 .campo-descricao{
     height: 10%;
@@ -369,4 +370,9 @@
     margin-top: 5%;
     border-radius: 5px;
     font-size: xx-large;
+}
+.img-usuario{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
 }

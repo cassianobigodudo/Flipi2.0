@@ -273,7 +273,6 @@ function TelaUsuarioConfigs() {
                   src={editarFoto || dadosUsuarioLogado.url_foto}
                   alt="Foto do usuário"
                   className="img-usuario"
-                  style={{ width: '150px', height: '150px', borderRadius: '50%' }}
                 />
                 <div className="usuarioNomeDescricao">
                   <h2>{dadosUsuarioLogado.usuario_nome}</h2>
@@ -295,7 +294,6 @@ function TelaUsuarioConfigs() {
                         }
                       }}
                       rows={3}
-                      style={{ resize: "none" }}
                     />
                   </div>
                 </div>
@@ -413,7 +411,7 @@ function TelaUsuarioConfigs() {
               </div>
 
               <div className="usuarioConfigs-bmpr-body">
-                <ResenhasConfigs /><ResenhasConfigs /><ResenhasConfigs /><ResenhasConfigs />
+                <ResenhasConfigs />
               </div>
             </div>
           </div>

@@ -11,7 +11,6 @@ function LivroAleatorio() {
         src="public/images/ecodosilencio.png"
         alt=""
         onClick={() => setShowPopup(true)}
-        style={{ cursor: 'pointer' }}
       />
 
       {showPopup && (

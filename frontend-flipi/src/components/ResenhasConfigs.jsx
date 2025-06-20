@@ -1,36 +1,35 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './ResenhasConfigs.css'
-import{ GlobalContext } from '../contexts/GlobalContext'
-import { useContext } from 'react'
-import EstrelasBtn from './EstrelasBtn'
-import EstrelaCass from './EstrelaCass' 
-import LivroAleatorio from './LivroAleatorio'  
+import { GlobalContext } from '../contexts/GlobalContext'
+import LivroAleatorio from './LivroAleatorio'
 
 function ResenhasConfigs() {
-  return (
-    <div className='resenhas-container'>
+    const { reviews } = useContext(GlobalContext) // reviews: array de resenhas
 
-        {/* <img src="./images/star.svg" alt="" className="icone-estrela"/> */}
-        <div className="resenhas-usuario">
-
-            <div className="resenhas-usuario-capa">
-
-                <div className="resenhas-usuario-livro">
-
-                    <LivroAleatorio/>
-
-                        
-                    <div className="resenhas-usuario-titulo">
-                        <label className='lbl-titulo'>O Eco do Silêncio</label>
+    return (
+        <div className='resenhas-container'>
+            <div className="resenhas-usuario">
+                <div className="resenhas-usuario-capa">
+                    <div className="resenhas-usuario-livros-grid">
+                        {reviews && reviews.length > 0 ? (
+                            reviews.map((review, idx) => (
+                                <div className="resenha-livro" key={review.id || idx}>
+                                    <LivroAleatorio livro={review.livro} />
+                                    <div className="resenhas-usuario-titulo">
+                                        <label className='lbl-titulo'>{review.titulo}</label>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="sem-resenhas">
+                                <label>Você ainda não cadastrou nenhuma resenha.</label>
+                            </div>
+                        )}
                     </div>
-
                 </div>
             </div>
-
         </div>
-
-    </div>
-  )
+    )
 }
 
 export default ResenhasConfigs

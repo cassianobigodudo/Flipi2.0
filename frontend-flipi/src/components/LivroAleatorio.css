@@ -9,6 +9,7 @@
   justify-content: center; /* Centraliza horizontalmente */
   align-items: center;     /* Centraliza verticalmente */
   height: 100%;            /* Ajuste conforme necessário */
+  cursor: pointer;
 }
 .popup-overlay {
   position: fixed;
