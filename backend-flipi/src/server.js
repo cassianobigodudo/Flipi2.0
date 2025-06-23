@@ -1022,7 +1022,35 @@ app.get('/resenha/:resenha_id', async (req, res) => {
 
 
 })
- 
+
+app.put('/resenha/:resenha_id', async (req, res) => {
+    const { resenha_id } = req.params;
+    const { resenha_curtidas } = req.body;
+    
+    try {
+
+        const resenhaExiste = await pool.query(
+            'SELECT * FROM resenha WHERE resenha_id = $1', 
+            [resenha_id]
+        );
+        
+        if (resenhaExiste.rows.length === 0) {
+            return res.status(404).json({ error: 'Resenha não encontrada' });
+        }
+        
+
+        const result = await pool.query(
+            'UPDATE resenha SET resenha_curtidas = $1 WHERE resenha_id = $2 RETURNING *',
+            [resenha_curtidas, resenha_id]
+        );
+        
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error('Erro ao atualizar resenha:', error);
+        res.status(500).json({ error: 'Erro ao atualizar resenha' });
+    }
+});
+   
 
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000! :D')
