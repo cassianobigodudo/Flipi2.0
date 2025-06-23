@@ -26,44 +26,167 @@ function MinhaLista({
   // Estados para os valores temporários durante a edição
   const [nomeTemporario, setNomeTemporario] = useState(nomeLista)
   const [descricaoTemporaria, setDescricaoTemporaria] = useState(descricaoLista)
+  const [livros, setLivros] = useState([])
+  const [todosLivros, setTodosLivros] = useState([])
+
+  //pesquisar livros
+  const [livrosPesquisados, setLivrosPesquisados] = useState([])
+  const [pesquisa, setPesquisa] = useState()
+  const [carregarLivros, setCarregarLivros] = useState(false)
+
+  // Função para carregar todos os livros do banco
+  const carregarTodosLivros = async () => {
+    try {
+      setCarregarLivros(true);
+      const resposta = await axios.get('http://localhost:3000/livro'); // ajuste a URL conforme sua API
+      setTodosLivros(resposta.data);
+      setLivrosPesquisados(resposta.data); // inicialmente mostra todos
+    } catch (erro) {
+      console.error("Erro ao carregar livros:", erro);
+      alert("Erro ao carregar livros do banco de dados");
+    } finally {
+      setCarregarLivros(false);
+    }
+  };
+
+  // Função de pesquisa
+  const pesquisarLivros = (termo) => {
+    if (!termo.trim()) {
+      // Se não há termo de pesquisa, mostra todos os livros
+      setLivrosPesquisados(todosLivros);
+      return;
+    }
+
+    const termoLower = termo.toLowerCase();
+    
+    const resultados = todosLivros.filter(livro => {
+      // Pesquisa por título
+      const tituloMatch = livro.livro_titulo?.toLowerCase().includes(termoLower);
+      
+      // Pesquisa por ISBN (remove hífens e espaços para comparação mais flexível)
+      const isbnLivro = livro.livro_isbn?.replace(/[-\s]/g, '');
+      const isbnPesquisa = termo.replace(/[-\s]/g, '');
+      const isbnMatch = isbnLivro?.toLowerCase().includes(isbnPesquisa.toLowerCase());
+      
+      // Também pode pesquisar por autor se quiser
+      const autorMatch = livro.livro_autor?.toLowerCase().includes(termoLower);
+      
+      return tituloMatch || isbnMatch || autorMatch;
+    });
+
+    setLivrosPesquisados(resultados);
+  };
+
+  // Handler para mudança no input
+  const handleInputChange = (e) => {
+    const valor = e.target.value;
+    setPesquisa(valor);
+    pesquisarLivros(valor); // pesquisa em tempo real
+  };
+
+  // Função chamada quando o dialog abre
+  const abrirDialog = () => {
+    setAbriuCaixa(true);
+    carregarTodosLivros(); // carrega todos os livros quando abre
+    setPesquisa(''); // limpa a pesquisa
+  };
+
+  // Função para fechar o dialog e limpar estados
+  const fecharDialog = () => {
+    setAbriuCaixa(false);
+    setPesquisa('');
+    setTodosLivros([]);
+    setLivrosPesquisados([]);
+  };
+
+
 
   //adicionar um livro a uma lista
   const adicionarLivro = async (livro) => {
+
     try {
-      // Verificação de segurança
+
       if (!listaSelecionada || !listaSelecionada.id) {
         alert("Erro: Lista não selecionada!");
         return;
       }
 
-      const resposta = await axios.patch(
+      // ✅ VERIFICAÇÃO: Checa se o livro já está na lista
+      const livroJaExiste = livros.some(l => l.livro_isbn === livro.livro_isbn);
+      
+      if (livroJaExiste) {
+        alert(`O livro "${livro.livro_titulo}" já está na lista!`);
+        return;
+      }
+  
+      // Adiciona o livro no backend
+      await axios.patch(
         `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}/adicionar-livro`,
         {
-          isbnLivro: String(livro.isbnLivro) // Agora está correto com sua estrutura!
+          isbnLivro: livro.livro_isbn
         }
       );
-
-      // Atualiza a lista local com os dados retornados do backend
-      setLista(resposta.data);
-      
-      // Também atualiza a lista no estado global se necessário
-      const listasAtualizadas = listas.map(l => 
-        l.id === listaSelecionada.id ? resposta.data : l
+  
+      // 🔁 Faz uma nova requisição para buscar os livros da lista
+      const respostaLivros = await axios.get(
+        `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}/livro`
       );
-      setListas(listasAtualizadas);
-      
-      alert(`"${livro.tituloLivro}" adicionado com sucesso!`);
+  
+      // Atualiza o estado `livros` para garantir que a lista renderize corretamente
+      setLivros(respostaLivros.data);
+
+      // Atualiza os livros na lista com os dados completos
+      setLista(prev => ({
+        ...prev,
+        isbn_livros: respostaLivros.data.map(l => l.livro_isbn)
+      }));
+  
+      alert(`"${livro.livro_titulo}" adicionado com sucesso!`);
+
     } catch (erro) {
+
       console.error("Erro ao adicionar livro:", erro);
-      
-      // Mensagem de erro mais específica baseada na resposta do servidor
       if (erro.response?.data?.erro) {
         alert(erro.response.data.erro);
       } else {
         alert("Erro ao adicionar o livro à lista.");
       }
+
     }
+
   };
+  
+
+  useEffect(() => {
+    const buscarLivrosDaLista = async () => {
+      try {
+        if (!listaSelecionada?.id) return;
+  
+        const response = await axios.get(
+          `http://localhost:3000/listas_personalizadas/${listaSelecionada.id}/livro`
+        );
+        setLivros(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar livros da lista:", error);
+        alert("Erro interno ao buscar livros da lista");
+      }
+    };
+  
+    buscarLivrosDaLista();
+  }, [listaSelecionada]);
+
+  useEffect(() => {
+    const buscarTodosLivros = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/livro");
+        setTodosLivros(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar todos os livros:", error);
+      }
+    };
+  
+    buscarTodosLivros();
+  }, []);
 
   //editar ou excluir uma lista
   function opcoesedicao(){
@@ -309,23 +432,18 @@ function MinhaLista({
 
         <div className="lista__body--books">
 
-          {lista?.isbn_livros?.map((isbn) => {
-            const livro = biblioteca.find(l => l.isbnLivro === isbn || l.isbn === isbn);
-            if (!livro) return null;
+          {livros.map((livro) => (
+            <CapaLivro
+              key={livro.livro_isbn}
+              capa={livro.livro_capa}
+              titulo={livro.livro_titulo}
+              onClick={() => {}}
+              visualizarLixeira={mostrarBotaoDeletar}
+              deletarLivro={() => removerLivroDaLista(livro.livro_isbn)}
+            />
+          ))}
 
-            return (
-              <CapaLivro
-                key={isbn}
-                capa={livro.capaLivro}
-                titulo={livro.tituloLivro}
-                onClick={() => {}}
-                visualizarLixeira={mostrarBotaoDeletar}
-                deletarLivro={() => removerLivroDaLista(isbn)}
-              />
-            );
-          })}
-
-          <button className="botao__add--livro" onClick={() => setAbriuCaixa(true)}><img className='img__adicionar' src="./teste/adicionar.svg" alt="" /></button>
+          <button className="botao__add--livro" onClick={abrirDialog}><img className='img__adicionar' src="./teste/adicionar.svg" alt="" /></button>
 
         </div>
 
@@ -338,25 +456,57 @@ function MinhaLista({
             <div className="fechar__caixa">
 
               <div className="pesquisar__livro">
-                <input type="text" className="input__pesquisar--livro" placeholder='Pesquise o livro pelo ISBN aqui...'/>
-                <button className="btn__pesquisa--livro" onClick={() => alert("Pesquisando um livro pelo ISBN!")}><img className='img__pesquisar' src="./public/icons/search-book.svg" alt="" /></button>
+                <input 
+                  type="text" 
+                  className="input__pesquisar--livro" 
+                  placeholder='Pesquise o livro pelo ISBN aqui...'
+                  value={pesquisa}
+                  onChange={handleInputChange}
+                />
+                
+                <button className="btn__pesquisa--livro" onClick={() => pesquisarLivros(pesquisa)}>
+                  <img className='img__pesquisar' src="./public/icons/search-book.svg" alt="" />
+                </button>
+
               </div>
 
               <div className="botao__fechar">
-                <button className="btn__fechar--caixa" onClick={() => setAbriuCaixa(false)}>❌</button>
+                <button className="btn__fechar--caixa" onClick={fecharDialog}>❌</button>
               </div>
 
             </div>
 
             <div className="lista__livros">
 
-              {biblioteca.map((livro) => (
-                <CapaLivro 
-                  key={livro.isbnLivro || livro.isbn || livro.id} 
-                  capa={livro.capaLivro} 
-                  titulo={livro.tituloLivro} 
-                  onClick={() => adicionarLivro(livro)}/>
-              ))}
+              {carregarLivros ? (
+                  <div className="carregando">
+                    <p>Carregando livros...</p>
+                  </div>
+                ) : (
+                  <>
+                    {/* Lista de livros filtrados */}
+                    {livrosPesquisados.length > 0 ? (
+                      livrosPesquisados.map((livro) => (
+                        <CapaLivro
+                          key={livro.livro_isbn}
+                          capa={livro.livro_capa}
+                          titulo={livro.livro_titulo}
+                          onClick={() => adicionarLivro(livro)}
+                        />
+                      ))
+                    ) : (
+                      <div className="sem-resultados">
+                        {pesquisa ? (
+                          <p>Nenhum livro encontrado para "{pesquisa}"</p>
+                        ) : (
+                          <p>Nenhum livro disponível</p>
+                        )}
+                      </div>
+                    )}
+                  </>
+                )
+
+              }
 
             </div>
 

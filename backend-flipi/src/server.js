@@ -137,7 +137,7 @@ async function verificarTabelas(){
         nome_lista TEXT NOT NULL, 	
         descricao_lista TEXT NOT NULL, 	
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 	
-        isbn_livros TEXT[],
+        isbn_livros BIGINT[],
         CONSTRAINT fk_criador_lista FOREIGN KEY (criador_lista)
             REFERENCES usuario(usuario_id)
             ON DELETE CASCADE   
@@ -864,6 +864,17 @@ app.delete('/listas_personalizadas/:id', async (req, res) => {
     
 });
 
+//Rota para listar todos os livros que estão no meu banco de dados
+app.get("/livro", async (req, res) => {
+    try {
+      const resultado = await pool.query("SELECT * FROM livro");
+      res.json(resultado.rows); // ou .recordset se for SQL Server
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ erro: "Erro ao buscar livros" });
+    }
+  });
+
 //adição de isbn do livro a lista
 app.patch("/listas_personalizadas/:id/adicionar-livro", async (req, res) => {
     const idLista = req.params.id;
@@ -873,7 +884,7 @@ app.patch("/listas_personalizadas/:id/adicionar-livro", async (req, res) => {
 
     try {
 
-        const isbnParaBanco = isbnLivro;
+        const isbnParaBanco = Number(isbnLivro);
         
         // Primeiro verifica se a lista existe
         const listaExiste = await pool.query(
@@ -908,6 +919,41 @@ app.patch("/listas_personalizadas/:id/adicionar-livro", async (req, res) => {
         res.status(500).json({ erro: "Erro interno do servidor" });
     }
 });
+
+//rota para buscar todos os isbns da minha lista de livros
+app.get("/listas_personalizadas/:id/livro", async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      // Busca os ISBNs da lista
+      const lista = await pool.query(
+        "SELECT isbn_livros FROM listas_personalizadas WHERE id = $1",
+        [id]
+      );
+  
+      if (lista.rows.length === 0) {
+        return res.status(404).json({ erro: "Lista não encontrada" });
+      }
+  
+      const isbns = lista.rows[0].isbn_livros;
+  
+      if (!isbns || isbns.length === 0) {
+        return res.json([]); // Lista vazia
+      }
+  
+      // Busca os dados dos livros com base nos ISBNs
+      const livros = await pool.query(
+        `SELECT * FROM livro WHERE livro_isbn = ANY($1::bigint[])`,
+        [isbns]
+      );
+  
+      res.json(livros.rows);
+    } catch (erro) {
+      console.error("Erro ao buscar livros da lista:", erro);
+      res.status(500).json({ erro: "Erro interno ao buscar livros da lista" });
+    }
+  });
+  
 
 //rota para apagar um livro de uma lista
 app.patch('/listas_personalizadas/:id/remover-livro', async (req, res) => {
