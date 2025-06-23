@@ -88,8 +88,11 @@
 }
 
 .resenhaTexto{
+    padding: 5px;
 
 color: rgb(255, 234, 206);
+letter-spacing: 1px;
+font-size: 32px;
 }
 
 .resenhaBottom{
