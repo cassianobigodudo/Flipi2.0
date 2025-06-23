@@ -97,3 +97,34 @@
     text-align: center;
     margin-top: 10px;
 }
+.Fila-livros {
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: #FCF6E8;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+.box-titulo {
+    height: 100%;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #FCF6E8;
+    transition: 0.3s;
+}
+.popup-content{
+    font-family: 'fonte-projeto';
+}
+.close-popup{
+    max-width: 70%;
+    
+}

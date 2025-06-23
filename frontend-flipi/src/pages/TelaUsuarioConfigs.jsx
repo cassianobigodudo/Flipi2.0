@@ -201,9 +201,27 @@ function TelaUsuarioConfigs() {
   }, [setVetorObjetosUsuarios]);
 
   // Calcula a pontuação com base na quantidade de resenhas do usuário
-  const resenhasUsuario = dadosUsuarioLogado.resenhas || [];
-  const pontuacao = resenhasUsuario.length * 10; // Exemplo: 10 pontos por resenha
-  const nivel = Math.floor(pontuacao / 100) + 1; // Exemplo: cada 100 pontos sobe de nível
+  // Busca as resenhas do usuário logado para calcular pontos e nível
+  const [resenhasUsuario, setResenhasUsuario] = useState([]);
+
+  useEffect(() => {
+    const fetchResenhasUsuario = async () => {
+      try {
+        // Supondo que o backend tenha um endpoint para buscar resenhas por usuário
+        const response = await axios.get(`http://localhost:3000/resenha?usuario_id=${dadosUsuarioLogado.usuario_id}`);
+        setResenhasUsuario(response.data || []);
+      } catch (error) {
+        setResenhasUsuario([]);
+      }
+    };
+
+    if (dadosUsuarioLogado?.usuario_id) {
+      fetchResenhasUsuario();
+    }
+  }, [dadosUsuarioLogado?.usuario_id]);
+
+  const pontuacao = resenhasUsuario.length * 10; // 10 pontos por resenha
+  const nivel = Math.floor(pontuacao / 100) + 1; // cada 100 pontos sobe de nível
   const pontosProximoNivel = 100;
   const progresso = ((pontuacao % pontosProximoNivel) / pontosProximoNivel) * 100;
 
