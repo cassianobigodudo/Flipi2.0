@@ -13,10 +13,8 @@ function LivroParteDois({livroSelecionado, resenhaInd}) {
     const [resenhas, setResenhas] = useState([])
     const [usuarios, setUsuarios] = useState({})
 
-
     const pegarResenhasDoLivro = async (isbn) => {
         try {
-
             console.log('Buscando resenhas do livro ISBN:', isbn)
             const response = await axios.get(`http://localhost:3000/resenha`)
             const todasResenhas = response?.data 
@@ -27,12 +25,9 @@ function LivroParteDois({livroSelecionado, resenhaInd}) {
                 )
                 setResenhas(resenhasDoLivro)
                 console.log('Resenhas do livro:', resenhasDoLivro)
-
             } else {
                 setResenhas([])
             }
-
-
         } catch (error) {
             console.error('Erro ao puxar as resenhas:', error)
         }
@@ -54,6 +49,16 @@ function LivroParteDois({livroSelecionado, resenhaInd}) {
             console.error('Erro ao puxar os usuários:', error)
         }
     }
+
+    const atualizarCurtidas = (resenhaId, novasCurtidas) => {
+        setResenhas(resenhasAtuais => 
+            resenhasAtuais.map(resenha => 
+                resenha.resenha_id === resenhaId 
+                    ? { ...resenha, resenha_curtidas: novasCurtidas }
+                    : resenha
+            )
+        );
+    };
 
     useEffect(() => {
         console.log('Resenhas atualizadas:', resenhas)
@@ -90,14 +95,13 @@ function LivroParteDois({livroSelecionado, resenhaInd}) {
                                         resenhaNota={resenhaOrganizada.resenha_nota}
                                         usuarioId={resenhaOrganizada.usuario_id}
                                         usuarioApelido={usuarios[resenhaOrganizada.usuario_id]?.usuario_apelido}
+                                        resenhaId={resenhaOrganizada.resenha_id} 
+                                        onCurtidaAtualizada={atualizarCurtidas} 
                                     />
                                 </div>
-
                             </div>
                         ))
                     )}
-                    
-
                 </div>
             </div>
         </div>
