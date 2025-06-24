@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate} from 'react-router-dom'
 import './MinhaLista.css'
 import { useGlobalContext } from '../contexts/GlobalContext'
 import CapaLivro from './CapaLivro';
@@ -16,6 +17,8 @@ function MinhaLista({
   setListaSelecionada,
   biblioteca
   }) {
+
+    const navigate = useNavigate();
 
   const [abriuCaixa, setAbriuCaixa] = useState(false)
   const [caixaEdicao, setCaixaEdicao] = useState(false);
@@ -437,7 +440,7 @@ function MinhaLista({
               key={livro.livro_isbn}
               capa={livro.livro_capa}
               titulo={livro.livro_titulo}
-              onClick={() => {}}
+              onClick={() => navigate(`/livro/${livro.livro_isbn}`)}
               visualizarLixeira={mostrarBotaoDeletar}
               deletarLivro={() => removerLivroDaLista(livro.livro_isbn)}
             />

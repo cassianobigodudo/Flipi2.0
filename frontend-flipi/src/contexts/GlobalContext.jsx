@@ -1,87 +1,211 @@
+// import { createContext, useState, useContext, useEffect } from "react";
+// import { livros } from "./Livros";
+
+// export const GlobalContext = createContext()
+
+// export const GlobalContextProvider = ({children}) => {
+
+//     const [vetorObjetosUsuarios, setVetorObjetosUsuarios] = useState([])
+//     const [usuarioLogado, setUsuarioLogado] = useState(false)
+//     const [posicaoUsuario, setPosicaoUsuario] = useState('vazio')
+//     const [posicaoUsuarioID, setPosicaoUsuarioID] = useState(
+//         localStorage.getItem("posicaoUsuarioID") || null
+//     )
+//     const [idUsuarioLogado, setIdUsuarioLogado] = useState(
+//         localStorage.getItem("idUsuarioLogado") || null
+//     )
+//     const [dadosUsuarioLogado, setDadosUsuarioLogado] = useState(
+//         localStorage.getItem("dadosUsuarioLogado") || ""
+//     )
+//     const [livroAcessado, setLivroAcessado] = useState('')
+
+//     const [biblioteca, setBiblioteca] = useState(livros);
+
+//     useEffect(() => {
+//         const logado = localStorage.getItem("usuarioLogado") === "true";
+//         const dados = localStorage.getItem("dadosUsuarioLogado");
+//         const id = localStorage.getItem("idUsuarioLogado");
+//         const posID = localStorage.getItem("posicaoUsuarioID");
+    
+//         if (logado) setUsuarioLogado(true);
+//         if (dados) setDadosUsuarioLogado(JSON.parse(dados));
+//         if (id) setIdUsuarioLogado(id);
+//         if (posID) setPosicaoUsuarioID(posID);
+//     }, []);
+    
+
+//     // 🔗 Sincroniza o idUsuarioLogado no localStorage
+//     useEffect(() => {
+//         if (idUsuarioLogado) {
+//         localStorage.setItem("idUsuarioLogado", idUsuarioLogado);
+//         } else {
+//         localStorage.removeItem("idUsuarioLogado");
+//         }
+//     }, [idUsuarioLogado]);
+
+//     useEffect(() => {
+//         if (posicaoUsuarioID) {
+//         localStorage.setItem("posicaoUsuarioID", posicaoUsuarioID);
+//         } else {
+//         localStorage.removeItem("posicaoUsuarioID");
+//         }
+//     }, [posicaoUsuarioID]);
+
+//     useEffect(() => {
+//         if (dadosUsuarioLogado) {
+//             localStorage.setItem("dadosUsuarioLogado", JSON.stringify(dadosUsuarioLogado));
+//         } else {
+//             localStorage.removeItem("dadosUsuarioLogado");
+//         }
+//     }, [dadosUsuarioLogado]);
+
+//     useEffect(() => {
+//         localStorage.setItem("usuarioLogado", usuarioLogado);
+//     }, [usuarioLogado]);
+    
+//     const [listaResenhas, setListaResenhas] = useState([])
+//     const [mostrarFiltro, setMostrarFiltro] = useState(false)
+//     const [usuarioId, setUsuarioId] = useState()
+//     const [livrosPesquisados, setLivrosPesquisados] = useState([])
+
+
+//     return(
+ 
+//         <GlobalContext.Provider value={{
+//             livrosPesquisados, 
+//             setLivrosPesquisados, 
+//             vetorObjetosUsuarios, 
+//             setVetorObjetosUsuarios, 
+//             usuarioLogado, 
+//             setUsuarioLogado, 
+//             posicaoUsuario, 
+//             setPosicaoUsuario, 
+//             posicaoUsuarioID, 
+//             setPosicaoUsuarioID, 
+//             dadosUsuarioLogado, 
+//             setDadosUsuarioLogado, 
+//             biblioteca, 
+//             setBiblioteca, 
+//             livroAcessado, 
+//             setLivroAcessado,
+//             listaResenhas, 
+//             setListaResenhas, 
+//             usuarioId, 
+//             setUsuarioId,
+//             idUsuarioLogado, 
+//             setIdUsuarioLogado
+//           }}
+//         >
+//             {children}
+//         </GlobalContext.Provider>
+//     )
+// }
+
+// export const useGlobalContext = () => useContext(GlobalContext);
+
 import { createContext, useState, useContext, useEffect } from "react";
 import { livros } from "./Livros";
 
-export const GlobalContext = createContext()
+export const GlobalContext = createContext();
 
-export const GlobalContextProvider = ({children}) => {
+export const GlobalContextProvider = ({ children }) => {
+  const [vetorObjetosUsuarios, setVetorObjetosUsuarios] = useState([]);
+  const [usuarioLogado, setUsuarioLogado] = useState(() => {
+    return localStorage.getItem("usuarioLogado") === "true";
+  });
 
-    const [vetorObjetosUsuarios, setVetorObjetosUsuarios] = useState([])
-    const [usuarioLogado, setUsuarioLogado] = useState(false)
-    const [posicaoUsuario, setPosicaoUsuario] = useState('vazio')
-    const [posicaoUsuarioID, setPosicaoUsuarioID] = useState(
-        localStorage.getItem("posicaoUsuarioID") || null
-    )
-    const [idUsuarioLogado, setIdUsuarioLogado] = useState(
-        localStorage.getItem("idUsuarioLogado") || null
-    )
-    const [dadosUsuarioLogado, setDadosUsuarioLogado] = useState(
-        localStorage.getItem("dadosUsuarioLogado") || ""
-    )
-    const [livroAcessado, setLivroAcessado] = useState('')
+  const [posicaoUsuario, setPosicaoUsuario] = useState("vazio");
 
-    const [biblioteca, setBiblioteca] = useState(livros);
+  const [posicaoUsuarioID, setPosicaoUsuarioID] = useState(() => {
+    return localStorage.getItem("posicaoUsuarioID") || null;
+  });
 
-    // 🔗 Sincroniza o idUsuarioLogado no localStorage
-    useEffect(() => {
-        if (idUsuarioLogado) {
-        localStorage.setItem("idUsuarioLogado", idUsuarioLogado);
-        } else {
-        localStorage.removeItem("idUsuarioLogado");
-        }
-    }, [idUsuarioLogado]);
+  const [idUsuarioLogado, setIdUsuarioLogado] = useState(() => {
+    return localStorage.getItem("idUsuarioLogado") || null;
+  });
 
-    useEffect(() => {
-        if (posicaoUsuarioID) {
-        localStorage.setItem("posicaoUsuarioID", posicaoUsuarioID);
-        } else {
-        localStorage.removeItem("posicaoUsuarioID");
-        }
-    }, [posicaoUsuarioID]);
+  const [dadosUsuarioLogado, setDadosUsuarioLogado] = useState(() => {
+    try {
+      const data = localStorage.getItem("dadosUsuarioLogado");
+      return data ? JSON.parse(data) : null;
+    } catch (e) {
+      console.error("Erro ao carregar dadosUsuarioLogado:", e);
+      localStorage.removeItem("dadosUsuarioLogado");
+      return null;
+    }
+  });
 
-    useEffect(() => {
-        if (dadosUsuarioLogado) {
-        localStorage.setItem("dadosUsuarioLogado", dadosUsuarioLogado);
-        } else {
-        localStorage.removeItem("dadosUsuarioLogado");
-        }
-    }, [dadosUsuarioLogado]);
+  const [livroAcessado, setLivroAcessado] = useState("");
+  const [biblioteca, setBiblioteca] = useState(livros);
+  const [listaResenhas, setListaResenhas] = useState([]);
+  const [mostrarFiltro, setMostrarFiltro] = useState(false);
+  const [usuarioId, setUsuarioId] = useState();
+  const [livrosPesquisados, setLivrosPesquisados] = useState([]);
 
-    const [listaResenhas, setListaResenhas] = useState([])
-    const [mostrarFiltro, setMostrarFiltro] = useState(false)
-    const [usuarioId, setUsuarioId] = useState()
-    const [livrosPesquisados, setLivrosPesquisados] = useState([])
+  // 🔄 Sincronização com localStorage
+  useEffect(() => {
+    localStorage.setItem("usuarioLogado", usuarioLogado);
+  }, [usuarioLogado]);
 
+  useEffect(() => {
+    if (posicaoUsuarioID) {
+      localStorage.setItem("posicaoUsuarioID", posicaoUsuarioID);
+    } else {
+      localStorage.removeItem("posicaoUsuarioID");
+    }
+  }, [posicaoUsuarioID]);
 
-    return(
- 
-        <GlobalContext.Provider value={{
-            livrosPesquisados, 
-            setLivrosPesquisados, 
-            vetorObjetosUsuarios, 
-            setVetorObjetosUsuarios, 
-            usuarioLogado, 
-            setUsuarioLogado, 
-            posicaoUsuario, 
-            setPosicaoUsuario, 
-            posicaoUsuarioID, 
-            setPosicaoUsuarioID, 
-            dadosUsuarioLogado, 
-            setDadosUsuarioLogado, 
-            biblioteca, 
-            setBiblioteca, 
-            livroAcessado, 
-            setLivroAcessado,
-            listaResenhas, 
-            setListaResenhas, 
-            usuarioId, 
-            setUsuarioId,
-            idUsuarioLogado, 
-            setIdUsuarioLogado
-          }}
-        >
-            {children}
-        </GlobalContext.Provider>
-    )
-}
+  useEffect(() => {
+    if (idUsuarioLogado) {
+      localStorage.setItem("idUsuarioLogado", idUsuarioLogado);
+    } else {
+      localStorage.removeItem("idUsuarioLogado");
+    }
+  }, [idUsuarioLogado]);
+
+  useEffect(() => {
+    if (dadosUsuarioLogado) {
+      try {
+        localStorage.setItem("dadosUsuarioLogado", JSON.stringify(dadosUsuarioLogado));
+      } catch (e) {
+        console.error("Erro ao salvar dadosUsuarioLogado:", e);
+      }
+    } else {
+      localStorage.removeItem("dadosUsuarioLogado");
+    }
+  }, [dadosUsuarioLogado]);
+
+  return (
+    <GlobalContext.Provider
+      value={{
+        livrosPesquisados,
+        setLivrosPesquisados,
+        vetorObjetosUsuarios,
+        setVetorObjetosUsuarios,
+        usuarioLogado,
+        setUsuarioLogado,
+        posicaoUsuario,
+        setPosicaoUsuario,
+        posicaoUsuarioID,
+        setPosicaoUsuarioID,
+        dadosUsuarioLogado,
+        setDadosUsuarioLogado,
+        biblioteca,
+        setBiblioteca,
+        livroAcessado,
+        setLivroAcessado,
+        listaResenhas,
+        setListaResenhas,
+        usuarioId,
+        setUsuarioId,
+        idUsuarioLogado,
+        setIdUsuarioLogado,
+      }}
+    >
+      {children}
+    </GlobalContext.Provider>
+  );
+};
 
 export const useGlobalContext = () => useContext(GlobalContext);
+
