@@ -58,7 +58,7 @@ function TelaPrincipal() {
       }, [dadosUsuarioLogado])
 
     useEffect(() => {
-        console.log(dadosUsuarioLogado)
+        // console.log(dadosUsuarioLogado)
     }, [dadosUsuarioLogado])
 
     return (

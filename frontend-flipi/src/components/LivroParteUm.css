@@ -101,6 +101,7 @@
     height: 90vh;
     width: 180vh;
     animation: fadeIn 0.5s ease-in-out;
+    font-family: fonte-projeto;
     
 }
    .parte-cima{

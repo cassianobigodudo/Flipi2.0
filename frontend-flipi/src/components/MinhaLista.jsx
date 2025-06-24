@@ -440,7 +440,7 @@ function MinhaLista({
               key={livro.livro_isbn}
               capa={livro.livro_capa}
               titulo={livro.livro_titulo}
-              onClick={() => navigate(`/livro/${livro.livro_isbn}`)}
+              onClick={() => navigate(`/telalivro/${livro.livro_isbn}`)}
               visualizarLixeira={mostrarBotaoDeletar}
               deletarLivro={() => removerLivroDaLista(livro.livro_isbn)}
             />

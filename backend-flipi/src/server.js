@@ -433,6 +433,14 @@ app.post('/livro/isbn/:isbn', async (req, res) => {
         const editoraId = editoraNome ? await obterOuCriarEditora(editoraNome) : null;
         
         // Insere o livro no banco
+        console.log("isbn ====>>> ", isbn);
+        console.log("titulo====>>> ", titulo);
+        console.log("ano====>>> ", ano);
+        console.log("limitedSinopse ====>>> ", limitedSinopse);
+        console.log("editoraId ====>>> ", editoraId);
+        console.log("capa ====>>> ", capa);
+
+        
         const livroResult = await client.query(
             'INSERT INTO livro (livro_isbn, livro_titulo, livro_ano, livro_sinopse, editora_id, livro_capa) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
             [isbn, titulo, ano, limitedSinopse, editoraId, capa]
