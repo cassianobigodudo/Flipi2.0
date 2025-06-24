@@ -22,14 +22,14 @@
     height: 30%;
     display: flex;
     align-items: center;
-    background-color: blue;
+    /* background-color: blue; */
     justify-content: center;
     }
 
 .header-vazio{
 
     height: 13%;
-    background-color: red;
+    /* background-color: red; */
 
 }
 
