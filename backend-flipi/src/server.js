@@ -836,22 +836,27 @@ app.post('/resenha', async (req, res) => {
     }
 });
 
-
 app.get('/resenha', async (req, res) => {
+    const { usuario_id } = req.query;
 
     try {
-
-        const result = await pool.query(
-            'SELECT * FROM resenha'
-
-        )
-        res.status(200).json(result.rows)
+        let result;
+        if (usuario_id) {
+            result = await pool.query(
+                'SELECT * FROM resenha WHERE usuario_id = $1',
+                [usuario_id]
+            );
+        } else {
+            result = await pool.query(
+                'SELECT * FROM resenha'
+            );
+        }
+        res.status(200).json(result.rows);
     } catch (error) {
-
-        console.error('Erro ao buscar resenha: ', error)
-        res.status(500).json({ error: 'Erro ao buscar resenha'})
-
-    }})
+        console.error('Erro ao buscar resenha: ', error);
+        res.status(500).json({ error: 'Erro ao buscar resenha' });
+    }
+});
 
 
     
@@ -873,7 +878,26 @@ app.get('/resenha/:resenha_id', async (req, res) => {
 
 
 })
- 
+
+// ...existing code...
+
+// Rota para deletar uma resenha
+app.delete('/resenha/:resenha_id', async (req, res) => {
+    const { resenha_id } = req.params;
+    try {
+        const result = await pool.query(
+            'DELETE FROM resenha WHERE resenha_id = $1 RETURNING *',
+            [resenha_id]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Resenha não encontrada' });
+        }
+        res.json({ message: 'Resenha deletada com sucesso' });
+    } catch (error) {
+        console.error('Erro ao deletar resenha:', error);
+        res.status(500).json({ error: 'Erro ao deletar resenha' });
+    }
+});
 
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000! :D')

@@ -446,4 +446,4 @@ function TelaUsuarioConfigs() {
   )
 }
 
-export default TelaUsuarioConfigs
+export default TelaUsuarioConfigs;
