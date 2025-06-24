@@ -306,12 +306,12 @@ dialog{
 }
 
 .dialog-divAtivo{
-  height: 25%;
+  height: 75%;
   position: fixed;
   width: 85%;
   background-color: rgb(65, 143, 137);
   opacity: 94%;
-  margin-top: -200px;
+  margin-top: -300px;
   margin-left: -20px;
   border-radius: 3px;
   transition: 1s;
