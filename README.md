@@ -26,7 +26,15 @@ O trabalho desenvolvido pelo nosso grupo, cujo membros são Cassiano Calazans Co
 7. (Legado) **Suporte aos Navegadores (RNF-07):** O sistema será compatível com os navegadores Microsoft Edge, Google Chrome, além de dispositivos móveis.
 8. (Legado) **Moderação (RNF-08):** Todo o conteúdo criado pelos usuários será monitorado e regulado de acordo com as regras estabelecidas, garantindo a segurança do ambiente virtual.
 
-## Telas
+### Instalação das Dependências Frontend e Backend
+
+## Frontend
+No terminal da pasta Frontend, execute o comando "npm install axios react-router react-icons vitest".
+
+## Backend
+No terminal da pasta Backend, execute o comando "npm install express nodemon cors pg".
+
+### Telas
 
 ### Landing Page 
 ![image](https://github.com/user-attachments/assets/1132db13-941e-4ab0-bbb7-bdd63e6bdbd9)
