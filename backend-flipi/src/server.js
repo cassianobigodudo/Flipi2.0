@@ -106,6 +106,7 @@ async function verificarTabelas(){
     );`
     await client.query(createLivroQuery);
     console.log(`Tabela "livro" verificada/criada com sucesso.`);
+    await inserirLivrosTabela(client);
 
     const createLivroAutorQuery= `
     CREATE TABLE IF NOT EXISTS livro_autor(
@@ -200,6 +201,38 @@ async function buscarLivroPorISBN(isbn) {
     } catch (error) {
         console.error('Erro ao buscar livro:', error);
         throw error;
+    }
+}
+
+// Inserir os livros no banco:
+async function inserirLivrosTabela(client) {
+    const isbns = [9782290019436, 9788000011622, 9788960176751, 9782253176503, 9780008762278, 9780263870770, 9780263929874, 9780373336036, 9781608181797, 9781846175916, 9780553381689, 9782290019436, 9788580573619, 9788957591055, 9788580411522, 9787532150779, 9786047703739, 9780345379757, 9781603844666, 9780062060617, 9782253176503, 9788580572100, 9788804661603];
+
+    for (const isbn of isbns) {
+        try {
+            const livro = await buscarLivroPorISBN(isbn);
+
+            const titulo = livro.title || 'Título desconhecido';
+            const ano = livro.publish_date ? parseInt(livro.publish_date.match(/\d{4}/)) : 2000;
+            const sinopse = livro.notes || 'Sem sinopse';
+            const capa = livro.cover?.large || livro.cover?.medium || livro.cover?.small || '';
+            const editora = livro.publishers?.[0]?.name || null;
+
+            // Aqui assumimos que você tem uma editora com ID 1, ou você pode adicionar a lógica para cadastrar editoras.
+            const editora_id = 1;
+
+            const insertQuery = `
+                INSERT INTO livro (livro_isbn, livro_titulo, livro_ano, livro_sinopse, livro_capa, editora_id)
+                VALUES ($1, $2, $3, $4, $5, $6)
+                ON CONFLICT (livro_isbn) DO NOTHING;
+            `;
+
+            await client.query(insertQuery, [isbn, titulo, ano, sinopse, capa, editora_id]);
+            console.log(`Livro inserido: ${titulo}`);
+
+        } catch (error) {
+            console.error(`Erro ao inserir livro com ISBN ${isbn}:`, error.message);
+        }
     }
 }
 

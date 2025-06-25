@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate} from 'react-router-dom'
 import './MinhaLista.css'
-import { useGlobalContext } from '../contexts/GlobalContext'
+// import { useGlobalContext } from '../contexts/GlobalContext'
 import CapaLivro from './CapaLivro';
 import axios from 'axios';
 
@@ -14,8 +14,7 @@ function MinhaLista({
   listas, 
   setListas, 
   listaSelecionada, 
-  setListaSelecionada,
-  biblioteca
+  setListaSelecionada
   }) {
 
     const navigate = useNavigate();
@@ -41,9 +40,9 @@ function MinhaLista({
   const carregarTodosLivros = async () => {
     try {
       setCarregarLivros(true);
-      const resposta = await axios.get('http://localhost:3000/livro'); // ajuste a URL conforme sua API
+      const resposta = await axios.get('http://localhost:3000/livro'); 
       setTodosLivros(resposta.data);
-      setLivrosPesquisados(resposta.data); // inicialmente mostra todos
+      setLivrosPesquisados(resposta.data); 
     } catch (erro) {
       console.error("Erro ao carregar livros:", erro);
       alert("Erro ao carregar livros do banco de dados");
@@ -90,8 +89,8 @@ function MinhaLista({
   // Função chamada quando o dialog abre
   const abrirDialog = () => {
     setAbriuCaixa(true);
-    carregarTodosLivros(); // carrega todos os livros quando abre
-    setPesquisa(''); // limpa a pesquisa
+    carregarTodosLivros(); 
+    setPesquisa(''); 
   };
 
   // Função para fechar o dialog e limpar estados
@@ -101,8 +100,6 @@ function MinhaLista({
     setTodosLivros([]);
     setLivrosPesquisados([]);
   };
-
-
 
   //adicionar um livro a uma lista
   const adicionarLivro = async (livro) => {
@@ -462,7 +459,7 @@ function MinhaLista({
                 <input 
                   type="text" 
                   className="input__pesquisar--livro" 
-                  placeholder='Pesquise o livro pelo ISBN aqui...'
+                  placeholder='Pesquise o livro pelo título aqui...'
                   value={pesquisa}
                   onChange={handleInputChange}
                 />

@@ -32,7 +32,6 @@ export const GlobalContextProvider = ({ children }) => {
   });
 
   const [livroAcessado, setLivroAcessado] = useState("");
-  const [biblioteca, setBiblioteca] = useState(livros);
   const [listaResenhas, setListaResenhas] = useState([]);
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
   const [usuarioId, setUsuarioId] = useState();
@@ -86,8 +85,6 @@ export const GlobalContextProvider = ({ children }) => {
         setPosicaoUsuarioID,
         dadosUsuarioLogado,
         setDadosUsuarioLogado,
-        biblioteca,
-        setBiblioteca,
         livroAcessado,
         setLivroAcessado,
         listaResenhas,
