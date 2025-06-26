@@ -6,8 +6,6 @@ import { useContext } from 'react'
 import ResenhasConfigs from "../components/ResenhasConfigs"
 import NavbarVertical from "../components/NavbarVertical"
 import axios from "axios"
-import ResenhasUsuario from "../components/ResenhasUsuario"
-import ListasLivros from "../components/ListasLivros"
 
 function TelaUsuarioConfigs() {
 
@@ -28,7 +26,6 @@ function TelaUsuarioConfigs() {
   const [editarDescricao, setEditarDescricao] = useState('')
   const [editarFoto, setEditarFoto] = useState('')
   const [editarSenha, setEditarSenha] = useState('')
-  const [mostrarComponente, setMostrarComponente] = useState('resenhas');
   // const [mostrarSenha, setMostrarSenha] = useState(false)
   const navigate = useNavigate()
 
@@ -110,7 +107,16 @@ function TelaUsuarioConfigs() {
         break;
       case "email":
         if (!editarEmail || editarEmail === dadosUsuarioLogado.usuario_email) return alert("E-mail inválido ou igual ao atual.");
-        if (verificarEmailExistente()) return alert("E-mail já em uso.");
+        if (verificarEmailExistente()) {
+          if (!editarDados.emailAlertShown) {
+            alert("E-mail já em uso.");
+            editarDados.emailAlertShown = true;
+            setTimeout(() => {
+              editarDados.emailAlertShown = false;
+            }, 1000); // impede múltiplos alerts em sequência
+          }
+          return;
+        }
         novoValor = { usuario_email: editarEmail };
         break;
       case "foto":
@@ -204,9 +210,27 @@ function TelaUsuarioConfigs() {
   }, [setVetorObjetosUsuarios]);
 
   // Calcula a pontuação com base na quantidade de resenhas do usuário
-  const resenhasUsuario = dadosUsuarioLogado.resenhas || [];
-  const pontuacao = resenhasUsuario.length * 10; // Exemplo: 10 pontos por resenha
-  const nivel = Math.floor(pontuacao / 100) + 1; // Exemplo: cada 100 pontos sobe de nível
+  // Busca as resenhas do usuário logado para calcular pontos e nível
+  const [resenhasUsuario, setResenhasUsuario] = useState([]);
+
+  useEffect(() => {
+    const fetchResenhasUsuario = async () => {
+      try {
+        // Supondo que o backend tenha um endpoint para buscar resenhas por usuário
+        const response = await axios.get(`http://localhost:3000/resenha?usuario_id=${dadosUsuarioLogado.usuario_id}`);
+        setResenhasUsuario(response.data || []);
+      } catch (error) {
+        setResenhasUsuario([]);
+      }
+    };
+
+    if (dadosUsuarioLogado?.usuario_id) {
+      fetchResenhasUsuario();
+    }
+  }, [dadosUsuarioLogado?.usuario_id]);
+
+  const pontuacao = resenhasUsuario.length * 10; // 10 pontos por resenha
+  const nivel = Math.floor(pontuacao / 100) + 1; // cada 100 pontos sobe de nível
   const pontosProximoNivel = 100;
   const progresso = ((pontuacao % pontosProximoNivel) / pontosProximoNivel) * 100;
 
@@ -258,7 +282,6 @@ function TelaUsuarioConfigs() {
     <div className="usuarioConfigs-container">
 
       <div className="usuarioConfigs-div-esquerda">
-
       </div>
 
       <div className="usuarioConfigs-body">
@@ -277,7 +300,6 @@ function TelaUsuarioConfigs() {
                   src={editarFoto || dadosUsuarioLogado.url_foto}
                   alt="Foto do usuário"
                   className="img-usuario"
-                  style={{ width: '150px', height: '150px', borderRadius: '50%' }}
                 />
                 <div className="usuarioNomeDescricao">
                   <h2>{dadosUsuarioLogado.usuario_nome}</h2>
@@ -299,14 +321,12 @@ function TelaUsuarioConfigs() {
                         }
                       }}
                       rows={3}
-                      style={{ resize: "none" }}
                     />
                   </div>
                 </div>
 
               </div>
               <div className="usuarioConfigs-bmpc-infos">
-
                 <div className="teste">
                   <div className="campo-editavel">
                     <div className="input-container">
@@ -402,10 +422,10 @@ function TelaUsuarioConfigs() {
                 <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button>
                </div>
                 <div className="listas-btn">
-                  <button className="btn-secao" onClick={() => setMostrarComponente('listas')}>Listas</button>
+                  <button className="btn-secao">Listas</button>
                   <button
                     className="btn-secao"
-                    onClick={() => setMostrarComponente('resenhas')}
+                    onClick={() => navigate("/telaescrivaninha")}
                   >
                     Resenhas
                   </button>
@@ -413,8 +433,13 @@ function TelaUsuarioConfigs() {
             </div>
 
             <div className="usuarioConfigs-body-meio-papel-resenhas">
-              { mostrarComponente === 'resenhas' && <ResenhasUsuario />}
-              { mostrarComponente === 'listas' && <ListasLivros />}
+              <div className="usuarioConfigs-bmpr-titulo">
+                <label className="lbl-titulos">Minhas resenhas</label>
+              </div>
+
+              <div className="usuarioConfigs-bmpr-body">
+                <ResenhasConfigs />
+              </div>
             </div>
           </div>
         </div>
@@ -430,4 +455,4 @@ function TelaUsuarioConfigs() {
   )
 }
 
-export default TelaUsuarioConfigs
+export default TelaUsuarioConfigs;

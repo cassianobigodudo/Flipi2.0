@@ -1,5 +1,4 @@
-.resenhas-container{
-
+.resenhas-container {
     height: 40%;
     width: 100%;
     background-color: var(--corfundo);
@@ -7,112 +6,169 @@
     align-items: center;
     flex-direction: column;
     justify-content: center;
-
-
 }
 
-    .resenhas-usuario{
+.resenhas-usuario {
+    height: 90%;
+    width: 90%;
+    /* background-color: red; */
+    /* border: solid;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: var(--fundoDivs); */
+    display: flex;
+}
 
+.resenhas-usuario-capa {
+    /* background-color: crimson; */
+    height: 100%;
+    border-radius: 10px;
+}
 
-        height: 90%;
-        width: 90%;
-        /* background-color: red; */
-        border: solid;
-        border-radius: 10px;
-        border-width: 2px;
-        border-color: var(--fundoDivs);
-        display: flex;
+.resenhas-usuario-livro {
+    /* background-color: blueviolet; */
+    border-radius: 10px;
+    height: 85%;
+    width: 100%;
+}
 
-    }
+.resenhas-usuario-edicaoRemocao {
+    background-color: indianred;
+    height: 12%;
+    width: 90%;
+    border-radius: 5px;
+    margin-left: 4%;
+}
 
-        .resenhas-usuario-capa{
+.resenhas-usuario-infos {
+    /* background-color: darkgreen; */
+    height: 100%;
+    width: 70%;
+    border-radius: 10px;
+    overflow: auto;
+}
 
-            /* background-color: crimson; */
-            width: 30%;
-            height: 100%;
-            border-radius: 10px;
+.resenhas-usuario-titulo {
+    /* background-color: aqua; */
+    /* background-color: var(--fundoDivs); */
+    color: #C85B34;
+    height: 20%;
+    width: 100%;
+    /* border-radius: 10px; */
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+}
 
-        }
+.lbl-titulo {
+    font-family: 'fonte-projeto';
+    font-size: 25px;
+}
 
-            .resenhas-usuario-livro{
+.resenhas-usuario-estrelas {
+    /* background-color: orange; */
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin-top: 3px;
+    padding-left: 20px;
+}
 
-                /* background-color: blueviolet; */
-                border-radius: 10px;
-                height: 85%;
-                width: 100%;
+.textarea-resenha {
+    resize: none;
+    font-family: 'fonte-projeto';
+    font-size: 28px;
+    height: 50%;
+    border: none;
+    width: 100%;
+    padding: 5px;
+}
 
-            }
+.textarea-resenha:focus {
+    outline-width: 0px;
+}
+.sem-resenhas {
+    font-family: 'fonte-projeto';
+    font-size: 20px;
+    color: #C85B34;
+    text-align: center;
+    margin-top: 10px;
+}
+.Fila-livros {
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: #FCF6E8;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    padding-top: 9.5px;
 
-            .resenhas-usuario-edicaoRemocao{
-
-                background-color: indianred;
-                height: 12%;
-                width: 90%;
-                border-radius: 5px;
-                margin-left: 4%;
-
-            }
-
-        .resenhas-usuario-infos{
-
-            /* background-color: darkgreen; */
-            height: 100%;
-            width: 70%;
-            border-radius: 10px;
-            overflow: auto;
-
-        }
-
-
-            .resenhas-usuario-titulo{
-
-                /* background-color: aqua; */
-                background-color: var(--fundoDivs);
-                color: white;
-                height: 20%;
-                width: 100%;
-                border-radius: 10px;
-                display: flex;
-                justify-content: center;
-                padding-top: 5px;
-
-            }
-
-                .lbl-titulo{
-
-                    font-family: 'fonte-projeto';
-                    font-size: 25px;
-
-                }
-            
-            .resenhas-usuario-estrelas{
-
-                /* background-color: orange; */
-                width: 100%;
-                height: 20%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-direction: row;
-                margin-top: 3px;
-                padding-left: 20px;
-            }
-
-            .textarea-resenha{
-
-                resize: none;
-                font-family: 'fonte-projeto';
-                font-size: 28px;
-                height: 50%;
-                border: none;
-                width: 100%;
-                padding: 5px;
-
-            }
-
-            .textarea-resenha:focus{
-
-                outline-width: 0px;
-
-            }
-            
+}
+.box-titulo {
+    height: 100%;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #FCF6E8;
+    transition: 0.3s;
+}
+.popup-content{
+    font-family: 'fonte-projeto';
+    position: relative;
+}
+.close-popup{
+    max-width: 70%;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-family: cursive;
+}
+.btn-deletar-resenha{
+    margin-top: 16px;
+    background: #c85b34;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.popup-text{
+    background-color: #CB9375;
+    font-size: 130%;
+    border-radius: 5px;
+    padding: 0.3%;
+}
+.popup-info{
+    justify-items: left;
+}
+.popup-itens{
+    display: flex;
+    flex-direction: row;
+    gap: 4%;
+}
+.h2-title{
+    font-family: 'fonte-projeto';
+    font-size: 1.5rem;
+    color: #C85B34;
+    margin-bottom: 8px;
+    justify-self: center;
+    padding-bottom: 3%;
+}
+.btn-delete-resenha {
+    justify-self: center;
+}

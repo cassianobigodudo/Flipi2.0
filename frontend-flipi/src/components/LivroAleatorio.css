@@ -1,7 +1,94 @@
-.livro-aleatorio{
+.livro-aleatorio {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+.livro-aleatorio-container {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center;     /* Centraliza verticalmente */
+  height: 100%;            /* Ajuste conforme necessário */
+  cursor: pointer;
+}
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fade-in 0.3s;
+}
+.popup-content{
+  background: #fff;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  min-width: 350px;
+  max-width: 90vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  transform: scale(1.08);
+  animation: popupBounce 0.35s cubic-bezier(.68,-0.55,.27,1.55);
+  width: 45%;
+}
+.h2-titulo{
+    margin-top: 0;
+    font-size: 2rem;
+    color: #2c3e50;
+    font-family: 'fonte-projeto';
+    justify-self: center;
+    color: #C85B34;
+}
+.sinopse-area{
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: #444;
+    font-family: 'fonte-projeto';
+    font-size: larger;
+    background-color: #C85B34;
+    color: white;
+    border-radius: 10px;
+    padding: 1%;
+}
+h3{
+    font-family: 'fonte-projeto';
+    justify-self: center;
+    background-color: #C85B34;
+    width: 15%;
+    font-size: 155%;
+    text-align-last: center;
+    color: white;
+    border-radius: 15px;
+}
+.avaliacao-area{
+    font-size: 2rem;
+    color: #f1c40f;
+    margin-bottom: 1rem;
+    text-align-last: center;
+    contain: size;
+    padding: 3%;
+}
+@keyframes popupBounce {
+    0% { transform: scale(0.7); opacity: 0; }
+    70% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1.08); opacity: 1; }
+}
 
-    /* height: 1000%; */
-    width: 97%;
-    padding-left: 3px;
-
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.close-btn{
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
 }
