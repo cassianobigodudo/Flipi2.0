@@ -229,10 +229,21 @@ function TelaUsuarioConfigs() {
     }
   }, [dadosUsuarioLogado?.usuario_id]);
 
-  const pontuacao = resenhasUsuario.length * 10; // 10 pontos por resenha
-  const nivel = Math.floor(pontuacao / 100) + 1; // cada 100 pontos sobe de nível
-  const pontosProximoNivel = 100;
-  const progresso = ((pontuacao % pontosProximoNivel) / pontosProximoNivel) * 100;
+  // Calcula pontuação, nível e progresso sempre que resenhasUsuario mudar
+  const [pontuacao, setPontuacao] = useState(0);
+  const [nivel, setNivel] = useState(1);
+  const [progresso, setProgresso] = useState(0);
+
+  useEffect(() => {
+    const novaPontuacao = resenhasUsuario.length * 10;
+    const novoNivel = Math.floor(novaPontuacao / 100) + 1;
+    const pontosProximoNivel = 100;
+    const novoProgresso = ((novaPontuacao % pontosProximoNivel) / pontosProximoNivel) * 100;
+
+    setPontuacao(novaPontuacao);
+    setNivel(novoNivel);
+    setProgresso(novoProgresso);
+  }, [resenhasUsuario]);
 
   // Função para lidar com a alteração da senha
   const handleSenhaClick = async () => {
