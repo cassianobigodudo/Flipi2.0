@@ -83,8 +83,6 @@ function TelaEscrivaninha() {
 
     try {
       setMensagem('Buscando livro...')
-      
-
 
       const response = await axios.get(`http://localhost:3000/livro/${isbn}`)
       await setLivroAcessado(response.data)

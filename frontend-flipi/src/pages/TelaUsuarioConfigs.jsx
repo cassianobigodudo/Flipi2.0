@@ -192,7 +192,13 @@ function TelaUsuarioConfigs() {
 
 
           alert(`Conta deletada com sucesso.`)
+          localStorage.removeItem("usuarioLogado");
+          localStorage.removeItem("posicaoUsuarioID");
+          localStorage.removeItem("idUsuarioLogado");
+          localStorage.removeItem("dadosUsuarioLogado");
           setUsuarioLogado(false) //hi
+          setPosicaoUsuarioID(null)
+          setDadosUsuarioLogado(null);
           navigate(`/`)
             
         }
