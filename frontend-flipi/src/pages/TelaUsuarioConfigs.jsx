@@ -107,7 +107,16 @@ function TelaUsuarioConfigs() {
         break;
       case "email":
         if (!editarEmail || editarEmail === dadosUsuarioLogado.usuario_email) return alert("E-mail inválido ou igual ao atual.");
-        if (verificarEmailExistente()) return alert("E-mail já em uso.");
+        if (verificarEmailExistente()) {
+          if (!editarDados.emailAlertShown) {
+            alert("E-mail já em uso.");
+            editarDados.emailAlertShown = true;
+            setTimeout(() => {
+              editarDados.emailAlertShown = false;
+            }, 1000); // impede múltiplos alerts em sequência
+          }
+          return;
+        }
         novoValor = { usuario_email: editarEmail };
         break;
       case "foto":

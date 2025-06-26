@@ -101,33 +101,41 @@ function ResenhasConfigs() {
             {popupOpen && livroSelecionado && (
                 <div className="popup-overlay" onClick={closePopup}>
                     <div className="popup-content" onClick={e => e.stopPropagation()}>
+                            <h2 className='h2-title'>{livroSelecionado.livro_titulo}</h2>
+                        <div className="popup-itens">
+
                         <button
                             className="close-popup"
                             onClick={closePopup}>
                             X
                         </button>
-                        <h2>{livroSelecionado.livro_titulo}</h2>
                         {livroSelecionado.livro_capa && (
                             <img src={livroSelecionado.livro_capa} alt="" style={{ maxWidth: '150px' }} />
                         )}
+                        <div className="popup-info">
                         <div>
-                            <strong>Título da Resenha:</strong>{" "}
+                            <strong className="popup-text">Título da Resenha:</strong>{" "}
                             {livroSelecionado.resenha?.resenha_titulo ?? "Sem título"}
                         </div>
                         <div>
-                            <strong>Avaliação:</strong>{" "}
+                            <strong className="popup-text">Avaliação:</strong>{" "}
                             {livroSelecionado.resenha?.resenha_nota ?? "Sem avaliação"}
+                            /5
                         </div>
                         <div>
-                            <strong>Comentário:</strong>{" "}
+                            <strong className="popup-text">Comentário:</strong>{" "}
                             {livroSelecionado.resenha?.resenha_texto ?? "Sem comentário"}
                         </div>
+                        </div>
+                        </div>
+                        <div className="btn-delete-resenha">
                         <button
                             className="btn-deletar-resenha"
                             onClick={handleDeleteResenha}
                         >
                             Deletar Resenha
                         </button>
+                        </div>
                     </div>
                 </div>
             )}

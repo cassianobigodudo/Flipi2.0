@@ -110,6 +110,8 @@
     justify-content: center;
     align-items: center;
     justify-items: center;
+    padding-top: 9.5px;
+
 }
 .box-titulo {
     height: 100%;
@@ -138,10 +140,35 @@
 }
 .btn-deletar-resenha{
     margin-top: 16px;
-    background: #c00;
+    background: #c85b34;
     color: #fff;
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
+}
+.popup-text{
+    background-color: #CB9375;
+    font-size: 130%;
+    border-radius: 5px;
+    padding: 0.3%;
+}
+.popup-info{
+    justify-items: left;
+}
+.popup-itens{
+    display: flex;
+    flex-direction: row;
+    gap: 4%;
+}
+.h2-title{
+    font-family: 'fonte-projeto';
+    font-size: 1.5rem;
+    color: #C85B34;
+    margin-bottom: 8px;
+    justify-self: center;
+    padding-bottom: 3%;
+}
+.btn-delete-resenha {
+    justify-self: center;
 }
