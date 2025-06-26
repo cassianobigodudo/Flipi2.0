@@ -1,6 +1,5 @@
 
 import { createContext, useState, useContext, useEffect } from "react";
-import { livros } from "./Livros";
 
 export const GlobalContext = createContext();
 

@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import ResenhasConfigs from "../components/ResenhasConfigs"
 import NavbarVertical from "../components/NavbarVertical"
 import axios from "axios"
+import ListasLivros from "../components/ListasLivros"
 
 function TelaUsuarioConfigs() {
 
@@ -26,6 +27,7 @@ function TelaUsuarioConfigs() {
   const [editarDescricao, setEditarDescricao] = useState('')
   const [editarFoto, setEditarFoto] = useState('')
   const [editarSenha, setEditarSenha] = useState('')
+  const [mostrarComponente, setMostrarComponente] = useState('resenhas');
   // const [mostrarSenha, setMostrarSenha] = useState(false)
   const navigate = useNavigate()
 
@@ -159,8 +161,15 @@ function TelaUsuarioConfigs() {
   function deslogarUsuario() {
 
     alert('Até mais!')
+
+    localStorage.removeItem("usuarioLogado");
+    localStorage.removeItem("posicaoUsuarioID");
+    localStorage.removeItem("idUsuarioLogado");
+    localStorage.removeItem("dadosUsuarioLogado");
+
     setUsuarioLogado(false)
     setPosicaoUsuarioID(null)
+    setDadosUsuarioLogado(null);
     navigate('/')
 
   }
@@ -433,10 +442,10 @@ function TelaUsuarioConfigs() {
                 <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button>
                </div>
                 <div className="listas-btn">
-                  <button className="btn-secao">Listas</button>
+                  <button className="btn-secao" onClick={() => setMostrarComponente('listas')}>Listas</button>
                   <button
                     className="btn-secao"
-                    onClick={() => navigate("/telaescrivaninha")}
+                    onClick={() => setMostrarComponente('resenhas')}
                   >
                     Resenhas
                   </button>
@@ -444,13 +453,8 @@ function TelaUsuarioConfigs() {
             </div>
 
             <div className="usuarioConfigs-body-meio-papel-resenhas">
-              <div className="usuarioConfigs-bmpr-titulo">
-                <label className="lbl-titulos">Minhas resenhas</label>
-              </div>
-
-              <div className="usuarioConfigs-bmpr-body">
-                <ResenhasConfigs />
-              </div>
+              { mostrarComponente === 'resenhas' && <ResenhasConfigs />}
+              { mostrarComponente === 'listas' && <ListasLivros />}
             </div>
           </div>
         </div>
