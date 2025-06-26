@@ -106,7 +106,7 @@ async function verificarTabelas(){
     );`
     await client.query(createLivroQuery);
     console.log(`Tabela "livro" verificada/criada com sucesso.`);
-    await inserirLivrosTabela(client);
+    // ❌ REMOVER ESTA LINHA - await inserirLivrosTabela(client);
 
     const createLivroAutorQuery= `
     CREATE TABLE IF NOT EXISTS livro_autor(
@@ -146,10 +146,7 @@ async function verificarTabelas(){
     await client.query(createListQuery);
     console.log(`Tabela "listas_personalizadas" verificada/criada com sucesso.`)
 
-
-    
     //?-----RESENHA------?//
-
     const createResenhaQuery= `
    CREATE TABLE IF NOT EXISTS resenha(
     resenha_id SERIAL PRIMARY KEY,
@@ -167,8 +164,12 @@ async function verificarTabelas(){
     await client.query(createResenhaQuery);
     console.log(`Tabela  "resenha" verificada/criada com sucesso.`)
 
-  client.release();
-//   await pool.end();
+    // ✅ MOVER PARA AQUI - Agora todas as tabelas existem
+    console.log('Iniciando inserção de livros...');
+    await inserirLivrosTabela(client);
+    console.log('Inserção de livros concluída.');
+
+    client.release();
 }
 
 app.use(cors())
@@ -204,42 +205,9 @@ async function buscarLivroPorISBN(isbn) {
     }
 }
 
-// Inserir os livros no banco:
-async function inserirLivrosTabela(client) {
-    const isbns = [9782290019436, 9788000011622, 9788960176751, 9782253176503, 9780008762278, 9780263870770, 9780263929874, 9780373336036, 9781608181797, 9781846175916, 9780553381689, 9782290019436, 9788580573619, 9788957591055, 9788580411522, 9787532150779, 9786047703739, 9780345379757, 9781603844666, 9780062060617, 9782253176503, 9788580572100, 9788804661603];
-
-    for (const isbn of isbns) {
-        try {
-            const livro = await buscarLivroPorISBN(isbn);
-
-            const titulo = livro.title || 'Título desconhecido';
-            const ano = livro.publish_date ? parseInt(livro.publish_date.match(/\d{4}/)) : 2000;
-            const sinopse = livro.notes || 'Sem sinopse';
-            const capa = livro.cover?.large || livro.cover?.medium || livro.cover?.small || '';
-            const editora = livro.publishers?.[0]?.name || null;
-
-            // Aqui assumimos que você tem uma editora com ID 1, ou você pode adicionar a lógica para cadastrar editoras.
-            const editora_id = 1;
-
-            const insertQuery = `
-                INSERT INTO livro (livro_isbn, livro_titulo, livro_ano, livro_sinopse, livro_capa, editora_id)
-                VALUES ($1, $2, $3, $4, $5, $6)
-                ON CONFLICT (livro_isbn) DO NOTHING;
-            `;
-
-            await client.query(insertQuery, [isbn, titulo, ano, sinopse, capa, editora_id]);
-            console.log(`Livro inserido: ${titulo}`);
-
-        } catch (error) {
-            console.error(`Erro ao inserir livro com ISBN ${isbn}:`, error.message);
-        }
-    }
-}
-
-async function obterOuCriarEditora(nome) {
+async function obterOuCriarEditoraComClient(client, nome) {
     if (!nome) return null;
     
-    const client = await pool.connect();
     try {
         // Verifica se a editora já existe
         let result = await client.query('SELECT editora_id FROM editora WHERE editora_nome = $1', [nome]);
@@ -255,16 +223,15 @@ async function obterOuCriarEditora(nome) {
         );
         
         return result.rows[0].editora_id;
-    } finally {
-        client.release();
+    } catch (error) {
+        console.error('Erro ao obter/criar editora:', error.message);
+        return null;
     }
 }
 
-// Função para obter ou criar um autor
-async function obterOuCriarAutor(nome) {
+async function obterOuCriarAutorComClient(client, nome) {
     if (!nome) return null;
     
-    const client = await pool.connect();
     try {
         // Verifica se o autor já existe
         let result = await client.query('SELECT autor_id FROM autor WHERE autor_nome = $1', [nome]);
@@ -280,11 +247,57 @@ async function obterOuCriarAutor(nome) {
         );
         
         return result.rows[0].autor_id;
-    } finally {
-        client.release();
+    } catch (error) {
+        console.error('Erro ao obter/criar autor:', error.message);
+        return null;
     }
 }
 
+
+// Inserir os livros no banco:
+async function inserirLivrosTabela(client) {
+    const isbns = [9782290019436, 9788000011622, 9788960176751, 9782253176503, 9780008762278, 9780263870770, 9780263929874, 9780373336036, 9781608181797, 9781846175916, 9780553381689, 9782290019436, 9788580573619, 9788957591055, 9788580411522, 9787532150779, 9786047703739, 9780345379757, 9781603844666, 9780062060617, 9782253176503, 9788580572100, 9788804661603];
+
+    for (const isbn of isbns) {
+        try {
+            const livro = await buscarLivroPorISBN(isbn);
+
+            const titulo = livro.title || 'Título desconhecido';
+            const ano = livro.publish_date ? parseInt(livro.publish_date.match(/\d{4}/)?.[0]) || 2000 : 2000;
+            const sinopse = livro.notes || 'Sem sinopse';
+            const capa = livro.cover?.large || livro.cover?.medium || livro.cover?.small || '';
+            
+            // Usar a função corrigida que aceita o client como parâmetro
+            const editoraNome = livro.publishers?.[0]?.name || null;
+            const editora_id = editoraNome ? await obterOuCriarEditoraComClient(client, editoraNome) : null;
+
+            const insertQuery = `
+                INSERT INTO livro (livro_isbn, livro_titulo, livro_ano, livro_sinopse, livro_capa, editora_id)
+                VALUES ($1, $2, $3, $4, $5, $6)
+                ON CONFLICT (livro_isbn) DO NOTHING;
+            `;
+
+            await client.query(insertQuery, [isbn, titulo, ano, sinopse, capa, editora_id]);
+            console.log(`Livro inserido: ${titulo} - Editora ID: ${editora_id}`);
+
+            // Processar autores se existirem
+            if (livro.authors && livro.authors.length > 0) {
+                for (const autorInfo of livro.authors) {
+                    const autorId = await obterOuCriarAutorComClient(client, autorInfo.name);
+                    if (autorId) {
+                        await client.query(
+                            'INSERT INTO livro_autor (livro_isbn, autor_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+                            [isbn, autorId]
+                        );
+                    }
+                }
+            }
+
+        } catch (error) {
+            console.error(`Erro ao inserir livro com ISBN ${isbn}:`, error.message);
+        }
+    }
+}
 const mapeamentoGeneros = {
     // Ficção Científica
     'science fiction': 'Ficção Científica','sci-fi': 'Ficção Científica','dystopian': 'Ficção Científica','utopian': 'Ficção Científica','space': 'Ficção Científica','future': 'Ficção Científica','cyberpunk': 'Ficção Científica','aliens': 'Ficção Científica','time travel': 'Ficção Científica',
