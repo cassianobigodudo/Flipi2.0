@@ -101,6 +101,7 @@
     height: 90vh;
     width: 180vh;
     animation: fadeIn 0.5s ease-in-out;
+    font-family: fonte-projeto;
     
 }
    .parte-cima{
@@ -121,6 +122,7 @@
         float: left;
         width: 30%;
         background-color: transparent;
+        border-radius: 55px;
     }
         .capa-livro{
             box-shadow: 0px 10px 9px #a07e5c;
@@ -136,11 +138,12 @@
             background-color: #ecd9b1;
             background-repeat: no-repeat;
             background-size: cover;
-            border-radius: 5px;
+            border-radius: 15px;
         }
             .imagem-capa-livro{
                 /* height: 80vh; */
                 width:100%;
+                border-radius: 5px;
             }
         .parte-classificacao{ 
             display: flex;

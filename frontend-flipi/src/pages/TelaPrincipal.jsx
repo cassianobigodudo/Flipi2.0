@@ -26,8 +26,9 @@ function TelaPrincipal() {
         }
     }
 
-    useEffect(() => {
-        console.log(vetorObjetosUsuarios)
+
+    useEffect (() => {
+        // console.log(vetorObjetosUsuarios)
 
         if (usuarioLogado === true) {
             for (let i = 0; i < vetorObjetosUsuarios.length; i++) {
@@ -47,10 +48,17 @@ function TelaPrincipal() {
 
     useEffect(() => {
         console.log(posicaoUsuarioID)
-    }, [posicaoUsuarioID])
+
+      }, [posicaoUsuarioID])
+
+      useEffect (() => {
+
+        // console.log(dadosUsuarioLogado)
+
+      }, [dadosUsuarioLogado])
 
     useEffect(() => {
-        console.log(dadosUsuarioLogado)
+        // console.log(dadosUsuarioLogado)
     }, [dadosUsuarioLogado])
 
     return (

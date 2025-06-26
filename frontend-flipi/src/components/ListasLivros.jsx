@@ -70,6 +70,7 @@ function ListasLivros() {
                 setListas={setListas}
                 listaSelecionada={listaSelecionada}
                 setListaSelecionada={setListaSelecionada}
+                setLista={setListaSelecionada}
             />
         ) : (
 
@@ -112,7 +113,7 @@ function ListasLivros() {
 
                 </div>
 
-                    <dialog open={abriuForm}>
+                    <dialog open={abriuForm} className='dialog_lista-livros'>
 
                         <div className="form__listas">
 

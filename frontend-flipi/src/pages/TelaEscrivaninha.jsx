@@ -53,6 +53,19 @@ function TelaEscrivaninha() {
     return () => clearInterval(intervalo)
   }, [time])
 
+  useEffect(() => {
+    if (livroAcessado && !livroCarregado) {
+      setLivroCarregado(true);
+      setCapa(livroAcessado.livro_capa);
+      setAno(livroAcessado.livro_ano);
+      setEditora(livroAcessado.editora?.editora_nome || '');
+      setAutor(livroAcessado.autores?.[0]?.autor_nome || '');
+      setTituloLivro(livroAcessado.livro_titulo);
+      setSinopse(livroAcessado.livro_sinopse);
+      setIsbn(livroAcessado.livro_isbn); // importante para salvar resenha depois
+    }
+  }, [livroAcessado, livroCarregado]);
+
   // Funções
   const dialogFunc = () => {
     setAbrirCaixa(!abrirCaixa)
@@ -240,18 +253,18 @@ function TelaEscrivaninha() {
           </div>
 
           <div className="livroContainer-desc">
+
             <div className="desc-livroTitulo"> 
               <label className='livroTituloLbl' htmlFor="">{tituloLivro}</label>
             </div>
+            
             <div className="desc-livroDesc">
 
-      <textarea readOnly className='livroDesc-textArea' value={sinopse} name="" id="">
-      </textarea>
-
-
+              <textarea readOnly className='livroDesc-textArea' value={sinopse} name="" id="">
+              </textarea>
       
-
             </div>
+
           </div>
 
 

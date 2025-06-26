@@ -11,8 +11,8 @@ import TelaUsuarioConfigs from "../pages/TelaUsuarioConfigs";
 import TelaPrincipal from "../pages/TelaPrincipal";
 import LandingPage from "../pages/LandingPage";
 import TelaLivro from "../pages/TelaLivro";
-import PaginaTesteJaime from "../pages/PaginaTesteJaime";
 import TelaPesquisa from "../pages/TelaPesquisa";
+import LivroParteUm from '../components/LivroParteUm';
 
 const router = createBrowserRouter([
     // {path: "/", element: <Home />},
@@ -26,11 +26,10 @@ const router = createBrowserRouter([
     {path: "/telaescrivaninha", element: <TelaEscrivaninha/>},
     {path: "/telausuarioconfigs", element: <TelaUsuarioConfigs/>},
     {path: "/telaprincipal", element: <TelaPrincipal />},
-//     {path: "/paginatestejaime", element: <PaginaTesteJaime />}
     {path: "/", element: <LandingPage />},
-    {path: "/telalivro", element: <TelaLivro/>},
-    {path: "/telapesquisa", element: <TelaPesquisa/>}
-
+    {path: "/telalivro/:isbn?", element: <TelaLivro /> },
+    {path: "/telapesquisa", element: <TelaPesquisa/>},
+    {path: "/livro/:isbn", element: <LivroParteUm /> }
 ])
 
 export default router;

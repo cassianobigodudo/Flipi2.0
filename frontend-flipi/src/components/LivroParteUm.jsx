@@ -6,6 +6,8 @@ import NavbarVertical from "./NavbarVertical"
 import { GlobalContext } from "../contexts/GlobalContext"
 import { useFetcher, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios"
+import { useParams } from "react-router-dom";
+
 
 function LivroParteUm({ livro, indexResenha}) {
 
@@ -22,6 +24,8 @@ function LivroParteUm({ livro, indexResenha}) {
     const [resenhaId, setResenhaId] = useState(2)
     const [livros, setLivros] = useState([])
     const [resenhas, setResenhas] = useState(false)
+    const { isbn: isbnDaUrl } = useParams();
+
 
     const atualizarCatalogo = async () => {
         try {
@@ -64,23 +68,39 @@ function LivroParteUm({ livro, indexResenha}) {
         atualizarCatalogo()
     }, [])
 
-    useEffect(() => {
-        if (livro != null) {
-            console.log('Livro recebido:', livro)
+    // useEffect(() => {
+    //     if (livro != null) {
+    //         console.log('Livro recebido:', livro)
             
-            if (livro.livro_isbn != null) {
-                pegarLivro(livro.livro_isbn)
-            } else {
-                setTituloLivro(livro.livro_titulo || '')
-                setCapa(livro.livro_capa || '')
-                setAno(livro.livro_ano || '')
-                setSinopse(livro.livro_sinopse || '')
-                setAutor(livro.autor?.autor_nome || '')
-                setEditora(livro.editora?.editora_nome || '')
-                setIsbn(livro.livro_isbn || '')
-            }
+    //         if (livro.livro_isbn != null) {
+    //             pegarLivro(livro.livro_isbn)
+    //         } else {
+    //             setTituloLivro(livro.livro_titulo || '')
+    //             setCapa(livro.livro_capa || '')
+    //             setAno(livro.livro_ano || '')
+    //             setSinopse(livro.livro_sinopse || '')
+    //             setAutor(livro.autor?.autor_nome || '')
+    //             setEditora(livro.editora?.editora_nome || '')
+    //             setIsbn(livro.livro_isbn || '')
+    //         }
+    //     }
+    // }, [livro])
+    useEffect(() => {
+        if (livro) {
+            console.log('Livro recebido via prop:', livro);
+            setTituloLivro(livro.livro_titulo || '');
+            setCapa(livro.livro_capa || '');
+            setAno(livro.livro_ano || '');
+            setSinopse(livro.livro_sinopse || '');
+            setAutor(livro.autor?.autor_nome || '');
+            setEditora(livro.editora?.editora_nome || '');
+            setIsbn(livro.livro_isbn || '');
+        } else if (isbnDaUrl) {
+            console.log('Livro será buscado via URL (ISBN):', isbnDaUrl);
+            pegarLivro(isbnDaUrl);
         }
-    }, [livro])
+    }, [livro, isbnDaUrl]);
+    
 
     return (
         <div>
@@ -143,7 +163,17 @@ function LivroParteUm({ livro, indexResenha}) {
                 </div>
 
                 <div className="container-parte-resenhas">
-                    {resenhas && <LivroParteDois livroSelecionado={livro} resenhaInd={indexResenha}/>} 
+                    {/* {resenhas && <LivroParteDois livroSelecionado={livro} resenhaInd={indexResenha}/>}  */}
+                    {resenhas && <LivroParteDois livroSelecionado={{
+                        livro_titulo: tituloLivro,
+                        livro_isbn: isbn,
+                        livro_ano: ano,
+                        livro_sinopse: sinopse,
+                        livro_capa: capa,
+                        autor: { autor_nome: autor },
+                        editora: { editora_nome: editora }
+                    }} resenhaInd={indexResenha} />}
+
                 </div>
             </div>
         </div>

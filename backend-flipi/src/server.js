@@ -106,6 +106,7 @@ async function verificarTabelas(){
     );`
     await client.query(createLivroQuery);
     console.log(`Tabela "livro" verificada/criada com sucesso.`);
+    // ❌ REMOVER ESTA LINHA - await inserirLivrosTabela(client);
 
     const createLivroAutorQuery= `
     CREATE TABLE IF NOT EXISTS livro_autor(
@@ -128,10 +129,24 @@ async function verificarTabelas(){
     );`
     await client.query(createLivroGeneroQuery);
     console.log(`Tabela "livro_genero" verificada/criada com sucesso.`)
-
     
-    //?-----RESENHA------?//
+    //Criação automática da tabela de listas personalizadas
+    const createListQuery= `
+    CREATE TABLE IF NOT EXISTS listas_personalizadas(
+        id SERIAL PRIMARY KEY, 	
+        criador_lista INTEGER NOT NULL REFERENCES usuario(usuario_id),
+        nome_lista TEXT NOT NULL, 	
+        descricao_lista TEXT NOT NULL, 	
+        data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 	
+        isbn_livros BIGINT[],
+        CONSTRAINT fk_criador_lista FOREIGN KEY (criador_lista)
+            REFERENCES usuario(usuario_id)
+            ON DELETE CASCADE   
+    );`
+    await client.query(createListQuery);
+    console.log(`Tabela "listas_personalizadas" verificada/criada com sucesso.`)
 
+    //?-----RESENHA------?//
     const createResenhaQuery= `
    CREATE TABLE IF NOT EXISTS resenha(
     resenha_id SERIAL PRIMARY KEY,
@@ -149,8 +164,12 @@ async function verificarTabelas(){
     await client.query(createResenhaQuery);
     console.log(`Tabela  "resenha" verificada/criada com sucesso.`)
 
-  client.release();
-//   await pool.end();
+    // ✅ MOVER PARA AQUI - Agora todas as tabelas existem
+    console.log('Iniciando inserção de livros...');
+    await inserirLivrosTabela(client);
+    console.log('Inserção de livros concluída.');
+
+    client.release();
 }
 
 app.use(cors())
@@ -186,10 +205,9 @@ async function buscarLivroPorISBN(isbn) {
     }
 }
 
-async function obterOuCriarEditora(nome) {
+async function obterOuCriarEditoraComClient(client, nome) {
     if (!nome) return null;
     
-    const client = await pool.connect();
     try {
         // Verifica se a editora já existe
         let result = await client.query('SELECT editora_id FROM editora WHERE editora_nome = $1', [nome]);
@@ -205,16 +223,15 @@ async function obterOuCriarEditora(nome) {
         );
         
         return result.rows[0].editora_id;
-    } finally {
-        client.release();
+    } catch (error) {
+        console.error('Erro ao obter/criar editora:', error.message);
+        return null;
     }
 }
 
-// Função para obter ou criar um autor
-async function obterOuCriarAutor(nome) {
+async function obterOuCriarAutorComClient(client, nome) {
     if (!nome) return null;
     
-    const client = await pool.connect();
     try {
         // Verifica se o autor já existe
         let result = await client.query('SELECT autor_id FROM autor WHERE autor_nome = $1', [nome]);
@@ -230,11 +247,57 @@ async function obterOuCriarAutor(nome) {
         );
         
         return result.rows[0].autor_id;
-    } finally {
-        client.release();
+    } catch (error) {
+        console.error('Erro ao obter/criar autor:', error.message);
+        return null;
     }
 }
 
+
+// Inserir os livros no banco:
+async function inserirLivrosTabela(client) {
+    const isbns = [9782290019436, 9788000011622, 9788960176751, 9782253176503, 9780008762278, 9780263870770, 9780263929874, 9780373336036, 9781608181797, 9781846175916, 9780553381689, 9782290019436, 9788580573619, 9788957591055, 9788580411522, 9787532150779, 9786047703739, 9780345379757, 9781603844666, 9780062060617, 9782253176503, 9788580572100, 9788804661603];
+
+    for (const isbn of isbns) {
+        try {
+            const livro = await buscarLivroPorISBN(isbn);
+
+            const titulo = livro.title || 'Título desconhecido';
+            const ano = livro.publish_date ? parseInt(livro.publish_date.match(/\d{4}/)?.[0]) || 2000 : 2000;
+            const sinopse = livro.notes || 'Sem sinopse';
+            const capa = livro.cover?.large || livro.cover?.medium || livro.cover?.small || '';
+            
+            // Usar a função corrigida que aceita o client como parâmetro
+            const editoraNome = livro.publishers?.[0]?.name || null;
+            const editora_id = editoraNome ? await obterOuCriarEditoraComClient(client, editoraNome) : null;
+
+            const insertQuery = `
+                INSERT INTO livro (livro_isbn, livro_titulo, livro_ano, livro_sinopse, livro_capa, editora_id)
+                VALUES ($1, $2, $3, $4, $5, $6)
+                ON CONFLICT (livro_isbn) DO NOTHING;
+            `;
+
+            await client.query(insertQuery, [isbn, titulo, ano, sinopse, capa, editora_id]);
+            console.log(`Livro inserido: ${titulo} - Editora ID: ${editora_id}`);
+
+            // Processar autores se existirem
+            if (livro.authors && livro.authors.length > 0) {
+                for (const autorInfo of livro.authors) {
+                    const autorId = await obterOuCriarAutorComClient(client, autorInfo.name);
+                    if (autorId) {
+                        await client.query(
+                            'INSERT INTO livro_autor (livro_isbn, autor_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+                            [isbn, autorId]
+                        );
+                    }
+                }
+            }
+
+        } catch (error) {
+            console.error(`Erro ao inserir livro com ISBN ${isbn}:`, error.message);
+        }
+    }
+}
 const mapeamentoGeneros = {
     // Ficção Científica
     'science fiction': 'Ficção Científica','sci-fi': 'Ficção Científica','dystopian': 'Ficção Científica','utopian': 'Ficção Científica','space': 'Ficção Científica','future': 'Ficção Científica','cyberpunk': 'Ficção Científica','aliens': 'Ficção Científica','time travel': 'Ficção Científica',
@@ -416,6 +479,14 @@ app.post('/livro/isbn/:isbn', async (req, res) => {
         const editoraId = editoraNome ? await obterOuCriarEditora(editoraNome) : null;
         
         // Insere o livro no banco
+        console.log("isbn ====>>> ", isbn);
+        console.log("titulo====>>> ", titulo);
+        console.log("ano====>>> ", ano);
+        console.log("limitedSinopse ====>>> ", limitedSinopse);
+        console.log("editoraId ====>>> ", editoraId);
+        console.log("capa ====>>> ", capa);
+
+        
         const livroResult = await client.query(
             'INSERT INTO livro (livro_isbn, livro_titulo, livro_ano, livro_sinopse, editora_id, livro_capa) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
             [isbn, titulo, ano, limitedSinopse, editoraId, capa]
@@ -768,6 +839,63 @@ app.get('/listas_personalizadas/usuario/:id', async (req, res) => {
     }
 });
 
+// Rota para atualizar nome e/ou descrição de uma lista
+app.patch('/listas_personalizadas/:id', async (req, res) => {
+    console.log('Dados recebidos:', req.body);
+    
+    const { id } = req.params;
+    const { nomeLista, descricaoLista } = req.body;
+    
+    try {
+        // Construir a query dinamicamente baseado nos campos enviados
+        let updateFields = [];
+        let values = [];
+        let paramIndex = 1;
+        
+        if (nomeLista !== undefined) {
+            updateFields.push(`nome_lista = $${paramIndex}`);
+            values.push(nomeLista);
+            paramIndex++;
+        }
+        
+        if (descricaoLista !== undefined) {
+            updateFields.push(`descricao_lista = $${paramIndex}`);
+            values.push(descricaoLista);
+            paramIndex++;
+        }
+        
+        if (updateFields.length === 0) {
+            return res.status(400).json({ error: 'Nenhum campo para atualizar foi fornecido' });
+        }
+        
+        // Adicionar o ID no final dos valores
+        values.push(parseInt(id));
+        
+        const query = `
+            UPDATE listas_personalizadas 
+            SET ${updateFields.join(', ')} 
+            WHERE id = $${paramIndex} 
+            RETURNING *
+        `;
+        
+        console.log('Query:', query);
+        console.log('Values:', values);
+        
+        const result = await pool.query(query, values);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Lista não encontrada' });
+        }
+        
+        // Retornar a lista atualizada
+        res.status(200).json(result.rows[0]);
+        
+    } catch (err) {
+        console.error('Erro ao atualizar lista:', err.message);
+        res.status(500).json({ error: 'Erro ao atualizar lista!' });
+    }
+});
+
 //Rota para deletar uma lista
 app.delete('/listas_personalizadas/:id', async (req, res) => {
     const { id } = req.params;
@@ -789,6 +917,128 @@ app.delete('/listas_personalizadas/:id', async (req, res) => {
     }
     
 });
+
+//Rota para listar todos os livros que estão no meu banco de dados
+app.get("/livro", async (req, res) => {
+    try {
+      const resultado = await pool.query("SELECT * FROM livro");
+      res.json(resultado.rows); // ou .recordset se for SQL Server
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ erro: "Erro ao buscar livros" });
+    }
+  });
+
+//adição de isbn do livro a lista
+app.patch("/listas_personalizadas/:id/adicionar-livro", async (req, res) => {
+    const idLista = req.params.id;
+    const { isbnLivro } = req.body;
+
+    console.log('requisição recebida:', { idLista, isbnLivro });
+
+    try {
+
+        const isbnParaBanco = Number(isbnLivro);
+        
+        // Primeiro verifica se a lista existe
+        const listaExiste = await pool.query(
+            "SELECT * FROM listas_personalizadas WHERE id = $1",
+            [idLista]
+        );
+        
+        if (listaExiste.rows.length === 0) {
+            console.log('Lista não encontrada!')
+            return res.status(404).json({ erro: "Lista não encontrada" });
+        }
+        
+        // Verifica se o livro já está na lista
+        const isbnArray = listaExiste.rows[0].isbn_livros || [];
+        console.log('ISBNSs atuais na lista:', isbnArray);
+        if (isbnArray.includes(isbnParaBanco)) {
+            return res.status(400).json({ erro: "Livro já está na lista" });
+        }
+        
+        const resultado = await pool.query(
+            `UPDATE listas_personalizadas 
+             SET isbn_livros = array_append(COALESCE(isbn_livros, '{}'), $1)
+             WHERE id = $2
+             RETURNING *;`,
+            [isbnParaBanco, idLista]
+        );
+        console.log('livro adicionado com sucesso:', resultado.rows[0])
+        res.status(200).json(resultado.rows[0]);
+
+    } catch (erro) {
+        console.error("Erro ao adicionar livro: ", erro);
+        res.status(500).json({ erro: "Erro interno do servidor" });
+    }
+});
+
+//rota para buscar todos os isbns da minha lista de livros
+app.get("/listas_personalizadas/:id/livro", async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      // Busca os ISBNs da lista
+      const lista = await pool.query(
+        "SELECT isbn_livros FROM listas_personalizadas WHERE id = $1",
+        [id]
+      );
+  
+      if (lista.rows.length === 0) {
+        return res.status(404).json({ erro: "Lista não encontrada" });
+      }
+  
+      const isbns = lista.rows[0].isbn_livros;
+  
+      if (!isbns || isbns.length === 0) {
+        return res.json([]); // Lista vazia
+      }
+  
+      // Busca os dados dos livros com base nos ISBNs
+      const livros = await pool.query(
+        `SELECT * FROM livro WHERE livro_isbn = ANY($1::bigint[])`,
+        [isbns]
+      );
+  
+      res.json(livros.rows);
+    } catch (erro) {
+      console.error("Erro ao buscar livros da lista:", erro);
+      res.status(500).json({ erro: "Erro interno ao buscar livros da lista" });
+    }
+  });
+  
+
+//rota para apagar um livro de uma lista
+app.patch('/listas_personalizadas/:id/remover-livro', async (req, res) => {
+    const { id } = req.params; // ID da lista
+    const { isbnLivro } = req.body; // ISBN do livro a remover (como string)
+  
+    try {
+      // Verifica se a lista existe
+      const listaResult = await pool.query('SELECT * FROM listas_personalizadas WHERE id = $1', [id]);
+  
+      if (listaResult.rowCount === 0) {
+        return res.status(404).json({ erro: 'Lista não encontrada.' });
+      }
+  
+      // Remove o ISBN do array (PostgreSQL: array_remove)
+      const updateResult = await pool.query(
+        `UPDATE listas_personalizadas 
+         SET isbn_livros = array_remove(isbn_livros, $1)
+         WHERE id = $2
+         RETURNING *`,
+        [isbnLivro, id]
+      );
+  
+      return res.status(200).json(updateResult.rows[0]);
+  
+    } catch (erro) {
+      console.error('Erro ao remover livro da lista:', erro);
+      return res.status(500).json({ erro: 'Erro interno ao remover livro da lista.' });
+    }
+  });
+  
 
 //Rota para verificar o login 
 app.post('/login', async (req, res) => {
@@ -819,7 +1069,6 @@ app.post('/login', async (req, res) => {
 });
 
 //* TABELA RESENHA
-
 app.post('/resenha', async (req, res) => {
     const {resenha_titulo, resenha_texto, resenha_nota, resenha_curtidas, usuario_id, livro_isbn} = req.body;
     try {
@@ -879,9 +1128,6 @@ app.get('/resenha/:resenha_id', async (req, res) => {
 
 })
 
-// ...existing code...
-
-// Rota para deletar uma resenha
 app.delete('/resenha/:resenha_id', async (req, res) => {
     const { resenha_id } = req.params;
     try {
@@ -898,6 +1144,35 @@ app.delete('/resenha/:resenha_id', async (req, res) => {
         res.status(500).json({ error: 'Erro ao deletar resenha' });
     }
 });
+
+app.put('/resenha/:resenha_id', async (req, res) => {
+    const { resenha_id } = req.params;
+    const { resenha_curtidas } = req.body;
+    
+    try {
+
+        const resenhaExiste = await pool.query(
+            'SELECT * FROM resenha WHERE resenha_id = $1', 
+            [resenha_id]
+        );
+        
+        if (resenhaExiste.rows.length === 0) {
+            return res.status(404).json({ error: 'Resenha não encontrada' });
+        }
+        
+
+        const result = await pool.query(
+            'UPDATE resenha SET resenha_curtidas = $1 WHERE resenha_id = $2 RETURNING *',
+            [resenha_curtidas, resenha_id]
+        );
+        
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error('Erro ao atualizar resenha:', error);
+        res.status(500).json({ error: 'Erro ao atualizar resenha' });
+    }
+});
+  
 
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000! :D')
