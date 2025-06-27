@@ -20,7 +20,9 @@ function TelaUsuarioConfigs() {
     usuarioLogado,
     setUsuarioLogado,
     dadosUsuarioLogado,
-    setDadosUsuarioLogado
+    setDadosUsuarioLogado,
+    idUsuarioLogado,
+    setIdUsuarioLogado
   } = useContext(GlobalContext)
   const [editarNome, setEditarNome] = useState('')
   const [editarEmail, setEditarEmail] = useState('')
@@ -170,6 +172,7 @@ function TelaUsuarioConfigs() {
     setUsuarioLogado(false)
     setPosicaoUsuarioID(null)
     setDadosUsuarioLogado(null);
+    setIdUsuarioLogado(null);
     navigate('/')
 
   }
