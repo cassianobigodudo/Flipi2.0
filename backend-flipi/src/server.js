@@ -19,7 +19,7 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'flipidb',
-    password: 'SENAI',
+    password: 'jaime@db',
     port: 5432 
   });
 
@@ -30,7 +30,7 @@ async function verificarDB(){
         user: 'postgres', // Substitua pelo seu usuário do PostgreSQL / PGAdmin
         host: 'localhost',
         database: 'postgres', // Nome da sua database no PostgreSQL / PGAdmin
-        password: 'SENAI', // Substitua pela sua senha do PostgreSQL / PGAdmin
+        password: 'jaime@db', // Substitua pela sua senha do PostgreSQL / PGAdmin
         port: 5432, // Porta padrão do PostgreSQL
     })
     

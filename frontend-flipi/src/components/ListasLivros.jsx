@@ -13,24 +13,27 @@ function ListasLivros() {
     const [descricaoLista, setDescricaoLista] = useState('');
     const [listas, setListas] = useState([]);
     
-    const { idUsuarioLogado } = useContext(GlobalContext);
-    console.log('id do usuario logado', idUsuarioLogado)
+    const { idUsuarioLogado, posicaoUsuarioID } = useContext(GlobalContext);
+    console.log("idUsuarioLogado:", idUsuarioLogado);
+    console.log("posicaoUsuarioID:", posicaoUsuarioID);
+
     
+    const idUsuario = idUsuarioLogado || posicaoUsuarioID;
     useEffect(() => {
         const buscarListas = async () => {
             try {
-                const resposta = await axios.get(`http://localhost:3000/listas_personalizadas/usuario/${idUsuarioLogado}`);
+                const resposta = await axios.get(`http://localhost:3000/listas_personalizadas/usuario/${idUsuario}`);
                 setListas(resposta.data);
             } catch (erro) {
                 console.error("Erro ao buscar listas:", erro);
             }
             };
 
-            if (idUsuarioLogado) {
+            if (idUsuario) {
                 buscarListas();
             }
             
-    }, [idUsuarioLogado]);
+    }, [idUsuario]);
 
     const salvarLista = async (e) => {
 
@@ -40,7 +43,7 @@ function ListasLivros() {
              {
                 nome: nomeLista,
                 descricao: descricaoLista,
-                criador: idUsuarioLogado
+                criador: idUsuarioLogado || posicaoUsuarioID
             });
             alert("Lista criada com sucesso!");
             console.log("Lista criada:", res.data);
