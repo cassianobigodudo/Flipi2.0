@@ -177,6 +177,7 @@ function TelaEscrivaninha() {
       }
 
       const response = await axios.post('http://localhost:3000/resenha', novaResenha)
+      alert('Resenha cadastrada com sucesso!')
       
       
      /*  if (response.status === 201) {
