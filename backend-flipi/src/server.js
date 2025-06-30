@@ -19,7 +19,7 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'flipidb',
-    password: 'jaime@db',
+    password: 'SENAI',
     port: 5432 
   });
 
@@ -30,7 +30,7 @@ async function verificarDB(){
         user: 'postgres', // Substitua pelo seu usuário do PostgreSQL / PGAdmin
         host: 'localhost',
         database: 'postgres', // Nome da sua database no PostgreSQL / PGAdmin
-        password: 'jaime@db', // Substitua pela sua senha do PostgreSQL / PGAdmin
+        password: 'SENAI', // Substitua pela sua senha do PostgreSQL / PGAdmin
         port: 5432, // Porta padrão do PostgreSQL
     })
     
@@ -105,7 +105,7 @@ async function verificarTabelas(){
     );`
     await client.query(createLivroQuery);
     console.log(`Tabela "livro" verificada/criada com sucesso.`);
-    // ❌ REMOVER ESTA LINHA - await inserirLivrosTabela(client);
+
 
     const createLivroAutorQuery= `
     CREATE TABLE IF NOT EXISTS livro_autor(
@@ -128,6 +128,7 @@ async function verificarTabelas(){
     );`
     await client.query(createLivroGeneroQuery);
     console.log(`Tabela "livro_genero" verificada/criada com sucesso.`)
+
     
     //Criação automática da tabela de listas personalizadas
     const createListQuery= `
@@ -204,8 +205,11 @@ async function buscarLivroPorISBN(isbn) {
     }
 }
 
-async function obterOuCriarEditoraComClient(client, nome) {
+async function obterOuCriarEditora(nome) {
+
     if (!nome) return null;
+
+    const client = await pool.connect();
     
     try {
         // Verifica se a editora já existe
@@ -228,9 +232,10 @@ async function obterOuCriarEditoraComClient(client, nome) {
     }
 }
 
-async function obterOuCriarAutorComClient(client, nome) {
+async function obterOuCriarAutor(nome) {
     if (!nome) return null;
     
+    const client = await pool.connect();
     try {
         // Verifica se o autor já existe
         let result = await client.query('SELECT autor_id FROM autor WHERE autor_nome = $1', [nome]);
@@ -253,50 +258,6 @@ async function obterOuCriarAutorComClient(client, nome) {
 }
 
 
-// Inserir os livros no banco:
-async function inserirLivrosTabela(client) {
-    const isbns = [9782290019436, 9788960176751, 9782253176503, 9780008762278, 9780263870770, 9780263929874, 9780373336036, 9781608181797, 9781846175916, 9780553381689, 9782290019436, 9788580573619, 9788957591055];
-
-    for (const isbn of isbns) {
-        try {
-            const livro = await buscarLivroPorISBN(isbn);
-
-            const titulo = livro.title || 'Título desconhecido';
-            const ano = livro.publish_date ? parseInt(livro.publish_date.match(/\d{4}/)?.[0]) || 2000 : 2000;
-            const sinopse = livro.notes || 'Sem sinopse';
-            const capa = livro.cover?.large || livro.cover?.medium || livro.cover?.small || '';
-            
-            // Usar a função corrigida que aceita o client como parâmetro
-            const editoraNome = livro.publishers?.[0]?.name || null;
-            const editora_id = editoraNome ? await obterOuCriarEditoraComClient(client, editoraNome) : null;
-
-            const insertQuery = `
-                INSERT INTO livro (livro_isbn, livro_titulo, livro_ano, livro_sinopse, livro_capa, editora_id)
-                VALUES ($1, $2, $3, $4, $5, $6)
-                ON CONFLICT (livro_isbn) DO NOTHING;
-            `;
-
-            await client.query(insertQuery, [isbn, titulo, ano, sinopse, capa, editora_id]);
-            console.log(`Livro inserido: ${titulo} - Editora ID: ${editora_id}`);
-
-            // Processar autores se existirem
-            if (livro.authors && livro.authors.length > 0) {
-                for (const autorInfo of livro.authors) {
-                    const autorId = await obterOuCriarAutorComClient(client, autorInfo.name);
-                    if (autorId) {
-                        await client.query(
-                            'INSERT INTO livro_autor (livro_isbn, autor_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
-                            [isbn, autorId]
-                        );
-                    }
-                }
-            }
-
-        } catch (error) {
-            console.error(`Erro ao inserir livro com ISBN ${isbn}:`, error.message);
-        }
-    }
-}
 const mapeamentoGeneros = {
     // Ficção Científica
     'science fiction': 'Ficção Científica','sci-fi': 'Ficção Científica','dystopian': 'Ficção Científica','utopian': 'Ficção Científica','space': 'Ficção Científica','future': 'Ficção Científica','cyberpunk': 'Ficção Científica','aliens': 'Ficção Científica','time travel': 'Ficção Científica',
@@ -402,6 +363,179 @@ async function obterOuCriarGenero(nome) {
         return result.rows[0].genero_id;
     } finally {
         client.release();
+    }
+}
+
+async function obterOuCriarEditoraComClient(client, nome) {
+    if (!nome) return null;
+    
+    try {
+        // Verifica se a editora já existe
+        let result = await client.query('SELECT editora_id FROM editora WHERE editora_nome = $1', [nome]);
+        
+        if (result.rows.length > 0) {
+            return result.rows[0].editora_id;
+        }
+        
+        // Se não existir, cria uma nova editora
+        result = await client.query(
+            'INSERT INTO editora (editora_nome) VALUES ($1) RETURNING editora_id',
+            [nome]
+        );
+        
+        return result.rows[0].editora_id;
+    } catch (error) {
+        console.error('Erro ao obter/criar editora:', error.message);
+        return null;
+    }
+}
+
+async function obterOuCriarAutorComClient(client, nome) {
+    if (!nome) return null;
+    
+    try {
+        // Verifica se o autor já existe
+        let result = await client.query('SELECT autor_id FROM autor WHERE autor_nome = $1', [nome]);
+        
+        if (result.rows.length > 0) {
+            return result.rows[0].autor_id;
+        }
+        
+        // Se não existir, cria um novo autor
+        result = await client.query(
+            'INSERT INTO autor (autor_nome) VALUES ($1) RETURNING autor_id',
+            [nome]
+        );
+        
+        return result.rows[0].autor_id;
+    } catch (error) {
+        console.error('Erro ao obter/criar autor:', error.message);
+        return null;
+    }
+}
+
+async function obterOuCriarGeneroComClient(client, nome) {
+    if (!nome) return null;
+    
+    try {
+        // Verifica se o gênero já existe
+        let result = await client.query('SELECT genero_id FROM genero WHERE genero_nome = $1', [nome]);
+        
+        if (result.rows.length > 0) {
+            return result.rows[0].genero_id;
+        }
+        
+        // Se não existir, cria um novo gênero
+        result = await client.query(
+            'INSERT INTO genero (genero_nome) VALUES ($1) RETURNING genero_id',
+            [nome]
+        );
+        
+        return result.rows[0].genero_id;
+    } catch (error) {
+        console.error('Erro ao obter/criar gênero:', error.message);
+        return null;
+    }
+}
+
+// Função inserirLivrosTabela corrigida
+async function inserirLivrosTabela(client) {
+    const isbns = [9782290019436, 9788960176751, 9782253176503, 9780008762278, 9780263870770, 9780263929874, 9780373336036, 9781608181797, 9781846175916, 9780553381689, 9782290019436, 9788580573619, 9788957591055];
+
+    for (const isbn of isbns) {
+        try {
+            // Verifica se o livro já existe antes de tentar inserir
+            const livroExistente = await client.query('SELECT livro_isbn FROM livro WHERE livro_isbn = $1', [isbn]);
+            if (livroExistente.rows.length > 0) {
+                console.log(`Livro com ISBN ${isbn} já existe no banco. Pulando...`);
+                continue;
+            }
+
+            console.log(`Buscando informações para o livro ISBN: ${isbn}`);
+            const livro = await buscarLivroPorISBN(isbn);
+
+            const titulo = livro.title || 'Título desconhecido';
+            const ano = livro.publish_date ? parseInt(livro.publish_date.match(/\d{4}/)?.[0]) || 2000 : 2000;
+            const sinopse = livro.notes || livro.excerpts?.[0]?.text || 'Sem sinopse';
+            const capa = livro.cover?.large || livro.cover?.medium || livro.cover?.small || '';
+            
+            // Usar as funções que aceitam client como parâmetro
+            const editoraNome = livro.publishers?.[0]?.name || null;
+            const editora_id = editoraNome ? await obterOuCriarEditoraComClient(client, editoraNome) : null;
+
+            const insertQuery = `
+                INSERT INTO livro (livro_isbn, livro_titulo, livro_ano, livro_sinopse, livro_capa, editora_id)
+                VALUES ($1, $2, $3, $4, $5, $6)
+                ON CONFLICT (livro_isbn) DO NOTHING;
+            `;
+
+            await client.query(insertQuery, [isbn, titulo, ano, sinopse, capa, editora_id]);
+            console.log(`Livro inserido: ${titulo} - Editora ID: ${editora_id}`);
+
+            // Processar autores se existirem
+            if (livro.authors && livro.authors.length > 0) {
+                for (const autorInfo of livro.authors) {
+                    const autorId = await obterOuCriarAutorComClient(client, autorInfo.name);
+                    if (autorId) {
+                        await client.query(
+                            'INSERT INTO livro_autor (livro_isbn, autor_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+                            [isbn, autorId]
+                        );
+                        console.log(`Autor ${autorInfo.name} associado ao livro ${isbn}`);
+                    }
+                }
+            }
+
+            // Processar gêneros se existirem
+            if (livro.subjects && livro.subjects.length > 0) {
+                console.log('Assuntos originais da OpenLibrary:', livro.subjects);
+                
+                // Mapeia os assuntos para gêneros tradicionais
+                const generosLiterarios = mapearGenerosLiterarios(livro.subjects);
+                console.log('Gêneros mapeados:', generosLiterarios);
+                
+                // Insere apenas os gêneros mapeados
+                for (const generoNome of generosLiterarios) {
+                    const generoId = await obterOuCriarGeneroComClient(client, generoNome);
+                    if (generoId) {
+                        await client.query(
+                            'INSERT INTO livro_genero (livro_isbn, genero_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+                            [isbn, generoId]
+                        );
+                        console.log(`Gênero ${generoNome} associado ao livro ${isbn}`);
+                    }
+                }
+                
+                // Se nenhum gênero foi mapeado, adiciona "Drama" como padrão
+                if (generosLiterarios.length === 0) {
+                    console.log('Nenhum gênero mapeado, adicionando "Drama" como padrão');
+                    const generoId = await obterOuCriarGeneroComClient(client, 'Drama');
+                    if (generoId) {
+                        await client.query(
+                            'INSERT INTO livro_genero (livro_isbn, genero_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+                            [isbn, generoId]
+                        );
+                        console.log(`Gênero padrão "Drama" associado ao livro ${isbn}`);
+                    }
+                }
+            } else {
+                // Se não há subjects, adiciona Drama como padrão
+                console.log('Livro sem subjects, adicionando "Drama" como padrão');
+                const generoId = await obterOuCriarGeneroComClient(client, 'Drama');
+                if (generoId) {
+                    await client.query(
+                        'INSERT INTO livro_genero (livro_isbn, genero_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+                        [isbn, generoId]
+                    );
+                    console.log(`Gênero padrão "Drama" associado ao livro ${isbn}`);
+                }
+            }
+
+        } catch (error) {
+            console.error(`Erro ao inserir livro com ISBN ${isbn}:`, error.message);
+            // Continua com o próximo livro mesmo se houver erro
+            continue;
+        }
     }
 }
 
