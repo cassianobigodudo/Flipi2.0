@@ -6,7 +6,6 @@ const { Pool } = pg;
 
 const app = express()
 
-
 async function iniciarDB(){
     await verificarDB()
     await verificarTabelas()
@@ -20,7 +19,7 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'flipidb',
-    password: 'senai',
+    password: 'jaime@db',
     port: 5432 
   });
 
@@ -31,7 +30,7 @@ async function verificarDB(){
         user: 'postgres', // Substitua pelo seu usuário do PostgreSQL / PGAdmin
         host: 'localhost',
         database: 'postgres', // Nome da sua database no PostgreSQL / PGAdmin
-        password: 'senai', // Substitua pela sua senha do PostgreSQL / PGAdmin
+        password: 'jaime@db', // Substitua pela sua senha do PostgreSQL / PGAdmin
         port: 5432, // Porta padrão do PostgreSQL
     })
     
@@ -256,7 +255,7 @@ async function obterOuCriarAutorComClient(client, nome) {
 
 // Inserir os livros no banco:
 async function inserirLivrosTabela(client) {
-    const isbns = [9782290019436, 9788000011622, 9788960176751, 9782253176503, 9780008762278, 9780263870770, 9780263929874, 9780373336036, 9781608181797, 9781846175916, 9780553381689, 9782290019436, 9788580573619, 9788957591055, 9788580411522, 9787532150779, 9786047703739, 9780345379757, 9781603844666, 9780062060617, 9782253176503, 9788580572100, 9788804661603];
+    const isbns = [9782290019436, 9788960176751, 9782253176503, 9780008762278, 9780263870770, 9780263929874, 9780373336036, 9781608181797, 9781846175916, 9780553381689, 9782290019436, 9788580573619, 9788957591055];
 
     for (const isbn of isbns) {
         try {

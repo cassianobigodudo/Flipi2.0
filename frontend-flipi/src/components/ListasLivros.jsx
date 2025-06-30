@@ -56,7 +56,6 @@ function ListasLivros() {
 
     };
 
-
   return (
     <div className='container__listas'>
 

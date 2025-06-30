@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import ResenhasConfigs from "../components/ResenhasConfigs"
 import NavbarVertical from "../components/NavbarVertical"
 import axios from "axios"
+import ListasLivros from "../components/ListasLivros"
 
 function TelaUsuarioConfigs() {
 
@@ -19,13 +20,16 @@ function TelaUsuarioConfigs() {
     usuarioLogado,
     setUsuarioLogado,
     dadosUsuarioLogado,
-    setDadosUsuarioLogado
+    setDadosUsuarioLogado,
+    idUsuarioLogado,
+    setIdUsuarioLogado
   } = useContext(GlobalContext)
   const [editarNome, setEditarNome] = useState('')
   const [editarEmail, setEditarEmail] = useState('')
   const [editarDescricao, setEditarDescricao] = useState('')
   const [editarFoto, setEditarFoto] = useState('')
   const [editarSenha, setEditarSenha] = useState('')
+  const [mostrarComponente, setMostrarComponente] = useState('resenhas');
   // const [mostrarSenha, setMostrarSenha] = useState(false)
   const navigate = useNavigate()
 
@@ -159,8 +163,16 @@ function TelaUsuarioConfigs() {
   function deslogarUsuario() {
 
     alert('Até mais!')
+
+    localStorage.removeItem("usuarioLogado");
+    localStorage.removeItem("posicaoUsuarioID");
+    localStorage.removeItem("idUsuarioLogado");
+    localStorage.removeItem("dadosUsuarioLogado");
+
     setUsuarioLogado(false)
     setPosicaoUsuarioID(null)
+    setDadosUsuarioLogado(null);
+    setIdUsuarioLogado(null);
     navigate('/')
 
   }
@@ -183,7 +195,13 @@ function TelaUsuarioConfigs() {
 
 
           alert(`Conta deletada com sucesso.`)
+          localStorage.removeItem("usuarioLogado");
+          localStorage.removeItem("posicaoUsuarioID");
+          localStorage.removeItem("idUsuarioLogado");
+          localStorage.removeItem("dadosUsuarioLogado");
           setUsuarioLogado(false) //hi
+          setPosicaoUsuarioID(null)
+          setDadosUsuarioLogado(null);
           navigate(`/`)
             
         }
@@ -229,10 +247,21 @@ function TelaUsuarioConfigs() {
     }
   }, [dadosUsuarioLogado?.usuario_id]);
 
-  const pontuacao = resenhasUsuario.length * 10; // 10 pontos por resenha
-  const nivel = Math.floor(pontuacao / 100) + 1; // cada 100 pontos sobe de nível
-  const pontosProximoNivel = 100;
-  const progresso = ((pontuacao % pontosProximoNivel) / pontosProximoNivel) * 100;
+  // Calcula pontuação, nível e progresso sempre que resenhasUsuario mudar
+  const [pontuacao, setPontuacao] = useState(0);
+  const [nivel, setNivel] = useState(1);
+  const [progresso, setProgresso] = useState(0);
+
+  useEffect(() => {
+    const novaPontuacao = resenhasUsuario.length * 10;
+    const novoNivel = Math.floor(novaPontuacao / 100) + 1;
+    const pontosProximoNivel = 100;
+    const novoProgresso = ((novaPontuacao % pontosProximoNivel) / pontosProximoNivel) * 100;
+
+    setPontuacao(novaPontuacao);
+    setNivel(novoNivel);
+    setProgresso(novoProgresso);
+  }, [resenhasUsuario]);
 
   // Função para lidar com a alteração da senha
   const handleSenhaClick = async () => {
@@ -422,10 +451,10 @@ function TelaUsuarioConfigs() {
                 <button className="btn btn-delete" onClick={deletarUsuario}>Deletar conta</button>
                </div>
                 <div className="listas-btn">
-                  <button className="btn-secao">Listas</button>
+                  <button className="btn-secao" onClick={() => setMostrarComponente('listas')}>Listas</button>
                   <button
                     className="btn-secao"
-                    onClick={() => navigate("/telaescrivaninha")}
+                    onClick={() => setMostrarComponente('resenhas')}
                   >
                     Resenhas
                   </button>
@@ -433,13 +462,8 @@ function TelaUsuarioConfigs() {
             </div>
 
             <div className="usuarioConfigs-body-meio-papel-resenhas">
-              <div className="usuarioConfigs-bmpr-titulo">
-                <label className="lbl-titulos">Minhas resenhas</label>
-              </div>
-
-              <div className="usuarioConfigs-bmpr-body">
-                <ResenhasConfigs />
-              </div>
+              { mostrarComponente === 'resenhas' && <ResenhasConfigs />}
+              { mostrarComponente === 'listas' && <ListasLivros />}
             </div>
           </div>
         </div>

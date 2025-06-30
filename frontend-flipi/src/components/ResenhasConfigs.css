@@ -146,6 +146,8 @@
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
+    font-family: 'fonte-projeto';
+    font-size: 160%;
 }
 .popup-text{
     background-color: #CB9375;

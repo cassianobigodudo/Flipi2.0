@@ -62,7 +62,8 @@ function TelaLogin() {
             setUsuarioLogado(true);
             setPosicaoUsuarioID(dados.usuario_id)
             setIdUsuarioLogado(dados.usuario_id)
-            console.log('estou guardando esse id: ', idUsuarioLogado);
+            // console.log('estou guardando esse id: ', idUsuarioLogado);
+            console.log('estou guardando esse id: ', dados.usuario_id);
             alert('Login feito com sucesso!');
             navigate('/telaprincipal');
 
