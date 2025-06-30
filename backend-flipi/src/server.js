@@ -64,7 +64,8 @@ async function verificarTabelas(){
         usuario_nome VARCHAR(40) NOT NULL,
         usuario_apelido VARCHAR(40) NOT NULL,
         usuario_email VARCHAR(80) NOT NULL,
-        usuario_senha VARCHAR(30) NOT NULL
+        usuario_senha VARCHAR(30) NOT NULL,
+        url_foto TEXT 
     );`
     await client.query(createUsuarioQuery);
     console.log(`Tabela "usuario" verificada/criada com sucesso.`);
@@ -891,29 +892,66 @@ app.get('/usuario/apelido/:apelido', async (req, res) => {
     }
 });
 
-// Rota para atualizar um cliente
+// // Rota para atualizar um cliente
+// app.put('/usuario/:usuario_id', async (req, res) => {
+//     const { usuario_id } = req.params;
+//     const { usuario_nome, usuario_email, usuario_senha, url_foto  } = req.body;
+//     try {
+//         console.log('entrei no try')
+//         const result = await pool.query(
+//             'UPDATE usuario SET usuario_nome = $1, usuario_email = $2, usuario_senha = $3, url_foto = $4 WHERE usuario_id = $5 RETURNING *',
+//             [usuario_nome, usuario_email, usuario_senha, url_foto, usuario_id]
+//         );
+//         console.log('fiz a query')
+//         console.log(usuario_id)
+//         if (result.rows.length === 0) {
+//             console.log('entrei no 404')
+//             return res.status(404).json({ error: 'Usuario não encontrado' });
+//         }
+//         console.log('atualizei os dados')
+//         res.json(result.rows[0]);
+//     } catch (err) {
+//         console.error(err.message);
+//         res.status(500).json({ error: 'Erro ao atualizar usuario' });
+//     }
+//   });
+
+// rota para atualizar um usuário
 app.put('/usuario/:usuario_id', async (req, res) => {
-    const { usuario_id } = req.params;
-    const { usuario_nome, usuario_email, usuario_senha, url_foto  } = req.body;
-    try {
-        console.log('entrei no try')
-        const result = await pool.query(
-            'UPDATE usuario SET usuario_nome = $1, usuario_email = $2, usuario_senha = $3, url_foto = $5 WHERE usuario_id = $4 RETURNING *',
-            [usuario_nome, usuario_email, usuario_senha, usuario_id, url_foto]
-        );
-        console.log('fiz a query')
-        console.log(usuario_id)
-        if (result.rows.length === 0) {
-            console.log('entrei no 404')
-            return res.status(404).json({ error: 'Usuario não encontrado' });
-        }
-        console.log('atualizei os dados')
-        res.json(result.rows[0]);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ error: 'Erro ao atualizar usuario' });
+  const { usuario_id } = req.params;
+  const campos = req.body;
+
+  try {
+    const chaves = Object.keys(campos);
+    const valores = Object.values(campos);
+
+    if (chaves.length === 0) {
+      return res.status(400).json({ error: 'Nenhum dado enviado para atualização' });
     }
-  });
+
+    // Ex: "usuario_nome = $1, usuario_email = $2"
+    const setClause = chaves.map((campo, i) => `${campo} = $${i + 1}`).join(', ');
+
+    const query = `
+      UPDATE usuario
+      SET ${setClause}
+      WHERE usuario_id = $${chaves.length + 1}
+      RETURNING *;
+    `;
+
+    const result = await pool.query(query, [...valores, usuario_id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Erro ao atualizar usuário:', err.message);
+    res.status(500).json({ error: 'Erro ao atualizar usuário' });
+  }
+});
+
 
   // Rota para deletar um cliente
 app.delete('/usuario/:usuario_id', async (req, res) => {

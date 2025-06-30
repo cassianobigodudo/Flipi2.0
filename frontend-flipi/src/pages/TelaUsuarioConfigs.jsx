@@ -101,7 +101,7 @@ function TelaUsuarioConfigs() {
       console.error('Erro ao buscar clientes:', error);
     }
   };
-
+  
   const editarDados = async (campo) => {
     let novoValor;
     switch (campo) {
